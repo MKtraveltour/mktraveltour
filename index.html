@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MKトラベル手帳 | MKトラベル</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans JP', sans-serif; font-size: 14px; color: #3c2e1e; background: #f5f0e8; }
+    a { text-decoration: none; color: inherit; }
+    .nav { background: #8b7355; display: flex; width: 100%; position: sticky; top: 0; z-index: 100; }
+    .nav a { color: #fff; text-align: center; padding: 14px 0; flex: 1; font-size: 13px; font-weight: 500; border-right: 1px solid rgba(255,255,255,0.2); transition: background 0.2s; }
+    .nav a:last-child { border-right: none; }
+    .nav a span { display: block; font-size: 11px; opacity: 0.7; margin-top: 2px; }
+    .nav a:hover { background: rgba(255,255,255,0.15); }
+    .hero { background: #8b7355; color: #fff; padding: 28px 24px; text-align: center; position: relative; }
+    .hero h1 { font-size: 22px; font-weight: 500; margin-bottom: 6px; color: #fff; }
+    .hero p  { font-size: 14px; color: #fff; opacity: 0.9; }
+    .page-wrap { display: grid; grid-template-columns: 160px 1fr 260px; max-width: 1200px; margin: 0 auto; background: #fff; }
+    .blog-nav { background: #faf8f5; border-right: 1px solid #e0d8cc; padding: 16px 0; min-height: 100vh; }
+    .blog-nav-title { font-size: 13px; font-weight: 500; color: #5c4a32; padding: 0 14px 10px; border-bottom: 3px solid #8b7355; margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
+    .bnav-category { border-bottom: 1px solid #ede8e0; }
+    .bnav-cat-label { display: flex; align-items: center; justify-content: space-between; padding: 9px 14px; font-size: 12px; color: #5c4a32; font-weight: 500; cursor: pointer; }
+    .bnav-cat-label:hover { background: #f0ebe2; }
+    .bnav-sub a { display: flex; align-items: center; justify-content: space-between; padding: 6px 14px 6px 22px; font-size: 11px; color: #7c6040; cursor: pointer; }
+    .bnav-sub a:hover { background: #f0ebe2; color: #5c4a32; }
+    .bnav-sub a.active { color: #8b7355; font-weight: 500; background: #f5ede0; }
+    .new-badge { background: #c0392b; color: #fff; font-size: 10px; padding: 1px 6px; border-radius: 10px; font-weight: 500; }
+    .blog-new-btn { margin: 14px 14px 0; background: #8b7355; color: #fff; border-radius: 6px; padding: 9px 10px; font-size: 12px; text-align: center; cursor: pointer; font-weight: 500; }
+    .blog-new-btn:hover { background: #7a6448; }
+    .content { padding: 18px; background: #fff; }
+    .breadcrumb { font-size: 12px; color: #999; margin-bottom: 14px; }
+    .breadcrumb span { color: #8b7355; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .section-title { font-size: 14px; font-weight: 500; color: #5c4a32; border-left: 4px solid #8b7355; padding-left: 10px; }
+    .see-all { font-size: 12px; color: #8b7355; cursor: pointer; }
+    .see-all:hover { text-decoration: underline; }
+    .calendar-wrap { background: #fff; border: 1px solid #e0d8cc; border-radius: 10px; padding: 16px; margin-bottom: 20px; }
+    .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .cal-header h3 { font-size: 15px; font-weight: 500; color: #5c4a32; }
+    .cal-header button { background: none; border: 1px solid #c5b8a8; border-radius: 4px; padding: 4px 12px; cursor: pointer; color: #8b7355; font-size: 13px; }
+    .cal-header button:hover { background: #f5ede0; }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+    .cdl { text-align: center; font-size: 12px; color: #999; padding: 5px 0; font-weight: 500; }
+    .cdl.sun { color: #c0392b; } .cdl.sat { color: #2980b9; }
+    .cd { text-align: center; font-size: 13px; padding: 8px 2px; border-radius: 5px; cursor: pointer; }
+    .cd.has-tour  { background: #f0e8d8; color: #5c4a32; font-weight: 500; }
+    .cd.confirmed { background: #8b7355; color: #fff; font-weight: 500; }
+    .cd.full      { background: #c0392b; color: #fff; font-weight: 500; }
+    .cd.today     { outline: 2px solid #8b7355; outline-offset: -2px; }
+    .cal-legend { display: flex; gap: 16px; margin-top: 10px; flex-wrap: wrap; }
+    .cl-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #888; }
+    .cl-dot  { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+    .filter-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    .ftab { padding: 6px 14px; border-radius: 20px; font-size: 12px; cursor: pointer; border: 1px solid #8b7355; color: #8b7355; background: #fff; transition: all 0.15s; }
+    .ftab.active { background: #8b7355; color: #fff; }
+    .ftab:hover { background: #f5ede0; }
+    .tour-count { font-size: 12px; color: #999; margin-bottom: 10px; }
+    .tours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+    .tour-card.hidden { display: none; }
+    .cd.selected { outline: 3px solid #5c4a32; outline-offset: -2px; }
+    .filter-note { font-size: 12px; color: var(--color-text-secondary, #888); background: #f5f0e8; border-radius: 6px; padding: 8px 12px; margin-bottom: 12px; display: none; }
+    .filter-note.show { display: block; }
+    .reset-link { font-size: 12px; color: #8b7355; cursor: pointer; text-decoration: underline; display: none; }
+    .tour-card { background: #fff; border: 1px solid #d0c4b0; border-radius: 10px; overflow: hidden; transition: box-shadow 0.2s; }
+    .tour-card:hover { box-shadow: 0 2px 10px rgba(139,115,85,0.15); }
+    .tour-img { height: 110px; position: relative; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #fff; font-weight: 500; }
+    .sbadge { position: absolute; top: 6px; right: 6px; font-size: 11px; padding: 2px 10px; border-radius: 4px; font-weight: 500; }
+    .bc { background: #27ae60; color: #fff; } .bfw { background: #e67e22; color: #fff; }
+    .bfull { background: #c0392b; color: #fff; } .br { background: #2980b9; color: #fff; }
+    .tour-body { padding: 12px; }
+    .tour-tags { display: flex; gap: 4px; margin-bottom: 6px; flex-wrap: wrap; }
+    .ttag { font-size: 10px; padding: 2px 7px; border-radius: 3px; border: 1px solid; }
+    .th  { color: #7c5c2e; border-color: #c5a87a; background: #fdf5e8; }
+    .te  { color: #4a7c4a; border-color: #7ab87a; background: #e8f5e8; }
+    .tev { color: #6b4a7c; border-color: #b87ab8; background: #f5e8f5; }
+    .tour-title { font-size: 13px; font-weight: 500; color: #3c2e1e; margin-bottom: 5px; line-height: 1.45; }
+    .tour-date  { font-size: 12px; color: #888; margin-bottom: 3px; }
+    .tour-price { font-size: 13px; color: #5c4a32; font-weight: 500; margin-bottom: 8px; }
+    .btn-detail { display: block; text-align: center; background: #8b7355; color: #fff; border-radius: 5px; padding: 7px; font-size: 12px; cursor: pointer; font-weight: 500; transition: background 0.2s; }
+    .btn-detail:hover { background: #7a6448; }
+    .news-post { background: #fff; border: 1px solid #e0d8cc; border-radius: 8px; padding: 12px; margin-bottom: 8px; }
+    .news-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .nav-avatar { width: 30px; height: 30px; border-radius: 50%; background: #8b7355; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 500; flex-shrink: 0; }
+    .news-author { font-size: 12px; font-weight: 500; color: #5c4a32; }
+    .news-dt { font-size: 11px; color: #999; }
+    .news-text { font-size: 12px; color: #3c2e1e; line-height: 1.6; }
+    .news-tag { color: #8b7355; font-size: 11px; margin-top: 4px; }
+    .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-bottom: 20px; }
+    .pt { border-radius: 6px; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #fff; font-weight: 500; cursor: pointer; }
+    .p1{ background:#6b8e6b; } .p2{ background:#c5a87a; } .p3{ background:#7c9cc5; }
+    .p4{ background:#c57a9c; } .p5{ background:#7cc57a; }
+    .p-upload { background: #f5f0e8; border: 2px dashed #c5b8a8; border-radius: 6px; aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; gap: 4px; }
+    .p-upload:hover { background: #ede5d8; }
+    .p-upload i { font-size: 22px; color: #8b7355; }
+    .p-upload span { font-size: 11px; color: #8b7355; }
+    .sidebar { padding: 16px; border-left: 1px solid #e0d8cc; background: #faf8f5; }
+    .sb-block { background: #fff; border: 1px solid #e0d8cc; border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+    .sb-title { font-size: 13px; font-weight: 500; color: #5c4a32; border-bottom: 1px solid #e0d8cc; padding-bottom: 6px; margin-bottom: 10px; }
+    .status-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; background: #faf8f5; border-radius: 4px; margin-bottom: 5px; border-left: 3px solid #8b7355; }
+    .status-item.full-s { border-left-color: #c0392b; }
+    .status-item.cancel-s { border-left-color: #95a5a6; }
+    .sname { color: #3c2e1e; font-weight: 500; flex: 1; margin-right: 6px; font-size: 11px; line-height: 1.3; }
+    .stag { font-size: 10px; padding: 2px 7px; border-radius: 3px; font-weight: 500; white-space: nowrap; }
+    .sns-btn { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid #e0d8cc; color: #3c2e1e; background: #fff; margin-bottom: 6px; width: 100%; transition: opacity 0.2s; }
+    .sns-btn:hover { opacity: 0.85; }
+    .sns-line { background: #06c755; color: #fff; border-color: #06c755; }
+    .sns-x { background: #000; color: #fff; border-color: #000; }
+    .sns-insta { background: #e1306c; color: #fff; border-color: #e1306c; }
+    .sns-youtube { background: #ff0000; color: #fff; border-color: #ff0000; }
+    .past-item { font-size: 13px; color: #8b7355; cursor: pointer; padding: 6px 0; border-bottom: 1px solid #f0e8d8; }
+    .past-item:last-child { border-bottom: none; }
+    .login-btn { background: #8b7355; color: #fff; text-align: center; padding: 8px; border-radius: 6px; font-size: 12px; cursor: pointer; margin-top: 8px; font-weight: 500; }
+    .login-btn:hover { background: #7a6448; }
+    .updated-note { font-size: 11px; color: #aaa; text-align: right; padding: 4px 18px; background: #fff; }
+    @media (max-width: 900px) {
+      .page-wrap { grid-template-columns: 1fr; }
+      .blog-nav { display: none; }
+      .sidebar { border-left: none; border-top: 1px solid #e0d8cc; }
+      .tours-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .tours-grid { grid-template-columns: 1fr; }
+      .nav a span { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+
+
+<div class="hero" id="hero-section">
+  <div id="hero-img-wrap" style="display:none;position:absolute;inset:0;overflow:hidden;">
+    <img id="hero-img" src="" alt="ヒーロー画像" style="width:100%;height:100%;object-fit:cover;opacity:0.45;">
+  </div>
+  <div style="position:relative;z-index:1;">
+    <h1>MKトラベル手帳</h1>
+    <p>ＭＫドライバーが案内する、ここだけの京都体験</p>
+    <div style="margin-top:10px;">
+      <label style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.5);color:#fff;padding:5px 14px;border-radius:20px;font-size:11px;cursor:pointer;">
+        📷 ヒーロー画像を設定
+        <input type="file" accept="image/*" style="display:none;" onchange="setHeroImage(this)">
+      </label>
+      <span id="hero-clear-btn" onclick="clearHeroImage()" style="display:none;margin-left:8px;color:rgba(255,255,255,0.7);font-size:11px;cursor:pointer;text-decoration:underline;">削除</span>
+    </div>
+  </div>
+</div>
+
+<p class="updated-note">最終更新: 2026年06月05日 05:07</p>
+
+<div class="page-wrap">
+
+  <!-- 左：ブログナビ -->
+  <aside class="blog-nav">
+    <div class="blog-nav-title"><i class="ti ti-notebook"></i>ツアー日記</div>
+    <div class="bnav-category">
+      <div class="bnav-cat-label">造成日記 <i class="ti ti-chevron-down"></i></div>
+      <div class="bnav-sub">
+        <a href="#"><i class="ti ti-chevron-right"></i>すべて</a>
+        <a href="#" class="active" style="gap:6px"><span style="display:flex;align-items:center;gap:4px"><i class="ti ti-chevron-right"></i>New！</span><span class="new-badge">3</span></a>
+        <a href="#"><i class="ti ti-chevron-right"></i>企画のたまご</a>
+        <a href="#"><i class="ti ti-chevron-right"></i>レポート</a>
+        <a href="#"><i class="ti ti-chevron-right"></i>完成！</a>
+      </div>
+    </div>
+    <div class="bnav-category">
+      <div class="bnav-cat-label">季節・テーマ <i class="ti ti-chevron-down"></i></div>
+      <div class="bnav-sub">
+        <a href="#"><i class="ti ti-chevron-right"></i>春の京都</a>
+        <a href="#"><i class="ti ti-chevron-right"></i>夏祭り</a>
+        <a href="#"><i class="ti ti-chevron-right"></i>紅葉の秋</a>
+        <a href="#"><i class="ti ti-chevron-right"></i>冬の情緒</a>
+      </div>
+    </div>
+    <div class="bnav-category">
+      <div class="bnav-cat-label">目的別 <i class="ti ti-chevron-down"></i></div>
+      <div class="bnav-sub">
+        <a href="#"><i class="ti ti-chevron-right"></i>イベント・お祭り</a>
+        <a href="#"><i class="ti ti-chevron-right"></i>体験・名所巡り</a>
+        <a href="#"><i class="ti ti-chevron-right"></i>歴史・社寺巡り</a>
+      </div>
+    </div>
+    <div class="bnav-category" style="border-bottom:none">
+      <div class="bnav-cat-label">過去の記録 <i class="ti ti-chevron-down"></i></div>
+      <div class="bnav-sub">
+        <a href="#"><i class="ti ti-chevron-right"></i>2026年</a>
+        <a href="#"><i class="ti ti-chevron-right"></i>2025年</a>
+        <a href="#"><i class="ti ti-chevron-right"></i>2024年</a>
+      </div>
+    </div>
+    <div class="blog-new-btn"><i class="ti ti-edit"></i> 新規投稿</div>
+  </aside>
+
+  <!-- 中央：メインコンテンツ -->
+  <main class="content">
+    <p class="breadcrumb">ホーム &gt; <span>最新情報・募集中ツアー</span></p>
+
+    <!-- カレンダー -->
+    <div class="calendar-wrap">
+      <div class="cal-header">
+        <button onclick="calMove(-1)">&lt;</button>
+        <h3>
+          <i class="ti ti-calendar" style="font-size:15px;vertical-align:-2px;margin-right:5px;"></i>
+          <span id="cal-month-label" style="font-size:15px;">読み込み中...</span>
+        </h3>
+        <button onclick="calMove(1)">&gt;</button>
+      </div>
+      <div id="cal-grid-area" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;"></div>
+      <div class="cal-legend">
+        <div class="cl-item"><div class="cl-dot" style="background:#f0e8d8;border:1px solid #c5b8a8;"></div>ツアーあり</div>
+        <div class="cl-item"><div class="cl-dot" style="background:#8b7355;"></div>催行確定</div>
+        <div class="cl-item"><div class="cl-dot" style="background:#c0392b;"></div>満席</div>
+        <div class="cl-item"><div class="cl-dot" style="outline:2px solid #8b7355;outline-offset:-1px;"></div>本日</div>
+      </div>
+      <p style="font-size:11px;color:#999;margin-top:8px;">※色付き日付をクリックするとツアー詳細ページを開きます</p>
+    </div>
+
+    <!-- 募集中ツアー -->
+    <div class="section-header">
+      <div class="section-title">募集中のツアー</div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span class="reset-link" id="tour-reset" onclick="tourReset()">すべて表示 ×</span>
+        <a href="https://travel.mk-group.co.jp/tourkyoto/" target="_blank" class="see-all">すべて見る →</a>
+      </div>
+    </div>
+    <div class="filter-note" id="tour-filter-note"></div>
+    <div class="filter-tabs">
+      <div class="ftab active" onclick="tourFilter('all', this)">すべて</div>
+      <div class="ftab" onclick="tourFilter('event', this)">イベント・お祭り</div>
+      <div class="ftab" onclick="tourFilter('exp', this)">体験・名所巡り</div>
+      <div class="ftab" onclick="tourFilter('history', this)">歴史・社寺巡り</div>
+      <div class="ftab" onclick="tourFilter('flower', this)">季節の花</div>
+      <div class="ftab" onclick="tourFilter('summer', this)">夏のツアー</div>
+      <div class="ftab" onclick="tourFilter('autumn', this)">秋のツアー</div>
+    </div>
+    <div class="tour-count" id="tour-count"></div>
+    <div class="tours-grid" id="tours-grid">
+      <div class="tour-card" data-tags="flower" data-dates="2026-6-13,2026-6-14,2026-6-15,2026-6-16,2026-6-17,2026-6-18,2026-6-19,2026-6-20,2026-6-21,2026-6-22,2026-6-23,2026-6-24,2026-6-25,2026-6-26,2026-6-27,2026-6-28,2026-6-29,2026-6-30,2026-6-13">
+        <div class="tour-img" style="background:#6b8e6b;position:relative;overflow:hidden;">
+          <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/04/top.png" alt="京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;" onerror="this.style.display='none'">
+          <div class="sbadge bc" style="z-index:1;">催行確定日あり</div>
+        </div>
+        <div class="tour-body">
+          <div class="tour-tags"><span class="ttag th">季節の花</span></div>
+          <div class="tour-title">京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～</div>
+          <div class="tour-date">6/13(土)・6/14(日)・6/15(月) 他</div>
+          <div class="tour-price">大人1名 9,800円～10,800円（税込）</div>
+          <a href="https://travel.mk-group.co.jp/tourkyoto/2026ajisai-harf/" target="_blank" class="btn-detail">詳細をみる</a>
+        </div>
+      </div>
+      <div class="tour-card" data-tags="flower" data-dates="2026-6-21,2026-6-24,2026-6-27">
+        <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
+          <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/04/top-ayabe.jpg" alt="福知山・綾部で出会う、あじさい名所＆穴場めぐり" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;" onerror="this.style.display='none'">
+          <div class="sbadge bc" style="z-index:1;">催行確定日あり</div>
+        </div>
+        <div class="tour-body">
+          <div class="tour-tags"><span class="ttag th">季節の花</span></div>
+          <div class="tour-title">福知山・綾部で出会う、あじさい名所＆穴場めぐり</div>
+          <div class="tour-date">6/21(日)・6/24(水)・6/27(土)</div>
+          <div class="tour-price">大人1名 15,800円（税込）</div>
+          <a href="https://travel.mk-group.co.jp/tourkyoto/ayabe-ajisai2026/" target="_blank" class="btn-detail">詳細をみる</a>
+        </div>
+      </div>
+      <div class="tour-card" data-tags="event summer" data-dates="2026-7-19">
+        <div class="tour-img" style="background:#4a7c6b;position:relative;overflow:hidden;">
+          <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/rousoku.png" alt="正寿院 ろうそくまつり送迎プラン【2026年】" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;" onerror="this.style.display='none'">
+          <div class="sbadge br" style="z-index:1;">募集中</div>
+        </div>
+        <div class="tour-body">
+          <div class="tour-tags"><span class="ttag tev">イベント・お祭り</span></div>
+          <div class="tour-title">正寿院 ろうそくまつり送迎プラン【2026年】</div>
+          <div class="tour-date">7/19(日)</div>
+          <div class="tour-price">大人1名 6,500円～7,500円（税込）</div>
+          <a href="https://travel.mk-group.co.jp/tourkyoto/rousokumatsuri2026/" target="_blank" class="btn-detail">詳細をみる</a>
+        </div>
+      </div>
+      <div class="tour-card" data-tags="event autumn" data-dates="2026-10-22">
+        <div class="tour-img" style="background:#3a2a1a;position:relative;overflow:hidden;">
+          <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/宿泊トップ.png" alt="【限定宿泊プラン】 くらま温泉で迎える 鞍馬の火祭 特別な一夜" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;" onerror="this.style.display='none'">
+          <div class="sbadge br" style="z-index:1;">募集中</div>
+        </div>
+        <div class="tour-body">
+          <div class="tour-tags"><span class="ttag tev">イベント・お祭り</span></div>
+          <div class="tour-title">【限定宿泊プラン】 くらま温泉で迎える 鞍馬の火祭 特別な一夜</div>
+          <div class="tour-date">10/22(木)</div>
+          <div class="tour-price">大人1名 67,000円～135,000円（税込）</div>
+          <a href="https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/" target="_blank" class="btn-detail">詳細をみる</a>
+        </div>
+      </div>
+      <div class="tour-card" data-tags="event summer" data-dates="2026-8-16">
+        <div class="tour-img" style="background:#6b8e6b;position:relative;overflow:hidden;">
+          <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/okuribi.png" alt="【限定40名】京の夜空を彩る「五山の送り火」特別鑑賞ツアー" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;" onerror="this.style.display='none'">
+          <div class="sbadge bfull" style="z-index:1;">満席</div>
+        </div>
+        <div class="tour-body">
+          <div class="tour-tags"><span class="ttag tev">イベント・お祭り</span></div>
+          <div class="tour-title">【限定40名】京の夜空を彩る「五山の送り火」特別鑑賞ツアー</div>
+          <div class="tour-date">8/16(日)</div>
+          <div class="tour-price">大人1名 23,800円（税込）</div>
+          <a href="https://travel.mk-group.co.jp/tourkyoto/okuribi2026/" target="_blank" class="btn-detail">詳細をみる</a>
+        </div>
+      </div>
+      <div class="tour-card" data-tags="exp flower" data-dates="2026-6-12,2026-6-13,2026-6-21">
+        <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
+          <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/top-5.png" alt="こころうつし ―まだ言葉にならない想いに、そっと触れる―" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;" onerror="this.style.display='none'">
+          <div class="sbadge bfull" style="z-index:1;">満席</div>
+        </div>
+        <div class="tour-body">
+          <div class="tour-tags"><span class="ttag th">季節の花</span><span class="ttag te">体験・名所巡り</span></div>
+          <div class="tour-title">こころうつし ―まだ言葉にならない想いに、そっと触れる―</div>
+          <div class="tour-date">6/12(金)・6/13(土)・6/21(日)</div>
+          <div class="tour-price">大人1名 20,000円～50,000円（税込）</div>
+          <a href="https://travel.mk-group.co.jp/tourkyoto/yokokuji-limited/" target="_blank" class="btn-detail">詳細をみる</a>
+        </div>
+      </div>
+      <div class="tour-card" data-tags="other" data-dates="2026-6-20">
+        <div class="tour-img" style="background:#4a7c6b;position:relative;overflow:hidden;">
+          <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/top-3.png" alt="SNSで映える！ 【閉門後貸切】紫陽花の名刹・柳谷観音 楊谷寺スマホ撮影講座ツアー" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;" onerror="this.style.display='none'">
+          <div class="sbadge br" style="z-index:1;">募集中</div>
+        </div>
+        <div class="tour-body">
+          <div class="tour-tags"><span class="ttag te">体験・名所巡り</span></div>
+          <div class="tour-title">SNSで映える！ 【閉門後貸切】紫陽花の名刹・柳谷観音 楊谷寺スマホ撮影講座ツアー</div>
+          <div class="tour-date">6/20(土)</div>
+          <div class="tour-price">大人1名 14,800円～15,800円（税込）</div>
+          <a href="https://travel.mk-group.co.jp/tourkyoto/photo_yokokuji/" target="_blank" class="btn-detail">詳細をみる</a>
+        </div>
+      </div>
+      <div class="tour-card" data-tags="exp summer" data-dates="2026-6-8">
+        <div class="tour-img" style="background:#3a2a1a;position:relative;overflow:hidden;">
+          <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/04/momidiya-1.png" alt="京都・高雄「もみぢ家」で川床ランチと金閣寺＆高雄エリア フリー観光" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;" onerror="this.style.display='none'">
+          <div class="sbadge br" style="z-index:1;">募集中</div>
+        </div>
+        <div class="tour-body">
+          <div class="tour-tags"><span class="ttag te">体験・名所巡り</span></div>
+          <div class="tour-title">京都・高雄「もみぢ家」で川床ランチと金閣寺＆高雄エリア フリー観光</div>
+          <div class="tour-date">6/8(月)～9/30(水)※下記日程は川床満席のため除外日となります。＜7月15日・16日・17日・23日・24日＞</div>
+          <div class="tour-price">大人1名 16,000円～22,000円（税込）</div>
+          <a href="https://travel.mk-group.co.jp/tourkyoto/momijiya-takao2026/" target="_blank" class="btn-detail">詳細をみる</a>
+        </div>
+      </div>
+      <div class="tour-card" data-tags="event autumn" data-dates="2026-10-22">
+        <div class="tour-img" style="background:#6b8e6b;position:relative;overflow:hidden;">
+          <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/1day.png" alt="昼の鞍馬散策と夜の火祭へ  ～くらま温泉で過ごす特別な一日～" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;" onerror="this.style.display='none'">
+          <div class="sbadge br" style="z-index:1;">募集中</div>
+        </div>
+        <div class="tour-body">
+          <div class="tour-tags"><span class="ttag tev">イベント・お祭り</span></div>
+          <div class="tour-title">昼の鞍馬散策と夜の火祭へ  ～くらま温泉で過ごす特別な一日～</div>
+          <div class="tour-date">10/22(木)</div>
+          <div class="tour-price">大人1名 26,800円（税込）</div>
+          <a href="https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/" target="_blank" class="btn-detail">詳細をみる</a>
+        </div>
+      </div>
+      <div class="tour-card" data-tags="event" data-dates="2026-6-1,2026-6-19,2026-8-14,2026-6-13,2026-6-20,2026-7-5,2026-7-11,2026-8-23,2026-9-19">
+        <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
+          <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2024/04/2021shojuin_furin_bn.jpg" alt="正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;" onerror="this.style.display='none'">
+          <div class="sbadge bc" style="z-index:1;">催行確定日あり</div>
+        </div>
+        <div class="tour-body">
+          <div class="tour-tags"><span class="ttag tev">イベント・お祭り</span></div>
+          <div class="tour-title">正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】</div>
+          <div class="tour-date">6/1～9/30まで（月・木・金・土・日・祝）※8/17は終日拝観中止となる為、ツアーも除外日となります。</div>
+          <div class="tour-price">大人1名 6,800円～7,800円（税込）</div>
+          <a href="https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/" target="_blank" class="btn-detail">詳細をみる</a>
+        </div>
+      </div>
+      <div class="tour-card" data-tags="history event summer" data-dates="2026-8-16">
+        <div class="tour-img" style="background:#4a7c6b;position:relative;overflow:hidden;">
+          <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/okuribi2.png" alt="京都の夏を送る夜～御所から望む右大文字と湯葉懐石～" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;" onerror="this.style.display='none'">
+          <div class="sbadge br" style="z-index:1;">募集中</div>
+        </div>
+        <div class="tour-body">
+          <div class="tour-tags"><span class="ttag th">歴史・社寺巡り</span><span class="ttag tev">イベント・お祭り</span></div>
+          <div class="tour-title">京都の夏を送る夜～御所から望む右大文字と湯葉懐石～</div>
+          <div class="tour-date">8/16(日)</div>
+          <div class="tour-price">大人1名 13,000円（税込）</div>
+          <a href="https://travel.mk-group.co.jp/tourkyoto/migidaimonji2026/" target="_blank" class="btn-detail">詳細をみる</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ツアー造成日記（X埋め込み・ハッシュタグ切り替え） -->
+    <div class="section-header" style="margin-top:16px;">
+      <div class="section-title">
+        <i class="ti ti-brand-x" style="font-size:14px;vertical-align:-2px;margin-right:5px;"></i>
+        ツアー造成日記 / 担当者からのお知らせ
+      </div>
+      <a href="https://x.com/mk_ryokou" target="_blank" class="see-all">Xで見る →</a>
+    </div>
+    <div class="filter-tabs" id="x-tabs">
+      <div class="ftab active" onclick="switchXTab(this,'MKツアー')">すべて</div>
+      <div class="ftab" onclick="switchXTab(this,'祇園祭2026')">祇園祭</div>
+      <div class="ftab" onclick="switchXTab(this,'あじさい2026')">あじさい</div>
+      <div class="ftab" onclick="switchXTab(this,'鞍馬火祭2026')">鞍馬の火祭</div>
+      <div class="ftab" onclick="switchXTab(this,'ろうそくまつり2026')">ろうそくまつり</div>
+      <div class="ftab" onclick="switchXTab(this,'五山送り火2026')">五山の送り火</div>
+    </div>
+    <div style="background:#fff;border:1px solid #e0d8cc;border-radius:10px;overflow:hidden;margin-bottom:20px;">
+      <div style="background:#8b7355;color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;">
+          <i class="ti ti-brand-x" aria-hidden="true"></i>
+          <span id="x-title">@mk_ryokou の最新投稿</span>
+        </div>
+        <span id="x-tag" style="font-size:11px;background:rgba(255,255,255,0.2);padding:2px 10px;border-radius:10px;">#MKツアー</span>
+      </div>
+      <div id="x-embed-wrap">
+        <a class="twitter-timeline"
+           id="x-timeline"
+           href="https://twitter.com/search?q=%23MK%E3%83%84%E3%82%A2%E3%83%BC%20from%3Amk_ryokou&f=live"
+           data-height="480"
+           data-chrome="noheader nofooter noborders"
+           data-lang="ja">
+          読み込み中...
+        </a>
+      </div>
+      <p style="font-size:11px;color:#999;text-align:center;padding:8px;border-top:1px solid #f0e8d8;">
+        ※ タブをクリックするとツアーごとの投稿に切り替わります
+      </p>
+    </div>
+    <div style="background:#fdf5e8;border:1px solid #e0c88a;border-radius:8px;padding:12px 16px;margin-bottom:20px;">
+      <div style="font-size:12px;font-weight:500;color:#5c4a32;margin-bottom:8px;">
+        <i class="ti ti-info-circle" aria-hidden="true" style="font-size:14px;vertical-align:-2px;margin-right:4px;"></i>
+        Xで投稿するときのタグルール
+      </div>
+      <div style="font-size:12px;color:#7c5c2e;line-height:2;">
+        <div><i class="ti ti-hash" aria-hidden="true" style="font-size:12px;margin-right:4px;"></i><strong>#MKツアー</strong>　すべての投稿に必ずつける</div>
+        <div><i class="ti ti-hash" aria-hidden="true" style="font-size:12px;margin-right:4px;"></i><strong>#祇園祭2026</strong> / <strong>#あじさい2026</strong> / <strong>#鞍馬火祭2026</strong> / <strong>#ろうそくまつり2026</strong> / <strong>#五山送り火2026</strong>　該当ツアーの投稿につける</div>
+      </div>
+    </div>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script>
+    var xTabs = {
+      'MKツアー':           { title: '@mk_ryokou の最新投稿',     tag: '#MKツアー',           url: 'https://twitter.com/search?q=%23MK%E3%83%84%E3%82%A2%E3%83%BC%20from%3Amk_ryokou&f=live' },
+      '祇園祭2026':         { title: '祇園祭ツアーの投稿',         tag: '#祇園祭2026',         url: 'https://twitter.com/search?q=%23%E7%A5%87%E5%9C%92%E7%A5%AD2026%20from%3Amk_ryokou&f=live' },
+      'あじさい2026':       { title: 'あじさいツアーの投稿',       tag: '#あじさい2026',       url: 'https://twitter.com/search?q=%23%E3%81%82%E3%81%98%E3%81%95%E3%81%842026%20from%3Amk_ryokou&f=live' },
+      '鞍馬火祭2026':       { title: '鞍馬の火祭ツアーの投稿',     tag: '#鞍馬火祭2026',       url: 'https://twitter.com/search?q=%23%E9%9E%8D%E9%A6%AC%E7%81%AB%E7%A5%AD2026%20from%3Amk_ryokou&f=live' },
+      'ろうそくまつり2026': { title: 'ろうそくまつりの投稿',       tag: '#ろうそくまつり2026', url: 'https://twitter.com/search?q=%23%E3%82%8D%E3%81%86%E3%81%9D%E3%81%8F%E3%81%BE%E3%81%A4%E3%82%8A2026%20from%3Amk_ryokou&f=live' },
+      '五山送り火2026':     { title: '五山の送り火ツアーの投稿',   tag: '#五山送り火2026',     url: 'https://twitter.com/search?q=%23%E4%BA%94%E5%B1%B1%E9%80%81%E3%82%8A%E7%81%AC2026%20from%3Amk_ryokou&f=live' },
+    };
+    function switchXTab(el, key) {
+      document.querySelectorAll('#x-tabs .ftab').forEach(function(t){ t.classList.remove('active'); });
+      el.classList.add('active');
+      var info = xTabs[key];
+      document.getElementById('x-title').textContent = info.title;
+      document.getElementById('x-tag').textContent   = info.tag;
+      // タイムラインを再構築
+      var wrap = document.getElementById('x-embed-wrap');
+      wrap.innerHTML = '<a class="twitter-timeline" href="' + info.url + '" data-height="480" data-chrome="noheader nofooter noborders" data-lang="ja">読み込み中...</a>';
+      if (window.twttr && window.twttr.widgets) {
+        window.twttr.widgets.load(wrap);
+      }
+    }
+    </script>
+
+    <!-- 当日の様子 -->
+    <div class="section-header" style="margin-top:16px">
+      <div class="section-title"><i class="ti ti-camera" style="font-size:14px;vertical-align:-2px;margin-right:5px;"></i>当日の様子</div>
+      <a href="#" class="see-all">すべての写真 →</a>
+    </div>
+    <div class="photo-grid">
+      <div class="pt p1">祇園祭</div>
+      <div class="pt p2">嵐山ツアー</div>
+      <div class="pt p3">ナイトハイク</div>
+      <div class="pt p4">花手水</div>
+      <div class="pt p5">新緑ハイク</div>
+      <div class="p-upload"><i class="ti ti-cloud-upload"></i><span>写真を投稿</span></div>
+    </div>
+  </main>
+
+  <!-- 右サイドバー -->
+  <aside class="sidebar">
+    <div class="sb-block">
+      <div class="sb-title"><i class="ti ti-list-check" style="font-size:13px;vertical-align:-2px;margin-right:4px;"></i>直近の催行状況</div>
+      <div class="status-item"><span class="sname">京都あじさい半日めぐり … 6/20</span><span class="stag" style="background:#27ae60;color:#fff">催行確定</span></div>
+      <div class="status-item"><span class="sname">福知山・綾部で出会う、あ… 6/21</span><span class="stag" style="background:#27ae60;color:#fff">催行確定</span></div>
+      <div class="status-item"><span class="sname">正寿院 ろうそくまつり送…</span><span class="stag" style="background:#2980b9;color:#fff">募集中</span></div>
+      <div class="status-item"><span class="sname">【限定宿泊プラン】 くら…</span><span class="stag" style="background:#2980b9;color:#fff">募集中</span></div>
+      <div class="status-item full-s"><span class="sname">【限定40名】京の夜空を… 8/16</span><span class="stag" style="background:#c0392b;color:#fff">満席</span></div>
+    </div>
+    <div class="sb-block">
+      <div class="sb-title">SNS</div>
+      <a href="https://page.line.me/620mozlm?openQrModal=true" target="_blank" class="sns-btn sns-line"><i class="ti ti-message-circle" style="font-size:15px"></i>LINE 友だち追加</a>
+      <a href="https://x.com/mk_ryokou" target="_blank" class="sns-btn sns-x"><i class="ti ti-brand-x" style="font-size:15px"></i>X（ツアー担当）</a>
+      <a href="https://www.instagram.com/mktravel.jp/" target="_blank" class="sns-btn sns-insta"><i class="ti ti-brand-instagram" style="font-size:15px"></i>Instagram</a>
+      <a href="https://www.youtube.com/c/MKofficial_ch" target="_blank" class="sns-btn sns-youtube"><i class="ti ti-brand-youtube" style="font-size:15px"></i>YouTube</a>
+    </div>
+    <div class="sb-block">
+      <div class="sb-title">過去のツアー</div>
+      <div class="past-item">📁 2026年</div>
+      <div class="past-item">📁 2025年</div>
+      <div class="past-item">📁 2024年</div>
+    </div>
+    <div class="sb-block" style="background:#fdf5e8;border-color:#e0c88a">
+      <div style="font-size:12px;font-weight:500;color:#5c4a32;margin-bottom:5px">マイページ</div>
+      <div style="font-size:12px;color:#7c5c2e;margin-bottom:8px">予約確認・お気に入り管理</div>
+      <div class="login-btn">ログイン</div>
+    </div>
+  </aside>
+
+</div><!-- /.page-wrap -->
+
+<script>
+  // ===== ⑤ ヒーロー画像 =====
+  function setHeroImage(input) {
+    if (!input.files || !input.files[0]) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('hero-img').src = e.target.result;
+      document.getElementById('hero-img-wrap').style.display = 'block';
+      document.getElementById('hero-clear-btn').style.display = 'inline';
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+  function clearHeroImage() {
+    document.getElementById('hero-img').src = '';
+    document.getElementById('hero-img-wrap').style.display = 'none';
+    document.getElementById('hero-clear-btn').style.display = 'none';
+  }
+
+  function tourFilter(tag, el) {
+    var cards = document.querySelectorAll('.tour-card');
+    var tabs  = document.querySelectorAll('.ftab');
+    var count = 0;
+    tabs.forEach(function(t) { t.classList.remove('active'); });
+    if (el) el.classList.add('active');
+    cards.forEach(function(c) {
+      var tags = c.getAttribute('data-tags') || '';
+      if (tag === 'all' || tags.indexOf(tag) !== -1) {
+        c.classList.remove('hidden'); count++;
+      } else {
+        c.classList.add('hidden');
+      }
+    });
+    var note = document.getElementById('tour-count');
+    if (note) note.textContent = count + '件のツアーを表示中';
+  }
+
+  // 初期カウント表示
+  window.addEventListener('load', function() {
+    var cards = document.querySelectorAll('.tour-card');
+    var note  = document.getElementById('tour-count');
+    if (note) note.textContent = cards.length + '件のツアーを表示中';
+  });
+
+  function tourFilterByDate(dateKey) {
+    var cards = document.querySelectorAll('#tours-grid .tour-card');
+    var count = 0;
+    cards.forEach(function(card) {
+      var dates = (card.getAttribute('data-dates') || '').split(',');
+      if (dates.indexOf(dateKey) !== -1) { card.classList.remove('hidden'); count++; }
+      else { card.classList.add('hidden'); }
+    });
+    document.querySelectorAll('.cd').forEach(function(c) { c.classList.remove('selected'); });
+    document.querySelectorAll('.cd').forEach(function(c) {
+      var parts = dateKey.split('-');
+      var d = parts[2];
+      if (c.textContent == String(parseInt(d)) &&
+          (c.classList.contains('has-tour') || c.classList.contains('confirmed') ||
+           c.classList.contains('full') || c.classList.contains('few'))) {
+        c.classList.add('selected');
+      }
+    });
+    var note = document.getElementById('tour-filter-note');
+    var mParts = dateKey.split('-');
+    var label = mParts.length === 3 ? mParts[1] + '/' + mParts[2] : dateKey;
+    if (note) { note.textContent = label + ' のツアーを表示中（' + count + '件）'; note.classList.add('show'); }
+    var reset = document.getElementById('tour-reset');
+    if (reset) reset.style.display = 'inline';
+    var noResult = document.getElementById('tour-no-result');
+    if (noResult) noResult.style.display = count === 0 ? 'block' : 'none';
+    var tabNote = document.getElementById('tour-count');
+    if (tabNote) tabNote.textContent = count + '件のツアーを表示中';
+  }
+
+  function tourReset() {
+    document.querySelectorAll('#tours-grid .tour-card').forEach(function(c) { c.classList.remove('hidden'); });
+    document.querySelectorAll('.cd').forEach(function(c) { c.classList.remove('selected'); });
+    var note = document.getElementById('tour-filter-note');
+    if (note) note.classList.remove('show');
+    var reset = document.getElementById('tour-reset');
+    if (reset) reset.style.display = 'none';
+    var noResult = document.getElementById('tour-no-result');
+    if (noResult) noResult.style.display = 'none';
+    var cards = document.querySelectorAll('#tours-grid .tour-card');
+    var tabNote = document.getElementById('tour-count');
+    if (tabNote) tabNote.textContent = cards.length + '件のツアーを表示中';
+  }
+
+  var TOUR = {};
+      var _u_ajisai_harf = 'https://travel.mk-group.co.jp/tourkyoto/2026ajisai-harf/';
+      TOUR['2026-6-20'] = {st:'confirmed', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～ 催行確定', em:'🌸'};
+      TOUR['2026-6-21'] = {st:'confirmed', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～ 催行確定', em:'🌸'};
+      TOUR['2026-6-29'] = {st:'confirmed', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～ 催行確定', em:'🌸'};
+      TOUR['2026-6-13'] = {st:'confirmed', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～ 催行確定', em:'🌸'};
+      TOUR['2026-6-28'] = {st:'confirmed', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～ 催行確定', em:'🌸'};
+      TOUR['2026-6-14'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸'};
+      TOUR['2026-6-15'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸'};
+      TOUR['2026-6-16'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸'};
+      TOUR['2026-6-17'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸'};
+      TOUR['2026-6-18'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸'};
+      TOUR['2026-6-19'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸'};
+      TOUR['2026-6-22'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸'};
+      TOUR['2026-6-23'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸'};
+      TOUR['2026-6-24'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸'};
+      TOUR['2026-6-25'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸'};
+      TOUR['2026-6-26'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸'};
+      TOUR['2026-6-27'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸'};
+      TOUR['2026-6-30'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸'};
+      var _u_ayabe_ajisai = 'https://travel.mk-group.co.jp/tourkyoto/ayabe-ajisai2026/';
+      TOUR['2026-6-21'] = {st:'confirmed', ti:'福知山・綾部で出会う、あじさい名所＆穴場めぐり', ur:_u_ayabe_ajisai, nt:'福知山・綾部で出会う、あじさい名所＆穴場めぐり 催行確定', em:'🌸'};
+      TOUR['2026-6-24'] = {st:'tour', ti:'福知山・綾部で出会う、あじさい名所＆穴場めぐり', ur:_u_ayabe_ajisai, nt:'福知山・綾部で出会う、あじさい名所＆穴場めぐり', em:'🌸'};
+      TOUR['2026-6-27'] = {st:'tour', ti:'福知山・綾部で出会う、あじさい名所＆穴場めぐり', ur:_u_ayabe_ajisai, nt:'福知山・綾部で出会う、あじさい名所＆穴場めぐり', em:'🌸'};
+      var _u_rousoku = 'https://travel.mk-group.co.jp/tourkyoto/rousokumatsuri2026/';
+      TOUR['2026-7-19'] = {st:'tour', ti:'正寿院 ろうそくまつり送迎プラン【2026年】', ur:_u_rousoku, nt:'正寿院 ろうそくまつり送迎プラン【2026年】', em:'🕯'};
+      var _u_himatsuri_stay = 'https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/';
+      TOUR['2026-10-22'] = {st:'tour', ti:'【限定宿泊プラン】 くらま温泉で迎える 鞍馬の火祭 特別な一夜', ur:_u_himatsuri_stay, nt:'【限定宿泊プラン】 くらま温泉で迎える 鞍馬の火祭 特別な一夜', em:'🔥'};
+      var _u_okuribi = 'https://travel.mk-group.co.jp/tourkyoto/okuribi2026/';
+      TOUR['2026-8-16'] = {st:'full', ti:'【限定40名】京の夜空を彩る「五山の送り火」特別鑑賞ツアー', ur:_u_okuribi, nt:'【限定40名】京の夜空を彩る「五山の送り火」特別鑑賞ツアー 満席', em:'🔥'};
+      var _u_kokoro_utsushi = 'https://travel.mk-group.co.jp/tourkyoto/yokokuji-limited/';
+      TOUR['2026-6-12'] = {st:'full', ti:'こころうつし ―まだ言葉にならない想いに、そっと触れる―', ur:_u_kokoro_utsushi, nt:'こころうつし ―まだ言葉にならない想いに、そっと触れる― 満席', em:'🍃'};
+      TOUR['2026-6-13'] = {st:'tour', ti:'こころうつし ―まだ言葉にならない想いに、そっと触れる―', ur:_u_kokoro_utsushi, nt:'こころうつし ―まだ言葉にならない想いに、そっと触れる―', em:'🍃'};
+      TOUR['2026-6-21'] = {st:'tour', ti:'こころうつし ―まだ言葉にならない想いに、そっと触れる―', ur:_u_kokoro_utsushi, nt:'こころうつし ―まだ言葉にならない想いに、そっと触れる―', em:'🍃'};
+      var _u_satsuei = 'https://travel.mk-group.co.jp/tourkyoto/photo_yokokuji/';
+      TOUR['2026-6-20'] = {st:'tour', ti:'SNSで映える！ 【閉門後貸切】紫陽花の名刹・柳谷観音 楊谷寺スマホ撮影講座ツアー', ur:_u_satsuei, nt:'SNSで映える！ 【閉門後貸切】紫陽花の名刹・柳谷観音 楊谷寺スマホ撮影講座ツアー', em:'🌸'};
+      var _u_momidiya = 'https://travel.mk-group.co.jp/tourkyoto/momijiya-takao2026/';
+      TOUR['2026-6-8'] = {st:'tour', ti:'京都・高雄「もみぢ家」で川床ランチと金閣寺＆高雄エリア フリー観光', ur:_u_momidiya, nt:'京都・高雄「もみぢ家」で川床ランチと金閣寺＆高雄エリア フリー観光', em:'🍽'};
+      var _u_himatsuri_1day = 'https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/';
+      TOUR['2026-10-22'] = {st:'tour', ti:'昼の鞍馬散策と夜の火祭へ  ～くらま温泉で過ごす特別な一日～', ur:_u_himatsuri_1day, nt:'昼の鞍馬散策と夜の火祭へ  ～くらま温泉で過ごす特別な一日～', em:'🔥'};
+      var _u_furin_shojuin2026 = 'https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/';
+      TOUR['2026-6-1'] = {st:'confirmed', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 催行確定', em:'🔔'};
+      TOUR['2026-6-19'] = {st:'confirmed', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 催行確定', em:'🔔'};
+      TOUR['2026-8-14'] = {st:'confirmed', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 催行確定', em:'🔔'};
+      TOUR['2026-6-13'] = {st:'few', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 あと２名', em:'🔔'};
+      TOUR['2026-6-20'] = {st:'few', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 あと２名', em:'🔔'};
+      TOUR['2026-7-5'] = {st:'few', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 あと２名', em:'🔔'};
+      TOUR['2026-7-11'] = {st:'few', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 あと２名', em:'🔔'};
+      TOUR['2026-8-23'] = {st:'few', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 あと２名', em:'🔔'};
+      TOUR['2026-9-19'] = {st:'few', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 あと２名', em:'🔔'};
+      var _u_migidaimonji2026 = 'https://travel.mk-group.co.jp/tourkyoto/migidaimonji2026/';
+      TOUR['2026-8-16'] = {st:'tour', ti:'京都の夏を送る夜～御所から望む右大文字と湯葉懐石～', ur:_u_migidaimonji2026, nt:'京都の夏を送る夜～御所から望む右大文字と湯葉懐石～', em:'🌙'};
+
+  var MN = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+  var DL = ['日','月','火','水','木','金','土'];
+  var DC = ['cdl sun','cdl','cdl','cdl','cdl','cdl','cdl sat'];
+  var CY = new Date().getFullYear();
+  var CM = new Date().getMonth() + 1;
+
+  function drawCal(y, m) {
+    var lbl  = document.getElementById('cal-month-label');
+    var grid = document.getElementById('cal-grid-area');
+    if (!lbl || !grid) { return; }
+    lbl.textContent = y + '年' + MN[m-1] + '　催行カレンダー';
+    grid.innerHTML = '';
+    for (var i = 0; i < 7; i++) {
+      var h = document.createElement('div');
+      h.className = DC[i]; h.textContent = DL[i];
+      grid.appendChild(h);
+    }
+    var fd = new Date(y, m-1, 1).getDay();
+    var ld = new Date(y, m, 0).getDate();
+    var td = new Date();
+    for (var i = 0; i < fd; i++) {
+      var b = document.createElement('div'); b.className = 'cd'; grid.appendChild(b);
+    }
+    for (var d = 1; d <= ld; d++) {
+      var c = document.createElement('div');
+      var k = y + '-' + m + '-' + d;
+      var t = TOUR[k];
+      var isT = (y === td.getFullYear() && m === td.getMonth()+1 && d === td.getDate());
+      var cl = 'cd';
+      if (t) { cl += t.st === 'confirmed' ? ' confirmed' : t.st === 'full' ? ' full' : ' has-tour'; }
+      if (isT) { cl += ' today'; }
+      c.className = cl;
+      if (t) {
+        c.innerHTML = '<span style="display:block;text-align:center;">' + d + '</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:-2px;">' + (t.em || '') + '</span>';
+      } else {
+        c.textContent = d;
+      }
+      if (t) {
+        c.title = t.nt;
+        c.style.cursor = 'pointer';
+        (function(k) { c.onclick = function() { tourFilterByDate(k); }; })(k);
+      }
+      grid.appendChild(c);
+    }
+  }
+
+  function calMove(delta) {
+    CM += delta;
+    if (CM > 12) { CM = 1; CY++; }
+    if (CM < 1)  { CM = 12; CY--; }
+    drawCal(CY, CM);
+  }
+
+  drawCal(CY, CM);
+</script>
+</body>
+</html>
