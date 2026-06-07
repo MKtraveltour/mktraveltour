@@ -240,6 +240,22 @@ def build_tour_cards(tours: dict) -> str:
             if '冬' in t:                        filter_tags.append('winter')
         data_tags = ' '.join(set(filter_tags)) or 'other'
 
+        # レポートバッジ生成（月日だけで照合）
+        report_badge = ""
+        for report_key, report_val in TOUR_REPORTS.items():
+            # report_keyは "2025-10-22" 形式 → 月日だけ取り出す
+            rk_parts = report_key.split("-")
+            if len(rk_parts) == 3:
+                rk_md = f"{int(rk_parts[1])}/{int(rk_parts[2])}"
+                # ツアーのdatesと照合
+                for date_str in dates:
+                    m = __import__('re').search(r'(\d+)/(\d+)', date_str)
+                    if m and f"{int(m.group(1))}/{int(m.group(2))}" == rk_md:
+                        report_badge = f' <a href="{report_val["page"]}" style="font-size:13px;text-decoration:none;vertical-align:middle;" title="当日のレポートを見る">📄</a>'
+                        break
+            if report_badge:
+                break
+
         # data-dates生成（カレンダーキーと同じ形式 "2026-M-D"）
         card_date_keys = []
         for date_str in dates:
@@ -263,7 +279,7 @@ def build_tour_cards(tours: dict) -> str:
         </div>
         <div class="tour-body">
           <div class="tour-tags">{tag_html}</div>
-          <div class="tour-title">{title}</div>
+          <div class="tour-title">{title}{report_badge}</div>
           <div class="tour-date">{date_text}</div>
           <div class="tour-price">大人1名 {price}</div>
           <a href="{url}" target="_blank" class="btn-detail">詳細をみる</a>
@@ -509,13 +525,6 @@ HTML_TEMPLATE = """\
       </div>
     </div>
     <div class="bnav-category" style="border-bottom:none">
-      <div class="bnav-cat-label">過去の記録 <i class="ti ti-chevron-down"></i></div>
-      <div class="bnav-sub">
-        <a href="#"><i class="ti ti-chevron-right"></i>2026年</a>
-        <a href="#"><i class="ti ti-chevron-right"></i>2025年</a>
-        <a href="#"><i class="ti ti-chevron-right"></i>2024年</a>
-      </div>
-    </div>
     <div class="blog-new-btn"><i class="ti ti-edit"></i> 新規投稿</div>
   </aside>
 
@@ -664,6 +673,33 @@ HTML_TEMPLATE = """\
       <div style="font-size:12px;font-weight:500;color:#5c4a32;margin-bottom:5px">マイページ</div>
       <div style="font-size:12px;color:#7c5c2e;margin-bottom:8px">予約確認・お気に入り管理</div>
       <a href="https://www.mk-group.co.jp/mktravel/mypage" target="_blank" class="login-btn">ログイン</a>
+    </div>
+
+    <!-- 会社情報 -->
+    <div class="sb-block" style="margin-top:4px;">
+      <div class="sb-title">MKトラベル</div>
+      <p style="font-size:11px;color:#7c5c2e;line-height:1.8;margin-bottom:10px;">
+        京都発のご旅行はMKタクシーの旅行部門MKトラベルにご相談ください
+      </p>
+      <hr style="border:none;border-top:0.5px solid #e0d8cc;margin-bottom:10px;">
+      <p style="font-size:11px;color:#999;line-height:1.8;margin-bottom:10px;">
+        京都府知事登録第2-288<br>
+        総合旅行業務取扱管理者<br>
+        竹内雅哉
+      </p>
+      <a href="https://mk-group-form.spiral-site.com/mktravel_form" target="_blank"
+         style="display:block;font-size:12px;font-weight:500;color:#5c4a32;margin-bottom:6px;">お問い合わせはこちら</a>
+      <a href="https://www.mk-group.co.jp/mktravel/faq" target="_blank"
+         style="display:block;font-size:12px;color:#5c4a32;margin-bottom:12px;">よくある質問はこちら</a>
+      <hr style="border:none;border-top:0.5px solid #e0d8cc;margin-bottom:10px;">
+      <a href="https://travel.mk-group.co.jp/tour-kiyaku/" target="_blank"
+         style="display:block;font-size:11px;color:#8b7355;margin-bottom:5px;">募集型企画旅行規約</a>
+      <a href="https://www.mk-group.co.jp/mktravel/tokusyo" target="_blank"
+         style="display:block;font-size:11px;color:#8b7355;margin-bottom:5px;">特定商取引法に基づく表記</a>
+      <a href="https://www.mk-group.co.jp/mktravel/pdf/ryokin.pdf" target="_blank"
+         style="display:block;font-size:11px;color:#8b7355;margin-bottom:5px;">旅行業務取扱料金表</a>
+      <a href="https://www.mk-group.co.jp/privacy/" target="_blank"
+         style="display:block;font-size:11px;color:#8b7355;">プライバシーポリシー</a>
     </div>
   </aside>
 
