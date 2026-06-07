@@ -134,23 +134,18 @@
 
 
 <div class="hero" id="hero-section">
-  <div id="hero-img-wrap" style="display:none;position:absolute;inset:0;overflow:hidden;">
-    <img id="hero-img" src="" alt="ヒーロー画像" style="width:100%;height:100%;object-fit:cover;opacity:0.45;">
+  <div style="position:absolute;inset:0;overflow:hidden;">
+    <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/hero-bg.png"
+         alt="ヒーロー背景"
+         style="width:100%;height:100%;object-fit:cover;opacity:0.3;">
   </div>
   <div style="position:relative;z-index:1;">
     <h1>MKトラベル手帳</h1>
     <p>ＭＫドライバーが案内する、ここだけの京都体験</p>
-    <div style="margin-top:10px;">
-      <label style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.5);color:#fff;padding:5px 14px;border-radius:20px;font-size:11px;cursor:pointer;">
-        📷 ヒーロー画像を設定
-        <input type="file" accept="image/*" style="display:none;" onchange="setHeroImage(this)">
-      </label>
-      <span id="hero-clear-btn" onclick="clearHeroImage()" style="display:none;margin-left:8px;color:rgba(255,255,255,0.7);font-size:11px;cursor:pointer;text-decoration:underline;">削除</span>
-    </div>
   </div>
 </div>
 
-<p class="updated-note">最終更新: 2026年06月07日 02:57</p>
+<p class="updated-note">最終更新: 2026年06月07日 04:18</p>
 
 <div class="page-wrap">
 
@@ -369,7 +364,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="event history summer" data-dates="2026-8-16">
+      <div class="tour-card" data-tags="history event summer" data-dates="2026-8-16">
         <div class="tour-img" style="background:#4a7c6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/okuribi2.png" alt="京都の夏を送る夜～御所から望む右大文字と湯葉懐石～" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;" onerror="this.style.display='none'">
           <div class="sbadge br" style="z-index:1;">募集中</div>
@@ -382,6 +377,17 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/migidaimonji2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
+    </div>
+    <!-- ツアーレポートセクション（カレンダー日付クリック時に表示） -->
+    <div id="tour-report-section" style="display:none;margin-top:16px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <div class="section-title">
+          <i class="ti ti-camera" style="font-size:14px;vertical-align:-2px;margin-right:5px;"></i>
+          当日の様子
+        </div>
+        <a id="tour-report-link" href="#" class="see-all">すべて見る →</a>
+      </div>
+      <div id="tour-report-photos" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:16px;"></div>
     </div>
 
 
@@ -436,7 +442,10 @@
       <a href="#" class="see-all">すべての写真 →</a>
     </div>
     <div class="photo-grid">
-      <a href="himatsuri2025.html" class="pt" style="background:linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.5)),url(https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/images/21f355c5596cd370e7f58f9c99c3b246-600x400.webp) center/cover;color:#fff;font-size:11px;text-align:center;padding:8px;display:flex;align-items:flex-end;justify-content:center;">🔥 鞍馬の火祭<br>2025年</a>
+      <a href="himatsuri2025.html" class="pt" style="position:relative;overflow:hidden;background:#1a1a1a;">
+        <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.85;" alt="鞍馬の火祭">
+        <span style="position:absolute;bottom:8px;left:8px;color:#fff;font-size:11px;font-weight:500;text-shadow:0 1px 3px rgba(0,0,0,0.8);">🔥 鞍馬の火祭</span>
+      </a>
       <div class="pt p2">嵐山ツアー</div>
       <div class="pt p3">ナイトハイク</div>
       <div class="pt p4">花手水</div>
@@ -478,22 +487,8 @@
 </div><!-- /.page-wrap -->
 
 <script>
-  // ===== ⑤ ヒーロー画像 =====
-  function setHeroImage(input) {
-    if (!input.files || !input.files[0]) return;
-    var reader = new FileReader();
-    reader.onload = function(e) {
-      document.getElementById('hero-img').src = e.target.result;
-      document.getElementById('hero-img-wrap').style.display = 'block';
-      document.getElementById('hero-clear-btn').style.display = 'inline';
-    };
-    reader.readAsDataURL(input.files[0]);
-  }
-  function clearHeroImage() {
-    document.getElementById('hero-img').src = '';
-    document.getElementById('hero-img-wrap').style.display = 'none';
-    document.getElementById('hero-clear-btn').style.display = 'none';
-  }
+  // ===== ツアーレポートデータ =====
+  var TOUR_REPORTS = {"2025-10-22": {"title": "鞍馬の火祭×くらま温泉 癒し旅", "page": "himatsuri2025.html", "photos": ["https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/f9b7e4277e1c0a018981566ed4e8087e-600x400.webp", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/4a3e24e959e0275abd2df3e85320065c-600x400.webp"]}};
 
   function tourFilter(tag, el) {
     var cards = document.querySelectorAll('.tour-card');
@@ -548,6 +543,30 @@
     if (noResult) noResult.style.display = count === 0 ? 'block' : 'none';
     var tabNote = document.getElementById('tour-count');
     if (tabNote) tabNote.textContent = count + '件のツアーを表示中';
+
+    // ツアーレポート表示
+    var reportSection = document.getElementById('tour-report-section');
+    var reportPhotos  = document.getElementById('tour-report-photos');
+    var reportLink    = document.getElementById('tour-report-link');
+    if (reportSection && TOUR_REPORTS[dateKey]) {
+      var report = TOUR_REPORTS[dateKey];
+      reportSection.style.display = 'block';
+      reportLink.href = report.page;
+      reportPhotos.innerHTML = '';
+      report.photos.forEach(function(url) {
+        var a = document.createElement('a');
+        a.href = report.page;
+        a.style.cssText = 'border-radius:8px;overflow:hidden;aspect-ratio:1;display:block;';
+        var img = document.createElement('img');
+        img.src = url;
+        img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+        img.alt = report.title;
+        a.appendChild(img);
+        reportPhotos.appendChild(a);
+      });
+    } else if (reportSection) {
+      reportSection.style.display = 'none';
+    }
   }
 
   function tourReset() {
@@ -562,6 +581,8 @@
     var cards = document.querySelectorAll('#tours-grid .tour-card');
     var tabNote = document.getElementById('tour-count');
     if (tabNote) tabNote.textContent = cards.length + '件のツアーを表示中';
+    var reportSection = document.getElementById('tour-report-section');
+    if (reportSection) reportSection.style.display = 'none';
   }
 
   var TOUR = {};
