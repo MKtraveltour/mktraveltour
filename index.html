@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MKトラベル手帳 | MKトラベル</title>
+  <!-- 公開時にこの1行を削除してください -->
+  <meta name="robots" content="noindex,nofollow">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   <style>
@@ -148,7 +150,7 @@
   </div>
 </div>
 
-<p class="updated-note">最終更新: 2026年06月05日 05:07</p>
+<p class="updated-note">最終更新: 2026年06月07日 02:57</p>
 
 <div class="page-wrap">
 
@@ -302,7 +304,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/okuribi2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="exp flower" data-dates="2026-6-12,2026-6-13,2026-6-21">
+      <div class="tour-card" data-tags="flower exp" data-dates="2026-6-12,2026-6-13,2026-6-21">
         <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/top-5.png" alt="こころうつし ―まだ言葉にならない想いに、そっと触れる―" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;" onerror="this.style.display='none'">
           <div class="sbadge bfull" style="z-index:1;">満席</div>
@@ -328,7 +330,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/photo_yokokuji/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="exp summer" data-dates="2026-6-8">
+      <div class="tour-card" data-tags="summer exp" data-dates="2026-6-8">
         <div class="tour-img" style="background:#3a2a1a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/04/momidiya-1.png" alt="京都・高雄「もみぢ家」で川床ランチと金閣寺＆高雄エリア フリー観光" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;" onerror="this.style.display='none'">
           <div class="sbadge br" style="z-index:1;">募集中</div>
@@ -367,7 +369,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="history event summer" data-dates="2026-8-16">
+      <div class="tour-card" data-tags="event history summer" data-dates="2026-8-16">
         <div class="tour-img" style="background:#4a7c6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/okuribi2.png" alt="京都の夏を送る夜～御所から望む右大文字と湯葉懐石～" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;" onerror="this.style.display='none'">
           <div class="sbadge br" style="z-index:1;">募集中</div>
@@ -382,78 +384,51 @@
       </div>
     </div>
 
-    <!-- ツアー造成日記（X埋め込み・ハッシュタグ切り替え） -->
+
+    <!-- ツアー日記（Xリンクボタン方式） -->
     <div class="section-header" style="margin-top:16px;">
       <div class="section-title">
-        <i class="ti ti-brand-x" style="font-size:14px;vertical-align:-2px;margin-right:5px;"></i>
-        ツアー造成日記 / 担当者からのお知らせ
+        <i class="ti ti-notebook" style="font-size:14px;vertical-align:-2px;margin-right:5px;"></i>
+        ツアー日記 / 担当者からのお知らせ
       </div>
       <a href="https://x.com/mk_ryokou" target="_blank" class="see-all">Xで見る →</a>
     </div>
-    <div class="filter-tabs" id="x-tabs">
-      <div class="ftab active" onclick="switchXTab(this,'MKツアー')">すべて</div>
-      <div class="ftab" onclick="switchXTab(this,'祇園祭2026')">祇園祭</div>
-      <div class="ftab" onclick="switchXTab(this,'あじさい2026')">あじさい</div>
-      <div class="ftab" onclick="switchXTab(this,'鞍馬火祭2026')">鞍馬の火祭</div>
-      <div class="ftab" onclick="switchXTab(this,'ろうそくまつり2026')">ろうそくまつり</div>
-      <div class="ftab" onclick="switchXTab(this,'五山送り火2026')">五山の送り火</div>
-    </div>
-    <div style="background:#fff;border:1px solid #e0d8cc;border-radius:10px;overflow:hidden;margin-bottom:20px;">
-      <div style="background:#8b7355;color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;">
-        <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;">
-          <i class="ti ti-brand-x" aria-hidden="true"></i>
-          <span id="x-title">@mk_ryokou の最新投稿</span>
+    <div style="background:#fff;border:1px solid #e0d8cc;border-radius:10px;padding:20px;margin-bottom:20px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+        <div style="width:40px;height:40px;border-radius:50%;background:#000;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <i class="ti ti-brand-x" aria-hidden="true" style="color:#fff;font-size:18px;"></i>
         </div>
-        <span id="x-tag" style="font-size:11px;background:rgba(255,255,255,0.2);padding:2px 10px;border-radius:10px;">#MKツアー</span>
+        <div>
+          <div style="font-size:13px;font-weight:500;color:#3c2e1e;">MKトラベル ツアー担当</div>
+          <div style="font-size:11px;color:#999;">@mk_ryokou</div>
+        </div>
       </div>
-      <div id="x-embed-wrap">
-        <a class="twitter-timeline"
-           id="x-timeline"
-           href="https://twitter.com/search?q=%23MK%E3%83%84%E3%82%A2%E3%83%BC%20from%3Amk_ryokou&f=live"
-           data-height="480"
-           data-chrome="noheader nofooter noborders"
-           data-lang="ja">
-          読み込み中...
-        </a>
-      </div>
-      <p style="font-size:11px;color:#999;text-align:center;padding:8px;border-top:1px solid #f0e8d8;">
-        ※ タブをクリックするとツアーごとの投稿に切り替わります
+      <p style="font-size:13px;color:#5c4a32;line-height:1.8;margin-bottom:16px;">
+        ツアー造成の裏側や京都の旬な情報を日々Xで発信しています。<br>
+        ハッシュタグでツアーごとの投稿を確認できます。
       </p>
-    </div>
-    <div style="background:#fdf5e8;border:1px solid #e0c88a;border-radius:8px;padding:12px 16px;margin-bottom:20px;">
-      <div style="font-size:12px;font-weight:500;color:#5c4a32;margin-bottom:8px;">
-        <i class="ti ti-info-circle" aria-hidden="true" style="font-size:14px;vertical-align:-2px;margin-right:4px;"></i>
-        Xで投稿するときのタグルール
+      <!-- ハッシュタグボタン -->
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;">
+        <a href="https://x.com/search?q=%23MK%E3%83%84%E3%82%A2%E3%83%BC+from%3Amk_ryokou&f=live" target="_blank"
+           style="background:#f5f0e8;color:#8b7355;padding:5px 12px;border-radius:20px;font-size:11px;text-decoration:none;border:1px solid #c5b8a8;">#MKツアー</a>
+        <a href="https://x.com/search?q=%23%E7%A5%87%E5%9C%92%E7%A5%AD2026+from%3Amk_ryokou&f=live" target="_blank"
+           style="background:#f5f0e8;color:#8b7355;padding:5px 12px;border-radius:20px;font-size:11px;text-decoration:none;border:1px solid #c5b8a8;">🎆 祇園祭2026</a>
+        <a href="https://x.com/search?q=%23%E3%81%82%E3%81%98%E3%81%95%E3%81%842026+from%3Amk_ryokou&f=live" target="_blank"
+           style="background:#f5f0e8;color:#8b7355;padding:5px 12px;border-radius:20px;font-size:11px;text-decoration:none;border:1px solid #c5b8a8;">🌸 あじさい2026</a>
+        <a href="https://x.com/search?q=%23%E9%9E%8D%E9%A6%AC%E7%81%AB%E7%A5%AD2026+from%3Amk_ryokou&f=live" target="_blank"
+           style="background:#f5f0e8;color:#8b7355;padding:5px 12px;border-radius:20px;font-size:11px;text-decoration:none;border:1px solid #c5b8a8;">🔥 鞍馬火祭2026</a>
+        <a href="https://x.com/search?q=%23%E3%82%8D%E3%81%86%E3%81%9D%E3%81%8F%E3%81%BE%E3%81%A4%E3%82%8A2026+from%3Amk_ryokou&f=live" target="_blank"
+           style="background:#f5f0e8;color:#8b7355;padding:5px 12px;border-radius:20px;font-size:11px;text-decoration:none;border:1px solid #c5b8a8;">🕯 ろうそくまつり2026</a>
+        <a href="https://x.com/search?q=%23%E4%BA%94%E5%B1%B1%E9%80%81%E3%82%8A%E7%81%AC2026+from%3Amk_ryokou&f=live" target="_blank"
+           style="background:#f5f0e8;color:#8b7355;padding:5px 12px;border-radius:20px;font-size:11px;text-decoration:none;border:1px solid #c5b8a8;">🏔 五山送り火2026</a>
       </div>
-      <div style="font-size:12px;color:#7c5c2e;line-height:2;">
-        <div><i class="ti ti-hash" aria-hidden="true" style="font-size:12px;margin-right:4px;"></i><strong>#MKツアー</strong>　すべての投稿に必ずつける</div>
-        <div><i class="ti ti-hash" aria-hidden="true" style="font-size:12px;margin-right:4px;"></i><strong>#祇園祭2026</strong> / <strong>#あじさい2026</strong> / <strong>#鞍馬火祭2026</strong> / <strong>#ろうそくまつり2026</strong> / <strong>#五山送り火2026</strong>　該当ツアーの投稿につける</div>
-      </div>
+      <!-- Xで見るボタン -->
+      <a href="https://x.com/mk_ryokou" target="_blank"
+         style="display:flex;align-items:center;justify-content:center;gap:8px;background:#000;color:#fff;padding:10px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;">
+        <i class="ti ti-brand-x" aria-hidden="true" style="font-size:16px;"></i>
+        @mk_ryokou の投稿をすべて見る
+      </a>
     </div>
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    <script>
-    var xTabs = {
-      'MKツアー':           { title: '@mk_ryokou の最新投稿',     tag: '#MKツアー',           url: 'https://twitter.com/search?q=%23MK%E3%83%84%E3%82%A2%E3%83%BC%20from%3Amk_ryokou&f=live' },
-      '祇園祭2026':         { title: '祇園祭ツアーの投稿',         tag: '#祇園祭2026',         url: 'https://twitter.com/search?q=%23%E7%A5%87%E5%9C%92%E7%A5%AD2026%20from%3Amk_ryokou&f=live' },
-      'あじさい2026':       { title: 'あじさいツアーの投稿',       tag: '#あじさい2026',       url: 'https://twitter.com/search?q=%23%E3%81%82%E3%81%98%E3%81%95%E3%81%842026%20from%3Amk_ryokou&f=live' },
-      '鞍馬火祭2026':       { title: '鞍馬の火祭ツアーの投稿',     tag: '#鞍馬火祭2026',       url: 'https://twitter.com/search?q=%23%E9%9E%8D%E9%A6%AC%E7%81%AB%E7%A5%AD2026%20from%3Amk_ryokou&f=live' },
-      'ろうそくまつり2026': { title: 'ろうそくまつりの投稿',       tag: '#ろうそくまつり2026', url: 'https://twitter.com/search?q=%23%E3%82%8D%E3%81%86%E3%81%9D%E3%81%8F%E3%81%BE%E3%81%A4%E3%82%8A2026%20from%3Amk_ryokou&f=live' },
-      '五山送り火2026':     { title: '五山の送り火ツアーの投稿',   tag: '#五山送り火2026',     url: 'https://twitter.com/search?q=%23%E4%BA%94%E5%B1%B1%E9%80%81%E3%82%8A%E7%81%AC2026%20from%3Amk_ryokou&f=live' },
-    };
-    function switchXTab(el, key) {
-      document.querySelectorAll('#x-tabs .ftab').forEach(function(t){ t.classList.remove('active'); });
-      el.classList.add('active');
-      var info = xTabs[key];
-      document.getElementById('x-title').textContent = info.title;
-      document.getElementById('x-tag').textContent   = info.tag;
-      // タイムラインを再構築
-      var wrap = document.getElementById('x-embed-wrap');
-      wrap.innerHTML = '<a class="twitter-timeline" href="' + info.url + '" data-height="480" data-chrome="noheader nofooter noborders" data-lang="ja">読み込み中...</a>';
-      if (window.twttr && window.twttr.widgets) {
-        window.twttr.widgets.load(wrap);
-      }
-    }
-    </script>
 
     <!-- 当日の様子 -->
     <div class="section-header" style="margin-top:16px">
@@ -461,7 +436,7 @@
       <a href="#" class="see-all">すべての写真 →</a>
     </div>
     <div class="photo-grid">
-      <div class="pt p1">祇園祭</div>
+      <a href="himatsuri2025.html" class="pt" style="background:linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.5)),url(https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/images/21f355c5596cd370e7f58f9c99c3b246-600x400.webp) center/cover;color:#fff;font-size:11px;text-align:center;padding:8px;display:flex;align-items:flex-end;justify-content:center;">🔥 鞍馬の火祭<br>2025年</a>
       <div class="pt p2">嵐山ツアー</div>
       <div class="pt p3">ナイトハイク</div>
       <div class="pt p4">花手水</div>
@@ -489,14 +464,14 @@
     </div>
     <div class="sb-block">
       <div class="sb-title">過去のツアー</div>
-      <div class="past-item">📁 2026年</div>
-      <div class="past-item">📁 2025年</div>
-      <div class="past-item">📁 2024年</div>
+      <a href="https://www.mk-group.co.jp/mktravel/list_008" target="_blank" class="past-item">📁 2026年</a>
+      <a href="https://www.mk-group.co.jp/mktravel/list_008_2025" target="_blank" class="past-item">📁 2025年</a>
+      <a href="https://www.mk-group.co.jp/mktravel/list_008_2024" target="_blank" class="past-item">📁 2024年</a>
     </div>
     <div class="sb-block" style="background:#fdf5e8;border-color:#e0c88a">
       <div style="font-size:12px;font-weight:500;color:#5c4a32;margin-bottom:5px">マイページ</div>
       <div style="font-size:12px;color:#7c5c2e;margin-bottom:8px">予約確認・お気に入り管理</div>
-      <div class="login-btn">ログイン</div>
+      <a href="https://www.mk-group.co.jp/mktravel/mypage" target="_blank" class="login-btn">ログイン</a>
     </div>
   </aside>
 
