@@ -27,16 +27,6 @@ TOUR_URLS = {
     "himatsuri_1day": "https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/",
     "furin_shojuin2026": "https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/",
     "migidaimonji2026": "https://travel.mk-group.co.jp/tourkyoto/migidaimonji2026/",
-    "hanachozu": "https://travel.mk-group.co.jp/tourkyoto/2022hanachozu/",
-    "kodaiji_premium": "https://travel.mk-group.co.jp/tourkyoto/kodaiji-premium/",
-    "kodaiji_toyokuni":   "https://travel.mk-group.co.jp/tourkyoto/kodaiji-toyokuni/",
-    "uma":                "https://travel.mk-group.co.jp/tourkyoto/eto-uma/",
-    "baikamo2026":        "https://travel.mk-group.co.jp/tourkyoto/baikamo2026/",
-    "maizuru_ajisai":     "https://travel.mk-group.co.jp/tourkyoto/2026maizuruajisai/",
-    "yawata":             "https://travel.mk-group.co.jp/tourkyoto/yawata/",
-    "shojuin_sogei":      "https://travel.mk-group.co.jp/tourkyoto/2021shojuin_sogei/",
-    "yokokuji_shuttle":   "https://travel.mk-group.co.jp/tourkyoto/yokokuji_shuttletour/",
-    "narihira_nishiyama": "https://travel.mk-group.co.jp/tourkyoto/narihira-nishiyama/",
 }
 
 HEADERS = {
@@ -165,24 +155,52 @@ def extract_status(soup: BeautifulSoup) -> list[dict]:
                                 "label": f"あと{remaining}名",
                                 "type": "few"
                             })
-    # 日付なしの「満席」表示に対応（例：「満席（キャンセル待ち可能）」）
+    # 日付なしの「満席」「催行確定」表示に対応
+    # 出発予定日が1日のみの場合は常に補完を試みる
     if not statuses:
+        date_section = soup.select_one('.p-tour-detail__departure-date')
+        single_date = None
+        if date_section:
+            spans = date_section.find_all('span')
+            valid_dates = []
+            for span in spans:
+                d_text = span.get_text(strip=True).replace('、', '')
+                m = re.search(r'(\d+)/(\d+)', d_text)
+                if m and '～' not in d_text:
+                    valid_dates.append(m.group(1) + '/' + m.group(2))
+            if len(valid_dates) == 1:
+                single_date = valid_dates[0]
+
         for el in red_texts:
             text = el.get_text(strip=True)
-            if '満席' in text and not re.search(r'\d+/\d+', text):
-                date_section = soup.select_one('.p-tour-detail__departure-date')
-                if date_section:
+            is_full = '満席' in text and not re.search(r'\d+/\d+', text)
+            is_confirmed = '催行確定' in text and not re.search(r'\d+/\d+', text)
+            if is_full or is_confirmed:
+                target_date = single_date
+                if not target_date and date_section:
                     spans = date_section.find_all('span')
                     for span in spans:
                         d_text = span.get_text(strip=True).replace('、', '')
                         m = re.search(r'(\d+)/(\d+)', d_text)
                         if m:
-                            statuses.append({
-                                'date': m.group(1) + '/' + m.group(2),
-                                'label': '満席',
-                                'type': 'full'
-                            })
+                            target_date = m.group(1) + '/' + m.group(2)
+                            break
+                if target_date:
+                    if is_full:
+                        statuses.append({'date': target_date, 'label': '満席', 'type': 'full'})
+                    else:
+                        statuses.append({'date': target_date, 'label': '催行確定', 'type': 'confirmed'})
                 break
+        # 出発予定日が1日のみで赤字テキストに催行確定がある場合も補完
+        if not statuses and single_date:
+            for el in red_texts:
+                text = el.get_text(strip=True)
+                if '催行確定' in text:
+                    statuses.append({'date': single_date, 'label': '催行確定', 'type': 'confirmed'})
+                    break
+                elif '満席' in text:
+                    statuses.append({'date': single_date, 'label': '満席', 'type': 'full'})
+                    break
     return statuses
 
 
