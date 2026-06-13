@@ -114,9 +114,25 @@ def build_tour_js(tours: dict) -> str:
             label = info["label"].replace("'", "\\'")
             note = f"{title} {label}".strip()
             emoji = get_tour_emoji(title)
-            lines.append(
-                f"      TOUR['{k}'] = {{st:'{t}', ti:'{title}', ur:{var_url}, nt:'{note}', em:'{emoji}'}};"
-            )
+            # 既存エントリに絵文字を追加（同じ日付に複数ツアーがある場合）
+            existing_idx = None
+            for i, line in enumerate(lines):
+                if f"TOUR['{k}']" in line:
+                    existing_idx = i
+                    break
+            if existing_idx is not None:
+                import re as _re
+                m2 = _re.search(r"em:'([^']*)'", lines[existing_idx])
+                if m2:
+                    existing_em = m2.group(1)
+                    if emoji and emoji not in existing_em:
+                        lines[existing_idx] = lines[existing_idx].replace(
+                            f"em:'{existing_em}'", f"em:'{existing_em}{emoji}'"
+                        )
+            else:
+                lines.append(
+                    f"      TOUR['{k}'] = {{st:'{t}', ti:'{title}', ur:{var_url}, nt:'{note}', em:'{emoji}'}};"
+                )
 
     return "\n".join(lines)
 
