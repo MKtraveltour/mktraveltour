@@ -524,19 +524,34 @@ HTML_TEMPLATE = """\
       </div>
     </div>
     <div class="bnav-category">
-      <div class="bnav-cat-label">季節・テーマ <i class="ti ti-chevron-down"></i></div>
-      <div class="bnav-sub">
-        <a href="#"><i class="ti ti-chevron-right"></i>春の京都</a>
-        <a href="https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/" target="_blank" style="display:block;padding:0;margin-bottom:4px;border-radius:6px;overflow:hidden;">
-          <div style="position:relative;height:80px;overflow:hidden;border-radius:6px;">
-            <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/furin_summer.jpg"
-                 style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
-            <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.55));"></div>
-            <span style="position:absolute;bottom:5px;left:8px;color:#fff;font-size:10px;font-weight:500;">🔔 夏祭り</span>
+      <div class="bnav-cat-label" onclick="toggleSection(this)">季節・テーマ <i class="ti ti-chevron-down"></i></div>
+      <div class="bnav-sub" style="padding:8px 8px;">
+        <!-- 春の京都 -->
+        <div style="font-size:11px;color:#8b7355;font-weight:500;padding:4px 6px 4px;">🌸 春の京都</div>
+        <div style="border-radius:6px;border:1px dashed #c5b8a8;height:40px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#aaa;margin-bottom:8px;cursor:pointer;">写真を追加</div>
+        <!-- 夏祭り -->
+        <div style="font-size:11px;color:#8b7355;font-weight:500;padding:4px 6px 4px;">☀️ 夏祭り</div>
+        <a href="https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/" target="_blank" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;">
+          <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;">
+            <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/furin_summer.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+            <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
+            <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🔔 風鈴まつり</span>
           </div>
         </a>
-        <a href="#"><i class="ti ti-chevron-right"></i>紅葉の秋</a>
-        <a href="#"><i class="ti ti-chevron-right"></i>冬の情緒</a>
+        <div style="border-radius:6px;border:1px dashed #c5b8a8;height:40px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#aaa;margin-bottom:8px;cursor:pointer;">写真を追加</div>
+        <!-- 紅葉の秋 -->
+        <div style="font-size:11px;color:#8b7355;font-weight:500;padding:4px 6px 4px;">🍁 紅葉の秋</div>
+        <a href="https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/" target="_blank" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;">
+          <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;background:#3a2a1a;">
+            <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;opacity:0.85;">
+            <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
+            <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🔥 鞍馬の火祭</span>
+          </div>
+        </a>
+        <div style="border-radius:6px;border:1px dashed #c5b8a8;height:40px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#aaa;margin-bottom:8px;cursor:pointer;">写真を追加</div>
+        <!-- 冬の情緒 -->
+        <div style="font-size:11px;color:#8b7355;font-weight:500;padding:4px 6px 4px;">❄️ 冬の情緒</div>
+        <div style="border-radius:6px;border:1px dashed #c5b8a8;height:40px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#aaa;margin-bottom:4px;cursor:pointer;">写真を追加</div>
       </div>
     </div>
     <div class="bnav-category">
