@@ -395,7 +395,7 @@ HTML_TEMPLATE = """\
     .cd.has-tour  {{ background: #f0e8d8; color: #5c4a32; font-weight: 500; }}
     .cd.confirmed {{ background: #8b7355; color: #fff; font-weight: 500; }}
     .cd.full      {{ background: #c0392b; color: #fff; font-weight: 500; }}
-    .cd.today     {{ outline: 2px solid #8b7355; outline-offset: -2px; }}
+    .cd.today     {{ outline: 3px solid #fff; outline-offset: -3px; box-shadow: 0 0 0 3px #8b7355; }}
     .cal-legend {{ display: flex; gap: 16px; margin-top: 10px; flex-wrap: wrap; }}
     .cl-item {{ display: flex; align-items: center; gap: 5px; font-size: 12px; color: #888; }}
     .cl-dot  {{ width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }}
