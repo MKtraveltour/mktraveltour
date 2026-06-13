@@ -459,7 +459,7 @@ HTML_TEMPLATE = """\
     .tour-card.hidden {{ display: none; }}
     .cd.selected {{ outline: 2px solid #e8a0b0; outline-offset: -2px; }}
     .cd.selected .cd-num {{ opacity: 0; }}
-    .cd.selected::after {{ content: '🐾'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 18px; line-height: 1; filter: sepia(1) saturate(3) hue-rotate(300deg) brightness(1.3); }}
+    .cd.selected::after {{ content: '🐾'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 16px; line-height: 1; filter: sepia(1) saturate(3) hue-rotate(300deg) brightness(1.3); }}
     .filter-note {{ font-size: 12px; color: var(--color-text-secondary, #888); background: #f5f0e8; border-radius: 6px; padding: 8px 12px; margin-bottom: 12px; display: none; }}
     .filter-note.show {{ display: block; }}
     .reset-link {{ font-size: 12px; color: #8b7355; cursor: pointer; text-decoration: underline; display: none; }}
