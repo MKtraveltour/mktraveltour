@@ -458,10 +458,7 @@ HTML_TEMPLATE = """\
     .tours-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }}
     .tour-card.hidden {{ display: none; }}
     .cd.selected {{ outline: 2px solid #e8a0b0; outline-offset: -2px; }}
-    .cd.selected .cd-num {{ display: none; }}
-    .cd.selected .cd-paw {{ display: block; }}
-    .cd-paw {{ display: none; filter: sepia(1) saturate(3) hue-rotate(300deg) brightness(1.3); font-size: 16px; line-height: 1; }}
-    .cd.selected::after {{ content: none; }}
+    .cd-paw {{ display: none; filter: sepia(1) saturate(3) hue-rotate(300deg) brightness(1.3); font-size: 16px; line-height: 1; text-align: center; }}
     .filter-note {{ font-size: 12px; color: var(--color-text-secondary, #888); background: #f5f0e8; border-radius: 6px; padding: 8px 12px; margin-bottom: 12px; display: none; }}
     .filter-note.show {{ display: block; }}
     .reset-link {{ font-size: 12px; color: #8b7355; cursor: pointer; text-decoration: underline; display: none; }}
@@ -891,14 +888,24 @@ HTML_TEMPLATE = """\
       if (dates.indexOf(dateKey) !== -1) {{ card.classList.remove('hidden'); count++; }}
       else {{ card.classList.add('hidden'); }}
     }});
-    document.querySelectorAll('.cd').forEach(function(c) {{ c.classList.remove('selected'); }});
+    document.querySelectorAll('.cd').forEach(function(c) {{
+      c.classList.remove('selected');
+      var paw = c.querySelector('.cd-paw');
+      var num = c.querySelector('.cd-num');
+      if (paw) paw.style.display = 'none';
+      if (num) num.style.display = '';
+    }});
     document.querySelectorAll('.cd').forEach(function(c) {{
       var parts = dateKey.split('-');
       var d = parts[2];
-      if ((c.textContent.trim() == String(parseInt(d)) || (c.querySelector('.cd-num') && c.querySelector('.cd-num').textContent == String(parseInt(d)))) &&
+      var numEl = c.querySelector('.cd-num');
+      if (numEl && numEl.textContent == String(parseInt(d)) &&
           (c.classList.contains('has-tour') || c.classList.contains('confirmed') ||
            c.classList.contains('full') || c.classList.contains('few'))) {{
         c.classList.add('selected');
+        numEl.style.display = 'none';
+        var paw = c.querySelector('.cd-paw');
+        if (paw) paw.style.display = 'block';
       }}
     }});
     var note = document.getElementById('tour-filter-note');
@@ -939,7 +946,13 @@ HTML_TEMPLATE = """\
 
   function tourReset() {{
     document.querySelectorAll('#tours-grid .tour-card').forEach(function(c) {{ c.classList.remove('hidden'); }});
-    document.querySelectorAll('.cd').forEach(function(c) {{ c.classList.remove('selected'); }});
+    document.querySelectorAll('.cd').forEach(function(c) {{
+      c.classList.remove('selected');
+      var paw = c.querySelector('.cd-paw');
+      var num = c.querySelector('.cd-num');
+      if (paw) paw.style.display = 'none';
+      if (num) num.style.display = '';
+    }});
     var note = document.getElementById('tour-filter-note');
     if (note) note.classList.remove('show');
     var reset = document.getElementById('tour-reset');
