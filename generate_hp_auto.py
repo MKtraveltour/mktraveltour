@@ -527,7 +527,14 @@ HTML_TEMPLATE = """\
       <div class="bnav-cat-label">季節・テーマ <i class="ti ti-chevron-down"></i></div>
       <div class="bnav-sub">
         <a href="#"><i class="ti ti-chevron-right"></i>春の京都</a>
-        <a href="#"><i class="ti ti-chevron-right"></i>夏祭り</a>
+        <a href="https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/" target="_blank" style="display:block;padding:0;margin-bottom:4px;border-radius:6px;overflow:hidden;">
+          <div style="position:relative;height:80px;overflow:hidden;border-radius:6px;">
+            <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/furin_summer.jpg"
+                 style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+            <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.55));"></div>
+            <span style="position:absolute;bottom:5px;left:8px;color:#fff;font-size:10px;font-weight:500;">🔔 夏祭り</span>
+          </div>
+        </a>
         <a href="#"><i class="ti ti-chevron-right"></i>紅葉の秋</a>
         <a href="#"><i class="ti ti-chevron-right"></i>冬の情緒</a>
       </div>
