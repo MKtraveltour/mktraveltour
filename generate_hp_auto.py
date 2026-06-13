@@ -533,7 +533,7 @@ HTML_TEMPLATE = """\
         <div style="font-size:11px;color:#8b7355;font-weight:500;padding:4px 6px 4px;">☀️ 夏祭り</div>
         <a href="https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/" target="_blank" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;">
           <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;">
-            <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/furin_summer.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+            <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250707_%E6%AD%A3%E5%AF%BF%E9%99%A2_%E9%A2%A8%E9%88%B4%E3%81%BE%E3%81%A4%E3%82%8A-%E8%A5%BF%E5%B7%9D%20(6).jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
             <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
             <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🔔 風鈴まつり</span>
           </div>
