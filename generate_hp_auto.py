@@ -457,7 +457,9 @@ HTML_TEMPLATE = """\
     .tour-count {{ font-size: 12px; color: #999; margin-bottom: 10px; }}
     .tours-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }}
     .tour-card.hidden {{ display: none; }}
-    .cd.selected {{ outline: 3px solid #5c4a32; outline-offset: -2px; }}
+    .cd.selected {{ outline: 2px solid #e8a0b0; outline-offset: -2px; }}
+    .cd.selected .cd-num {{ opacity: 0; }}
+    .cd.selected::after {{ content: '🐾'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 18px; line-height: 1; filter: sepia(1) saturate(3) hue-rotate(300deg) brightness(1.3); }}
     .filter-note {{ font-size: 12px; color: var(--color-text-secondary, #888); background: #f5f0e8; border-radius: 6px; padding: 8px 12px; margin-bottom: 12px; display: none; }}
     .filter-note.show {{ display: block; }}
     .reset-link {{ font-size: 12px; color: #8b7355; cursor: pointer; text-decoration: underline; display: none; }}
@@ -891,7 +893,7 @@ HTML_TEMPLATE = """\
     document.querySelectorAll('.cd').forEach(function(c) {{
       var parts = dateKey.split('-');
       var d = parts[2];
-      if (c.textContent == String(parseInt(d)) &&
+      if ((c.textContent.trim() == String(parseInt(d)) || (c.querySelector('.cd-num') && c.querySelector('.cd-num').textContent == String(parseInt(d)))) &&
           (c.classList.contains('has-tour') || c.classList.contains('confirmed') ||
            c.classList.contains('full') || c.classList.contains('few'))) {{
         c.classList.add('selected');
@@ -985,9 +987,9 @@ HTML_TEMPLATE = """\
       if (isT) {{ cl += ' today'; }}
       c.className = cl;
       if (t) {{
-        c.innerHTML = '<span style="display:block;text-align:center;">' + d + '</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:-2px;">' + (t.em || '') + '</span>';
+        c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:-2px;">' + (t.em || '') + '</span>';
       }} else {{
-        c.textContent = d;
+        c.innerHTML = '<span class="cd-num">' + d + '</span>';
       }}
       if (t) {{
         c.title = t.nt;
