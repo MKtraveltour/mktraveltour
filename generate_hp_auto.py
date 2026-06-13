@@ -223,7 +223,7 @@ def build_tour_cards(tours: dict) -> str:
             img_html = (
                 f'<img src="{image}" alt="{title}" '
                 f'style="width:100%;height:100%;object-fit:cover;'
-                f'position:absolute;top:0;left:0;" '
+                f'position:absolute;top:0;left:0;display:block;" '
                 f'onerror="this.style.display=\'none\'">'
             )
 
@@ -413,7 +413,7 @@ HTML_TEMPLATE = """\
     .reset-link {{ font-size: 12px; color: #8b7355; cursor: pointer; text-decoration: underline; display: none; }}
     .tour-card {{ background: #fff; border: 1px solid #d0c4b0; border-radius: 10px; overflow: hidden; transition: box-shadow 0.2s; }}
     .tour-card:hover {{ box-shadow: 0 2px 10px rgba(139,115,85,0.15); }}
-    .tour-img {{ height: 110px; position: relative; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #fff; font-weight: 500; }}
+    .tour-img {{ height: 160px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #fff; font-weight: 500; }}
     .sbadge {{ position: absolute; top: 6px; right: 6px; font-size: 11px; padding: 2px 10px; border-radius: 4px; font-weight: 500; }}
     .bc {{ background: #27ae60; color: #fff; }} .bfw {{ background: #e67e22; color: #fff; }}
     .bfull {{ background: #c0392b; color: #fff; }} .br {{ background: #2980b9; color: #fff; }}
