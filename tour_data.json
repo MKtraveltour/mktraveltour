@@ -1,0 +1,478 @@
+{
+  "ajisai_harf": {
+    "key": "ajisai_harf",
+    "url": "https://travel.mk-group.co.jp/tourkyoto/2026ajisai-harf/",
+    "title": "京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～",
+    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/04/top.png",
+    "price": "9,800円～10,800円（税込）",
+    "dates": [
+      "6/13(土)",
+      "6/14(日)",
+      "6/15(月)",
+      "6/16(火)",
+      "6/17(水)",
+      "6/18(木)",
+      "6/19(金)",
+      "6/20(土)",
+      "6/21(日)",
+      "6/22(月)",
+      "6/23(火)",
+      "6/24(水)",
+      "6/25(木)",
+      "6/26(金)",
+      "6/27(土)",
+      "6/28(日)",
+      "6/29(月)",
+      "6/30(火)",
+      "6/13(土)～6/30(火)"
+    ],
+    "statuses": [
+      {
+        "date": "6/20",
+        "label": "催行確定",
+        "type": "confirmed"
+      },
+      {
+        "date": "6/21",
+        "label": "催行確定",
+        "type": "confirmed"
+      },
+      {
+        "date": "6/29",
+        "label": "催行確定",
+        "type": "confirmed"
+      },
+      {
+        "date": "6/16",
+        "label": "催行確定",
+        "type": "confirmed"
+      },
+      {
+        "date": "6/15",
+        "label": "催行確定",
+        "type": "confirmed"
+      },
+      {
+        "date": "6/27",
+        "label": "催行確定",
+        "type": "confirmed"
+      },
+      {
+        "date": "6/28",
+        "label": "催行確定",
+        "type": "confirmed"
+      }
+    ],
+    "tags": [
+      "季節の花",
+      "催行確定日あり",
+      "神社仏閣",
+      "景色・写真",
+      "京都西山"
+    ],
+    "updated_at": "2026-06-13T11:33:33.874521",
+    "error": null
+  },
+  "ayabe_ajisai": {
+    "key": "ayabe_ajisai",
+    "url": "https://travel.mk-group.co.jp/tourkyoto/ayabe-ajisai2026/",
+    "title": "福知山・綾部で出会う、あじさい名所＆穴場めぐり",
+    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/04/top-ayabe.jpg",
+    "price": "15,800円（税込）",
+    "dates": [
+      "6/21(日)",
+      "6/24(水)",
+      "6/27(土)"
+    ],
+    "statuses": [
+      {
+        "date": "6/21",
+        "label": "催行確定",
+        "type": "confirmed"
+      }
+    ],
+    "tags": [
+      "季節の花",
+      "催行確定日あり",
+      "神社仏閣",
+      "景色・写真"
+    ],
+    "updated_at": "2026-06-13T11:33:35.270988",
+    "error": null
+  },
+  "rousoku": {
+    "key": "rousoku",
+    "url": "https://travel.mk-group.co.jp/tourkyoto/rousokumatsuri2026/",
+    "title": "正寿院 ろうそくまつり送迎プラン【2026年】",
+    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/rousoku.png",
+    "price": "6,500円～7,500円（税込）",
+    "dates": [
+      "7/19(日)"
+    ],
+    "statuses": [],
+    "tags": [
+      "催行確定日あり",
+      "神社仏閣",
+      "景色・写真",
+      "イベント・お祭り",
+      "ライトアップ",
+      "ナイトツアー",
+      "京都タクシー観光",
+      "日帰り旅行",
+      "夏のツアー"
+    ],
+    "updated_at": "2026-06-13T11:33:36.866516",
+    "error": null
+  },
+  "himatsuri_stay": {
+    "key": "himatsuri_stay",
+    "url": "https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/",
+    "title": "【限定宿泊プラン】 くらま温泉で迎える 鞍馬の火祭 特別な一夜",
+    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/宿泊トップ.png",
+    "price": "67,000円～135,000円（税込）",
+    "dates": [
+      "10/22(木)"
+    ],
+    "statuses": [],
+    "tags": [
+      "催行確定日あり",
+      "神社仏閣",
+      "景色・写真",
+      "伝統文化",
+      "イベント・お祭り",
+      "ナイトツアー",
+      "秋のツアー"
+    ],
+    "updated_at": "2026-06-13T11:33:38.214560",
+    "error": null
+  },
+  "okuribi": {
+    "key": "okuribi",
+    "url": "https://travel.mk-group.co.jp/tourkyoto/okuribi2026/",
+    "title": "【限定40名】京の夜空を彩る「五山の送り火」特別鑑賞ツアー",
+    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/okuribi.png",
+    "price": "23,800円（税込）",
+    "dates": [
+      "8/16(日)"
+    ],
+    "statuses": [
+      {
+        "date": "8/16",
+        "label": "満席",
+        "type": "full"
+      }
+    ],
+    "tags": [
+      "催行確定日あり",
+      "景色・写真",
+      "グルメ",
+      "伝統文化",
+      "イベント・お祭り",
+      "期間限定",
+      "乗合",
+      "夏のツアー"
+    ],
+    "updated_at": "2026-06-13T11:33:39.211971",
+    "error": null
+  },
+  "kokoro_utsushi": {
+    "key": "kokoro_utsushi",
+    "url": "https://travel.mk-group.co.jp/tourkyoto/yokokuji-limited/",
+    "title": "こころうつし ―まだ言葉にならない想いに、そっと触れる―",
+    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/top-5.png",
+    "price": "20,000円～50,000円（税込）",
+    "dates": [
+      "6/12(金)",
+      "6/13(土)",
+      "6/21(日)"
+    ],
+    "statuses": [],
+    "tags": [
+      "季節の花",
+      "催行確定日あり",
+      "神社仏閣",
+      "景色・写真",
+      "体験",
+      "期間限定",
+      "送迎場所指定OK"
+    ],
+    "updated_at": "2026-06-13T11:33:39.924526",
+    "error": null
+  },
+  "satsuei": {
+    "key": "satsuei",
+    "url": "https://travel.mk-group.co.jp/tourkyoto/photo_yokokuji/",
+    "title": "SNSで映える！ 【閉門後貸切】紫陽花の名刹・柳谷観音 楊谷寺スマホ撮影講座ツアー",
+    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/top-3.png",
+    "price": "14,800円～15,800円（税込）",
+    "dates": [
+      "6/20(土)",
+      "※1名様からお申込み可能ですが、6名様以上で催行いたします。"
+    ],
+    "statuses": [],
+    "tags": [
+      "催行確定日あり",
+      "神社仏閣",
+      "景色・写真",
+      "ガイド・講座",
+      "期間限定"
+    ],
+    "updated_at": "2026-06-13T11:33:40.889117",
+    "error": null
+  },
+  "momidiya": {
+    "key": "momidiya",
+    "url": "https://travel.mk-group.co.jp/tourkyoto/momijiya-takao2026/",
+    "title": "京都・高雄「もみぢ家」で川床ランチと金閣寺＆高雄エリア フリー観光",
+    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/04/momidiya-1.png",
+    "price": "16,000円～22,000円（税込）",
+    "dates": [
+      "随時催行",
+      "6/8(月)～9/30(水)※下記日程は川床満席のため除外日となります。＜7月15日・16日・17日・23日・24日＞"
+    ],
+    "statuses": [],
+    "tags": [
+      "催行確定日あり",
+      "神社仏閣",
+      "景色・写真",
+      "グルメ",
+      "体験",
+      "伝統文化",
+      "期間限定",
+      "貸切",
+      "おふたりから催行確定",
+      "夏のツアー",
+      "夏旅"
+    ],
+    "updated_at": "2026-06-13T11:33:41.870165",
+    "error": null
+  },
+  "himatsuri_1day": {
+    "key": "himatsuri_1day",
+    "url": "https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/",
+    "title": "昼の鞍馬散策と夜の火祭へ  ～くらま温泉で過ごす特別な一日～",
+    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/1day.png",
+    "price": "26,800円（税込）",
+    "dates": [
+      "10/22(木)"
+    ],
+    "statuses": [],
+    "tags": [
+      "催行確定日あり",
+      "神社仏閣",
+      "景色・写真",
+      "伝統文化",
+      "イベント・お祭り",
+      "ナイトツアー",
+      "秋のツアー"
+    ],
+    "updated_at": "2026-06-13T11:33:42.916626",
+    "error": null
+  },
+  "furin_shojuin2026": {
+    "key": "furin_shojuin2026",
+    "url": "https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/",
+    "title": "正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】",
+    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2024/04/2021shojuin_furin_bn.jpg",
+    "price": "6,800円～7,800円（税込）",
+    "dates": [
+      "随時催行",
+      "6/1～9/30まで（月・木・金・土・日・祝）※8/17は終日拝観中止となる為、ツアーも除外日となります。"
+    ],
+    "statuses": [
+      {
+        "date": "6/1",
+        "label": "催行確定",
+        "type": "confirmed"
+      },
+      {
+        "date": "6/13",
+        "label": "催行確定",
+        "type": "confirmed"
+      },
+      {
+        "date": "6/19",
+        "label": "催行確定",
+        "type": "confirmed"
+      },
+      {
+        "date": "8/14",
+        "label": "催行確定",
+        "type": "confirmed"
+      },
+      {
+        "date": "6/20",
+        "label": "催行確定",
+        "type": "confirmed"
+      },
+      {
+        "date": "7/5",
+        "label": "催行確定",
+        "type": "confirmed"
+      },
+      {
+        "date": "7/11",
+        "label": "催行確定",
+        "type": "confirmed"
+      },
+      {
+        "date": "7/12",
+        "label": "催行確定",
+        "type": "confirmed"
+      },
+      {
+        "date": "8/23",
+        "label": "催行確定",
+        "type": "confirmed"
+      },
+      {
+        "date": "9/19",
+        "label": "催行確定",
+        "type": "confirmed"
+      }
+    ],
+    "tags": [
+      "催行確定日あり",
+      "神社仏閣",
+      "景色・写真",
+      "イベント・お祭り",
+      "京都タクシー観光",
+      "日帰り旅行"
+    ],
+    "updated_at": "2026-06-13T11:33:43.715126",
+    "error": null
+  },
+  "migidaimonji2026": {
+    "key": "migidaimonji2026",
+    "url": "https://travel.mk-group.co.jp/tourkyoto/migidaimonji2026/",
+    "title": "京都の夏を送る夜～御所から望む右大文字と湯葉懐石～",
+    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/okuribi2.png",
+    "price": "13,000円（税込）",
+    "dates": [
+      "8/16(日)"
+    ],
+    "statuses": [],
+    "tags": [
+      "催行確定日あり",
+      "景色・写真",
+      "ガイド・講座",
+      "歴史",
+      "伝統文化",
+      "イベント・お祭り",
+      "期間限定",
+      "乗合",
+      "夏のツアー"
+    ],
+    "updated_at": "2026-06-13T11:33:44.662303",
+    "error": null
+  },
+  "hanachozu": {
+    "key": "hanachozu",
+    "url": "https://travel.mk-group.co.jp/tourkyoto/2022hanachozu/",
+    "title": "毎月17日限定!!京都のかわいい花手水と心ときめく癒し旅 ～楊谷寺＆勝林寺巡り～",
+    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2025/02/main.png",
+    "price": "9,800円（税込）",
+    "dates": [
+      "随時催行",
+      "毎月17日開催（※11月17日を除く）"
+    ],
+    "statuses": [
+      {
+        "date": "6/17",
+        "label": "催行確定",
+        "type": "confirmed"
+      }
+    ],
+    "tags": [
+      "季節の花",
+      "催行確定日あり",
+      "神社仏閣",
+      "景色・写真",
+      "期間限定",
+      "通年開催",
+      "京都西山",
+      "京都タクシー観光",
+      "日帰り旅行"
+    ],
+    "updated_at": "2026-06-13T11:33:44.927210",
+    "error": null
+  },
+  "kodaiji_premium": {
+    "key": "kodaiji_premium",
+    "url": "https://travel.mk-group.co.jp/tourkyoto/kodaiji-premium/",
+    "title": "京の奥に触れる一日 ～ 非公開寺院「高台寺 岡林院」貸切拝観とオリジナル写経・茶の湯・精進美食の贅沢体験",
+    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/03/top-premium-1.png",
+    "price": "16,000円（税込）",
+    "dates": [
+      "6/27(土)"
+    ],
+    "statuses": [],
+    "tags": [
+      "京の特別体験 プレミアムシリーズ",
+      "神社仏閣",
+      "景色・写真",
+      "体験",
+      "ガイド・講座",
+      "歴史",
+      "伝統文化",
+      "期間限定",
+      "京都タクシー観光"
+    ],
+    "updated_at": "2026-06-13T11:33:46.474283",
+    "error": null
+  },
+  "kodaiji_toyokuni": {
+    "key": "kodaiji_toyokuni",
+    "url": "https://travel.mk-group.co.jp/tourkyoto/kodaiji-toyokuni/",
+    "title": "【募集終了】静寂に癒される　～高台寺、非公開寺院・岡林院と、豊国神社をめぐる”ねねと秀吉”の物語～",
+    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/03/top-toyotomi-1.png",
+    "price": "15,000円（税込）",
+    "dates": [
+      "6/14(日)"
+    ],
+    "statuses": [],
+    "tags": [
+      "京の特別体験 プレミアムシリーズ",
+      "神社仏閣",
+      "景色・写真",
+      "ガイド・講座",
+      "歴史",
+      "伝統文化",
+      "期間限定",
+      "京都タクシー観光"
+    ],
+    "updated_at": "2026-06-13T11:33:47.455136",
+    "error": null
+  },
+  "uma": {
+    "key": "uma",
+    "url": "https://travel.mk-group.co.jp/tourkyoto/eto-uma/",
+    "title": "物事が“うまく”進む一年に　馬ゆかりの社めぐり日帰りツアー",
+    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/01/top-1.jpg",
+    "price": "7,800円（税込）",
+    "dates": [
+      "随時催行",
+      "※1名様からお申込み可能ですが、4名様以上で催行いたします。"
+    ],
+    "statuses": [
+      {
+        "date": "7/11",
+        "label": "あと１名",
+        "type": "few"
+      }
+    ],
+    "tags": [
+      "催行確定日あり",
+      "神社仏閣",
+      "景色・写真",
+      "ガイド・講座",
+      "通年開催",
+      "送迎のみ",
+      "京都西山",
+      "京都タクシー観光",
+      "日帰り旅行"
+    ],
+    "updated_at": "2026-06-13T11:33:48.380874",
+    "error": null
+  }
+}
