@@ -761,7 +761,7 @@ HTML_TEMPLATE = """\
       <div class="season-popup-title" id="sp-title"></div>
       <div id="sp-date" style="display:none;font-size:11px;color:#8b7355;margin-bottom:8px;background:#fdf5e8;padding:4px 8px;border-radius:4px;display:inline-block;"></div>
       <div class="season-popup-desc" id="sp-desc" style="margin-top:8px;"></div>
-      <a class="season-popup-btn" id="sp-btn" href="#" target="_blank"></a>
+      <div id="sp-btn-wrap"></div>
       <span class="season-popup-close" onclick="closeSeasonPopup()">閉じる ×</span>
     </div>
   </div>
@@ -778,16 +778,20 @@ HTML_TEMPLATE = """\
       title: '正寿院 風鈴まつり送迎プラン 2026',
       date: '📷 2025年7月7日 ドライバー撮影',
       desc: '6月〜9月の週末を中心に開催。色とりどりの風鈴が境内を彩る正寿院の夏。京都駅・宇治駅から送迎付きのお手軽プランです。',
-      url: 'https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/',
-      label: 'ツアー詳細を見る'
+      links: [
+        {{ url: 'https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/', label: '🔔 ツアー詳細を見る' }}
+      ]
     }},
     'himatsuri': {{
       img: 'https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp',
       title: '鞍馬の火祭×くらま温泉 癒し旅',
       date: '📷 2025年10月22日 関係者撮影',
       desc: '年に一度、鞍馬の夜を燃やす伝統の火祭。巨大な松明が山里を照らす幻想的な夜をくらま温泉でゆっくり締めくくります。',
-      url: 'himatsuri2025.html',
-      label: '当日のレポートを見る'
+      links: [
+        {{ url: 'https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/', label: '🏨 限定宿泊プランを見る' }},
+        {{ url: 'https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/', label: '🔥 1dayプランを見る' }},
+        {{ url: 'himatsuri2025.html', label: '📄 当日のレポートを見る' }}
+      ]
     }}
   }};
 
@@ -800,8 +804,26 @@ HTML_TEMPLATE = """\
     if (d.date) {{ dateEl.textContent = d.date; dateEl.style.display = 'inline-block'; }}
     else {{ dateEl.style.display = 'none'; }}
     document.getElementById('sp-desc').textContent = d.desc;
-    document.getElementById('sp-btn').href = d.url;
-    document.getElementById('sp-btn').textContent = d.label;
+    var btnWrap = document.getElementById('sp-btn-wrap');
+    btnWrap.innerHTML = '';
+    if (d.links) {{
+      d.links.forEach(function(l) {{
+        var a = document.createElement('a');
+        a.href = l.url;
+        a.textContent = l.label;
+        a.target = '_blank';
+        a.className = 'season-popup-btn';
+        a.style.marginBottom = '6px';
+        btnWrap.appendChild(a);
+      }});
+    }} else {{
+      var a = document.createElement('a');
+      a.href = d.url;
+      a.textContent = d.label;
+      a.target = '_blank';
+      a.className = 'season-popup-btn';
+      btnWrap.appendChild(a);
+    }}
     document.getElementById('season-popup-overlay').classList.add('show');
   }}
   function closeSeasonPopup() {{
