@@ -759,7 +759,8 @@ HTML_TEMPLATE = """\
     <img id="sp-img" src="" alt="">
     <div class="season-popup-body">
       <div class="season-popup-title" id="sp-title"></div>
-      <div class="season-popup-desc" id="sp-desc"></div>
+      <div id="sp-date" style="display:none;font-size:11px;color:#8b7355;margin-bottom:8px;background:#fdf5e8;padding:4px 8px;border-radius:4px;display:inline-block;"></div>
+      <div class="season-popup-desc" id="sp-desc" style="margin-top:8px;"></div>
       <a class="season-popup-btn" id="sp-btn" href="#" target="_blank"></a>
       <span class="season-popup-close" onclick="closeSeasonPopup()">閉じる ×</span>
     </div>
@@ -775,6 +776,7 @@ HTML_TEMPLATE = """\
     'furin': {{
       img: 'https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250707_%E6%AD%A3%E5%AF%BF%E9%99%A2_%E9%A2%A8%E9%88%B4%E3%81%BE%E3%81%A4%E3%82%8A-%E8%A5%BF%E5%B7%9D%20(6).jpg',
       title: '正寿院 風鈴まつり送迎プラン 2026',
+      date: '📷 2025年7月7日 ドライバー撮影',
       desc: '6月〜9月の週末を中心に開催。色とりどりの風鈴が境内を彩る正寿院の夏。京都駅・宇治駅から送迎付きのお手軽プランです。',
       url: 'https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/',
       label: 'ツアー詳細を見る'
@@ -793,6 +795,9 @@ HTML_TEMPLATE = """\
     if (!d) return;
     document.getElementById('sp-img').src = d.img;
     document.getElementById('sp-title').textContent = d.title;
+    var dateEl = document.getElementById('sp-date');
+    if (d.date) {{ dateEl.textContent = d.date; dateEl.style.display = 'inline-block'; }}
+    else {{ dateEl.style.display = 'none'; }}
     document.getElementById('sp-desc').textContent = d.desc;
     document.getElementById('sp-btn').href = d.url;
     document.getElementById('sp-btn').textContent = d.label;
