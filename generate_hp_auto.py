@@ -458,8 +458,10 @@ HTML_TEMPLATE = """\
     .tours-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }}
     .tour-card.hidden {{ display: none; }}
     .cd.selected {{ outline: 2px solid #e8a0b0; outline-offset: -2px; }}
-    .cd.selected .cd-num {{ opacity: 0; }}
-    .cd.selected::after {{ content: '🐾'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 16px; line-height: 1; filter: sepia(1) saturate(3) hue-rotate(300deg) brightness(1.3); }}
+    .cd.selected .cd-num {{ display: none; }}
+    .cd.selected .cd-paw {{ display: block; }}
+    .cd-paw {{ display: none; filter: sepia(1) saturate(3) hue-rotate(300deg) brightness(1.3); font-size: 16px; line-height: 1; }}
+    .cd.selected::after {{ content: none; }}
     .filter-note {{ font-size: 12px; color: var(--color-text-secondary, #888); background: #f5f0e8; border-radius: 6px; padding: 8px 12px; margin-bottom: 12px; display: none; }}
     .filter-note.show {{ display: block; }}
     .reset-link {{ font-size: 12px; color: #8b7355; cursor: pointer; text-decoration: underline; display: none; }}
@@ -987,9 +989,9 @@ HTML_TEMPLATE = """\
       if (isT) {{ cl += ' today'; }}
       c.className = cl;
       if (t) {{
-        c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:-2px;">' + (t.em || '') + '</span>';
+        c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;">🐾</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:-2px;">' + (t.em || '') + '</span>';
       }} else {{
-        c.innerHTML = '<span class="cd-num">' + d + '</span>';
+        c.innerHTML = '<span class="cd-num">' + d + '</span><span class="cd-paw">🐾</span>';
       }}
       if (t) {{
         c.title = t.nt;
