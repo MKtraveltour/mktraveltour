@@ -784,6 +784,7 @@ HTML_TEMPLATE = """\
     'himatsuri': {{
       img: 'https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp',
       title: '鞍馬の火祭×くらま温泉 癒し旅',
+      date: '📷 2025年10月22日 関係者撮影',
       desc: '年に一度、鞍馬の夜を燃やす伝統の火祭。巨大な松明が山里を照らす幻想的な夜をくらま温泉でゆっくり締めくくります。',
       url: 'himatsuri2025.html',
       label: '当日のレポートを見る'
