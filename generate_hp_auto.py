@@ -391,6 +391,16 @@ HTML_TEMPLATE = """\
     .bnav-sub a:hover {{ background: #f0ebe2; color: #5c4a32; }}
     .bnav-sub a.active {{ color: #8b7355; font-weight: 500; background: #f5ede0; }}
     .new-badge {{ background: #c0392b; color: #fff; font-size: 10px; padding: 1px 6px; border-radius: 10px; font-weight: 500; }}
+    .season-popup-overlay {{ display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;align-items:center;justify-content:center; }}
+    .season-popup-overlay.show {{ display:flex; }}
+    .season-popup {{ background:#fff;border-radius:12px;overflow:hidden;max-width:420px;width:90%; }}
+    .season-popup img {{ width:100%;height:220px;object-fit:cover;display:block; }}
+    .season-popup-body {{ padding:16px; }}
+    .season-popup-title {{ font-size:14px;font-weight:500;color:#3c2e1e;margin-bottom:8px; }}
+    .season-popup-desc {{ font-size:12px;color:#7c6040;line-height:1.7;margin-bottom:12px; }}
+    .season-popup-btn {{ display:block;text-align:center;background:#8b7355;color:#fff;border-radius:6px;padding:9px;font-size:13px;font-weight:500;margin-bottom:8px; }}
+    .season-popup-btn:hover {{ background:#7a6448; }}
+    .season-popup-close {{ display:block;text-align:center;font-size:12px;color:#999;cursor:pointer; }}
     .blog-new-btn {{ margin: 14px 14px 0; background: #8b7355; color: #fff; border-radius: 6px; padding: 9px 10px; font-size: 12px; text-align: center; cursor: pointer; font-weight: 500; }}
     .blog-new-btn:hover {{ background: #7a6448; }}
     .content {{ padding: 18px; background: #fff; }}
@@ -531,23 +541,23 @@ HTML_TEMPLATE = """\
         <div style="border-radius:6px;border:1px dashed #c5b8a8;height:40px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#aaa;margin-bottom:8px;cursor:pointer;">写真を追加</div>
         <!-- 夏祭り -->
         <div style="font-size:11px;color:#8b7355;font-weight:500;padding:4px 6px 4px;">☀️ 夏祭り</div>
-        <a href="https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/" target="_blank" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;">
+        <div onclick="openSeasonPopup('furin')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
           <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;">
             <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250707_%E6%AD%A3%E5%AF%BF%E9%99%A2_%E9%A2%A8%E9%88%B4%E3%81%BE%E3%81%A4%E3%82%8A-%E8%A5%BF%E5%B7%9D%20(6).jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
             <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
             <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🔔 風鈴まつり</span>
           </div>
-        </a>
+        </div>
         <div style="border-radius:6px;border:1px dashed #c5b8a8;height:40px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#aaa;margin-bottom:8px;cursor:pointer;">写真を追加</div>
         <!-- 紅葉の秋 -->
         <div style="font-size:11px;color:#8b7355;font-weight:500;padding:4px 6px 4px;">🍁 紅葉の秋</div>
-        <a href="https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/" target="_blank" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;">
+        <div onclick="openSeasonPopup('himatsuri')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
           <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;background:#3a2a1a;">
             <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;opacity:0.85;">
             <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
             <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🔥 鞍馬の火祭</span>
           </div>
-        </a>
+        </div>
         <div style="border-radius:6px;border:1px dashed #c5b8a8;height:40px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#aaa;margin-bottom:8px;cursor:pointer;">写真を追加</div>
         <!-- 冬の情緒 -->
         <div style="font-size:11px;color:#8b7355;font-weight:500;padding:4px 6px 4px;">❄️ 冬の情緒</div>
@@ -743,9 +753,54 @@ HTML_TEMPLATE = """\
 
 </div><!-- /.page-wrap -->
 
+<!-- 季節テーマ ポップアップ -->
+<div class="season-popup-overlay" id="season-popup-overlay" onclick="closeSeasonPopup()">
+  <div class="season-popup" onclick="event.stopPropagation()">
+    <img id="sp-img" src="" alt="">
+    <div class="season-popup-body">
+      <div class="season-popup-title" id="sp-title"></div>
+      <div class="season-popup-desc" id="sp-desc"></div>
+      <a class="season-popup-btn" id="sp-btn" href="#" target="_blank"></a>
+      <span class="season-popup-close" onclick="closeSeasonPopup()">閉じる ×</span>
+    </div>
+  </div>
+</div>
+
 <script>
   // ===== ツアーレポートデータ =====
   var TOUR_REPORTS = {tour_reports_js};
+
+  // ===== 季節テーマ ポップアップ =====
+  var SEASON_DATA = {{
+    'furin': {{
+      img: 'https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250707_%E6%AD%A3%E5%AF%BF%E9%99%A2_%E9%A2%A8%E9%88%B4%E3%81%BE%E3%81%A4%E3%82%8A-%E8%A5%BF%E5%B7%9D%20(6).jpg',
+      title: '正寿院 風鈴まつり送迎プラン 2026',
+      desc: '6月〜9月の週末を中心に開催。色とりどりの風鈴が境内を彩る正寿院の夏。京都駅・宇治駅から送迎付きのお手軽プランです。',
+      url: 'https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/',
+      label: 'ツアー詳細を見る'
+    }},
+    'himatsuri': {{
+      img: 'https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp',
+      title: '鞍馬の火祭×くらま温泉 癒し旅',
+      desc: '年に一度、鞍馬の夜を燃やす伝統の火祭。巨大な松明が山里を照らす幻想的な夜をくらま温泉でゆっくり締めくくります。',
+      url: 'himatsuri2025.html',
+      label: '当日のレポートを見る'
+    }}
+  }};
+
+  function openSeasonPopup(key) {{
+    var d = SEASON_DATA[key];
+    if (!d) return;
+    document.getElementById('sp-img').src = d.img;
+    document.getElementById('sp-title').textContent = d.title;
+    document.getElementById('sp-desc').textContent = d.desc;
+    document.getElementById('sp-btn').href = d.url;
+    document.getElementById('sp-btn').textContent = d.label;
+    document.getElementById('season-popup-overlay').classList.add('show');
+  }}
+  function closeSeasonPopup() {{
+    document.getElementById('season-popup-overlay').classList.remove('show');
+  }}
 
   function tourFilter(tag, el) {{
     var cards = document.querySelectorAll('.tour-card');
