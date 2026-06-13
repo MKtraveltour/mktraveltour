@@ -187,12 +187,17 @@ def build_tour_cards(tours: dict) -> str:
         return result
 
     # 催行状況バッジ判定
-    def get_badge(statuses: list) -> tuple:
+    def get_badge(statuses: list, dates: list = None) -> tuple:
         """最も重要なステータスのバッジを返す (class, text)"""
         if not statuses:
             return ("br", "募集中")
         types = [s["type"] for s in statuses]
         if "confirmed" in types:
+            # 出発日が1日のみの場合は「催行確定」、複数の場合は「催行確定日あり」
+            if dates is not None:
+                valid_dates = [d for d in dates if re.search(r'\d+/\d+', d) and '～' not in d and not d.startswith('※') and '随時' not in d]
+                if len(valid_dates) == 1:
+                    return ("bc", "催行確定")
             return ("bc", "催行確定日あり")
         if "full" in types:
             return ("bfull", "満席")
@@ -245,7 +250,7 @@ def build_tour_cards(tours: dict) -> str:
         dates    = tour.get("dates", [])
 
         tag_items = get_tag_class(tags)
-        badge_cls, badge_text = get_badge(statuses)
+        badge_cls, badge_text = get_badge(statuses, dates)
         date_text = format_dates(dates)
         bg_color = bg_colors[i % len(bg_colors)]
 
