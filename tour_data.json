@@ -70,7 +70,7 @@
       "景色・写真",
       "京都西山"
     ],
-    "updated_at": "2026-06-13T16:06:45.588995",
+    "updated_at": "2026-06-13T16:28:48.899858",
     "error": null
   },
   "ayabe_ajisai": {
@@ -97,7 +97,7 @@
       "神社仏閣",
       "景色・写真"
     ],
-    "updated_at": "2026-06-13T16:06:45.925894",
+    "updated_at": "2026-06-13T16:28:49.220903",
     "error": null
   },
   "rousoku": {
@@ -109,7 +109,13 @@
     "dates": [
       "7/19(日)"
     ],
-    "statuses": [],
+    "statuses": [
+      {
+        "date": "7/19",
+        "label": "催行確定",
+        "type": "confirmed"
+      }
+    ],
     "tags": [
       "催行確定日あり",
       "神社仏閣",
@@ -121,7 +127,7 @@
       "日帰り旅行",
       "夏のツアー"
     ],
-    "updated_at": "2026-06-13T16:06:46.264004",
+    "updated_at": "2026-06-13T16:28:49.561573",
     "error": null
   },
   "himatsuri_stay": {
@@ -143,7 +149,7 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-06-13T16:06:46.616300",
+    "updated_at": "2026-06-13T16:28:49.871975",
     "error": null
   },
   "okuribi": {
@@ -172,7 +178,7 @@
       "乗合",
       "夏のツアー"
     ],
-    "updated_at": "2026-06-13T16:06:46.930889",
+    "updated_at": "2026-06-13T16:28:50.202399",
     "error": null
   },
   "kokoro_utsushi": {
@@ -196,7 +202,7 @@
       "期間限定",
       "送迎場所指定OK"
     ],
-    "updated_at": "2026-06-13T16:06:47.249921",
+    "updated_at": "2026-06-13T16:28:50.515290",
     "error": null
   },
   "satsuei": {
@@ -209,7 +215,13 @@
       "6/20(土)",
       "※1名様からお申込み可能ですが、6名様以上で催行いたします。"
     ],
-    "statuses": [],
+    "statuses": [
+      {
+        "date": "6/20",
+        "label": "催行確定",
+        "type": "confirmed"
+      }
+    ],
     "tags": [
       "催行確定日あり",
       "神社仏閣",
@@ -217,7 +229,7 @@
       "ガイド・講座",
       "期間限定"
     ],
-    "updated_at": "2026-06-13T16:06:47.578438",
+    "updated_at": "2026-06-13T16:28:50.803776",
     "error": null
   },
   "momidiya": {
@@ -244,7 +256,7 @@
       "夏のツアー",
       "夏旅"
     ],
-    "updated_at": "2026-06-13T16:06:47.907210",
+    "updated_at": "2026-06-13T16:28:51.115004",
     "error": null
   },
   "himatsuri_1day": {
@@ -256,7 +268,13 @@
     "dates": [
       "10/22(木)"
     ],
-    "statuses": [],
+    "statuses": [
+      {
+        "date": "10/22",
+        "label": "催行確定",
+        "type": "confirmed"
+      }
+    ],
     "tags": [
       "催行確定日あり",
       "神社仏閣",
@@ -266,7 +284,7 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-06-13T16:06:48.300516",
+    "updated_at": "2026-06-13T16:28:51.417887",
     "error": null
   },
   "furin_shojuin2026": {
@@ -339,7 +357,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-06-13T16:06:48.647642",
+    "updated_at": "2026-06-13T16:28:51.729933",
     "error": null
   },
   "migidaimonji2026": {
@@ -351,7 +369,13 @@
     "dates": [
       "8/16(日)"
     ],
-    "statuses": [],
+    "statuses": [
+      {
+        "date": "8/16",
+        "label": "催行確定",
+        "type": "confirmed"
+      }
+    ],
     "tags": [
       "催行確定日あり",
       "景色・写真",
@@ -363,295 +387,7 @@
       "乗合",
       "夏のツアー"
     ],
-    "updated_at": "2026-06-13T16:06:49.138475",
-    "error": null
-  },
-  "hanachozu": {
-    "key": "hanachozu",
-    "url": "https://travel.mk-group.co.jp/tourkyoto/2022hanachozu/",
-    "title": "毎月17日限定!!京都のかわいい花手水と心ときめく癒し旅 ～楊谷寺＆勝林寺巡り～",
-    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2025/02/main.png",
-    "price": "9,800円（税込）",
-    "dates": [
-      "随時催行",
-      "毎月17日開催（※11月17日を除く）"
-    ],
-    "statuses": [
-      {
-        "date": "6/17",
-        "label": "催行確定",
-        "type": "confirmed"
-      }
-    ],
-    "tags": [
-      "季節の花",
-      "催行確定日あり",
-      "神社仏閣",
-      "景色・写真",
-      "期間限定",
-      "通年開催",
-      "京都西山",
-      "京都タクシー観光",
-      "日帰り旅行"
-    ],
-    "updated_at": "2026-06-13T16:06:49.451870",
-    "error": null
-  },
-  "kodaiji_premium": {
-    "key": "kodaiji_premium",
-    "url": "https://travel.mk-group.co.jp/tourkyoto/kodaiji-premium/",
-    "title": "京の奥に触れる一日 ～ 非公開寺院「高台寺 岡林院」貸切拝観とオリジナル写経・茶の湯・精進美食の贅沢体験",
-    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/03/top-premium-1.png",
-    "price": "16,000円（税込）",
-    "dates": [
-      "6/27(土)"
-    ],
-    "statuses": [],
-    "tags": [
-      "京の特別体験 プレミアムシリーズ",
-      "神社仏閣",
-      "景色・写真",
-      "体験",
-      "ガイド・講座",
-      "歴史",
-      "伝統文化",
-      "期間限定",
-      "京都タクシー観光"
-    ],
-    "updated_at": "2026-06-13T16:06:49.785275",
-    "error": null
-  },
-  "kodaiji_toyokuni": {
-    "key": "kodaiji_toyokuni",
-    "url": "https://travel.mk-group.co.jp/tourkyoto/kodaiji-toyokuni/",
-    "title": "【募集終了】静寂に癒される　～高台寺、非公開寺院・岡林院と、豊国神社をめぐる”ねねと秀吉”の物語～",
-    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/03/top-toyotomi-1.png",
-    "price": "15,000円（税込）",
-    "dates": [
-      "6/14(日)"
-    ],
-    "statuses": [],
-    "tags": [
-      "京の特別体験 プレミアムシリーズ",
-      "神社仏閣",
-      "景色・写真",
-      "ガイド・講座",
-      "歴史",
-      "伝統文化",
-      "期間限定",
-      "京都タクシー観光"
-    ],
-    "updated_at": "2026-06-13T16:06:50.116746",
-    "error": null
-  },
-  "uma": {
-    "key": "uma",
-    "url": "https://travel.mk-group.co.jp/tourkyoto/eto-uma/",
-    "title": "物事が“うまく”進む一年に　馬ゆかりの社めぐり日帰りツアー",
-    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/01/top-1.jpg",
-    "price": "7,800円（税込）",
-    "dates": [
-      "随時催行",
-      "※1名様からお申込み可能ですが、4名様以上で催行いたします。"
-    ],
-    "statuses": [
-      {
-        "date": "7/11",
-        "label": "あと１名",
-        "type": "few"
-      }
-    ],
-    "tags": [
-      "催行確定日あり",
-      "神社仏閣",
-      "景色・写真",
-      "ガイド・講座",
-      "通年開催",
-      "送迎のみ",
-      "京都西山",
-      "京都タクシー観光",
-      "日帰り旅行"
-    ],
-    "updated_at": "2026-06-13T16:06:50.431783",
-    "error": null
-  },
-  "baikamo2026": {
-    "key": "baikamo2026",
-    "url": "https://travel.mk-group.co.jp/tourkyoto/baikamo2026/",
-    "title": "夏限定！清流に咲く梅花藻と、豊臣兄弟ゆかりの城下町・長浜さんぽ",
-    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/top-1.png",
-    "price": "14,000円（税込）",
-    "dates": [
-      "7/25(土)",
-      "8/2(日)",
-      "8/6(木)"
-    ],
-    "statuses": [
-      {
-        "date": "7/25",
-        "label": "あと３名",
-        "type": "few"
-      }
-    ],
-    "tags": [
-      "季節の花",
-      "催行確定日あり",
-      "神社仏閣",
-      "景色・写真",
-      "グルメ",
-      "滋賀タクシー観光",
-      "日帰り旅行",
-      "夏のツアー"
-    ],
-    "updated_at": "2026-06-13T16:06:51.876706",
-    "error": null
-  },
-  "maizuru_ajisai": {
-    "key": "maizuru_ajisai",
-    "url": "https://travel.mk-group.co.jp/tourkyoto/2026maizuruajisai/",
-    "title": "海とあじさいの絶景へ!!舞鶴あじさい名所と絶景めぐり旅",
-    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/top-maizuru.png",
-    "price": "13,800円（税込）",
-    "dates": [
-      "6/18(木)",
-      "6/20(土)",
-      "6/23(火)",
-      "6/26(金)",
-      "6/27(土)",
-      "6/28(日)",
-      "6/29(月)"
-    ],
-    "statuses": [
-      {
-        "date": "6/28",
-        "label": "あと5名",
-        "type": "few"
-      }
-    ],
-    "tags": [
-      "季節の花",
-      "催行確定日あり",
-      "神社仏閣",
-      "景色・写真"
-    ],
-    "updated_at": "2026-06-13T16:06:52.185296",
-    "error": null
-  },
-  "yawata": {
-    "key": "yawata",
-    "url": "https://travel.mk-group.co.jp/tourkyoto/yawata/",
-    "title": "京都・八幡の隠れた名所巡り ～流れ橋と歴史の旅～",
-    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2025/02/トップ-1.png",
-    "price": "7,800円（税込）",
-    "dates": [
-      "随時催行",
-      "毎週　金・土・日曜日運行（4名様以上で催行確定）"
-    ],
-    "statuses": [],
-    "tags": [
-      "神社仏閣",
-      "景色・写真",
-      "通年開催",
-      "送迎のみ",
-      "京都タクシー観光",
-      "日帰り旅行"
-    ],
-    "updated_at": "2026-06-13T16:06:52.558106",
-    "error": null
-  },
-  "shojuin_sogei": {
-    "key": "shojuin_sogei",
-    "url": "https://travel.mk-group.co.jp/tourkyoto/2021shojuin_sogei/",
-    "title": "タクシーで快適♪宇治田原を満喫！正寿院と寺社巡りの旅",
-    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2025/02/shojuin2.jpg",
-    "price": "6,800円～8,800円（税込）",
-    "dates": [
-      "随時催行",
-      "【シンプルコース：毎週 木・日運行】【満喫コース：毎週 金・土・日運行】いずれも4名様以上で催行確定"
-    ],
-    "statuses": [
-      {
-        "date": "6/5",
-        "label": "あと２名",
-        "type": "few"
-      },
-      {
-        "date": "7/10",
-        "label": "あと２名",
-        "type": "few"
-      },
-      {
-        "date": "6/25",
-        "label": "あと３名",
-        "type": "few"
-      }
-    ],
-    "tags": [
-      "神社仏閣",
-      "通年開催",
-      "送迎のみ",
-      "京都タクシー観光",
-      "日帰り旅行"
-    ],
-    "updated_at": "2026-06-13T16:06:52.874179",
-    "error": null
-  },
-  "yokokuji_shuttle": {
-    "key": "yokokuji_shuttle",
-    "url": "https://travel.mk-group.co.jp/tourkyoto/yokokuji_shuttletour/",
-    "title": "京都の隠れた名所ツアー ～ 長岡京の名刹＆花手水を楽しむ旅 ～",
-    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2025/02/yokokujitop2.jpg",
-    "price": "7,800円～8,800円（税込）",
-    "dates": [
-      "随時催行",
-      "※1名様からお申込み可能ですが、5名様以上で催行いたします。"
-    ],
-    "statuses": [
-      {
-        "date": "7/31",
-        "label": "あと４名",
-        "type": "few"
-      }
-    ],
-    "tags": [
-      "神社仏閣",
-      "景色・写真",
-      "通年開催",
-      "送迎のみ",
-      "京都西山",
-      "京都タクシー観光",
-      "日帰り旅行"
-    ],
-    "updated_at": "2026-06-13T16:06:53.205106",
-    "error": null
-  },
-  "narihira_nishiyama": {
-    "key": "narihira_nishiyama",
-    "url": "https://travel.mk-group.co.jp/tourkyoto/narihira-nishiyama/",
-    "title": "京都西山お手軽コース ～なりひら寺と西山三山を訪ねて～",
-    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/01/top-3.jpg",
-    "price": "9,800円（税込）",
-    "dates": [
-      "随時催行",
-      "※1名様からお申込み可能ですが、4名様以上で催行いたします。"
-    ],
-    "statuses": [
-      {
-        "date": "7/14",
-        "label": "あと２名",
-        "type": "few"
-      }
-    ],
-    "tags": [
-      "神社仏閣",
-      "景色・写真",
-      "通年開催",
-      "送迎のみ",
-      "京都西山",
-      "京都タクシー観光",
-      "日帰り旅行"
-    ],
-    "updated_at": "2026-06-13T16:06:53.553900",
+    "updated_at": "2026-06-13T16:28:52.034805",
     "error": null
   }
 }
