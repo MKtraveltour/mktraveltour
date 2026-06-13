@@ -131,12 +131,22 @@ def build_tour_js(tours: dict) -> str:
                     break
             if existing_idx is not None:
                 import re as _re
+                # 絵文字を追加
                 m2 = _re.search(r"em:'([^']*)'", lines[existing_idx])
                 if m2:
                     existing_em = m2.group(1)
                     if emoji and emoji not in existing_em:
                         lines[existing_idx] = lines[existing_idx].replace(
                             f"em:'{existing_em}'", f"em:'{existing_em}{emoji}'"
+                        )
+                # ステータスの優先順位：full > confirmed > few > tour
+                priority = {'confirmed': 3, 'full': 2, 'few': 1, 'tour': 0}
+                m3 = _re.search(r"st:'([^']*)'", lines[existing_idx])
+                if m3:
+                    existing_st = m3.group(1)
+                    if priority.get(t, 0) > priority.get(existing_st, 0):
+                        lines[existing_idx] = lines[existing_idx].replace(
+                            f"st:'{existing_st}'", f"st:'{t}'"
                         )
             else:
                 lines.append(
