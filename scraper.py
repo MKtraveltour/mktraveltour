@@ -29,8 +29,14 @@ TOUR_URLS = {
     "migidaimonji2026": "https://travel.mk-group.co.jp/tourkyoto/migidaimonji2026/",
     "hanachozu": "https://travel.mk-group.co.jp/tourkyoto/2022hanachozu/",
     "kodaiji_premium": "https://travel.mk-group.co.jp/tourkyoto/kodaiji-premium/",
-    "kodaiji_toyokuni": "https://travel.mk-group.co.jp/tourkyoto/kodaiji-toyokuni/",
-    "uma": "https://travel.mk-group.co.jp/tourkyoto/eto-uma/",
+    "kodaiji_toyokuni":   "https://travel.mk-group.co.jp/tourkyoto/kodaiji-toyokuni/",
+    "uma":                "https://travel.mk-group.co.jp/tourkyoto/eto-uma/",
+    "baikamo2026":        "https://travel.mk-group.co.jp/tourkyoto/baikamo2026/",
+    "maizuru_ajisai":     "https://travel.mk-group.co.jp/tourkyoto/2026maizuruajisai/",
+    "yawata":             "https://travel.mk-group.co.jp/tourkyoto/yawata/",
+    "shojuin_sogei":      "https://travel.mk-group.co.jp/tourkyoto/2021shojuin_sogei/",
+    "yokokuji_shuttle":   "https://travel.mk-group.co.jp/tourkyoto/yokokuji_shuttletour/",
+    "narihira_nishiyama": "https://travel.mk-group.co.jp/tourkyoto/narihira-nishiyama/",
 }
 
 HEADERS = {
