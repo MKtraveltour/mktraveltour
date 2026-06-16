@@ -542,8 +542,9 @@ HTML_TEMPLATE = """\
          style="width:100%;height:100%;object-fit:cover;opacity:0.3;">
   </div>
   <div style="position:relative;z-index:1;">
-    <h1>MKトラベル手帳</h1>
-    <p>ＭＫドライバーが案内する、ここだけの京都体験</p>
+    <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/mk_logo.png" alt="MKグループ" style="height:36px;margin-bottom:8px;filter:brightness(0) invert(1);">
+    <h1>トラベル手帳</h1>
+    <p>ＭＫが案内する、ここだけの京都体験</p>
   </div>
 </div>
 
