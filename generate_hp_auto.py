@@ -621,6 +621,14 @@ HTML_TEMPLATE = """\
     </div>
 
     <div class="bnav-category" style="border-bottom:none">
+      <div class="bnav-cat-label" onclick="toggleSection(this)">過去のツアー <i class="ti ti-chevron-down"></i></div>
+      <div class="bnav-sub" style="display:none;">
+        <a href="https://www.mk-group.co.jp/mktravel/list_008" target="_blank"><i class="ti ti-chevron-right"></i>📁 2026年</a>
+        <a href="https://www.mk-group.co.jp/mktravel/list_008_2025" target="_blank"><i class="ti ti-chevron-right"></i>📁 2025年</a>
+        <a href="https://www.mk-group.co.jp/mktravel/list_008_2024" target="_blank"><i class="ti ti-chevron-right"></i>📁 2024年</a>
+      </div>
+    </div>
+    <div class="bnav-category" style="border-bottom:none">
     <div class="blog-new-btn"><i class="ti ti-edit"></i> 新規投稿</div>
   </aside>
 
@@ -639,13 +647,34 @@ HTML_TEMPLATE = """\
         <button onclick="calMove(1)">&gt;</button>
       </div>
       <div id="cal-grid-area" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;"></div>
-      <div class="cal-legend">
+      <!-- 翌月ミニカレンダー -->
+      <div style="position:relative;margin-top:4px;">
+        <div id="next-cal-wrap" style="position:absolute;right:0;bottom:0;width:220px;background:#fff;border:1px solid #e0d8cc;border-radius:8px;padding:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);z-index:2;">
+          <div style="text-align:center;font-size:11px;font-weight:500;color:#5c4a32;margin-bottom:6px;">
+            <i class="ti ti-calendar" style="font-size:11px;vertical-align:-1px;margin-right:3px;"></i>
+            <span id="next-cal-label"></span>
+          </div>
+          <div id="next-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;"></div>
+        </div>
+      </div>
+      <div class="cal-legend" style="margin-top:8px;">
         <div class="cl-item"><div class="cl-dot" style="background:#f0e8d8;border:1px solid #c5b8a8;"></div>ツアーあり</div>
         <div class="cl-item"><div class="cl-dot" style="background:#8b7355;"></div>催行確定</div>
         <div class="cl-item"><div class="cl-dot" style="background:#c0392b;"></div>満席</div>
         <div class="cl-item"><div class="cl-dot" style="outline:2px solid #8b7355;outline-offset:-1px;"></div>本日</div>
       </div>
       <p style="font-size:11px;color:#999;margin-top:8px;">※色付き日付をクリックするとツアー詳細ページを開きます</p>
+    </div>
+
+    <!-- 造成日記 -->
+    <div id="article-section">
+      <div class="section-header">
+        <div class="section-title">
+          <i class="ti ti-notebook" style="font-size:14px;vertical-align:-2px;margin-right:5px;"></i>
+          ツアー日記 / 担当者からのお知らせ
+        </div>
+      </div>
+      {articles_html}
     </div>
 
     <!-- 募集中ツアー -->
@@ -688,14 +717,7 @@ HTML_TEMPLATE = """\
     </div>
 
 
-    <!-- ツアー日記 -->
-    <div class="section-header" style="margin-top:16px;">
-      <div class="section-title">
-        <i class="ti ti-notebook" style="font-size:14px;vertical-align:-2px;margin-right:5px;"></i>
-        ツアー日記 / 担当者からのお知らせ
-      </div>
-    </div>
-    {articles_html}
+
     <div style="background:#fff;border:1px solid #e0d8cc;border-radius:10px;padding:20px;margin-bottom:20px;">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
         <div style="width:40px;height:40px;border-radius:50%;background:#000;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
@@ -764,12 +786,7 @@ HTML_TEMPLATE = """\
       <a href="https://www.instagram.com/mktravel.jp/" target="_blank" class="sns-btn sns-insta"><i class="ti ti-brand-instagram" style="font-size:15px"></i>Instagram</a>
       <a href="https://www.youtube.com/c/MKofficial_ch" target="_blank" class="sns-btn sns-youtube"><i class="ti ti-brand-youtube" style="font-size:15px"></i>YouTube</a>
     </div>
-    <div class="sb-block">
-      <div class="sb-title">過去のツアー</div>
-      <a href="https://www.mk-group.co.jp/mktravel/list_008" target="_blank" class="past-item">📁 2026年</a>
-      <a href="https://www.mk-group.co.jp/mktravel/list_008_2025" target="_blank" class="past-item">📁 2025年</a>
-      <a href="https://www.mk-group.co.jp/mktravel/list_008_2024" target="_blank" class="past-item">📁 2024年</a>
-    </div>
+
     <div class="sb-block" style="background:#fdf5e8;border-color:#e0c88a">
       <div style="font-size:12px;font-weight:500;color:#5c4a32;margin-bottom:5px">マイページ</div>
       <div style="font-size:12px;color:#7c5c2e;margin-bottom:8px">予約確認・お気に入り管理</div>
@@ -1065,6 +1082,43 @@ HTML_TEMPLATE = """\
   var CY = new Date().getFullYear();
   var CM = new Date().getMonth() + 1;
 
+  function drawNextCal(y, m) {{
+    var nm = m + 1; var ny = y;
+    if (nm > 12) {{ nm = 1; ny++; }}
+    var lbl = document.getElementById('next-cal-label');
+    var grid = document.getElementById('next-cal-grid');
+    if (!lbl || !grid) return;
+    lbl.textContent = ny + '年' + MN[nm-1];
+    grid.innerHTML = '';
+    for (var i = 0; i < 7; i++) {{
+      var h = document.createElement('div');
+      h.style.cssText = 'text-align:center;font-size:9px;color:#999;padding:2px 0;';
+      h.textContent = DL[i];
+      grid.appendChild(h);
+    }}
+    var fd = new Date(ny, nm-1, 1).getDay();
+    var ld = new Date(ny, nm, 0).getDate();
+    for (var i = 0; i < fd; i++) {{
+      var b = document.createElement('div'); grid.appendChild(b);
+    }}
+    for (var d = 1; d <= ld; d++) {{
+      var c = document.createElement('div');
+      var k = ny + '-' + nm + '-' + d;
+      var t = TOUR[k];
+      var st = t ? t.st : '';
+      c.style.cssText = 'text-align:center;font-size:10px;padding:3px 1px;border-radius:3px;' +
+        (st === 'confirmed' ? 'background:#8b7355;color:#fff;font-weight:500;' :
+         st === 'full' ? 'background:#c0392b;color:#fff;font-weight:500;' :
+         st ? 'background:#f0e8d8;color:#5c4a32;' : 'color:#666;');
+      c.textContent = d;
+      if (t) {{
+        c.style.cursor = 'pointer';
+        (function(k) {{ c.onclick = function() {{ tourFilterByDate(k); }}; }})(k);
+      }}
+      grid.appendChild(c);
+    }}
+  }}
+
   function drawCal(y, m) {{
     var lbl  = document.getElementById('cal-month-label');
     var grid = document.getElementById('cal-grid-area');
@@ -1110,9 +1164,11 @@ HTML_TEMPLATE = """\
     if (CM > 12) {{ CM = 1; CY++; }}
     if (CM < 1)  {{ CM = 12; CY--; }}
     drawCal(CY, CM);
+    drawNextCal(CY, CM);
   }}
 
   drawCal(CY, CM);
+  drawNextCal(CY, CM);
 </script>
 </body>
 </html>
