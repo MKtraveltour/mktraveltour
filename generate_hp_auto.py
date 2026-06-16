@@ -555,13 +555,19 @@ HTML_TEMPLATE = """\
   <aside class="blog-nav">
     <div class="blog-nav-title"><i class="ti ti-notebook"></i>ツアー日記</div>
     <div class="bnav-category">
-      <div class="bnav-cat-label">造成日記 <i class="ti ti-chevron-down"></i></div>
-      <div class="bnav-sub">
-        <a href="#"><i class="ti ti-chevron-right"></i>すべて</a>
-        <a href="#" class="active" style="gap:6px"><span style="display:flex;align-items:center;gap:4px"><i class="ti ti-chevron-right"></i>New！</span><span class="new-badge">3</span></a>
-        <a href="#"><i class="ti ti-chevron-right"></i>企画のたまご</a>
-        <a href="#"><i class="ti ti-chevron-right"></i>レポート</a>
-        <a href="#"><i class="ti ti-chevron-right"></i>完成！</a>
+      <div class="bnav-cat-label" onclick="toggleSection(this)">造成日記 <i class="ti ti-chevron-down"></i></div>
+      <div class="bnav-sub" style="display:none;">
+        <a href="#" onclick="filterArticles('all', this)"><i class="ti ti-chevron-right"></i>すべて</a>
+        <div class="bnav-season-label" onclick="toggleSeason(this)" id="new-label">
+          <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>New！</span>
+
+        </div>
+        <div class="bnav-season-body" id="new-articles-body">
+          {new_articles_nav}
+        </div>
+        <a href="#" onclick="filterArticles('企画のたまご', this)"><i class="ti ti-chevron-right"></i>企画のたまご</a>
+        <a href="#" onclick="filterArticles('レポート', this)"><i class="ti ti-chevron-right"></i>レポート</a>
+        <a href="#" onclick="filterArticles('完成！', this)"><i class="ti ti-chevron-right"></i>完成！</a>
       </div>
     </div>
     <div class="bnav-category">
@@ -613,14 +619,7 @@ HTML_TEMPLATE = """\
         <div class="bnav-season-body"></div>
       </div>
     </div>
-    <div class="bnav-category">
-      <div class="bnav-cat-label">目的別 <i class="ti ti-chevron-down"></i></div>
-      <div class="bnav-sub">
-        <a href="#"><i class="ti ti-chevron-right"></i>イベント・お祭り</a>
-        <a href="#"><i class="ti ti-chevron-right"></i>体験・名所巡り</a>
-        <a href="#"><i class="ti ti-chevron-right"></i>歴史・社寺巡り</a>
-      </div>
-    </div>
+
     <div class="bnav-category" style="border-bottom:none">
     <div class="blog-new-btn"><i class="ti ti-edit"></i> 新規投稿</div>
   </aside>
@@ -666,6 +665,11 @@ HTML_TEMPLATE = """\
       <div class="ftab" onclick="tourFilter('flower', this)">季節の花</div>
       <div class="ftab" onclick="tourFilter('summer', this)">夏のツアー</div>
       <div class="ftab" onclick="tourFilter('autumn', this)">秋のツアー</div>
+    </div>
+    <div class="filter-tabs" style="margin-top:-4px;">
+      <div class="ftab" onclick="tourFilterStatus('confirmed', this)">✅ 催行確定</div>
+      <div class="ftab" onclick="tourFilterStatus('full', this)">🈵 満席</div>
+      <div class="ftab" onclick="tourFilterStatus('recruiting', this)">📢 募集中</div>
     </div>
     <div class="tour-count" id="tour-count"></div>
     <div class="tours-grid" id="tours-grid">
@@ -898,6 +902,42 @@ HTML_TEMPLATE = """\
     }}
   }}
 
+  function tourFilterStatus(status, el) {{
+    var cards = document.querySelectorAll('.tour-card');
+    var tabs = document.querySelectorAll('.ftab');
+    var count = 0;
+    tabs.forEach(function(t) {{ t.classList.remove('active'); }});
+    if (el) el.classList.add('active');
+    cards.forEach(function(c) {{
+      var badge = c.querySelector('.sbadge');
+      var badgeText = badge ? badge.textContent : '';
+      var show = false;
+      if (status === 'confirmed') show = badgeText.indexOf('催行確定') !== -1;
+      else if (status === 'full') show = badgeText === '満席';
+      else if (status === 'recruiting') show = badgeText === '募集中';
+      if (show) {{ c.classList.remove('hidden'); count++; }}
+      else {{ c.classList.add('hidden'); }}
+    }});
+    var note = document.getElementById('tour-count');
+    if (note) note.textContent = count + '件のツアーを表示中';
+  }}
+
+  function scrollToArticle(id) {{
+    var el = document.getElementById('article-' + id);
+    if (el) {{ el.scrollIntoView({{behavior: 'smooth', block: 'start'}}); }}
+  }}
+
+  function filterArticles(cat, el) {{
+    var posts = document.querySelectorAll('.news-post');
+    posts.forEach(function(p) {{
+      if (cat === 'all' || p.getAttribute('data-category') === cat) {{
+        p.style.display = 'block';
+      }} else {{
+        p.style.display = 'none';
+      }}
+    }});
+  }}
+
   function toggleSeason(el) {{
     var body = el.nextElementSibling;
     var isOpen = el.classList.contains('open');
@@ -1105,6 +1145,13 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
     # 造成日記記事HTMLを生成
     articles_html = ""
     new_count = sum(1 for a in articles if a.get("category") == "New！")
+    # ナビ用：New！記事のタイトルリスト
+    new_articles_nav = ""
+    for art in articles:
+        if art.get("category") == "New！":
+            aid = art.get("id", "")
+            title = art.get("title", "")
+            new_articles_nav += f'<a href="#article-{aid}" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle(\'{aid}\')">{title}</a>'
     for art in articles:
         cat = art.get("category", "")
         cat_color = {"New！": "#c0392b", "企画のたまご": "#e67e22", "レポート": "#2980b9", "完成！": "#27ae60"}.get(cat, "#8b7355")
@@ -1112,8 +1159,9 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
         for p in art.get("photos", []):
             photos_html += f'<img src="{p}" style="width:100%;border-radius:6px;margin-top:8px;object-fit:cover;max-height:200px;" alt="{art.get("title","")}">'
         text_html = art.get("text", "").replace("\n", "<br>")
+        aid = art.get("id", "")
         articles_html += f'''
-      <div class="news-post" data-category="{cat}">
+      <div class="news-post" data-category="{cat}" id="article-{aid}">
         <div class="news-meta">
           <div class="nav-avatar">{art.get("author","?")[0]}</div>
           <div>
@@ -1134,6 +1182,7 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
         sidebar_status=sidebar_status,
         tour_reports_js=tour_reports_js,
         articles_html=articles_html,
+        new_articles_nav=new_articles_nav,
         new_count=new_count,
     )
 
