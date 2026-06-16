@@ -43,16 +43,6 @@
         "type": "confirmed"
       },
       {
-        "date": "6/16",
-        "label": "催行確定",
-        "type": "confirmed"
-      },
-      {
-        "date": "6/15",
-        "label": "催行確定",
-        "type": "confirmed"
-      },
-      {
         "date": "6/27",
         "label": "催行確定",
         "type": "confirmed"
@@ -70,7 +60,7 @@
       "景色・写真",
       "京都西山"
     ],
-    "updated_at": "2026-06-13T17:24:38.299226",
+    "updated_at": "2026-06-16T12:26:11.630103",
     "error": null
   },
   "ayabe_ajisai": {
@@ -97,7 +87,7 @@
       "神社仏閣",
       "景色・写真"
     ],
-    "updated_at": "2026-06-13T17:24:38.585179",
+    "updated_at": "2026-06-16T12:26:11.908623",
     "error": null
   },
   "rousoku": {
@@ -127,7 +117,7 @@
       "日帰り旅行",
       "夏のツアー"
     ],
-    "updated_at": "2026-06-13T17:24:38.937925",
+    "updated_at": "2026-06-16T12:26:12.204300",
     "error": null
   },
   "himatsuri_stay": {
@@ -149,7 +139,7 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-06-13T17:24:39.267279",
+    "updated_at": "2026-06-16T12:26:12.504778",
     "error": null
   },
   "okuribi": {
@@ -178,7 +168,7 @@
       "乗合",
       "夏のツアー"
     ],
-    "updated_at": "2026-06-13T17:24:39.635384",
+    "updated_at": "2026-06-16T12:26:12.807986",
     "error": null
   },
   "kokoro_utsushi": {
@@ -202,7 +192,7 @@
       "期間限定",
       "送迎場所指定OK"
     ],
-    "updated_at": "2026-06-13T17:24:40.053676",
+    "updated_at": "2026-06-16T12:26:13.121204",
     "error": null
   },
   "satsuei": {
@@ -229,7 +219,7 @@
       "ガイド・講座",
       "期間限定"
     ],
-    "updated_at": "2026-06-13T17:24:40.434896",
+    "updated_at": "2026-06-16T12:26:13.424438",
     "error": null
   },
   "momidiya": {
@@ -256,7 +246,7 @@
       "夏のツアー",
       "夏旅"
     ],
-    "updated_at": "2026-06-13T17:24:40.807153",
+    "updated_at": "2026-06-16T12:26:13.772066",
     "error": null
   },
   "himatsuri_1day": {
@@ -284,7 +274,7 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-06-13T17:24:41.145998",
+    "updated_at": "2026-06-16T12:26:14.072084",
     "error": null
   },
   "furin_shojuin2026": {
@@ -299,54 +289,44 @@
     ],
     "statuses": [
       {
-        "date": "6/1",
-        "label": "催行確定",
-        "type": "confirmed"
-      },
-      {
-        "date": "6/13",
-        "label": "催行確定",
-        "type": "confirmed"
-      },
-      {
-        "date": "6/19",
-        "label": "催行確定",
-        "type": "confirmed"
+        "date": "7/2",
+        "label": "あと２名",
+        "type": "few"
       },
       {
         "date": "8/14",
-        "label": "催行確定",
-        "type": "confirmed"
+        "label": "あと２名",
+        "type": "few"
       },
       {
         "date": "6/20",
-        "label": "催行確定",
-        "type": "confirmed"
+        "label": "あと３名",
+        "type": "few"
       },
       {
         "date": "7/5",
-        "label": "催行確定",
-        "type": "confirmed"
+        "label": "あと３名",
+        "type": "few"
       },
       {
         "date": "7/11",
-        "label": "催行確定",
-        "type": "confirmed"
+        "label": "あと３名",
+        "type": "few"
       },
       {
         "date": "7/12",
-        "label": "催行確定",
-        "type": "confirmed"
+        "label": "あと３名",
+        "type": "few"
       },
       {
         "date": "8/23",
-        "label": "催行確定",
-        "type": "confirmed"
+        "label": "あと３名",
+        "type": "few"
       },
       {
         "date": "9/19",
-        "label": "催行確定",
-        "type": "confirmed"
+        "label": "あと３名",
+        "type": "few"
       }
     ],
     "tags": [
@@ -357,7 +337,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-06-13T17:24:41.472131",
+    "updated_at": "2026-06-16T12:26:14.369509",
     "error": null
   },
   "migidaimonji2026": {
@@ -387,7 +367,7 @@
       "乗合",
       "夏のツアー"
     ],
-    "updated_at": "2026-06-13T17:24:41.830844",
+    "updated_at": "2026-06-16T12:26:14.654475",
     "error": null
   },
   "himatsuri2026": {
@@ -415,7 +395,7 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-06-13T17:24:42.179376",
+    "updated_at": "2026-06-16T12:26:14.931943",
     "error": null
   }
 }

@@ -73,7 +73,7 @@
     .tours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
     .tour-card.hidden { display: none; }
     .cd.selected { outline: 2px solid #e8a0b0; outline-offset: -2px; }
-    .cd-paw { display: none; filter: sepia(1) saturate(3) hue-rotate(300deg) brightness(1.3); font-size: 16px; line-height: 1; text-align: center; }
+    .cd-paw { display: none; filter: sepia(1) saturate(3) hue-rotate(300deg) brightness(1.3); font-size: 26px; line-height: 1; text-align: center; }
     .filter-note { font-size: 12px; color: var(--color-text-secondary, #888); background: #f5f0e8; border-radius: 6px; padding: 8px 12px; margin-bottom: 12px; display: none; }
     .filter-note.show { display: block; }
     .reset-link { font-size: 12px; color: #8b7355; cursor: pointer; text-decoration: underline; display: none; }
@@ -156,7 +156,7 @@
   </div>
 </div>
 
-<p class="updated-note">最終更新: 2026年06月13日 17:24</p>
+<p class="updated-note">最終更新: 2026年06月16日 12:26</p>
 
 <div class="page-wrap">
 
@@ -178,6 +178,13 @@
       <div class="bnav-sub" style="padding:8px 8px;">
         <!-- 春の京都 -->
         <div style="font-size:11px;color:#8b7355;font-weight:500;padding:4px 6px 4px;">🌸 春の京都</div>
+        <div onclick="openSeasonPopup('sakura')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
+          <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;">
+            <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250409_oonodam%20dr%20teramoto.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+            <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
+            <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🌸 美山・大野ダム</span>
+          </div>
+        </div>
         <div style="border-radius:6px;border:1px dashed #c5b8a8;height:40px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#aaa;margin-bottom:8px;cursor:pointer;">写真を追加</div>
         <!-- 夏祭り -->
         <div style="font-size:11px;color:#8b7355;font-weight:500;padding:4px 6px 4px;">☀️ 夏祭り</div>
@@ -351,7 +358,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/photo_yokokuji/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="exp summer" data-dates="2026-6-8">
+      <div class="tour-card" data-tags="summer exp" data-dates="2026-6-8">
         <div class="tour-img" style="background:#3a2a1a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/04/momidiya-1.png" alt="京都・高雄「もみぢ家」で川床ランチと金閣寺＆高雄エリア フリー観光" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge br" style="z-index:1;">募集中</div>
@@ -377,10 +384,10 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="event" data-dates="2026-6-1,2026-6-13,2026-6-19,2026-8-14,2026-6-20,2026-7-5,2026-7-11,2026-7-12,2026-8-23,2026-9-19">
+      <div class="tour-card" data-tags="event" data-dates="2026-6-1,2026-7-2,2026-8-14,2026-6-20,2026-7-5,2026-7-11,2026-7-12,2026-8-23,2026-9-19">
         <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2024/04/2021shojuin_furin_bn.jpg" alt="正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
-          <div class="sbadge bc" style="z-index:1;">催行確定日あり</div>
+          <div class="sbadge bfw" style="z-index:1;">あと２名</div>
         </div>
         <div class="tour-body">
           <div class="tour-tags"><span class="ttag tev">イベント・お祭り</span></div>
@@ -390,7 +397,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="history summer event" data-dates="2026-8-16">
+      <div class="tour-card" data-tags="event summer history" data-dates="2026-8-16">
         <div class="tour-img" style="background:#4a7c6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/okuribi2.png" alt="京都の夏を送る夜～御所から望む右大文字と湯葉懐石～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bc" style="z-index:1;">催行確定</div>
@@ -572,6 +579,13 @@
 
   // ===== 季節テーマ ポップアップ =====
   var SEASON_DATA = {
+    'sakura': {
+      img: 'https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250409_oonodam%20dr%20teramoto.jpg',
+      title: '美山・大野ダム',
+      date: '📷 2025年4月9日 ドライバー寺本撮影',
+      desc: '春の美山、大野ダムのほとりに咲く桜。青い水面と山々を背景に、白とピンクの桜が美しく広がります。',
+      links: []
+    },
     'furin': {
       img: 'https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250707_%E6%AD%A3%E5%AF%BF%E9%99%A2_%E9%A2%A8%E9%88%B4%E3%81%BE%E3%81%A4%E3%82%8A-%E8%A5%BF%E5%B7%9D%20(6).jpg',
       title: '正寿院 風鈴まつり送迎プラン 2026',
@@ -745,15 +759,15 @@
       TOUR['2026-6-20'] = {st:'confirmed', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～ 催行確定', em:'🌸🔔'};
       TOUR['2026-6-21'] = {st:'confirmed', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～ 催行確定', em:'🌸🍃'};
       TOUR['2026-6-29'] = {st:'confirmed', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～ 催行確定', em:'🌸'};
-      TOUR['2026-6-16'] = {st:'confirmed', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～ 催行確定', em:'🌸'};
-      TOUR['2026-6-15'] = {st:'confirmed', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～ 催行確定', em:'🌸'};
       TOUR['2026-6-27'] = {st:'confirmed', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～ 催行確定', em:'🌸'};
       TOUR['2026-6-28'] = {st:'confirmed', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～ 催行確定', em:'🌸'};
-      TOUR['2026-6-13'] = {st:'confirmed', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸🍃🔔'};
+      TOUR['2026-6-13'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸🍃'};
       TOUR['2026-6-14'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸'};
+      TOUR['2026-6-15'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸'};
+      TOUR['2026-6-16'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸'};
       TOUR['2026-6-17'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸'};
       TOUR['2026-6-18'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸'};
-      TOUR['2026-6-19'] = {st:'confirmed', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸🔔'};
+      TOUR['2026-6-19'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸'};
       TOUR['2026-6-22'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸'};
       TOUR['2026-6-23'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸'};
       TOUR['2026-6-24'] = {st:'tour', ti:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', ur:_u_ajisai_harf, nt:'京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～', em:'🌸'};
@@ -774,13 +788,14 @@
       TOUR['2026-6-8'] = {st:'tour', ti:'京都・高雄「もみぢ家」で川床ランチと金閣寺＆高雄エリア フリー観光', ur:_u_momidiya, nt:'京都・高雄「もみぢ家」で川床ランチと金閣寺＆高雄エリア フリー観光', em:'🍽'};
       var _u_himatsuri_1day = 'https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/';
       var _u_furin_shojuin2026 = 'https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/';
-      TOUR['2026-6-1'] = {st:'confirmed', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 催行確定', em:'🔔'};
-      TOUR['2026-8-14'] = {st:'confirmed', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 催行確定', em:'🔔'};
-      TOUR['2026-7-5'] = {st:'confirmed', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 催行確定', em:'🔔'};
-      TOUR['2026-7-11'] = {st:'confirmed', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 催行確定', em:'🔔'};
-      TOUR['2026-7-12'] = {st:'confirmed', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 催行確定', em:'🔔'};
-      TOUR['2026-8-23'] = {st:'confirmed', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 催行確定', em:'🔔'};
-      TOUR['2026-9-19'] = {st:'confirmed', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 催行確定', em:'🔔'};
+      TOUR['2026-7-2'] = {st:'few', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 あと２名', em:'🔔'};
+      TOUR['2026-8-14'] = {st:'few', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 あと２名', em:'🔔'};
+      TOUR['2026-7-5'] = {st:'few', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 あと３名', em:'🔔'};
+      TOUR['2026-7-11'] = {st:'few', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 あと３名', em:'🔔'};
+      TOUR['2026-7-12'] = {st:'few', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 あと３名', em:'🔔'};
+      TOUR['2026-8-23'] = {st:'few', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 あと３名', em:'🔔'};
+      TOUR['2026-9-19'] = {st:'few', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】 あと３名', em:'🔔'};
+      TOUR['2026-6-1'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🔔'};
       var _u_migidaimonji2026 = 'https://travel.mk-group.co.jp/tourkyoto/migidaimonji2026/';
       var _u_himatsuri2026 = 'https://travel.mk-group.co.jp/tourkyoto/kuramanohimatsuri2026/';
 

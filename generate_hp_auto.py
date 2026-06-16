@@ -458,7 +458,7 @@ HTML_TEMPLATE = """\
     .tours-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }}
     .tour-card.hidden {{ display: none; }}
     .cd.selected {{ outline: 2px solid #e8a0b0; outline-offset: -2px; }}
-    .cd-paw {{ display: none; filter: sepia(1) saturate(3) hue-rotate(300deg) brightness(1.3); font-size: 16px; line-height: 1; text-align: center; }}
+    .cd-paw {{ display: none; filter: sepia(1) saturate(3) hue-rotate(300deg) brightness(1.3); font-size: 26px; line-height: 1; text-align: center; }}
     .filter-note {{ font-size: 12px; color: var(--color-text-secondary, #888); background: #f5f0e8; border-radius: 6px; padding: 8px 12px; margin-bottom: 12px; display: none; }}
     .filter-note.show {{ display: block; }}
     .reset-link {{ font-size: 12px; color: #8b7355; cursor: pointer; text-decoration: underline; display: none; }}
@@ -563,6 +563,13 @@ HTML_TEMPLATE = """\
       <div class="bnav-sub" style="padding:8px 8px;">
         <!-- 春の京都 -->
         <div style="font-size:11px;color:#8b7355;font-weight:500;padding:4px 6px 4px;">🌸 春の京都</div>
+        <div onclick="openSeasonPopup('sakura')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
+          <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;">
+            <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250409_oonodam%20dr%20teramoto.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+            <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
+            <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🌸 美山・大野ダム</span>
+          </div>
+        </div>
         <div style="border-radius:6px;border:1px dashed #c5b8a8;height:40px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#aaa;margin-bottom:8px;cursor:pointer;">写真を追加</div>
         <!-- 夏祭り -->
         <div style="font-size:11px;color:#8b7355;font-weight:500;padding:4px 6px 4px;">☀️ 夏祭り</div>
@@ -798,6 +805,13 @@ HTML_TEMPLATE = """\
 
   // ===== 季節テーマ ポップアップ =====
   var SEASON_DATA = {{
+    'sakura': {{
+      img: 'https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250409_oonodam%20dr%20teramoto.jpg',
+      title: '美山・大野ダム',
+      date: '📷 2025年4月9日 ドライバー寺本撮影',
+      desc: '春の美山、大野ダムのほとりに咲く桜。青い水面と山々を背景に、白とピンクの桜が美しく広がります。',
+      links: []
+    }},
     'furin': {{
       img: 'https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250707_%E6%AD%A3%E5%AF%BF%E9%99%A2_%E9%A2%A8%E9%88%B4%E3%81%BE%E3%81%A4%E3%82%8A-%E8%A5%BF%E5%B7%9D%20(6).jpg',
       title: '正寿院 風鈴まつり送迎プラン 2026',
