@@ -545,7 +545,8 @@ HTML_TEMPLATE = """\
       .sp-tab.active {{ border-bottom-color:#8b7355;color:#5c4a32; }}
       .sp-panel {{ display:none;background:#faf8f5;border-bottom:1px solid #e0d8cc;padding:12px 16px; }}
       .sp-panel.active {{ display:block; }}
-      .sp-panel .bnav-sub {{ display:block !important; }}
+      .sp-panel .bnav-sub {{ display:block; }}
+      .sp-panel .bnav-cat-label {{ display:none; }}
       .sp-panel .bnav-season-body {{ display:none; }}
     }}
     @media (max-width: 900px) {{
