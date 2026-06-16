@@ -28,6 +28,7 @@ TOUR_URLS = {
     "furin_shojuin2026": "https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/",
     "migidaimonji2026": "https://travel.mk-group.co.jp/tourkyoto/migidaimonji2026/",
     "himatsuri2026":    "https://travel.mk-group.co.jp/tourkyoto/kuramanohimatsuri2026/",
+    "miyama_ishida":    "https://travel.mk-group.co.jp/tourkyoto/miyama-ishida/",
 }
 
 HEADERS = {

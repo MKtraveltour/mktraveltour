@@ -67,6 +67,7 @@ TOUR_EMOJI = {
     '正寿院':   '🔔',
     '花手水':   '🌸',
     '西山':     '🍃',
+    '美山':     '🏡',
     'なりひら': '🍃',
     '写経':     '🍵',
     '茶の湯':   '🍵',
@@ -542,7 +543,7 @@ HTML_TEMPLATE = """\
          style="width:100%;height:100%;object-fit:cover;opacity:0.3;">
   </div>
   <div style="position:relative;z-index:1;">
-    <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/mk%20logo.png" alt="MKグループ" style="height:36px;margin-bottom:8px;filter:brightness(0) invert(1);">
+    <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/mklogo.png" alt="MKグループ" style="height:40px;margin-bottom:8px;">
     <h1>トラベル手帳</h1>
     <p>ＭＫが案内する、ここだけの京都体験</p>
   </div>
