@@ -667,14 +667,14 @@ HTML_TEMPLATE = """\
     </div>
 
 
-    <!-- ツアー日記（Xリンクボタン方式） -->
+    <!-- ツアー日記 -->
     <div class="section-header" style="margin-top:16px;">
       <div class="section-title">
         <i class="ti ti-notebook" style="font-size:14px;vertical-align:-2px;margin-right:5px;"></i>
         ツアー日記 / 担当者からのお知らせ
       </div>
-      <a href="https://x.com/mk_ryokou" target="_blank" class="see-all">Xで見る →</a>
     </div>
+    {articles_html}
     <div style="background:#fff;border:1px solid #e0d8cc;border-radius:10px;padding:20px;margin-bottom:20px;">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
         <div style="width:40px;height:40px;border-radius:50%;background:#000;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
@@ -1043,10 +1043,19 @@ HTML_TEMPLATE = """\
 """
 
 
-def generate(data_path: Path, output_path: Path) -> None:
+def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> None:
     """tour_data.json を読み込んでindex.htmlを生成"""
     with open(data_path, "r", encoding="utf-8") as f:
         tours = json.load(f)
+
+    # 造成日記記事を読み込む
+    articles_path = Path(data_path).parent / "articles.json"
+    articles = []
+    if articles_path.exists():
+        with open(articles_path, "r", encoding="utf-8") as f:
+            articles = json.load(f).get("articles", [])
+        # 日付の新しい順に並べる
+        articles.sort(key=lambda x: x.get("date", ""), reverse=True)
 
     updated_at = datetime.now().strftime("%Y年%m月%d日 %H:%M")
     tour_js       = build_tour_js(tours)
@@ -1057,12 +1066,39 @@ def generate(data_path: Path, output_path: Path) -> None:
     import json as _json
     tour_reports_js = _json.dumps(TOUR_REPORTS, ensure_ascii=False)
 
+    # 造成日記記事HTMLを生成
+    articles_html = ""
+    new_count = sum(1 for a in articles if a.get("category") == "New！")
+    for art in articles:
+        cat = art.get("category", "")
+        cat_color = {"New！": "#c0392b", "企画のたまご": "#e67e22", "レポート": "#2980b9", "完成！": "#27ae60"}.get(cat, "#8b7355")
+        photos_html = ""
+        for p in art.get("photos", []):
+            photos_html += f'<img src="{p}" style="width:100%;border-radius:6px;margin-top:8px;object-fit:cover;max-height:200px;" alt="{art.get("title","")}">'
+        text_html = art.get("text", "").replace("\n", "<br>")
+        articles_html += f'''
+      <div class="news-post" data-category="{cat}">
+        <div class="news-meta">
+          <div class="nav-avatar">{art.get("author","?")[0]}</div>
+          <div>
+            <div class="news-author">{art.get("author","")}</div>
+            <div class="news-dt">{art.get("date","")}</div>
+          </div>
+          <span style="margin-left:auto;font-size:10px;padding:2px 8px;border-radius:10px;background:{cat_color};color:#fff;">{cat}</span>
+        </div>
+        <div style="font-size:13px;font-weight:500;color:#3c2e1e;margin-bottom:6px;">{art.get("title","")}</div>
+        <div class="news-text">{text_html}</div>
+        {photos_html}
+      </div>'''
+
     html = HTML_TEMPLATE.format(
         updated_at=updated_at,
         tour_js=tour_js,
         tour_cards=tour_cards,
         sidebar_status=sidebar_status,
         tour_reports_js=tour_reports_js,
+        articles_html=articles_html,
+        new_count=new_count,
     )
 
     with open(output_path, "w", encoding="utf-8") as f:
@@ -1072,14 +1108,15 @@ def generate(data_path: Path, output_path: Path) -> None:
 
 def main():
     base = Path(__file__).parent
-    data_path   = base / "tour_data.json"
-    output_path = base / "index.html"
+    data_path     = base / "tour_data.json"
+    articles_path = base / "articles.json"
+    output_path   = base / "index.html"
 
     if not data_path.exists():
         print(f"❌ {data_path} が見つかりません。先に scraper.py を実行してください。")
         sys.exit(1)
 
-    generate(data_path, output_path)
+    generate(data_path, output_path, articles_path)
 
 
 if __name__ == "__main__":
