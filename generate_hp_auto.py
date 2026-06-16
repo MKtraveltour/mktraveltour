@@ -636,6 +636,17 @@ HTML_TEMPLATE = """\
   <main class="content">
     <p class="breadcrumb">ホーム &gt; <span>最新情報・募集中ツアー</span></p>
 
+    <!-- 造成日記 -->
+    <div id="article-section" style="margin-bottom:16px;">
+      <div class="section-header">
+        <div class="section-title">
+          <i class="ti ti-notebook" style="font-size:14px;vertical-align:-2px;margin-right:5px;"></i>
+          ツアー日記 / 担当者からのお知らせ
+        </div>
+      </div>
+      {articles_html}
+    </div>
+
     <!-- カレンダー -->
     <div class="calendar-wrap">
       <div class="cal-header">
@@ -647,34 +658,23 @@ HTML_TEMPLATE = """\
         <button onclick="calMove(1)">&gt;</button>
       </div>
       <div id="cal-grid-area" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;"></div>
-      <!-- 翌月ミニカレンダー -->
-      <div style="position:relative;margin-top:4px;">
-        <div id="next-cal-wrap" style="position:absolute;right:0;bottom:0;width:220px;background:#fff;border:1px solid #e0d8cc;border-radius:8px;padding:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);z-index:2;">
-          <div style="text-align:center;font-size:11px;font-weight:500;color:#5c4a32;margin-bottom:6px;">
-            <i class="ti ti-calendar" style="font-size:11px;vertical-align:-1px;margin-right:3px;"></i>
-            <span id="next-cal-label"></span>
-          </div>
-          <div id="next-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;"></div>
-        </div>
-      </div>
-      <div class="cal-legend" style="margin-top:8px;">
+      <div class="cal-legend" style="margin-top:10px;">
         <div class="cl-item"><div class="cl-dot" style="background:#f0e8d8;border:1px solid #c5b8a8;"></div>ツアーあり</div>
         <div class="cl-item"><div class="cl-dot" style="background:#8b7355;"></div>催行確定</div>
         <div class="cl-item"><div class="cl-dot" style="background:#c0392b;"></div>満席</div>
         <div class="cl-item"><div class="cl-dot" style="outline:2px solid #8b7355;outline-offset:-1px;"></div>本日</div>
       </div>
       <p style="font-size:11px;color:#999;margin-top:8px;">※色付き日付をクリックするとツアー詳細ページを開きます</p>
-    </div>
-
-    <!-- 造成日記 -->
-    <div id="article-section">
-      <div class="section-header">
-        <div class="section-title">
-          <i class="ti ti-notebook" style="font-size:14px;vertical-align:-2px;margin-right:5px;"></i>
-          ツアー日記 / 担当者からのお知らせ
+      <!-- 翌月ミニカレンダー -->
+      <div style="margin-top:12px;border-top:1px solid #e0d8cc;padding-top:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <div style="font-size:11px;font-weight:500;color:#5c4a32;">
+            <i class="ti ti-calendar" style="font-size:11px;vertical-align:-1px;margin-right:3px;"></i>
+            <span id="next-cal-label"></span>
+          </div>
         </div>
+        <div id="next-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;"></div>
       </div>
-      {articles_html}
     </div>
 
     <!-- 募集中ツアー -->
