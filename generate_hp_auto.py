@@ -425,6 +425,12 @@ HTML_TEMPLATE = """\
     .season-popup-btn {{ display:block;text-align:center;background:#8b7355;color:#fff;border-radius:6px;padding:9px;font-size:13px;font-weight:500;margin-bottom:8px; }}
     .season-popup-btn:hover {{ background:#7a6448; }}
     .season-popup-close {{ display:block;text-align:center;font-size:12px;color:#999;cursor:pointer; }}
+    .bnav-season-label {{ display:flex;align-items:center;justify-content:space-between;padding:7px 14px 7px 22px;font-size:11px;color:#7c6040;cursor:pointer;font-weight:500; }}
+    .bnav-season-label:hover {{ background:#f0ebe2;color:#5c4a32; }}
+    .bnav-season-label.open {{ color:#8b7355;background:#f5ede0; }}
+    .bnav-season-label.open i {{ transform:rotate(90deg); }}
+    .bnav-season-label i {{ transition:transform 0.2s; }}
+    .bnav-season-body {{ display:none;padding:0 8px 6px; }}
     .blog-new-btn {{ margin: 14px 14px 0; background: #8b7355; color: #fff; border-radius: 6px; padding: 9px 10px; font-size: 12px; text-align: center; cursor: pointer; font-weight: 500; }}
     .blog-new-btn:hover {{ background: #7a6448; }}
     .content {{ padding: 18px; background: #fff; }}
@@ -560,40 +566,51 @@ HTML_TEMPLATE = """\
     </div>
     <div class="bnav-category">
       <div class="bnav-cat-label" onclick="toggleSection(this)">季節・テーマ <i class="ti ti-chevron-down"></i></div>
-      <div class="bnav-sub" style="padding:8px 8px;">
+      <div class="bnav-sub" style="padding:4px 0;display:none;">
         <!-- 春の京都 -->
-        <div style="font-size:11px;color:#8b7355;font-weight:500;padding:4px 6px 4px;">🌸 春の京都</div>
-        <div onclick="openSeasonPopup('sakura')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
-          <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;">
-            <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250409_oonodam%20dr%20teramoto.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
-            <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
-            <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🌸 美山・大野ダム</span>
+        <div class="bnav-season-label" onclick="toggleSeason(this)">
+          <span>🌸 春の京都</span><i class="ti ti-chevron-right" style="font-size:11px;"></i>
+        </div>
+        <div class="bnav-season-body">
+          <div onclick="openSeasonPopup('sakura')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
+            <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;">
+              <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250409_oonodam%20dr%20teramoto.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+              <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
+              <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🌸 美山・大野ダム</span>
+            </div>
           </div>
         </div>
-        <div style="border-radius:6px;border:1px dashed #c5b8a8;height:40px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#aaa;margin-bottom:8px;cursor:pointer;">写真を追加</div>
         <!-- 夏祭り -->
-        <div style="font-size:11px;color:#8b7355;font-weight:500;padding:4px 6px 4px;">☀️ 夏祭り</div>
-        <div onclick="openSeasonPopup('furin')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
-          <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;">
-            <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250707_%E6%AD%A3%E5%AF%BF%E9%99%A2_%E9%A2%A8%E9%88%B4%E3%81%BE%E3%81%A4%E3%82%8A-%E8%A5%BF%E5%B7%9D%20(6).jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
-            <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
-            <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🔔 風鈴まつり</span>
+        <div class="bnav-season-label" onclick="toggleSeason(this)">
+          <span>☀️ 夏祭り</span><i class="ti ti-chevron-right" style="font-size:11px;"></i>
+        </div>
+        <div class="bnav-season-body">
+          <div onclick="openSeasonPopup('furin')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
+            <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;">
+              <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250707_%E6%AD%A3%E5%AF%BF%E9%99%A2_%E9%A2%A8%E9%88%B4%E3%81%BE%E3%81%A4%E3%82%8A-%E8%A5%BF%E5%B7%9D%20(6).jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+              <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
+              <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🔔 風鈴まつり</span>
+            </div>
           </div>
         </div>
-        <div style="border-radius:6px;border:1px dashed #c5b8a8;height:40px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#aaa;margin-bottom:8px;cursor:pointer;">写真を追加</div>
         <!-- 紅葉の秋 -->
-        <div style="font-size:11px;color:#8b7355;font-weight:500;padding:4px 6px 4px;">🍁 紅葉の秋</div>
-        <div onclick="openSeasonPopup('himatsuri')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
-          <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;background:#3a2a1a;">
-            <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;opacity:0.85;">
-            <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
-            <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🔥 鞍馬の火祭</span>
+        <div class="bnav-season-label" onclick="toggleSeason(this)">
+          <span>🍁 紅葉の秋</span><i class="ti ti-chevron-right" style="font-size:11px;"></i>
+        </div>
+        <div class="bnav-season-body">
+          <div onclick="openSeasonPopup('himatsuri')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
+            <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;background:#3a2a1a;">
+              <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;opacity:0.85;">
+              <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
+              <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🔥 鞍馬の火祭</span>
+            </div>
           </div>
         </div>
-        <div style="border-radius:6px;border:1px dashed #c5b8a8;height:40px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#aaa;margin-bottom:8px;cursor:pointer;">写真を追加</div>
         <!-- 冬の情緒 -->
-        <div style="font-size:11px;color:#8b7355;font-weight:500;padding:4px 6px 4px;">❄️ 冬の情緒</div>
-        <div style="border-radius:6px;border:1px dashed #c5b8a8;height:40px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#aaa;margin-bottom:4px;cursor:pointer;">写真を追加</div>
+        <div class="bnav-season-label" onclick="toggleSeason(this)">
+          <span>❄️ 冬の情緒</span><i class="ti ti-chevron-right" style="font-size:11px;"></i>
+        </div>
+        <div class="bnav-season-body"></div>
       </div>
     </div>
     <div class="bnav-category">
@@ -867,6 +884,25 @@ HTML_TEMPLATE = """\
   }}
   function closeSeasonPopup() {{
     document.getElementById('season-popup-overlay').classList.remove('show');
+  }}
+
+  function toggleSection(el) {{
+    var sub = el.nextElementSibling;
+    var icon = el.querySelector('i');
+    if (sub.style.display === 'none' || sub.style.display === '') {{
+      sub.style.display = 'block';
+      if (icon) icon.style.transform = 'rotate(180deg)';
+    }} else {{
+      sub.style.display = 'none';
+      if (icon) icon.style.transform = '';
+    }}
+  }}
+
+  function toggleSeason(el) {{
+    var body = el.nextElementSibling;
+    var isOpen = el.classList.contains('open');
+    el.classList.toggle('open', !isOpen);
+    body.style.display = isOpen ? 'none' : 'block';
   }}
 
   function tourFilter(tag, el) {{
