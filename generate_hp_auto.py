@@ -540,7 +540,7 @@ HTML_TEMPLATE = """\
   <div style="position:absolute;inset:0;overflow:hidden;">
     <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/hero-bg.png"
          alt="ヒーロー背景"
-         style="width:100%;height:100%;object-fit:cover;opacity:0.3;">
+         style="width:100%;height:100%;object-fit:cover;opacity:0.15;">
   </div>
   <div style="position:relative;z-index:1;">
     <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/mktaxilogo.png" alt="MKグループ" style="height:40px;margin-bottom:8px;">
@@ -1213,11 +1213,13 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
     for art in articles:
         cat = art.get("category", "")
         cat_color = {"New！": "#c0392b", "企画のたまご": "#e67e22", "レポート": "#2980b9", "完成！": "#27ae60"}.get(cat, "#8b7355")
+        photos = art.get("photos", [])
         photos_html = ""
-        for p in art.get("photos", []):
-            photos_html += f'<img src="{p}" style="width:100%;border-radius:6px;margin-top:8px;object-fit:cover;max-height:200px;" alt="{art.get("title","")}">'
+        if photos:
+            photos_html = f'<div style="flex:0 0 220px;max-width:220px;"><img src="{photos[0]}" style="width:100%;border-radius:6px;object-fit:cover;height:160px;" alt="{art.get("title","")}"></div>'
         text_html = art.get("text", "").replace("\n", "<br>")
         aid = art.get("id", "")
+        content_style = "display:flex;gap:14px;align-items:flex-start;" if photos else ""
         articles_html += f'''
       <div class="news-post" data-category="{cat}" id="article-{aid}">
         <div class="news-meta">
@@ -1228,9 +1230,13 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
           </div>
           <span style="margin-left:auto;font-size:10px;padding:2px 8px;border-radius:10px;background:{cat_color};color:#fff;">{cat}</span>
         </div>
-        <div style="font-size:13px;font-weight:500;color:#3c2e1e;margin-bottom:6px;">{art.get("title","")}</div>
-        <div class="news-text">{text_html}</div>
-        {photos_html}
+        <div style="{content_style}">
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:13px;font-weight:500;color:#3c2e1e;margin-bottom:6px;">{art.get("title","")}</div>
+            <div class="news-text">{text_html}</div>
+          </div>
+          {photos_html}
+        </div>
       </div>'''
 
     html = HTML_TEMPLATE.format(
