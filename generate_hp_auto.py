@@ -403,7 +403,7 @@ HTML_TEMPLATE = """\
     .nav a:last-child {{ border-right: none; }}
     .nav a span {{ display: block; font-size: 11px; opacity: 0.7; margin-top: 2px; }}
     .nav a:hover {{ background: rgba(255,255,255,0.15); }}
-    .hero {{ background: #8b7355; color: #fff; padding: 28px 24px; text-align: center; position: relative; }}
+    .hero {{ background: #faf8f5; color: #fff; padding: 28px 24px; text-align: center; position: relative; }}
     .hero h1 {{ font-size: 22px; font-weight: 500; margin-bottom: 6px; color: #fff; }}
     .hero p  {{ font-size: 14px; color: #fff; opacity: 0.9; }}
     .page-wrap {{ display: grid; grid-template-columns: 160px 1fr 260px; max-width: 1200px; margin: 0 auto; background: #fff; }}
@@ -487,6 +487,14 @@ HTML_TEMPLATE = """\
     .btn-detail {{ display: block; text-align: center; background: #8b7355; color: #fff; border-radius: 5px; padding: 7px; font-size: 12px; cursor: pointer; font-weight: 500; transition: background 0.2s; }}
     .btn-detail:hover {{ background: #7a6448; }}
     .news-post {{ background: #fff; border: 1px solid #e0d8cc; border-radius: 8px; padding: 12px; margin-bottom: 8px; }}
+    .news-body {{ display:flex; gap:14px; align-items:flex-start; }}
+    .news-photo {{ flex:0 0 220px; max-width:220px; }}
+    .news-photo img {{ width:100%; border-radius:6px; object-fit:cover; height:160px; }}
+    @media (max-width: 600px) {{
+      .news-body {{ flex-direction:column; }}
+      .news-photo {{ flex:none; max-width:100%; width:100%; }}
+      .news-photo img {{ height:200px; width:100%; }}
+    }}
     .news-meta {{ display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }}
     .nav-avatar {{ width: 30px; height: 30px; border-radius: 50%; background: #8b7355; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 500; flex-shrink: 0; }}
     .news-author {{ font-size: 12px; font-weight: 500; color: #5c4a32; }}
@@ -1216,10 +1224,10 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
         photos = art.get("photos", [])
         photos_html = ""
         if photos:
-            photos_html = f'<div style="flex:0 0 220px;max-width:220px;"><img src="{photos[0]}" style="width:100%;border-radius:6px;object-fit:cover;height:160px;" alt="{art.get("title","")}"></div>'
+            photos_html = f'<div class="news-photo"><img src="{photos[0]}" alt="{art.get("title","")}"></div>'
         text_html = art.get("text", "").replace("\n", "<br>")
         aid = art.get("id", "")
-        content_style = "display:flex;gap:14px;align-items:flex-start;" if photos else ""
+
         articles_html += f'''
       <div class="news-post" data-category="{cat}" id="article-{aid}">
         <div class="news-meta">
@@ -1230,7 +1238,7 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
           </div>
           <span style="margin-left:auto;font-size:10px;padding:2px 8px;border-radius:10px;background:{cat_color};color:#fff;">{cat}</span>
         </div>
-        <div style="{content_style}">
+        <div class="news-body">
           <div style="flex:1;min-width:0;">
             <div style="font-size:13px;font-weight:500;color:#3c2e1e;margin-bottom:6px;">{art.get("title","")}</div>
             <div class="news-text">{text_html}</div>
