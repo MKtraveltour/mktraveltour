@@ -528,6 +528,26 @@ HTML_TEMPLATE = """\
     .login-btn {{ background: #8b7355; color: #fff; text-align: center; padding: 8px; border-radius: 6px; font-size: 12px; cursor: pointer; margin-top: 8px; font-weight: 500; }}
     .login-btn:hover {{ background: #7a6448; }}
     .updated-note {{ font-size: 11px; color: #aaa; text-align: right; padding: 4px 18px; background: #fff; }}
+    .sp-tabs {{ display:none; }}
+    @media (max-width: 900px) {{
+      .sp-tabs {{
+        display:flex;
+        background:#faf8f5;
+        border-bottom:2px solid #e0d8cc;
+        position:sticky;top:0;z-index:99;
+        overflow-x:auto;
+      }}
+      .sp-tab {{
+        flex:1;min-width:80px;padding:10px 6px;text-align:center;font-size:12px;
+        color:#8b7355;font-weight:500;cursor:pointer;white-space:nowrap;
+        border-bottom:3px solid transparent;
+      }}
+      .sp-tab.active {{ border-bottom-color:#8b7355;color:#5c4a32; }}
+      .sp-panel {{ display:none;background:#faf8f5;border-bottom:1px solid #e0d8cc;padding:12px 16px; }}
+      .sp-panel.active {{ display:block; }}
+      .sp-panel .bnav-sub {{ display:block !important; }}
+      .sp-panel .bnav-season-body {{ display:none; }}
+    }}
     @media (max-width: 900px) {{
       .page-wrap {{ grid-template-columns: 1fr; }}
       .blog-nav {{ display: none; }}
@@ -555,6 +575,34 @@ HTML_TEMPLATE = """\
     <h1 style="color:#8b7355;">旅とも手帳</h1>
     <p style="color:#8b7355;">ＭＫが案内する、ここだけの京都</p>
   </div>
+</div>
+
+<!-- スマホ用タブナビ -->
+<div class="sp-tabs" id="sp-tabs">
+  <div class="sp-tab active" onclick="spTab('diary', this)">📔 造成日記</div>
+  <div class="sp-tab" onclick="spTab('season', this)">🌸 季節・テーマ</div>
+  <div class="sp-tab" onclick="spTab('past', this)">📁 過去のツアー</div>
+</div>
+<div class="sp-panel active" id="sp-diary">
+  <a href="#" onclick="filterArticles('all',this);closeSp();" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">すべて</a>
+  <a href="#" onclick="filterArticles('New！',this);closeSp();" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">New！</a>
+  <a href="#" onclick="filterArticles('企画のたまご',this);closeSp();" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">企画のたまご</a>
+  <a href="#" onclick="filterArticles('レポート',this);closeSp();" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">レポート</a>
+  <a href="#" onclick="filterArticles('完成！',this);closeSp();" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">完成！</a>
+</div>
+<div class="sp-panel" id="sp-season">
+  <div style="font-size:12px;color:#8b7355;font-weight:500;padding:4px 0;">🌸 春の京都</div>
+  <a href="#" onclick="openSeasonPopup('sakura');closeSp();" style="display:block;padding:4px 0 4px 12px;font-size:12px;color:#5c4a32;">美山・大野ダム</a>
+  <div style="font-size:12px;color:#8b7355;font-weight:500;padding:4px 0;margin-top:6px;">☀️ 夏祭り</div>
+  <a href="#" onclick="openSeasonPopup('furin');closeSp();" style="display:block;padding:4px 0 4px 12px;font-size:12px;color:#5c4a32;">風鈴まつり</a>
+  <div style="font-size:12px;color:#8b7355;font-weight:500;padding:4px 0;margin-top:6px;">🍁 紅葉の秋</div>
+  <a href="#" onclick="openSeasonPopup('himatsuri');closeSp();" style="display:block;padding:4px 0 4px 12px;font-size:12px;color:#5c4a32;">鞍馬の火祭</a>
+  <div style="font-size:12px;color:#8b7355;font-weight:500;padding:4px 0;margin-top:6px;">❄️ 冬の情緒</div>
+</div>
+<div class="sp-panel" id="sp-past">
+  <a href="https://www.mk-group.co.jp/mktravel/list_008" target="_blank" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">📁 2026年</a>
+  <a href="https://www.mk-group.co.jp/mktravel/list_008_2025" target="_blank" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">📁 2025年</a>
+  <a href="https://www.mk-group.co.jp/mktravel/list_008_2024" target="_blank" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">📁 2024年</a>
 </div>
 
 <p class="updated-note">最終更新: {updated_at}</p>
@@ -638,8 +686,7 @@ HTML_TEMPLATE = """\
         <a href="https://www.mk-group.co.jp/mktravel/list_008_2024" target="_blank"><i class="ti ti-chevron-right"></i>📁 2024年</a>
       </div>
     </div>
-    <div class="bnav-category" style="border-bottom:none">
-    <div class="blog-new-btn"><i class="ti ti-edit"></i> 新規投稿</div>
+
   </aside>
 
   <!-- 中央：メインコンテンツ -->
@@ -915,6 +962,18 @@ HTML_TEMPLATE = """\
   }}
   function closeSeasonPopup() {{
     document.getElementById('season-popup-overlay').classList.remove('show');
+  }}
+
+  function spTab(id, el) {{
+    document.querySelectorAll('.sp-tab').forEach(function(t) {{ t.classList.remove('active'); }});
+    document.querySelectorAll('.sp-panel').forEach(function(p) {{ p.classList.remove('active'); }});
+    el.classList.add('active');
+    var panel = document.getElementById('sp-' + id);
+    if (panel) panel.classList.toggle('active');
+  }}
+  function closeSp() {{
+    document.querySelectorAll('.sp-panel').forEach(function(p) {{ p.classList.remove('active'); }});
+    document.querySelectorAll('.sp-tab').forEach(function(t) {{ t.classList.remove('active'); }});
   }}
 
   function toggleSection(el) {{
