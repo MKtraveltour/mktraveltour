@@ -40,6 +40,12 @@
     .season-popup-btn { display:block;text-align:center;background:#8b7355;color:#fff;border-radius:6px;padding:9px;font-size:13px;font-weight:500;margin-bottom:8px; }
     .season-popup-btn:hover { background:#7a6448; }
     .season-popup-close { display:block;text-align:center;font-size:12px;color:#999;cursor:pointer; }
+    .bnav-season-label { display:flex;align-items:center;justify-content:space-between;padding:7px 14px 7px 22px;font-size:11px;color:#7c6040;cursor:pointer;font-weight:500; }
+    .bnav-season-label:hover { background:#f0ebe2;color:#5c4a32; }
+    .bnav-season-label.open { color:#8b7355;background:#f5ede0; }
+    .bnav-season-label.open i { transform:rotate(90deg); }
+    .bnav-season-label i { transition:transform 0.2s; }
+    .bnav-season-body { display:none;padding:0 8px 6px; }
     .blog-new-btn { margin: 14px 14px 0; background: #8b7355; color: #fff; border-radius: 6px; padding: 9px 10px; font-size: 12px; text-align: center; cursor: pointer; font-weight: 500; }
     .blog-new-btn:hover { background: #7a6448; }
     .content { padding: 18px; background: #fff; }
@@ -156,7 +162,7 @@
   </div>
 </div>
 
-<p class="updated-note">最終更新: 2026年06月16日 13:10</p>
+<p class="updated-note">最終更新: 2026年06月16日 13:17</p>
 
 <div class="page-wrap">
 
@@ -175,40 +181,51 @@
     </div>
     <div class="bnav-category">
       <div class="bnav-cat-label" onclick="toggleSection(this)">季節・テーマ <i class="ti ti-chevron-down"></i></div>
-      <div class="bnav-sub" style="padding:8px 8px;">
+      <div class="bnav-sub" style="padding:4px 0;display:none;">
         <!-- 春の京都 -->
-        <div style="font-size:11px;color:#8b7355;font-weight:500;padding:4px 6px 4px;">🌸 春の京都</div>
-        <div onclick="openSeasonPopup('sakura')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
-          <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;">
-            <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250409_oonodam%20dr%20teramoto.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
-            <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
-            <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🌸 美山・大野ダム</span>
+        <div class="bnav-season-label" onclick="toggleSeason(this)">
+          <span>🌸 春の京都</span><i class="ti ti-chevron-right" style="font-size:11px;"></i>
+        </div>
+        <div class="bnav-season-body">
+          <div onclick="openSeasonPopup('sakura')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
+            <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;">
+              <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250409_oonodam%20dr%20teramoto.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+              <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
+              <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🌸 美山・大野ダム</span>
+            </div>
           </div>
         </div>
-        <div style="border-radius:6px;border:1px dashed #c5b8a8;height:40px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#aaa;margin-bottom:8px;cursor:pointer;">写真を追加</div>
         <!-- 夏祭り -->
-        <div style="font-size:11px;color:#8b7355;font-weight:500;padding:4px 6px 4px;">☀️ 夏祭り</div>
-        <div onclick="openSeasonPopup('furin')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
-          <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;">
-            <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250707_%E6%AD%A3%E5%AF%BF%E9%99%A2_%E9%A2%A8%E9%88%B4%E3%81%BE%E3%81%A4%E3%82%8A-%E8%A5%BF%E5%B7%9D%20(6).jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
-            <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
-            <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🔔 風鈴まつり</span>
+        <div class="bnav-season-label" onclick="toggleSeason(this)">
+          <span>☀️ 夏祭り</span><i class="ti ti-chevron-right" style="font-size:11px;"></i>
+        </div>
+        <div class="bnav-season-body">
+          <div onclick="openSeasonPopup('furin')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
+            <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;">
+              <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250707_%E6%AD%A3%E5%AF%BF%E9%99%A2_%E9%A2%A8%E9%88%B4%E3%81%BE%E3%81%A4%E3%82%8A-%E8%A5%BF%E5%B7%9D%20(6).jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+              <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
+              <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🔔 風鈴まつり</span>
+            </div>
           </div>
         </div>
-        <div style="border-radius:6px;border:1px dashed #c5b8a8;height:40px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#aaa;margin-bottom:8px;cursor:pointer;">写真を追加</div>
         <!-- 紅葉の秋 -->
-        <div style="font-size:11px;color:#8b7355;font-weight:500;padding:4px 6px 4px;">🍁 紅葉の秋</div>
-        <div onclick="openSeasonPopup('himatsuri')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
-          <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;background:#3a2a1a;">
-            <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;opacity:0.85;">
-            <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
-            <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🔥 鞍馬の火祭</span>
+        <div class="bnav-season-label" onclick="toggleSeason(this)">
+          <span>🍁 紅葉の秋</span><i class="ti ti-chevron-right" style="font-size:11px;"></i>
+        </div>
+        <div class="bnav-season-body">
+          <div onclick="openSeasonPopup('himatsuri')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
+            <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;background:#3a2a1a;">
+              <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;opacity:0.85;">
+              <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
+              <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🔥 鞍馬の火祭</span>
+            </div>
           </div>
         </div>
-        <div style="border-radius:6px;border:1px dashed #c5b8a8;height:40px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#aaa;margin-bottom:8px;cursor:pointer;">写真を追加</div>
         <!-- 冬の情緒 -->
-        <div style="font-size:11px;color:#8b7355;font-weight:500;padding:4px 6px 4px;">❄️ 冬の情緒</div>
-        <div style="border-radius:6px;border:1px dashed #c5b8a8;height:40px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#aaa;margin-bottom:4px;cursor:pointer;">写真を追加</div>
+        <div class="bnav-season-label" onclick="toggleSeason(this)">
+          <span>❄️ 冬の情緒</span><i class="ti ti-chevron-right" style="font-size:11px;"></i>
+        </div>
+        <div class="bnav-season-body"></div>
       </div>
     </div>
     <div class="bnav-category">
@@ -306,7 +323,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/rousokumatsuri2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="event autumn" data-dates="2026-10-22">
+      <div class="tour-card" data-tags="autumn event" data-dates="2026-10-22">
         <div class="tour-img" style="background:#3a2a1a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/宿泊トップ.png" alt="【限定宿泊プラン】 くらま温泉で迎える 鞍馬の火祭 特別な一夜" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge br" style="z-index:1;">募集中</div>
@@ -332,7 +349,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/okuribi2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="flower exp" data-dates="2026-6-12,2026-6-13,2026-6-21">
+      <div class="tour-card" data-tags="exp flower" data-dates="2026-6-12,2026-6-13,2026-6-21">
         <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/top-5.png" alt="こころうつし ―まだ言葉にならない想いに、そっと触れる―" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge br" style="z-index:1;">募集中</div>
@@ -371,7 +388,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/momijiya-takao2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="event autumn" data-dates="2026-10-22">
+      <div class="tour-card" data-tags="autumn event" data-dates="2026-10-22">
         <div class="tour-img" style="background:#6b8e6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/1day.png" alt="昼の鞍馬散策と夜の火祭へ  ～くらま温泉で過ごす特別な一日～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bc" style="z-index:1;">催行確定</div>
@@ -397,7 +414,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="summer event history" data-dates="2026-8-16">
+      <div class="tour-card" data-tags="summer history event" data-dates="2026-8-16">
         <div class="tour-img" style="background:#4a7c6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/okuribi2.png" alt="京都の夏を送る夜～御所から望む右大文字と湯葉懐石～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bc" style="z-index:1;">催行確定</div>
@@ -410,7 +427,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/migidaimonji2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="event autumn" data-dates="2026-10-22">
+      <div class="tour-card" data-tags="autumn event" data-dates="2026-10-22">
         <div class="tour-img" style="background:#3a2a1a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/夜トップ.png" alt="間近で体感する迫力！くらま温泉×鞍馬の火祭 観覧ツアー ～帰り時間を気にせず楽しむ特別な一夜～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bc" style="z-index:1;">催行確定</div>
@@ -654,6 +671,25 @@
   }
   function closeSeasonPopup() {
     document.getElementById('season-popup-overlay').classList.remove('show');
+  }
+
+  function toggleSection(el) {
+    var sub = el.nextElementSibling;
+    var icon = el.querySelector('i');
+    if (sub.style.display === 'none' || sub.style.display === '') {
+      sub.style.display = 'block';
+      if (icon) icon.style.transform = 'rotate(180deg)';
+    } else {
+      sub.style.display = 'none';
+      if (icon) icon.style.transform = '';
+    }
+  }
+
+  function toggleSeason(el) {
+    var body = el.nextElementSibling;
+    var isOpen = el.classList.contains('open');
+    el.classList.toggle('open', !isOpen);
+    body.style.display = isOpen ? 'none' : 'block';
   }
 
   function tourFilter(tag, el) {
