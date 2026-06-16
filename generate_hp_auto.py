@@ -529,6 +529,7 @@ HTML_TEMPLATE = """\
     .login-btn:hover {{ background: #7a6448; }}
     .updated-note {{ font-size: 11px; color: #aaa; text-align: right; padding: 4px 18px; background: #fff; }}
     .sp-tabs {{ display:none; }}
+    .sp-panel {{ display:none; }}
     @media (max-width: 900px) {{
       .sp-tabs {{
         display:flex;
