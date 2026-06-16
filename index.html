@@ -162,7 +162,7 @@
   </div>
 </div>
 
-<p class="updated-note">最終更新: 2026年06月16日 13:17</p>
+<p class="updated-note">最終更新: 2026年06月16日 13:32</p>
 
 <div class="page-wrap">
 
@@ -170,13 +170,19 @@
   <aside class="blog-nav">
     <div class="blog-nav-title"><i class="ti ti-notebook"></i>ツアー日記</div>
     <div class="bnav-category">
-      <div class="bnav-cat-label">造成日記 <i class="ti ti-chevron-down"></i></div>
-      <div class="bnav-sub">
-        <a href="#"><i class="ti ti-chevron-right"></i>すべて</a>
-        <a href="#" class="active" style="gap:6px"><span style="display:flex;align-items:center;gap:4px"><i class="ti ti-chevron-right"></i>New！</span><span class="new-badge">3</span></a>
-        <a href="#"><i class="ti ti-chevron-right"></i>企画のたまご</a>
-        <a href="#"><i class="ti ti-chevron-right"></i>レポート</a>
-        <a href="#"><i class="ti ti-chevron-right"></i>完成！</a>
+      <div class="bnav-cat-label" onclick="toggleSection(this)">造成日記 <i class="ti ti-chevron-down"></i></div>
+      <div class="bnav-sub" style="display:none;">
+        <a href="#" onclick="filterArticles('all', this)"><i class="ti ti-chevron-right"></i>すべて</a>
+        <div class="bnav-season-label" onclick="toggleSeason(this)" id="new-label">
+          <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>New！</span>
+
+        </div>
+        <div class="bnav-season-body" id="new-articles-body">
+          <a href="#article-001" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('001')">担当よりご挨拶</a>
+        </div>
+        <a href="#" onclick="filterArticles('企画のたまご', this)"><i class="ti ti-chevron-right"></i>企画のたまご</a>
+        <a href="#" onclick="filterArticles('レポート', this)"><i class="ti ti-chevron-right"></i>レポート</a>
+        <a href="#" onclick="filterArticles('完成！', this)"><i class="ti ti-chevron-right"></i>完成！</a>
       </div>
     </div>
     <div class="bnav-category">
@@ -228,14 +234,7 @@
         <div class="bnav-season-body"></div>
       </div>
     </div>
-    <div class="bnav-category">
-      <div class="bnav-cat-label">目的別 <i class="ti ti-chevron-down"></i></div>
-      <div class="bnav-sub">
-        <a href="#"><i class="ti ti-chevron-right"></i>イベント・お祭り</a>
-        <a href="#"><i class="ti ti-chevron-right"></i>体験・名所巡り</a>
-        <a href="#"><i class="ti ti-chevron-right"></i>歴史・社寺巡り</a>
-      </div>
-    </div>
+
     <div class="bnav-category" style="border-bottom:none">
     <div class="blog-new-btn"><i class="ti ti-edit"></i> 新規投稿</div>
   </aside>
@@ -282,6 +281,11 @@
       <div class="ftab" onclick="tourFilter('summer', this)">夏のツアー</div>
       <div class="ftab" onclick="tourFilter('autumn', this)">秋のツアー</div>
     </div>
+    <div class="filter-tabs" style="margin-top:-4px;">
+      <div class="ftab" onclick="tourFilterStatus('confirmed', this)">✅ 催行確定</div>
+      <div class="ftab" onclick="tourFilterStatus('full', this)">🈵 満席</div>
+      <div class="ftab" onclick="tourFilterStatus('recruiting', this)">📢 募集中</div>
+    </div>
     <div class="tour-count" id="tour-count"></div>
     <div class="tours-grid" id="tours-grid">
       <div class="tour-card" data-tags="flower" data-dates="2026-6-13,2026-6-14,2026-6-15,2026-6-16,2026-6-17,2026-6-18,2026-6-19,2026-6-20,2026-6-21,2026-6-22,2026-6-23,2026-6-24,2026-6-25,2026-6-26,2026-6-27,2026-6-28,2026-6-29,2026-6-30,2026-6-13">
@@ -310,7 +314,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/ayabe-ajisai2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="summer event" data-dates="2026-7-19">
+      <div class="tour-card" data-tags="event summer" data-dates="2026-7-19">
         <div class="tour-img" style="background:#4a7c6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/rousoku.png" alt="正寿院 ろうそくまつり送迎プラン【2026年】" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bc" style="z-index:1;">催行確定</div>
@@ -336,7 +340,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="summer event" data-dates="2026-8-16">
+      <div class="tour-card" data-tags="event summer" data-dates="2026-8-16">
         <div class="tour-img" style="background:#6b8e6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/okuribi.png" alt="【限定40名】京の夜空を彩る「五山の送り火」特別鑑賞ツアー" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bfull" style="z-index:1;">満席</div>
@@ -349,7 +353,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/okuribi2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="exp flower" data-dates="2026-6-12,2026-6-13,2026-6-21">
+      <div class="tour-card" data-tags="flower exp" data-dates="2026-6-12,2026-6-13,2026-6-21">
         <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/top-5.png" alt="こころうつし ―まだ言葉にならない想いに、そっと触れる―" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge br" style="z-index:1;">募集中</div>
@@ -375,7 +379,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/photo_yokokuji/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="summer exp" data-dates="2026-6-8">
+      <div class="tour-card" data-tags="exp summer" data-dates="2026-6-8">
         <div class="tour-img" style="background:#3a2a1a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/04/momidiya-1.png" alt="京都・高雄「もみぢ家」で川床ランチと金閣寺＆高雄エリア フリー観光" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge br" style="z-index:1;">募集中</div>
@@ -414,7 +418,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="summer history event" data-dates="2026-8-16">
+      <div class="tour-card" data-tags="event summer history" data-dates="2026-8-16">
         <div class="tour-img" style="background:#4a7c6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/okuribi2.png" alt="京都の夏を送る夜～御所から望む右大文字と湯葉懐石～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bc" style="z-index:1;">催行確定</div>
@@ -462,7 +466,7 @@
       </div>
     </div>
     
-      <div class="news-post" data-category="New！">
+      <div class="news-post" data-category="New！" id="article-001">
         <div class="news-meta">
           <div class="nav-avatar">石</div>
           <div>
@@ -683,6 +687,42 @@
       sub.style.display = 'none';
       if (icon) icon.style.transform = '';
     }
+  }
+
+  function tourFilterStatus(status, el) {
+    var cards = document.querySelectorAll('.tour-card');
+    var tabs = document.querySelectorAll('.ftab');
+    var count = 0;
+    tabs.forEach(function(t) { t.classList.remove('active'); });
+    if (el) el.classList.add('active');
+    cards.forEach(function(c) {
+      var badge = c.querySelector('.sbadge');
+      var badgeText = badge ? badge.textContent : '';
+      var show = false;
+      if (status === 'confirmed') show = badgeText.indexOf('催行確定') !== -1;
+      else if (status === 'full') show = badgeText === '満席';
+      else if (status === 'recruiting') show = badgeText === '募集中';
+      if (show) { c.classList.remove('hidden'); count++; }
+      else { c.classList.add('hidden'); }
+    });
+    var note = document.getElementById('tour-count');
+    if (note) note.textContent = count + '件のツアーを表示中';
+  }
+
+  function scrollToArticle(id) {
+    var el = document.getElementById('article-' + id);
+    if (el) { el.scrollIntoView({behavior: 'smooth', block: 'start'}); }
+  }
+
+  function filterArticles(cat, el) {
+    var posts = document.querySelectorAll('.news-post');
+    posts.forEach(function(p) {
+      if (cat === 'all' || p.getAttribute('data-category') === cat) {
+        p.style.display = 'block';
+      } else {
+        p.style.display = 'none';
+      }
+    });
   }
 
   function toggleSeason(el) {
