@@ -33,6 +33,7 @@ TOUR_URLS = {
     "yokokuji_shuttle": "https://travel.mk-group.co.jp/tourkyoto/yokokuji_shuttletour/",
     "shojuin_sogei":    "https://travel.mk-group.co.jp/tourkyoto/2021shojuin_sogei/",
     "uma":              "https://travel.mk-group.co.jp/tourkyoto/eto-uma/",
+    "narihira_nishiyama": "https://travel.mk-group.co.jp/tourkyoto/narihira-nishiyama/",
 }
 
 HEADERS = {

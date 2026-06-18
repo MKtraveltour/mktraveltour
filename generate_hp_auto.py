@@ -89,7 +89,7 @@ def get_tour_emoji(title: str) -> str:
 def build_tour_js(tours: dict) -> str:
     """tour_data.json からカレンダー用JSデータを生成"""
     lines = []
-    SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei"}
+    SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama"}
     for key, tour in tours.items():
         if key in SKIP_KEYS:
             continue
@@ -166,6 +166,7 @@ def build_tour_js(tours: dict) -> str:
         "uma": {"start": (2026,1,1), "end": (2026,12,31), "status": "tour"},
         "yokokuji_shuttle": {"start": (2026,1,1), "end": (2026,12,31), "status": "tour"},
         "shojuin_sogei":    {"start": (2026,1,1), "end": (2026,12,31), "status": "tour", "weekdays": {3,4,5,6}},
+        "narihira_nishiyama": {"start": (2026,1,1), "end": (2026,12,31), "status": "tour"},
     }
     for akey, aval in ALWAYS_ON_TOURS.items():
         if akey not in tours:
@@ -279,7 +280,7 @@ def build_tour_cards(tours: dict) -> str:
 
     bg_colors = ["#6b8e6b", "#7c6b4a", "#4a7c6b", "#3a2a1a"]
     cards_html = []
-    SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei"}
+    SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama"}
     for i, (key, tour) in enumerate(tours.items()):
         if key in SKIP_KEYS:
             continue
@@ -384,7 +385,7 @@ def build_tour_cards(tours: dict) -> str:
       </div>""")
 
     # 随時催行ツアーのカードを追加（スクレイパーカードは除外）
-    ALWAYS_ON_KEYS = ["uma", "yokokuji_shuttle", "shojuin_sogei"]
+    ALWAYS_ON_KEYS = ["uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama"]
     SKIP_KEYS = set(ALWAYS_ON_KEYS)  # 通常カードには表示しない
     for akey in ALWAYS_ON_KEYS:
         if akey not in tours:
@@ -420,7 +421,7 @@ def build_tour_cards(tours: dict) -> str:
 def build_sidebar_status(tours: dict) -> str:
     """右サイドバーの催行状況リストを生成"""
     items = []
-    SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei"}
+    SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama"}
     for key, tour in tours.items():
         if key in SKIP_KEYS:
             continue
