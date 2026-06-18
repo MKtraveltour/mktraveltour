@@ -162,6 +162,7 @@ def build_tour_js(tours: dict) -> str:
     ALWAYS_ON_TOURS = {
         "uma": {"start": (2026,1,1), "end": (2026,12,31), "status": "tour"},
         "yokokuji_shuttle": {"start": (2026,1,1), "end": (2026,12,31), "status": "tour"},
+        "shojuin_sogei":    {"start": (2026,1,1), "end": (2026,12,31), "status": "tour"},
     }
     for akey, aval in ALWAYS_ON_TOURS.items():
         if akey not in tours:
@@ -371,7 +372,7 @@ def build_tour_cards(tours: dict) -> str:
       </div>""")
 
     # 随時催行ツアーのカードを追加
-    ALWAYS_ON_KEYS = ["uma", "yokokuji_shuttle"]
+    ALWAYS_ON_KEYS = ["uma", "yokokuji_shuttle", "shojuin_sogei"]
     for akey in ALWAYS_ON_KEYS:
         if akey not in tours:
             continue
