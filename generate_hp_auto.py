@@ -117,6 +117,12 @@ def build_tour_js(tours: dict) -> str:
             "status": "tour",
             "label": "",
         },
+        "yokokuji_shuttle": {
+            "start": (2026, 1, 1),
+            "end":   (2026, 12, 31),
+            "status": "tour",
+            "label": "",
+        },
     }
     for akey, aval in ALWAYS_ON_TOURS.items():
         if akey not in tours:

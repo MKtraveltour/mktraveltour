@@ -30,6 +30,7 @@ TOUR_URLS = {
     "himatsuri2026":    "https://travel.mk-group.co.jp/tourkyoto/kuramanohimatsuri2026/",
     "miyama_ishida":    "https://travel.mk-group.co.jp/tourkyoto/miyama-ishida/",
     "yuzengiku2026":    "https://travel.mk-group.co.jp/tourkyoto/yuzengiku2026/",
+    "yokokuji_shuttle": "https://travel.mk-group.co.jp/tourkyoto/yokokuji_shuttletour/",
 }
 
 HEADERS = {
