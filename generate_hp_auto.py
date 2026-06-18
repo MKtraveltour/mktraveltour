@@ -1116,8 +1116,10 @@ HTML_TEMPLATE = """\
     var cards = document.querySelectorAll('#tours-grid .tour-card');
     var count = 0;
     cards.forEach(function(card) {{
-      var dates = (card.getAttribute('data-dates') || '').split(',');
-      if (dates.indexOf(dateKey) !== -1) {{ card.classList.remove('hidden'); count++; }}
+      var datesAttr = card.getAttribute('data-dates') || '';
+      var dates = datesAttr.split(',');
+      // data-datesが空（随時催行）か、該当日付があれば表示
+      if (datesAttr === '' || dates.indexOf(dateKey) !== -1) {{ card.classList.remove('hidden'); count++; }}
       else {{ card.classList.add('hidden'); }}
     }});
     document.querySelectorAll('.cd').forEach(function(c) {{
