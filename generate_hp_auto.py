@@ -397,13 +397,8 @@ def build_tour_cards(tours: dict) -> str:
         tags  = t.get("tags", [])
         tag_classes = get_tag_class(tags)
         tags_html = "".join(f'<span class="ttag {c}">{l}</span>' for c, l in tag_classes)
-        data_tags = " ".join(
-            "event" if "イベント" in l or "お祭り" in l else
-            "history" if "歴史" in l or "社寺" in l else
-            "exp" if "体験" in l or "名所" in l else
-            "flower" if "花" in l else "other"
-            for _, l in tag_classes
-        ) or "other"
+        # 随時催行カードはすべてのカテゴリタブで表示されるよう"all"相当にする
+        data_tags = "event exp history flower summer autumn other"
         img_html = (f'<img src="{img}" alt="{title}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display=\'none\'">') if img else ""
         cards_html.append(f"""      <div class="tour-card" data-tags="{data_tags}" data-dates="">
         <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
