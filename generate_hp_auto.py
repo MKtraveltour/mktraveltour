@@ -165,7 +165,7 @@ def build_tour_js(tours: dict) -> str:
     ALWAYS_ON_TOURS = {
         "uma": {"start": (2026,1,1), "end": (2026,12,31), "status": "tour"},
         "yokokuji_shuttle": {"start": (2026,1,1), "end": (2026,12,31), "status": "tour"},
-        "shojuin_sogei":    {"start": (2026,1,1), "end": (2026,12,31), "status": "tour"},
+        "shojuin_sogei":    {"start": (2026,1,1), "end": (2026,12,31), "status": "tour", "weekdays": {3,4,5,6}},
     }
     for akey, aval in ALWAYS_ON_TOURS.items():
         if akey not in tours:
@@ -183,7 +183,13 @@ def build_tour_js(tours: dict) -> str:
         ey, em2, ed = aval["end"]
         cur = _dtt.date(sy, sm, sd)
         end_d = _dtt.date(ey, em2, ed)
+        weekdays = aval.get("weekdays", None)  # Noneなら全日
         while cur <= end_d:
+            if weekdays is None or cur.weekday() in weekdays:
+                pass
+            else:
+                cur += _dtt.timedelta(days=1)
+                continue
             k = f"{cur.year}-{cur.month}-{cur.day}"
             existing_idx = None
             for i, line in enumerate(lines):
