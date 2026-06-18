@@ -68,6 +68,8 @@ TOUR_EMOJI = {
     '花手水':   '🌸',
     '西山':     '🍃',
     '美山':     '🏡',
+    '友禅菊':   '💜',
+    'メタセコイア': '🌲',
     'なりひら': '🍃',
     '写経':     '🍵',
     '茶の湯':   '🍵',
@@ -107,7 +109,44 @@ def build_tour_js(tours: dict) -> str:
                 if priority.get(new_type, 0) >= priority.get(existing, 0):
                     status_map[k] = {"type": new_type, "label": s["label"]}
 
-        # 出発日すべてを「ツアーあり」として登録（まだ登録されていない日付のみ）
+        # 随時催行ツアーの手動日付登録
+    ALWAYS_ON_TOURS = {
+        "uma": {
+            "start": (2026, 1, 1),
+            "end":   (2026, 12, 31),
+            "status": "tour",
+            "label": "",
+        },
+    }
+    for akey, aval in ALWAYS_ON_TOURS.items():
+        if akey not in tours:
+            continue
+        atour = tours[akey]
+        atitle = atour.get("title", "")
+        aurl   = atour.get("url", "")
+        aemoji = ""
+        for kw, em in TOUR_EMOJI.items():
+            if kw in atitle:
+                aemoji = em
+                break
+        sy, sm, sd = aval["start"]
+        ey, em2, ed = aval["end"]
+        import datetime as _dtt
+        cur = _dtt.date(sy, sm, sd)
+        end = _dtt.date(ey, em2, ed)
+        while cur <= end:
+            k = f"{cur.year}-{cur.month}-{cur.day}"
+            if k not in status_map:
+                status_map[k] = {
+                    "type": aval["status"],
+                    "label": aval["label"],
+                    "title": atitle,
+                    "url": aurl,
+                    "emoji": aemoji,
+                }
+            cur += _dtt.timedelta(days=1)
+
+    # 出発日すべてを「ツアーあり」として登録（まだ登録されていない日付のみ）
         for date_str in tour.get("dates", []):
             parsed = parse_date(date_str)
             if parsed:
@@ -1259,6 +1298,14 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
             articles = json.load(f).get("articles", [])
         # 日付の新しい順に並べる
         articles.sort(key=lambda x: x.get("date", ""), reverse=True)
+        # publish_atが設定されている場合は現在時刻と比較して非表示
+        from datetime import datetime as _dt
+        now = _dt.now()
+        articles = [
+            a for a in articles
+            if not a.get("publish_at") or
+            _dt.strptime(a["publish_at"], "%Y-%m-%d %H:%M") <= now
+        ]
 
     updated_at = datetime.now().strftime("%Y年%m月%d日 %H:%M")
     tour_js       = build_tour_js(tours)
