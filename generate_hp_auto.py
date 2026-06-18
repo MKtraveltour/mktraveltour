@@ -89,7 +89,10 @@ def get_tour_emoji(title: str) -> str:
 def build_tour_js(tours: dict) -> str:
     """tour_data.json からカレンダー用JSデータを生成"""
     lines = []
+    SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei"}
     for key, tour in tours.items():
+        if key in SKIP_KEYS:
+            continue
         if tour.get("error"):
             continue
         url = tour["url"]
@@ -270,7 +273,10 @@ def build_tour_cards(tours: dict) -> str:
 
     bg_colors = ["#6b8e6b", "#7c6b4a", "#4a7c6b", "#3a2a1a"]
     cards_html = []
+    SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei"}
     for i, (key, tour) in enumerate(tours.items()):
+        if key in SKIP_KEYS:
+            continue
         if tour.get("error"):
             # エラーの場合は準備中カード
             cards_html.append(f"""      <div class="tour-card" style="opacity:0.55;">
@@ -371,8 +377,9 @@ def build_tour_cards(tours: dict) -> str:
         </div>
       </div>""")
 
-    # 随時催行ツアーのカードを追加
+    # 随時催行ツアーのカードを追加（スクレイパーカードは除外）
     ALWAYS_ON_KEYS = ["uma", "yokokuji_shuttle", "shojuin_sogei"]
+    SKIP_KEYS = set(ALWAYS_ON_KEYS)  # 通常カードには表示しない
     for akey in ALWAYS_ON_KEYS:
         if akey not in tours:
             continue
@@ -412,7 +419,10 @@ def build_tour_cards(tours: dict) -> str:
 def build_sidebar_status(tours: dict) -> str:
     """右サイドバーの催行状況リストを生成"""
     items = []
+    SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei"}
     for key, tour in tours.items():
+        if key in SKIP_KEYS:
+            continue
         if tour.get("error"):
             continue
         title_short = tour["title"][:12] + ("…" if len(tour["title"]) > 12 else "")
@@ -856,42 +866,7 @@ HTML_TEMPLATE = """\
 
 
 
-    <div style="background:#fff;border:1px solid #e0d8cc;border-radius:10px;padding:20px;margin-bottom:20px;">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-        <div style="width:40px;height:40px;border-radius:50%;background:#000;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <i class="ti ti-brand-x" aria-hidden="true" style="color:#fff;font-size:18px;"></i>
-        </div>
-        <div>
-          <div style="font-size:13px;font-weight:500;color:#3c2e1e;">MKトラベル ツアー担当</div>
-          <div style="font-size:11px;color:#999;">@mk_ryokou</div>
-        </div>
-      </div>
-      <p style="font-size:13px;color:#5c4a32;line-height:1.8;margin-bottom:16px;">
-        ツアー造成の裏側や京都の旬な情報を日々Xで発信しています。<br>
-        ハッシュタグでツアーごとの投稿を確認できます。
-      </p>
-      <!-- ハッシュタグボタン -->
-      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;">
-        <a href="https://x.com/search?q=%23MK%E3%83%84%E3%82%A2%E3%83%BC+from%3Amk_ryokou&f=live" target="_blank"
-           style="background:#f5f0e8;color:#8b7355;padding:5px 12px;border-radius:20px;font-size:11px;text-decoration:none;border:1px solid #c5b8a8;">#MKツアー</a>
-        <a href="https://x.com/search?q=%23%E7%A5%87%E5%9C%92%E7%A5%AD2026+from%3Amk_ryokou&f=live" target="_blank"
-           style="background:#f5f0e8;color:#8b7355;padding:5px 12px;border-radius:20px;font-size:11px;text-decoration:none;border:1px solid #c5b8a8;">🎆 祇園祭2026</a>
-        <a href="https://x.com/search?q=%23%E3%81%82%E3%81%98%E3%81%95%E3%81%842026+from%3Amk_ryokou&f=live" target="_blank"
-           style="background:#f5f0e8;color:#8b7355;padding:5px 12px;border-radius:20px;font-size:11px;text-decoration:none;border:1px solid #c5b8a8;">🌸 あじさい2026</a>
-        <a href="https://x.com/search?q=%23%E9%9E%8D%E9%A6%AC%E7%81%AB%E7%A5%AD2026+from%3Amk_ryokou&f=live" target="_blank"
-           style="background:#f5f0e8;color:#8b7355;padding:5px 12px;border-radius:20px;font-size:11px;text-decoration:none;border:1px solid #c5b8a8;">🔥 鞍馬火祭2026</a>
-        <a href="https://x.com/search?q=%23%E3%82%8D%E3%81%86%E3%81%9D%E3%81%8F%E3%81%BE%E3%81%A4%E3%82%8A2026+from%3Amk_ryokou&f=live" target="_blank"
-           style="background:#f5f0e8;color:#8b7355;padding:5px 12px;border-radius:20px;font-size:11px;text-decoration:none;border:1px solid #c5b8a8;">🕯 ろうそくまつり2026</a>
-        <a href="https://x.com/search?q=%23%E4%BA%94%E5%B1%B1%E9%80%81%E3%82%8A%E7%81%AC2026+from%3Amk_ryokou&f=live" target="_blank"
-           style="background:#f5f0e8;color:#8b7355;padding:5px 12px;border-radius:20px;font-size:11px;text-decoration:none;border:1px solid #c5b8a8;">🏔 五山送り火2026</a>
-      </div>
-      <!-- Xで見るボタン -->
-      <a href="https://x.com/mk_ryokou" target="_blank"
-         style="display:flex;align-items:center;justify-content:center;gap:8px;background:#000;color:#fff;padding:10px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;">
-        <i class="ti ti-brand-x" aria-hidden="true" style="font-size:16px;"></i>
-        @mk_ryokou の投稿をすべて見る
-      </a>
-    </div>
+
 
     <!-- 当日の様子 -->
     <div class="section-header" style="margin-top:16px">
