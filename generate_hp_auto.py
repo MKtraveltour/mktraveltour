@@ -59,6 +59,7 @@ TOUR_EMOJI = {
     '右大文字': '🌙',
     '鞍馬':     '🔥',
     '馬':       '🐎',
+    'うまく':   '🐎',
     '梅花藻':   '🌿',
     '長浜':     '🏯',
     '舞鶴':     '🌊',
@@ -109,49 +110,6 @@ def build_tour_js(tours: dict) -> str:
                 if priority.get(new_type, 0) >= priority.get(existing, 0):
                     status_map[k] = {"type": new_type, "label": s["label"]}
 
-        # 随時催行ツアーの手動日付登録
-    ALWAYS_ON_TOURS = {
-        "uma": {
-            "start": (2026, 1, 1),
-            "end":   (2026, 12, 31),
-            "status": "tour",
-            "label": "",
-        },
-        "yokokuji_shuttle": {
-            "start": (2026, 1, 1),
-            "end":   (2026, 12, 31),
-            "status": "tour",
-            "label": "",
-        },
-    }
-    for akey, aval in ALWAYS_ON_TOURS.items():
-        if akey not in tours:
-            continue
-        atour = tours[akey]
-        atitle = atour.get("title", "")
-        aurl   = atour.get("url", "")
-        aemoji = ""
-        for kw, em in TOUR_EMOJI.items():
-            if kw in atitle:
-                aemoji = em
-                break
-        sy, sm, sd = aval["start"]
-        ey, em2, ed = aval["end"]
-        import datetime as _dtt
-        cur = _dtt.date(sy, sm, sd)
-        end = _dtt.date(ey, em2, ed)
-        while cur <= end:
-            k = f"{cur.year}-{cur.month}-{cur.day}"
-            if k not in status_map:
-                status_map[k] = {
-                    "type": aval["status"],
-                    "label": aval["label"],
-                    "title": atitle,
-                    "url": aurl,
-                    "emoji": aemoji,
-                }
-            cur += _dtt.timedelta(days=1)
-
     # 出発日すべてを「ツアーあり」として登録（まだ登録されていない日付のみ）
         for date_str in tour.get("dates", []):
             parsed = parse_date(date_str)
@@ -198,6 +156,46 @@ def build_tour_js(tours: dict) -> str:
                 lines.append(
                     f"      TOUR['{k}'] = {{st:'{t}', ti:'{title}', ur:{var_url}, nt:'{note}', em:'{emoji}'}};"
                 )
+
+    # 随時催行ツアー（ALWAYS_ON_TOURS）をJSに追加（通常ツアー処理の後）
+    import datetime as _dtt
+    ALWAYS_ON_TOURS = {
+        "uma": {"start": (2026,1,1), "end": (2026,12,31), "status": "tour"},
+        "yokokuji_shuttle": {"start": (2026,1,1), "end": (2026,12,31), "status": "tour"},
+    }
+    for akey, aval in ALWAYS_ON_TOURS.items():
+        if akey not in tours:
+            continue
+        atour = tours[akey]
+        atitle = atour.get("title", "")
+        aurl   = atour.get("url", "")
+        aemoji = ""
+        for kw, em in TOUR_EMOJI.items():
+            if kw in atitle and em not in aemoji:
+                aemoji += em
+        var_url2 = f"_u_{akey.replace('-','_')}"
+        lines.append(f"      var {var_url2} = '{aurl}';")
+        sy, sm, sd = aval["start"]
+        ey, em2, ed = aval["end"]
+        cur = _dtt.date(sy, sm, sd)
+        end_d = _dtt.date(ey, em2, ed)
+        while cur <= end_d:
+            k = f"{cur.year}-{cur.month}-{cur.day}"
+            existing_idx = None
+            for i, line in enumerate(lines):
+                if f"TOUR['{k}']" in line:
+                    existing_idx = i
+                    break
+            if existing_idx is not None:
+                import re as _re
+                m2 = _re.search(r"em:'([^']*)'", lines[existing_idx])
+                if m2 and aemoji and aemoji not in m2.group(1):
+                    lines[existing_idx] = lines[existing_idx].replace(
+                        f"em:'{m2.group(1)}'", f"em:'{m2.group(1)}{aemoji}'"
+                    )
+            else:
+                lines.append(f"      TOUR['{k}'] = {{st:'tour', ti:'{atitle}', ur:{var_url2}, nt:'{atitle}', em:'{aemoji}'}};")
+            cur += _dtt.timedelta(days=1)
 
     return "\n".join(lines)
 
@@ -367,6 +365,41 @@ def build_tour_cards(tours: dict) -> str:
           <div class="tour-tags">{tag_html}</div>
           <div class="tour-title">{title}{report_badge}</div>
           <div class="tour-date">{date_text}</div>
+          <div class="tour-price">大人1名 {price}</div>
+          <a href="{url}" target="_blank" class="btn-detail">詳細をみる</a>
+        </div>
+      </div>""")
+
+    # 随時催行ツアーのカードを追加
+    ALWAYS_ON_KEYS = ["uma", "yokokuji_shuttle"]
+    for akey in ALWAYS_ON_KEYS:
+        if akey not in tours:
+            continue
+        t = tours[akey]
+        title = t.get("title", "")
+        url   = t.get("url", "")
+        img   = t.get("image", "")
+        price = t.get("price", "")
+        tags  = t.get("tags", [])
+        tag_classes = get_tag_class(tags)
+        tags_html = "".join(f'<span class="ttag {c}">{l}</span>' for c, l in tag_classes)
+        data_tags = " ".join(
+            "event" if "イベント" in l or "お祭り" in l else
+            "history" if "歴史" in l or "社寺" in l else
+            "exp" if "体験" in l or "名所" in l else
+            "flower" if "花" in l else "other"
+            for _, l in tag_classes
+        ) or "other"
+        img_html = (f'<img src="{img}" alt="{title}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display=\'none\'">') if img else ""
+        cards_html.append(f"""      <div class="tour-card" data-tags="{data_tags}" data-dates="">
+        <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
+          {img_html}
+          <div class="sbadge br" style="z-index:1;">随時催行</div>
+        </div>
+        <div class="tour-body">
+          <div class="tour-tags">{tags_html}</div>
+          <div class="tour-title">{title}</div>
+          <div class="tour-date">随時催行</div>
           <div class="tour-price">大人1名 {price}</div>
           <a href="{url}" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
