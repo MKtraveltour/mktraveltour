@@ -1114,15 +1114,32 @@ HTML_TEMPLATE = """\
     if (note) note.textContent = cards.length + '件のツアーを表示中';
   }});
 
+  // 正寿院（宇治田原）は木(3)金(4)土(5)日(0)のみ表示
+  var SHOJUIN_WEEKDAYS = [0, 4, 5, 6]; // JS: 日=0,月=1,火=2,水=3,木=4,金=5,土=6
   function tourFilterByDate(dateKey) {{
+    var parts = dateKey.split('-');
+    var d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+    var dow = d.getDay(); // 0=日,1=月,...,6=土
     var cards = document.querySelectorAll('#tours-grid .tour-card');
     var count = 0;
     cards.forEach(function(card) {{
       var datesAttr = card.getAttribute('data-dates') || '';
       var dates = datesAttr.split(',');
-      // data-datesが空（随時催行）か、該当日付があれば表示
-      if (datesAttr === '' || dates.indexOf(dateKey) !== -1) {{ card.classList.remove('hidden'); count++; }}
-      else {{ card.classList.add('hidden'); }}
+      var title = card.querySelector('.tour-title') ? card.querySelector('.tour-title').textContent : '';
+      var isShojuin = title.indexOf('宇治田原') !== -1;
+      // 随時催行（data-dates空）の場合
+      if (datesAttr === '') {{
+        // 正寿院は木金土日のみ
+        if (isShojuin && SHOJUIN_WEEKDAYS.indexOf(dow) === -1) {{
+          card.classList.add('hidden');
+        }} else {{
+          card.classList.remove('hidden'); count++;
+        }}
+      }} else if (dates.indexOf(dateKey) !== -1) {{
+        card.classList.remove('hidden'); count++;
+      }} else {{
+        card.classList.add('hidden');
+      }}
     }});
     document.querySelectorAll('.cd').forEach(function(c) {{
       c.classList.remove('selected');
