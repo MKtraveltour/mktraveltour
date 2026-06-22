@@ -428,14 +428,15 @@ def build_sidebar_status(tours: dict) -> str:
         if tour.get("error"):
             continue
         title_short = tour["title"][:12] + ("…" if len(tour["title"]) > 12 else "")
+        url = tour.get("url", "#")
         statuses = tour.get("statuses", [])
 
         if not statuses:
             items.append(
-                f'      <div class="status-item">'
+                f'      <a href="{url}" target="_blank" class="status-item" style="text-decoration:none;">'
                 f'<span class="sname">{title_short}</span>'
                 f'<span class="stag" style="background:#2980b9;color:#fff">募集中</span>'
-                f'</div>'
+                f'</a>'
             )
             continue
 
@@ -444,10 +445,10 @@ def build_sidebar_status(tours: dict) -> str:
         if confirmed:
             s = confirmed[0]
             items.append(
-                f'      <div class="status-item">'
+                f'      <a href="{url}" target="_blank" class="status-item" style="text-decoration:none;">'
                 f'<span class="sname">{title_short} {s["date"]}</span>'
                 f'<span class="stag" style="background:#27ae60;color:#fff">催行確定</span>'
-                f'</div>'
+                f'</a>'
             )
         else:
             # あと何席かを表示
@@ -456,18 +457,18 @@ def build_sidebar_status(tours: dict) -> str:
             if full:
                 s = full[0]
                 items.append(
-                    f'      <div class="status-item full-s">'
+                    f'      <a href="{url}" target="_blank" class="status-item full-s" style="text-decoration:none;">'
                     f'<span class="sname">{title_short} {s["date"]}</span>'
                     f'<span class="stag" style="background:#c0392b;color:#fff">満席</span>'
-                    f'</div>'
+                    f'</a>'
                 )
             elif few:
                 s = few[0]
                 items.append(
-                    f'      <div class="status-item">'
+                    f'      <a href="{url}" target="_blank" class="status-item" style="text-decoration:none;">'
                     f'<span class="sname">{title_short} {s["date"]}</span>'
                     f'<span class="stag" style="background:#e67e22;color:#fff">{s["label"]}</span>'
-                    f'</div>'
+                    f'</a>'
                 )
 
     return "\n".join(items[:5])
@@ -578,6 +579,10 @@ HTML_TEMPLATE = """\
     .btn-detail {{ display: block; text-align: center; background: #8b7355; color: #fff; border-radius: 5px; padding: 7px; font-size: 12px; cursor: pointer; font-weight: 500; transition: background 0.2s; }}
     .btn-detail:hover {{ background: #7a6448; }}
     .news-post {{ background: #fff; border: 1px solid #e0d8cc; border-radius: 8px; padding: 12px; margin-bottom: 8px; }}
+    .article-modal-overlay {{ display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9998;align-items:center;justify-content:center; }}
+    .article-modal-overlay.show {{ display:flex; }}
+    .article-modal {{ background:#fff;border-radius:12px;max-width:680px;width:90%;max-height:85vh;overflow-y:auto;padding:24px;position:relative; }}
+    .article-modal-close {{ position:absolute;top:12px;right:16px;font-size:20px;cursor:pointer;color:#999; }}
     .news-body {{ display:flex; gap:14px; align-items:flex-start; }}
     .news-photo {{ flex:0 0 220px; max-width:220px; }}
     .news-photo img {{ width:100%; border-radius:6px; object-fit:cover; height:160px; }}
@@ -706,8 +711,8 @@ HTML_TEMPLATE = """\
   <aside class="blog-nav">
     <div class="blog-nav-title"><i class="ti ti-notebook"></i>ツアー日記</div>
     <div class="bnav-category">
-      <div class="bnav-cat-label" onclick="toggleSection(this)">造成日記 <i class="ti ti-chevron-down"></i></div>
-      <div class="bnav-sub" style="display:none;">
+      <div class="bnav-cat-label">造成日記</div>
+      <div class="bnav-sub">
         <a href="#" onclick="filterArticles('all', this)"><i class="ti ti-chevron-right"></i>すべて</a>
         <div class="bnav-season-label" onclick="toggleSeason(this)" id="new-label">
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>New！</span>
@@ -722,8 +727,8 @@ HTML_TEMPLATE = """\
       </div>
     </div>
     <div class="bnav-category">
-      <div class="bnav-cat-label" onclick="toggleSection(this)">季節・テーマ <i class="ti ti-chevron-down"></i></div>
-      <div class="bnav-sub" style="padding:4px 0;display:none;">
+      <div class="bnav-cat-label">季節・テーマ</div>
+      <div class="bnav-sub" style="padding:4px 0;">
         <!-- 春の京都 -->
         <div class="bnav-season-label" onclick="toggleSeason(this)">
           <span>🌸 春の京都</span><i class="ti ti-chevron-right" style="font-size:11px;"></i>
@@ -772,8 +777,8 @@ HTML_TEMPLATE = """\
     </div>
 
     <div class="bnav-category" style="border-bottom:none">
-      <div class="bnav-cat-label" onclick="toggleSection(this)">過去のツアー <i class="ti ti-chevron-down"></i></div>
-      <div class="bnav-sub" style="display:none;">
+      <div class="bnav-cat-label">過去のツアー</div>
+      <div class="bnav-sub">
         <a href="https://www.mk-group.co.jp/mktravel/list_008" target="_blank"><i class="ti ti-chevron-right"></i>📁 2026年</a>
         <a href="https://www.mk-group.co.jp/mktravel/list_008_2025" target="_blank"><i class="ti ti-chevron-right"></i>📁 2025年</a>
         <a href="https://www.mk-group.co.jp/mktravel/list_008_2024" target="_blank"><i class="ti ti-chevron-right"></i>📁 2024年</a>
@@ -787,7 +792,7 @@ HTML_TEMPLATE = """\
     <p class="breadcrumb">ホーム &gt; <span>最新情報・募集中ツアー</span></p>
 
     <!-- 造成日記 -->
-    <div id="article-section" style="margin-bottom:16px;">
+    <div id="article-section" style="margin-bottom:16px;display:none;">
       <div class="section-header">
         <div class="section-title">
           <i class="ti ti-notebook" style="font-size:14px;vertical-align:-2px;margin-right:5px;"></i>
@@ -815,15 +820,10 @@ HTML_TEMPLATE = """\
         <div class="cl-item"><div class="cl-dot" style="outline:2px solid #8b7355;outline-offset:-1px;"></div>本日</div>
       </div>
       <p style="font-size:11px;color:#999;margin-top:8px;">※色付き日付をクリックするとツアー詳細ページを開きます</p>
-      <!-- 翌月ミニカレンダー -->
-      <div style="margin-top:12px;border-top:1px solid #e0d8cc;padding-top:10px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-          <div style="font-size:11px;font-weight:500;color:#5c4a32;">
-            <i class="ti ti-calendar" style="font-size:11px;vertical-align:-1px;margin-right:3px;"></i>
-            <span id="next-cal-label"></span>
-          </div>
-        </div>
-        <div id="next-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;"></div>
+      <!-- 直近の催行状況（カレンダー下） -->
+      <div style="margin-top:14px;border-top:1px solid #e0d8cc;padding-top:12px;">
+        <div style="font-size:13px;font-weight:500;color:#5c4a32;margin-bottom:8px;"><i class="ti ti-list-check" style="font-size:13px;vertical-align:-2px;margin-right:4px;"></i>直近の催行状況</div>
+        {sidebar_status}
       </div>
     </div>
 
@@ -891,10 +891,6 @@ HTML_TEMPLATE = """\
   <!-- 右サイドバー -->
   <aside class="sidebar">
     <div class="sb-block">
-      <div class="sb-title"><i class="ti ti-list-check" style="font-size:13px;vertical-align:-2px;margin-right:4px;"></i>直近の催行状況</div>
-{sidebar_status}
-    </div>
-    <div class="sb-block">
       <div class="sb-title">SNS</div>
       <a href="https://page.line.me/620mozlm?openQrModal=true" target="_blank" class="sns-btn sns-line"><i class="ti ti-message-circle" style="font-size:15px"></i>LINE 友だち追加</a>
       <a href="https://x.com/mk_ryokou" target="_blank" class="sns-btn sns-x"><i class="ti ti-brand-x" style="font-size:15px"></i>X（ツアー担当）</a>
@@ -937,6 +933,14 @@ HTML_TEMPLATE = """\
   </aside>
 
 </div><!-- /.page-wrap -->
+
+<!-- 記事モーダル -->
+<div class="article-modal-overlay" id="article-modal-overlay" onclick="closeArticleModal()">
+  <div class="article-modal" onclick="event.stopPropagation()">
+    <span class="article-modal-close" onclick="closeArticleModal()">✕</span>
+    <div id="article-modal-content"></div>
+  </div>
+</div>
 
 <!-- 季節テーマ ポップアップ -->
 <div class="season-popup-overlay" id="season-popup-overlay" onclick="closeSeasonPopup()">
@@ -1068,7 +1072,23 @@ HTML_TEMPLATE = """\
 
   function scrollToArticle(id) {{
     var el = document.getElementById('article-' + id);
-    if (el) {{ el.scrollIntoView({{behavior: 'smooth', block: 'start'}}); }}
+    if (!el) return;
+    // モーダルで表示
+    var content = el.cloneNode(true);
+    content.style.display = 'block';
+    content.style.border = 'none';
+    content.style.padding = '0';
+    content.style.marginBottom = '0';
+    var modal = document.getElementById('article-modal-content');
+    modal.innerHTML = '';
+    modal.appendChild(content);
+    document.getElementById('article-modal-overlay').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }}
+
+  function closeArticleModal() {{
+    document.getElementById('article-modal-overlay').classList.remove('show');
+    document.body.style.overflow = '';
   }}
 
   function filterArticles(cat, el) {{
@@ -1228,42 +1248,6 @@ HTML_TEMPLATE = """\
   var CY = new Date().getFullYear();
   var CM = new Date().getMonth() + 1;
 
-  function drawNextCal(y, m) {{
-    var nm = m + 1; var ny = y;
-    if (nm > 12) {{ nm = 1; ny++; }}
-    var lbl = document.getElementById('next-cal-label');
-    var grid = document.getElementById('next-cal-grid');
-    if (!lbl || !grid) return;
-    lbl.textContent = ny + '年' + MN[nm-1];
-    grid.innerHTML = '';
-    for (var i = 0; i < 7; i++) {{
-      var h = document.createElement('div');
-      h.style.cssText = 'text-align:center;font-size:9px;color:#999;padding:2px 0;';
-      h.textContent = DL[i];
-      grid.appendChild(h);
-    }}
-    var fd = new Date(ny, nm-1, 1).getDay();
-    var ld = new Date(ny, nm, 0).getDate();
-    for (var i = 0; i < fd; i++) {{
-      var b = document.createElement('div'); grid.appendChild(b);
-    }}
-    for (var d = 1; d <= ld; d++) {{
-      var c = document.createElement('div');
-      var k = ny + '-' + nm + '-' + d;
-      var t = TOUR[k];
-      var st = t ? t.st : '';
-      c.style.cssText = 'text-align:center;font-size:10px;padding:3px 1px;border-radius:3px;' +
-        (st === 'confirmed' ? 'background:#8b7355;color:#fff;font-weight:500;' :
-         st === 'full' ? 'background:#c0392b;color:#fff;font-weight:500;' :
-         st ? 'background:#f0e8d8;color:#5c4a32;' : 'color:#666;');
-      c.textContent = d;
-      if (t) {{
-        c.style.cursor = 'pointer';
-        (function(k) {{ c.onclick = function() {{ tourFilterByDate(k); }}; }})(k);
-      }}
-      grid.appendChild(c);
-    }}
-  }}
 
   function drawCal(y, m) {{
     var lbl  = document.getElementById('cal-month-label');
@@ -1310,11 +1294,9 @@ HTML_TEMPLATE = """\
     if (CM > 12) {{ CM = 1; CY++; }}
     if (CM < 1)  {{ CM = 12; CY--; }}
     drawCal(CY, CM);
-    drawNextCal(CY, CM);
   }}
 
   drawCal(CY, CM);
-  drawNextCal(CY, CM);
 </script>
 </body>
 </html>
