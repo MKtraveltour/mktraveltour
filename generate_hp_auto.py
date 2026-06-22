@@ -90,6 +90,8 @@ def build_tour_js(tours: dict) -> str:
     """tour_data.json からカレンダー用JSデータを生成"""
     lines = []
     SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama"}
+
+    import datetime as _dt2, re as _re2
     for key, tour in tours.items():
         if key in SKIP_KEYS:
             continue
@@ -281,9 +283,41 @@ def build_tour_cards(tours: dict) -> str:
     bg_colors = ["#6b8e6b", "#7c6b4a", "#4a7c6b", "#3a2a1a"]
     cards_html = []
     SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama"}
+
+    import datetime as _dt2, re as _re2
+    _today = _dt2.date.today()
+
+    def is_all_past(tour):
+        """全日程が過去ならTrueを返す（随時催行はFalse）"""
+        dates = tour.get("dates", [])
+        if not dates: return False
+        future_found = False
+        date_found = False
+        for d in dates:
+            if "随時" in str(d): return False
+            for m in _re2.finditer(r"(\d{1,2})/(\d{1,2})", str(d)):
+                mo, day = int(m.group(1)), int(m.group(2))
+                try:
+                    dt = _dt2.date(_today.year, mo, day)
+                    date_found = True
+                    if dt >= _today: future_found = True
+                except: pass
+            period = _re2.search(r"(\d{1,2})/(\d{1,2}).*?[～~].*(\d{1,2})/(\d{1,2})", str(d))
+            if period:
+                mo2, day2 = int(period.group(3)), int(period.group(4))
+                try:
+                    dt2 = _dt2.date(_today.year, mo2, day2)
+                    date_found = True
+                    if dt2 >= _today: future_found = True
+                except: pass
+        if not date_found: return False
+        return not future_found
+
     for i, (key, tour) in enumerate(tours.items()):
         if key in SKIP_KEYS:
             continue
+        if is_all_past(tour):
+            continue  # 全日程が過去のツアーは非表示
         if tour.get("error"):
             # エラーの場合は準備中カード
             cards_html.append(f"""      <div class="tour-card" style="opacity:0.55;">
@@ -419,60 +453,60 @@ def build_tour_cards(tours: dict) -> str:
 
 
 def build_sidebar_status(tours: dict) -> str:
-    """右サイドバーの催行状況リストを生成"""
-    items = []
+    """直近の催行状況リストを生成（今日以降のみ・日付近い順）"""
+    import datetime as _dt, re as _re
+    today = _dt.date.today()
+
+    def parse_date(date_str):
+        try:
+            m = _re.search(r"(\d+)/(\d+)", date_str)
+            if not m: return None
+            mo, d = int(m.group(1)), int(m.group(2))
+            dt = _dt.date(today.year, mo, d)
+            if dt < today: return None  # 過去日付は除外
+            return dt
+        except: return None
+
+    entries = []
     SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama"}
     for key, tour in tours.items():
-        if key in SKIP_KEYS:
-            continue
-        if tour.get("error"):
-            continue
+        if key in SKIP_KEYS: continue
+        if tour.get("error"): continue
         title_short = tour["title"][:12] + ("…" if len(tour["title"]) > 12 else "")
         url = tour.get("url", "#")
         statuses = tour.get("statuses", [])
-
         if not statuses:
-            items.append(
-                f'      <a href="{url}" target="_blank" class="status-item" style="text-decoration:none;">'
+            entries.append((_dt.date(9999,12,31), "tour",
+                f'      <a href="{url}" target="_blank" class="status-item" style="text-decoration:none;">'  
                 f'<span class="sname">{title_short}</span>'
-                f'<span class="stag" style="background:#2980b9;color:#fff">募集中</span>'
-                f'</a>'
-            )
+                f'<span class="stag" style="background:#2980b9;color:#fff">募集中</span></a>'))
             continue
-
-        # 催行確定があれば優先表示
         confirmed = [s for s in statuses if s["type"] == "confirmed"]
+        full_list = [s for s in statuses if s["type"] == "full"]
+        few_list  = [s for s in statuses if s["type"] == "few"]
         if confirmed:
-            s = confirmed[0]
-            items.append(
-                f'      <a href="{url}" target="_blank" class="status-item" style="text-decoration:none;">'
-                f'<span class="sname">{title_short} {s["date"]}</span>'
-                f'<span class="stag" style="background:#27ae60;color:#fff">催行確定</span>'
-                f'</a>'
-            )
-        else:
-            # あと何席かを表示
-            few = [s for s in statuses if s["type"] == "few"]
-            full = [s for s in statuses if s["type"] == "full"]
-            if full:
-                s = full[0]
-                items.append(
-                    f'      <a href="{url}" target="_blank" class="status-item full-s" style="text-decoration:none;">'
-                    f'<span class="sname">{title_short} {s["date"]}</span>'
-                    f'<span class="stag" style="background:#c0392b;color:#fff">満席</span>'
-                    f'</a>'
-                )
-            elif few:
-                s = few[0]
-                items.append(
+            s = confirmed[0]; dt = parse_date(s["date"])
+            if dt and dt >= today:
+                entries.append((dt, "confirmed",
                     f'      <a href="{url}" target="_blank" class="status-item" style="text-decoration:none;">'
                     f'<span class="sname">{title_short} {s["date"]}</span>'
-                    f'<span class="stag" style="background:#e67e22;color:#fff">{s["label"]}</span>'
-                    f'</a>'
-                )
-
-    return "\n".join(items[:5])
-
+                    f'<span class="stag" style="background:#27ae60;color:#fff">催行確定</span></a>'))
+        elif full_list:
+            s = full_list[0]; dt = parse_date(s["date"])
+            if dt and dt >= today:
+                entries.append((dt, "full",
+                    f'      <a href="{url}" target="_blank" class="status-item full-s" style="text-decoration:none;">'
+                    f'<span class="sname">{title_short} {s["date"]}</span>'
+                    f'<span class="stag" style="background:#c0392b;color:#fff">満席</span></a>'))
+        elif few_list:
+            s = few_list[0]; dt = parse_date(s["date"])
+            if dt and dt >= today:
+                entries.append((dt, "few",
+                    f'      <a href="{url}" target="_blank" class="status-item" style="text-decoration:none;">'
+                    f'<span class="sname">{title_short} {s["date"]}</span>'
+                    f'<span class="stag" style="background:#e67e22;color:#fff">{s["label"]}</span></a>'))
+    entries.sort(key=lambda x: x[0])
+    return "\n".join(e[2] for e in entries[:5])
 
 # ===== HTML テンプレート =====
 HTML_TEMPLATE = """\
@@ -541,7 +575,7 @@ HTML_TEMPLATE = """\
     .cal-grid {{ display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }}
     .cdl {{ text-align: center; font-size: 12px; color: #999; padding: 5px 0; font-weight: 500; }}
     .cdl.sun {{ color: #c0392b; }} .cdl.sat {{ color: #2980b9; }}
-    .cd {{ text-align: center; font-size: 13px; padding: 8px 2px; border-radius: 5px; cursor: pointer; }}
+    .cd {{ text-align: center; font-size: 13px; padding: 14px 2px; border-radius: 5px; cursor: pointer; }}
     .cd.has-tour  {{ background: #f0e8d8; color: #5c4a32; font-weight: 500; }}
     .cd.confirmed {{ background: #8b7355; color: #fff; font-weight: 500; }}
     .cd.full      {{ background: #c0392b; color: #fff; font-weight: 500; }}
@@ -721,9 +755,24 @@ HTML_TEMPLATE = """\
         <div class="bnav-season-body" id="new-articles-body">
           {new_articles_nav}
         </div>
-        <a href="#" onclick="filterArticles('企画のたまご', this)"><i class="ti ti-chevron-right"></i>企画のたまご</a>
-        <a href="#" onclick="filterArticles('レポート', this)"><i class="ti ti-chevron-right"></i>レポート</a>
-        <a href="#" onclick="filterArticles('完成！', this)"><i class="ti ti-chevron-right"></i>完成！</a>
+        <div class="bnav-season-label" onclick="toggleSeason(this)" id="tamago-label">
+          <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>企画のたまご</span>
+        </div>
+        <div class="bnav-season-body" id="tamago-articles-body">
+          {tamago_links}
+        </div>
+        <div class="bnav-season-label" onclick="toggleSeason(this)" id="report-label">
+          <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>レポート</span>
+        </div>
+        <div class="bnav-season-body" id="report-articles-body">
+          {report_links}
+        </div>
+        <div class="bnav-season-label" onclick="toggleSeason(this)" id="done-label">
+          <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>完成！</span>
+        </div>
+        <div class="bnav-season-body" id="done-articles-body">
+          {done_links}
+        </div>
       </div>
     </div>
     <div class="bnav-category">
@@ -789,8 +838,6 @@ HTML_TEMPLATE = """\
 
   <!-- 中央：メインコンテンツ -->
   <main class="content">
-    <p class="breadcrumb">ホーム &gt; <span>最新情報・募集中ツアー</span></p>
-
     <!-- 造成日記 -->
     <div id="article-section" style="margin-bottom:16px;display:none;">
       <div class="section-header">
@@ -1339,11 +1386,22 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
     new_count = sum(1 for a in articles if a.get("category") == "New！")
     # ナビ用：New！記事のタイトルリスト
     new_articles_nav = ""
+    tamago_links = ""
+    report_links = ""
+    done_links = ""
     for art in articles:
-        if art.get("category") == "New！":
-            aid = art.get("id", "")
-            title = art.get("title", "")
-            new_articles_nav += f'<a href="#article-{aid}" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle(\'{aid}\')">{title}</a>'
+        aid = art.get("id", "")
+        title = art.get("title", "")
+        cat = art.get("category", "")
+        lnk = '<a href="#article-' + aid + '" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle(\''+aid+'\')">' + title + '</a>'
+        if cat == "New！":
+            new_articles_nav += lnk
+        elif cat == "企画のたまご":
+            tamago_links += lnk
+        elif cat == "レポート":
+            report_links += lnk
+        elif cat == "完成！":
+            done_links += lnk
     for art in articles:
         cat = art.get("category", "")
         cat_color = {"New！": "#c0392b", "企画のたまご": "#e67e22", "レポート": "#2980b9", "完成！": "#27ae60"}.get(cat, "#8b7355")
@@ -1381,6 +1439,9 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
         tour_reports_js=tour_reports_js,
         articles_html=articles_html,
         new_articles_nav=new_articles_nav,
+        tamago_links=tamago_links,
+        report_links=report_links,
+        done_links=done_links,
         new_count=new_count,
     )
 
