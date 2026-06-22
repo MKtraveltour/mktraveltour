@@ -727,6 +727,7 @@ HTML_TEMPLATE = """\
   <a href="#" onclick="openSeasonPopup('sakura');closeSp();" style="display:block;padding:4px 0 4px 12px;font-size:12px;color:#5c4a32;">美山・大野ダム</a>
   <div style="font-size:12px;color:#8b7355;font-weight:500;padding:4px 0;margin-top:6px;">☀️ 夏祭り</div>
   <a href="#" onclick="openSeasonPopup('furin');closeSp();" style="display:block;padding:4px 0 4px 12px;font-size:12px;color:#5c4a32;">風鈴まつり</a>
+  <a href="#" onclick="openSeasonPopup('maizuru');closeSp();" style="display:block;padding:4px 0 4px 12px;font-size:12px;color:#5c4a32;">海とあじさいの絶景</a>
   <div style="font-size:12px;color:#8b7355;font-weight:500;padding:4px 0;margin-top:6px;">🍁 紅葉の秋</div>
   <a href="#" onclick="openSeasonPopup('himatsuri');closeSp();" style="display:block;padding:4px 0 4px 12px;font-size:12px;color:#5c4a32;">鞍馬の火祭</a>
   <div style="font-size:12px;color:#8b7355;font-weight:500;padding:4px 0;margin-top:6px;">❄️ 冬の情緒</div>
@@ -801,6 +802,13 @@ HTML_TEMPLATE = """\
               <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250707_%E6%AD%A3%E5%AF%BF%E9%99%A2_%E9%A2%A8%E9%88%B4%E3%81%BE%E3%81%A4%E3%82%8A-%E8%A5%BF%E5%B7%9D%20(6).jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
               <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
               <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🔔 風鈴まつり</span>
+            </div>
+          </div>
+          <div onclick="openSeasonPopup('maizuru')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
+            <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;">
+              <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620%20dr%20mishimura.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+              <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
+              <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🌊 海とあじさいの絶景</span>
             </div>
           </div>
         </div>
@@ -1023,6 +1031,15 @@ HTML_TEMPLATE = """\
       desc: '6月〜9月の週末を中心に開催。色とりどりの風鈴が境内を彩る正寿院の夏。京都駅・宇治駅から送迎付きのお手軽プランです。',
       links: [
         {{ url: 'https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/', label: '🔔 ツアー詳細を見る' }}
+      ]
+    }},
+    'maizuru': {{
+      img: 'https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620%20dr%20mishimura.jpg',
+      title: '海とあじさいの絶景へ!! 舞鶴あじさい名所と絶景めぐり',
+      date: '📷 2026年6月20日 ドライバー西村健撮影',
+      desc: '海とあじさいが織りなす絶景。舞鶴のあじさい名所と絶景スポットを巡るツアーのひとコマです。',
+      links: [
+        {{ url: 'https://travel.mk-group.co.jp/tourkyoto/2026maizuruajisai/', label: '🌊 ツアー詳細を見る' }}
       ]
     }},
     'himatsuri': {{
