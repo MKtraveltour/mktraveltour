@@ -35,6 +35,12 @@ TOUR_URLS = {
     "uma":              "https://travel.mk-group.co.jp/tourkyoto/eto-uma/",
     "narihira_nishiyama": "https://travel.mk-group.co.jp/tourkyoto/narihira-nishiyama/",
     "tango":              "https://travel.mk-group.co.jp/tourkyoto/tango-private/",
+    "baikamo2026": "https://travel.mk-group.co.jp/tourkyoto/baikamo2026/",
+
+    "maizuru_ajisai": "https://travel.mk-group.co.jp/tourkyoto/2026maizuruajisai/",
+
+    "yawata": "https://travel.mk-group.co.jp/tourkyoto/yawata/",
+
 }
 
 HEADERS = {

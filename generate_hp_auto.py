@@ -95,6 +95,8 @@ def build_tour_js(tours: dict) -> str:
     for key, tour in tours.items():
         if key in SKIP_KEYS:
             continue
+        if tour.get("hidden"):
+            continue  # 手動非表示フラグ
         if tour.get("error"):
             continue
         url = tour["url"]
@@ -318,6 +320,8 @@ def build_tour_cards(tours: dict) -> str:
             continue
         if is_all_past(tour):
             continue  # 全日程が過去のツアーは非表示
+        if tour.get("hidden"):
+            continue  # 手動非表示フラグ
         if tour.get("error"):
             # エラーの場合は準備中カード
             cards_html.append(f"""      <div class="tour-card" style="opacity:0.55;">
@@ -471,6 +475,7 @@ def build_sidebar_status(tours: dict) -> str:
     SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama"}
     for key, tour in tours.items():
         if key in SKIP_KEYS: continue
+        if tour.get("hidden"): continue  # 手動非表示フラグ
         if tour.get("error"): continue
         title_short = tour["title"][:12] + ("…" if len(tour["title"]) > 12 else "")
         url = tour.get("url", "#")
