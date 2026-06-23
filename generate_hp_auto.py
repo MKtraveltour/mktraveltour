@@ -43,6 +43,16 @@ def _load_tour_reports():
 
 TOUR_REPORTS = _load_tour_reports()
 
+def _load_season_data():
+    import json as _j
+    _path = Path(__file__).parent / "season_data.json"
+    if _path.exists():
+        with open(_path, "r", encoding="utf-8") as _f:
+            return _j.load(_f).get("seasons", [])
+    return []
+
+SEASON_DATA_LIST = _load_season_data()
+
 # ツアーキーワード→絵文字マッピング
 # タグ → 絵文字マッピング（優先順位順）
 TAG_EMOJI_MAP = [
@@ -755,14 +765,7 @@ HTML_TEMPLATE = """\
   <a href="#" onclick="filterArticles('完成！',this);closeSp();" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">完成！</a>
 </div>
 <div class="sp-panel" id="sp-season">
-  <div style="font-size:12px;color:#8b7355;font-weight:500;padding:4px 0;">🌸 春の京都</div>
-  <a href="#" onclick="openSeasonPopup('sakura');closeSp();" style="display:block;padding:4px 0 4px 12px;font-size:12px;color:#5c4a32;">美山・大野ダム</a>
-  <div style="font-size:12px;color:#8b7355;font-weight:500;padding:4px 0;margin-top:6px;">☀️ 夏祭り</div>
-  <a href="#" onclick="openSeasonPopup('furin');closeSp();" style="display:block;padding:4px 0 4px 12px;font-size:12px;color:#5c4a32;">風鈴まつり</a>
-  <a href="#" onclick="openSeasonPopup('maizuru');closeSp();" style="display:block;padding:4px 0 4px 12px;font-size:12px;color:#5c4a32;">海とあじさいの絶景</a>
-  <div style="font-size:12px;color:#8b7355;font-weight:500;padding:4px 0;margin-top:6px;">🍁 紅葉の秋</div>
-  <a href="#" onclick="openSeasonPopup('himatsuri');closeSp();" style="display:block;padding:4px 0 4px 12px;font-size:12px;color:#5c4a32;">鞍馬の火祭</a>
-  <div style="font-size:12px;color:#8b7355;font-weight:500;padding:4px 0;margin-top:6px;">❄️ 冬の情緒</div>
+{sp_season_html}
 </div>
 <div class="sp-panel" id="sp-past">
   <a href="https://www.mk-group.co.jp/mktravel/list_008" target="_blank" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">📁 2026年</a>
@@ -811,57 +814,7 @@ HTML_TEMPLATE = """\
     <div class="bnav-category">
       <div class="bnav-cat-label">季節・テーマ</div>
       <div class="bnav-sub" style="padding:4px 0;">
-        <!-- 春の京都 -->
-        <div class="bnav-season-label" onclick="toggleSeason(this)">
-          <span>🌸 春の京都</span><i class="ti ti-chevron-right" style="font-size:11px;"></i>
-        </div>
-        <div class="bnav-season-body">
-          <div onclick="openSeasonPopup('sakura')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
-            <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;">
-              <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250409_oonodam%20dr%20teramoto.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
-              <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
-              <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🌸 美山・大野ダム</span>
-            </div>
-          </div>
-        </div>
-        <!-- 夏祭り -->
-        <div class="bnav-season-label" onclick="toggleSeason(this)">
-          <span>☀️ 夏祭り</span><i class="ti ti-chevron-right" style="font-size:11px;"></i>
-        </div>
-        <div class="bnav-season-body">
-          <div onclick="openSeasonPopup('furin')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
-            <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;">
-              <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250707_%E6%AD%A3%E5%AF%BF%E9%99%A2_%E9%A2%A8%E9%88%B4%E3%81%BE%E3%81%A4%E3%82%8A-%E8%A5%BF%E5%B7%9D%20(6).jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
-              <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
-              <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🔔 風鈴まつり</span>
-            </div>
-          </div>
-          <div onclick="openSeasonPopup('maizuru')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
-            <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;">
-              <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620%20dr%20mishimura.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
-              <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
-              <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🌊 海とあじさいの絶景</span>
-            </div>
-          </div>
-        </div>
-        <!-- 紅葉の秋 -->
-        <div class="bnav-season-label" onclick="toggleSeason(this)">
-          <span>🍁 紅葉の秋</span><i class="ti ti-chevron-right" style="font-size:11px;"></i>
-        </div>
-        <div class="bnav-season-body">
-          <div onclick="openSeasonPopup('himatsuri')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
-            <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;background:#3a2a1a;">
-              <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;opacity:0.85;">
-              <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
-              <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🔥 鞍馬の火祭</span>
-            </div>
-          </div>
-        </div>
-        <!-- 冬の情緒 -->
-        <div class="bnav-season-label" onclick="toggleSeason(this)">
-          <span>❄️ 冬の情緒</span><i class="ti ti-chevron-right" style="font-size:11px;"></i>
-        </div>
-        <div class="bnav-season-body"></div>
+        {left_season_html}
       </div>
     </div>
 
@@ -1041,44 +994,7 @@ HTML_TEMPLATE = """\
   var TOUR_REPORTS = {tour_reports_js};
 
   // ===== 季節テーマ ポップアップ =====
-  var SEASON_DATA = {{
-    'sakura': {{
-      img: 'https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250409_oonodam%20dr%20teramoto.jpg',
-      title: '美山・大野ダム',
-      date: '📷 2025年4月9日 ドライバー寺本撮影',
-      desc: '春の美山、大野ダムのほとりに咲く桜。青い水面と山々を背景に、白とピンクの桜が美しく広がります。',
-      links: []
-    }},
-    'furin': {{
-      img: 'https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250707_%E6%AD%A3%E5%AF%BF%E9%99%A2_%E9%A2%A8%E9%88%B4%E3%81%BE%E3%81%A4%E3%82%8A-%E8%A5%BF%E5%B7%9D%20(6).jpg',
-      title: '正寿院 風鈴まつり送迎プラン 2026',
-      date: '📷 2025年7月7日 ドライバー撮影',
-      desc: '6月〜9月の週末を中心に開催。色とりどりの風鈴が境内を彩る正寿院の夏。京都駅・宇治駅から送迎付きのお手軽プランです。',
-      links: [
-        {{ url: 'https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/', label: '🔔 ツアー詳細を見る' }}
-      ]
-    }},
-    'maizuru': {{
-      img: 'https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620%20dr%20mishimura.jpg',
-      title: '海とあじさいの絶景へ!! 舞鶴あじさい名所と絶景めぐり',
-      date: '📷 2026年6月20日 ドライバー西村健撮影',
-      desc: '海とあじさいが織りなす絶景。舞鶴のあじさい名所と絶景スポットを巡るツアーのひとコマです。',
-      links: [
-        {{ url: 'https://travel.mk-group.co.jp/tourkyoto/2026maizuruajisai/', label: '🌊 ツアー詳細を見る' }}
-      ]
-    }},
-    'himatsuri': {{
-      img: 'https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp',
-      title: '鞍馬の火祭×くらま温泉 癒し旅',
-      date: '📷 2025年10月22日 関係者撮影',
-      desc: '年に一度、鞍馬の夜を燃やす伝統の火祭。巨大な松明が山里を照らす幻想的な夜をくらま温泉でゆっくり締めくくります。',
-      links: [
-        {{ url: 'https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/', label: '🏨 限定宿泊プランを見る' }},
-        {{ url: 'https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/', label: '🔥 1dayプランを見る' }},
-        {{ url: 'himatsuri2025.html', label: '📄 当日のレポートを見る' }}
-      ]
-    }}
-  }};
+  var SEASON_DATA = {season_data_js};
 
   function openSeasonPopup(key) {{
     var d = SEASON_DATA[key];
@@ -1423,6 +1339,78 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
     import json as _json
     tour_reports_js = _json.dumps(TOUR_REPORTS, ensure_ascii=False)
 
+    # ===== 季節・テーマ データを動的生成 =====
+    SEASON_ORDER = ["spring", "summer", "autumn", "winter"]
+    SEASON_HEADER = {
+        "spring": "🌸 春の京都",
+        "summer": "☀️ 夏祭り",
+        "autumn": "🍁 紅葉の秋",
+        "winter": "❄️ 冬の情緒",
+    }
+
+    # スマホナビ
+    sp_season_lines = []
+    cur_season_sp = None
+    for s in SEASON_DATA_LIST:
+        if s["season"] != cur_season_sp:
+            cur_season_sp = s["season"]
+            hdr = SEASON_HEADER.get(cur_season_sp, "")
+            mt = ' style="font-size:12px;color:#8b7355;font-weight:500;padding:4px 0;margin-top:6px;"' if sp_season_lines else ' style="font-size:12px;color:#8b7355;font-weight:500;padding:4px 0;"'
+            sp_season_lines.append(f'  <div{mt}>{hdr}</div>')
+        _key  = s["key"]
+        thumb = s.get("label", s["title"])
+        sp_season_lines.append(
+            f'  <a href="#" onclick="openSeasonPopup(\'{_key}\');closeSp();" '
+            f'style="display:block;padding:4px 0 4px 12px;font-size:12px;color:#5c4a32;">{thumb}</a>'
+        )
+    sp_season_html = "\n".join(sp_season_lines)
+
+    # 左ナビ
+    left_season_lines = []
+    cur_season_left = None
+    for s in SEASON_DATA_LIST:
+        if s["season"] != cur_season_left:
+            # 前のシーズンの閉じタグ
+            if cur_season_left is not None:
+                left_season_lines.append("        </div>")
+            cur_season_left = s["season"]
+            hdr = SEASON_HEADER.get(cur_season_left, "")
+            left_season_lines.append(
+                f'        <div class="bnav-season-label" onclick="toggleSeason(this)">'
+                f'\n          <span>{hdr}</span>'
+                f'<i class="ti ti-chevron-right" style="font-size:11px;"></i>\n        </div>'
+                f'\n        <div class="bnav-season-body">'
+            )
+        _key    = s["key"]
+        img_url = s.get("img", "")
+        thumb   = s.get("thumb_title", s.get("label", s["title"]))
+        left_season_lines.append(
+            f'          <div onclick="openSeasonPopup(\'{_key}\')" '
+            f'style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">'
+            f'\n            <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;">'
+            f'\n              <img src="{img_url}" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">'
+            f'\n              <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>'
+            f'\n              <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">{thumb}</span>'
+            f'\n            </div>\n          </div>'
+        )
+    if cur_season_left:
+        left_season_lines.append("        </div>")
+    left_season_html = "\n".join(left_season_lines)
+
+    # SEASON_DATA JS（JSONオブジェクト形式）
+    import json as _jsd
+    season_js_dict = {}
+    for s in SEASON_DATA_LIST:
+        links_js = [{"url": lk["url"], "label": lk["label"]} for lk in s.get("links", [])]
+        season_js_dict[s["key"]] = {
+            "img":   s.get("img", ""),
+            "title": s.get("title", ""),
+            "date":  s.get("date", ""),
+            "desc":  s.get("desc", ""),
+            "links": links_js,
+        }
+    season_data_js = _jsd.dumps(season_js_dict, ensure_ascii=False)
+
     # 当日の様子フォトグリッドをTOUR_REPORTSから動的生成（新しい順・最大6件）
     photo_grid_items = []
     for report_date in sorted(TOUR_REPORTS.keys(), reverse=True)[:6]:
@@ -1493,6 +1481,9 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
         sidebar_status=sidebar_status,
         tour_reports_js=tour_reports_js,
         photo_grid_html=photo_grid_html,
+        sp_season_html=sp_season_html,
+        left_season_html=left_season_html,
+        season_data_js=season_data_js,
         articles_html=articles_html,
         new_articles_nav=new_articles_nav,
         tamago_links=tamago_links,

@@ -222,13 +222,14 @@
 </div>
 <div class="sp-panel" id="sp-season">
   <div style="font-size:12px;color:#8b7355;font-weight:500;padding:4px 0;">🌸 春の京都</div>
-  <a href="#" onclick="openSeasonPopup('sakura');closeSp();" style="display:block;padding:4px 0 4px 12px;font-size:12px;color:#5c4a32;">美山・大野ダム</a>
+  <a href="#" onclick="openSeasonPopup('sakura');closeSp();" style="display:block;padding:4px 0 4px 12px;font-size:12px;color:#5c4a32;">🌸 春の京都</a>
   <div style="font-size:12px;color:#8b7355;font-weight:500;padding:4px 0;margin-top:6px;">☀️ 夏祭り</div>
-  <a href="#" onclick="openSeasonPopup('furin');closeSp();" style="display:block;padding:4px 0 4px 12px;font-size:12px;color:#5c4a32;">風鈴まつり</a>
-  <a href="#" onclick="openSeasonPopup('maizuru');closeSp();" style="display:block;padding:4px 0 4px 12px;font-size:12px;color:#5c4a32;">海とあじさいの絶景</a>
+  <a href="#" onclick="openSeasonPopup('furin');closeSp();" style="display:block;padding:4px 0 4px 12px;font-size:12px;color:#5c4a32;">🔔 風鈴まつり</a>
+  <a href="#" onclick="openSeasonPopup('maizuru');closeSp();" style="display:block;padding:4px 0 4px 12px;font-size:12px;color:#5c4a32;">🌊 海とあじさいの絶景</a>
   <div style="font-size:12px;color:#8b7355;font-weight:500;padding:4px 0;margin-top:6px;">🍁 紅葉の秋</div>
-  <a href="#" onclick="openSeasonPopup('himatsuri');closeSp();" style="display:block;padding:4px 0 4px 12px;font-size:12px;color:#5c4a32;">鞍馬の火祭</a>
+  <a href="#" onclick="openSeasonPopup('himatsuri');closeSp();" style="display:block;padding:4px 0 4px 12px;font-size:12px;color:#5c4a32;">🔥 鞍馬の火祭</a>
   <div style="font-size:12px;color:#8b7355;font-weight:500;padding:4px 0;margin-top:6px;">❄️ 冬の情緒</div>
+  <a href="#" onclick="openSeasonPopup('fuyutourou');closeSp();" style="display:block;padding:4px 0 4px 12px;font-size:12px;color:#5c4a32;">❄️ 冬の灯篭</a>
 </div>
 <div class="sp-panel" id="sp-past">
   <a href="https://www.mk-group.co.jp/mktravel/list_008" target="_blank" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">📁 2026年</a>
@@ -236,7 +237,7 @@
   <a href="https://www.mk-group.co.jp/mktravel/list_008_2024" target="_blank" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">📁 2024年</a>
 </div>
 
-<p class="updated-note">最終更新: 2026年06月23日 12:55</p>
+<p class="updated-note">最終更新: 2026年06月23日 12:56</p>
 
 <div class="page-wrap">
 
@@ -277,8 +278,7 @@
     <div class="bnav-category">
       <div class="bnav-cat-label">季節・テーマ</div>
       <div class="bnav-sub" style="padding:4px 0;">
-        <!-- 春の京都 -->
-        <div class="bnav-season-label" onclick="toggleSeason(this)">
+                <div class="bnav-season-label" onclick="toggleSeason(this)">
           <span>🌸 春の京都</span><i class="ti ti-chevron-right" style="font-size:11px;"></i>
         </div>
         <div class="bnav-season-body">
@@ -290,7 +290,6 @@
             </div>
           </div>
         </div>
-        <!-- 夏祭り -->
         <div class="bnav-season-label" onclick="toggleSeason(this)">
           <span>☀️ 夏祭り</span><i class="ti ti-chevron-right" style="font-size:11px;"></i>
         </div>
@@ -310,24 +309,30 @@
             </div>
           </div>
         </div>
-        <!-- 紅葉の秋 -->
         <div class="bnav-season-label" onclick="toggleSeason(this)">
           <span>🍁 紅葉の秋</span><i class="ti ti-chevron-right" style="font-size:11px;"></i>
         </div>
         <div class="bnav-season-body">
           <div onclick="openSeasonPopup('himatsuri')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
-            <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;background:#3a2a1a;">
-              <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;opacity:0.85;">
+            <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;">
+              <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
               <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
               <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">🔥 鞍馬の火祭</span>
             </div>
           </div>
         </div>
-        <!-- 冬の情緒 -->
         <div class="bnav-season-label" onclick="toggleSeason(this)">
           <span>❄️ 冬の情緒</span><i class="ti ti-chevron-right" style="font-size:11px;"></i>
         </div>
-        <div class="bnav-season-body"></div>
+        <div class="bnav-season-body">
+          <div onclick="openSeasonPopup('fuyutourou')" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:4px;cursor:pointer;">
+            <div style="position:relative;height:60px;overflow:hidden;border-radius:6px;">
+              <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyoruoudan.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+              <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>
+              <span style="position:absolute;bottom:4px;left:7px;color:#fff;font-size:10px;font-weight:500;">❄️ 冬の灯篭</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -486,7 +491,7 @@
     </div>
     <div class="tour-count" id="tour-count"></div>
     <div class="tours-grid" id="tours-grid">
-      <div class="tour-card" data-tags="history exp flower" data-dates="2026-6-13,2026-6-14,2026-6-15,2026-6-16,2026-6-17,2026-6-18,2026-6-19,2026-6-20,2026-6-21,2026-6-22,2026-6-23,2026-6-24,2026-6-25,2026-6-26,2026-6-27,2026-6-28,2026-6-29,2026-6-30,2026-6-13">
+      <div class="tour-card" data-tags="flower history exp" data-dates="2026-6-13,2026-6-14,2026-6-15,2026-6-16,2026-6-17,2026-6-18,2026-6-19,2026-6-20,2026-6-21,2026-6-22,2026-6-23,2026-6-24,2026-6-25,2026-6-26,2026-6-27,2026-6-28,2026-6-29,2026-6-30,2026-6-13">
         <div class="tour-img" style="background:#6b8e6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/04/top.png" alt="京都あじさい半日めぐり ～静けさとときめき、選べる2つのコース～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bc" style="z-index:1;">催行確定日あり</div>
@@ -499,7 +504,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/2026ajisai-harf/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="history exp flower" data-dates="2026-6-18,2026-6-20,2026-6-23,2026-6-26,2026-6-27,2026-6-28,2026-6-29">
+      <div class="tour-card" data-tags="flower history exp" data-dates="2026-6-18,2026-6-20,2026-6-23,2026-6-26,2026-6-27,2026-6-28,2026-6-29">
         <div class="tour-img" style="background:#6b8e6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/top-maizuru.png" alt="海とあじさいの絶景へ!!舞鶴あじさい名所と絶景めぐり旅" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bfw" style="z-index:1;">あと６名</div>
@@ -512,7 +517,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/2026maizuruajisai/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="exp history event" data-dates="2026-6-1,2026-7-2,2026-7-3,2026-8-14,2026-6-28,2026-7-5,2026-7-11,2026-7-12,2026-8-23,2026-9-19">
+      <div class="tour-card" data-tags="event history exp" data-dates="2026-6-1,2026-7-2,2026-7-3,2026-8-14,2026-6-28,2026-7-5,2026-7-11,2026-7-12,2026-8-23,2026-9-19">
         <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2024/04/2021shojuin_furin_bn.jpg" alt="正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bfw" style="z-index:1;">あと２名</div>
@@ -525,7 +530,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="summer exp history event" data-dates="2026-7-19">
+      <div class="tour-card" data-tags="event summer history exp" data-dates="2026-7-19">
         <div class="tour-img" style="background:#4a7c6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/rousoku.png" alt="正寿院 ろうそくまつり送迎プラン【2026年】" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bc" style="z-index:1;">催行確定</div>
@@ -538,7 +543,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/rousokumatsuri2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="history exp flower summer" data-dates="2026-7-25,2026-8-2,2026-8-6">
+      <div class="tour-card" data-tags="flower summer history exp" data-dates="2026-7-25,2026-8-2,2026-8-6">
         <div class="tour-img" style="background:#3a2a1a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/top-1.png" alt="夏限定！清流に咲く梅花藻と、豊臣兄弟ゆかりの城下町・長浜さんぽ" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bc" style="z-index:1;">催行確定日あり</div>
@@ -551,7 +556,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/baikamo2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="exp flower summer" data-dates="2026-7-26,2026-7-30">
+      <div class="tour-card" data-tags="flower summer exp" data-dates="2026-7-26,2026-7-30">
         <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/top.png" alt="一面に広がる紫の絶景！北山友禅菊とメタセコイア並木" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bc" style="z-index:1;">催行確定日あり</div>
@@ -564,7 +569,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/yuzengiku2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="exp history" data-dates="2026-8-1,2026-8-23,2026-9-5">
+      <div class="tour-card" data-tags="history exp" data-dates="2026-8-1,2026-8-23,2026-9-5">
         <div class="tour-img" style="background:#6b8e6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/06/ishidamiyamatop.png" alt="美山を守る人々に出会う旅～かやぶきの里の景観を未来へつなぐ物語～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge br" style="z-index:1;">募集中</div>
@@ -577,7 +582,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/miyama-ishida/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="exp event summer" data-dates="2026-8-16">
+      <div class="tour-card" data-tags="event summer exp" data-dates="2026-8-16">
         <div class="tour-img" style="background:#6b8e6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/okuribi.png" alt="【限定40名】京の夜空を彩る「五山の送り火」特別鑑賞ツアー" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bfull" style="z-index:1;">満席</div>
@@ -590,7 +595,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/okuribi2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="summer exp history event" data-dates="2026-8-16">
+      <div class="tour-card" data-tags="event summer history exp" data-dates="2026-8-16">
         <div class="tour-img" style="background:#4a7c6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/okuribi2.png" alt="京都の夏を送る夜～御所から望む右大文字と湯葉懐石～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bc" style="z-index:1;">催行確定</div>
@@ -603,7 +608,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/migidaimonji2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="exp history event autumn" data-dates="2026-10-22">
+      <div class="tour-card" data-tags="event autumn history exp" data-dates="2026-10-22">
         <div class="tour-img" style="background:#3a2a1a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/宿泊トップ.png" alt="【限定宿泊プラン】 くらま温泉で迎える 鞍馬の火祭 特別な一夜" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge br" style="z-index:1;">募集中</div>
@@ -616,7 +621,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="exp history event autumn" data-dates="2026-10-22">
+      <div class="tour-card" data-tags="event autumn history exp" data-dates="2026-10-22">
         <div class="tour-img" style="background:#6b8e6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/1day.png" alt="昼の鞍馬散策と夜の火祭へ  ～くらま温泉で過ごす特別な一日～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bc" style="z-index:1;">催行確定</div>
@@ -629,7 +634,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="exp history event autumn" data-dates="2026-10-22">
+      <div class="tour-card" data-tags="event autumn history exp" data-dates="2026-10-22">
         <div class="tour-img" style="background:#3a2a1a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/夜トップ.png" alt="間近で体感する迫力！くらま温泉×鞍馬の火祭 観覧ツアー ～帰り時間を気にせず楽しむ特別な一夜～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bfull" style="z-index:1;">満席</div>
@@ -642,7 +647,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/kuramanohimatsuri2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="exp history" data-dates="">
+      <div class="tour-card" data-tags="history exp" data-dates="">
         <div class="tour-img" style="background:#4a7c6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/06/top-tango.png" alt="夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge br" style="z-index:1;">募集中</div>
@@ -655,7 +660,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/tango-private/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="exp history" data-dates="">
+      <div class="tour-card" data-tags="history exp" data-dates="">
         <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2025/02/トップ-1.png" alt="京都・八幡の隠れた名所巡り ～流れ橋と歴史の旅～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge br" style="z-index:1;">募集中</div>
@@ -833,44 +838,7 @@
   var TOUR_REPORTS = {"2025-10-22": {"title": "鞍馬の火祭×くらま温泉 癒し旅", "page": "himatsuri2025.html", "photos": ["https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/f9b7e4277e1c0a018981566ed4e8087e-600x400.webp", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/4a3e24e959e0275abd2df3e85320065c-600x400.webp"]}, "2026-01-20": {"title": "美山かやぶきの里冬灯廊　日帰りタクシーツアー", "page": "", "photos": ["https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourou_marupost.JPG", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouzizou.JPG", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouroten.JPG"]}};
 
   // ===== 季節テーマ ポップアップ =====
-  var SEASON_DATA = {
-    'sakura': {
-      img: 'https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250409_oonodam%20dr%20teramoto.jpg',
-      title: '美山・大野ダム',
-      date: '📷 2025年4月9日 ドライバー寺本撮影',
-      desc: '春の美山、大野ダムのほとりに咲く桜。青い水面と山々を背景に、白とピンクの桜が美しく広がります。',
-      links: []
-    },
-    'furin': {
-      img: 'https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250707_%E6%AD%A3%E5%AF%BF%E9%99%A2_%E9%A2%A8%E9%88%B4%E3%81%BE%E3%81%A4%E3%82%8A-%E8%A5%BF%E5%B7%9D%20(6).jpg',
-      title: '正寿院 風鈴まつり送迎プラン 2026',
-      date: '📷 2025年7月7日 ドライバー撮影',
-      desc: '6月〜9月の週末を中心に開催。色とりどりの風鈴が境内を彩る正寿院の夏。京都駅・宇治駅から送迎付きのお手軽プランです。',
-      links: [
-        { url: 'https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/', label: '🔔 ツアー詳細を見る' }
-      ]
-    },
-    'maizuru': {
-      img: 'https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620%20dr%20mishimura.jpg',
-      title: '海とあじさいの絶景へ!! 舞鶴あじさい名所と絶景めぐり',
-      date: '📷 2026年6月20日 ドライバー西村健撮影',
-      desc: '海とあじさいが織りなす絶景。舞鶴のあじさい名所と絶景スポットを巡るツアーのひとコマです。',
-      links: [
-        { url: 'https://travel.mk-group.co.jp/tourkyoto/2026maizuruajisai/', label: '🌊 ツアー詳細を見る' }
-      ]
-    },
-    'himatsuri': {
-      img: 'https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp',
-      title: '鞍馬の火祭×くらま温泉 癒し旅',
-      date: '📷 2025年10月22日 関係者撮影',
-      desc: '年に一度、鞍馬の夜を燃やす伝統の火祭。巨大な松明が山里を照らす幻想的な夜をくらま温泉でゆっくり締めくくります。',
-      links: [
-        { url: 'https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/', label: '🏨 限定宿泊プランを見る' },
-        { url: 'https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/', label: '🔥 1dayプランを見る' },
-        { url: 'himatsuri2025.html', label: '📄 当日のレポートを見る' }
-      ]
-    }
-  };
+  var SEASON_DATA = {"sakura": {"img": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250409_oonodam%20dr%20teramoto.jpg", "title": "美山・大野ダム", "date": "📷 2025年4月9日 ドライバー寺本撮影", "desc": "春の美山、大野ダムのほとりに咲く桜。青い水面と山々を背景に、白とピンクの桜が美しく広がります。", "links": []}, "furin": {"img": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250707_%E6%AD%A3%E5%AF%BF%E9%99%A2_%E9%A2%A8%E9%88%B4%E3%81%BE%E3%81%A4%E3%82%8A-%E8%A5%BF%E5%B7%9D%20(6).jpg", "title": "正寿院 風鈴まつり送迎プラン 2026", "date": "📷 2025年7月7日 ドライバー撮影", "desc": "6月〜9月の週末を中心に開催。色とりどりの風鈴が境内を彩る正寿院の夏。京都駅・宇治駅から送迎付きのお手軽プランです。", "links": [{"url": "https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/", "label": "🔔 ツアー詳細を見る"}]}, "maizuru": {"img": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620%20dr%20mishimura.jpg", "title": "海とあじさいの絶景へ!! 舞鶴あじさい名所と絶景めぐり", "date": "📷 2026年6月20日 ドライバー西村健撮影", "desc": "海とあじさいが織りなす絶景。舞鶴のあじさい名所と絶景スポットを巡るツアーのひとコマです。", "links": [{"url": "https://travel.mk-group.co.jp/tourkyoto/2026maizuruajisai/", "label": "🌊 ツアー詳細を見る"}]}, "himatsuri": {"img": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp", "title": "鞍馬の火祭×くらま温泉 癒し旅", "date": "📷 2025年10月22日 関係者撮影", "desc": "年に一度、鞍馬の夜を燃やす伝統の火祭。巨大な松明が山里を照らす幻想的な夜をくらま温泉でゆっくり締めくくります。", "links": [{"url": "https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/", "label": "🏨 限定宿泊プランを見る"}, {"url": "https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/", "label": "🔥 1dayプランを見る"}, {"url": "himatsuri2025.html", "label": "📄 当日のレポートを見る"}]}, "fuyutourou": {"img": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyoruoudan.jpg", "title": "冬の灯篭", "date": "", "desc": "", "links": [{"url": "https://travel.mk-group.co.jp/tourkyoto/2025fuyutourou/", "label": "❄️ ツアー詳細を見る"}]}};
 
   function openSeasonPopup(key) {
     var d = SEASON_DATA[key];
