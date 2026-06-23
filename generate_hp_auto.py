@@ -224,10 +224,16 @@ def build_tour_cards(tours: dict) -> str:
         mapping = {
             "イベント": ("tev", "イベント・お祭り"),
             "お祭り":   ("tev", "イベント・お祭り"),
+            "伝統":     ("tev", "イベント・お祭り"),
+            "ナイト":   ("tev", "イベント・お祭り"),
             "歴史":     ("th",  "歴史・社寺巡り"),
             "社寺":     ("th",  "歴史・社寺巡り"),
+            "神社":     ("th",  "歴史・社寺巡り"),
             "体験":     ("te",  "体験・名所巡り"),
             "名所":     ("te",  "体験・名所巡り"),
+            "景色":     ("te",  "体験・名所巡り"),
+            "グルメ":   ("te",  "体験・名所巡り"),
+            "ガイド":   ("te",  "体験・名所巡り"),
             "季節":     ("th",  "季節の花"),
             "花":       ("th",  "季節の花"),
         }
@@ -283,7 +289,7 @@ def build_tour_cards(tours: dict) -> str:
         return text or dates[0]
 
     bg_colors = ["#6b8e6b", "#7c6b4a", "#4a7c6b", "#3a2a1a"]
-    cards_html = []
+    cards_entries = []  # (sort_key, html) のリスト
     SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama"}
 
     import datetime as _dt2, re as _re2
@@ -322,9 +328,11 @@ def build_tour_cards(tours: dict) -> str:
             continue  # 全日程が過去のツアーは非表示
         if tour.get("hidden"):
             continue  # 手動非表示フラグ
+        if "募集終了" in tour.get("title", "") or "受付終了" in tour.get("title", ""):
+            continue  # タイトルに【募集終了】が含まれるツアーは非表示
         if tour.get("error"):
             # エラーの場合は準備中カード
-            cards_html.append(f"""      <div class="tour-card" style="opacity:0.55;">
+            cards_entries.append((_dt2.date(9999,12,31), f"""      <div class="tour-card" style="opacity:0.55;">
         <div class="tour-img" style="background:#b0a090;">
           <div style="padding:10px;text-align:center;">取得エラー<br><small>{tour['url']}</small></div>
           <div class="sbadge br">取得失敗</div>
@@ -334,7 +342,7 @@ def build_tour_cards(tours: dict) -> str:
           <div class="tour-date">—</div>
           <span class="btn-detail" style="background:#b0a090;cursor:default;">エラー</span>
         </div>
-      </div>""")
+      </div>"""))
             continue
 
         title    = tour["title"]
@@ -366,12 +374,12 @@ def build_tour_cards(tours: dict) -> str:
         # タグからフィルター用data属性を生成
         filter_tags = []
         for t in tags:
-            if 'イベント' in t or 'お祭り' in t: filter_tags.append('event')
-            if '体験' in t or '名所' in t:       filter_tags.append('exp')
-            if '歴史' in t or '社寺' in t:       filter_tags.append('history')
-            if '季節' in t or '花' in t:         filter_tags.append('flower')
-            if '夏' in t:                        filter_tags.append('summer')
-            if '秋' in t:                        filter_tags.append('autumn')
+            if 'イベント' in t or 'お祭り' in t or '伝統' in t or 'ナイト' in t: filter_tags.append('event')
+            if '体験' in t or '名所' in t or '景色' in t or 'グルメ' in t or 'ガイド' in t: filter_tags.append('exp')
+            if '歴史' in t or '社寺' in t or '神社' in t:       filter_tags.append('history')
+            if '季節' in t or '花' in t:                        filter_tags.append('flower')
+            if '夏' in t:                                       filter_tags.append('summer')
+            if '秋' in t:                                       filter_tags.append('autumn')
             if '春' in t:                        filter_tags.append('spring')
             if '冬' in t:                        filter_tags.append('winter')
         data_tags = ' '.join(set(filter_tags)) or 'other'
@@ -408,7 +416,25 @@ def build_tour_cards(tours: dict) -> str:
                     card_date_keys.append(k)
         data_dates_attr = ','.join(card_date_keys)
 
-        cards_html.append(f"""      <div class="tour-card" data-tags="{data_tags}" data-dates="{data_dates_attr}">
+        # ソートキー：最も近い未来の日付を取得
+        _sort_key = _dt2.date(9999,12,30)  # デフォルトは末尾（随時催行の前）
+        for _sd in statuses:
+            _parsed = parse_date(_sd.get("date",""))
+            if _parsed:
+                _y,_m,_d = _parsed
+                _dt_val = _dt2.date(_y,_m,_d)
+                if _dt_val >= _today and _dt_val < _sort_key:
+                    _sort_key = _dt_val
+        for _dd in dates:
+            import re as _re3
+            for _mm in _re3.finditer(r"(\d{1,2})/(\d{1,2})", str(_dd)):
+                try:
+                    _dt_val = _dt2.date(_today.year, int(_mm.group(1)), int(_mm.group(2)))
+                    if _dt_val >= _today and _dt_val < _sort_key:
+                        _sort_key = _dt_val
+                except: pass
+
+        cards_entries.append((_sort_key, f"""      <div class="tour-card" data-tags="{data_tags}" data-dates="{data_dates_attr}">
         <div class="tour-img" style="background:{bg_color};position:relative;overflow:hidden;">
           {img_html}
           <div class="sbadge {badge_cls}" style="z-index:1;">{badge_text}</div>
@@ -420,7 +446,7 @@ def build_tour_cards(tours: dict) -> str:
           <div class="tour-price">大人1名 {price}</div>
           <a href="{url}" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
-      </div>""")
+      </div>"""))
 
     # 随時催行ツアーのカードを追加（スクレイパーカードは除外）
     ALWAYS_ON_KEYS = ["uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama"]
@@ -439,7 +465,7 @@ def build_tour_cards(tours: dict) -> str:
         # 随時催行カードはすべてのカテゴリタブで表示されるよう"all"相当にする
         data_tags = "event exp history flower summer autumn other"
         img_html = (f'<img src="{img}" alt="{title}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display=\'none\'">') if img else ""
-        cards_html.append(f"""      <div class="tour-card" data-tags="{data_tags}" data-dates="">
+        cards_entries.append((_dt2.date(9999,12,31), f"""      <div class="tour-card" data-tags="{data_tags}" data-dates="">
         <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
           {img_html}
           <div class="sbadge br" style="z-index:1;">随時催行</div>
@@ -451,9 +477,11 @@ def build_tour_cards(tours: dict) -> str:
           <div class="tour-price">大人1名 {price}</div>
           <a href="{url}" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
-      </div>""")
+      </div>"""))
 
-    return "\n".join(cards_html)
+    # 日付近い順→随時催行の順にソート
+    cards_entries.sort(key=lambda x: x[0])
+    return "\n".join(html for _, html in cards_entries)
 
 
 def build_sidebar_status(tours: dict) -> str:
