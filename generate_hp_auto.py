@@ -962,18 +962,9 @@ HTML_TEMPLATE = """\
     <!-- 当日の様子 -->
     <div class="section-header" style="margin-top:16px">
       <div class="section-title"><i class="ti ti-camera" style="font-size:14px;vertical-align:-2px;margin-right:5px;"></i>当日の様子</div>
-      <a href="#" class="see-all">すべての写真 →</a>
     </div>
     <div class="photo-grid">
-      <a href="himatsuri2025.html" class="pt" style="position:relative;overflow:hidden;background:#1a1a1a;">
-        <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.85;" alt="鞍馬の火祭">
-        <span style="position:absolute;bottom:8px;left:8px;color:#fff;font-size:11px;font-weight:500;text-shadow:0 1px 3px rgba(0,0,0,0.8);">🔥 鞍馬の火祭</span>
-      </a>
-      <div class="pt p2">嵐山ツアー</div>
-      <div class="pt p3">ナイトハイク</div>
-      <div class="pt p4">花手水</div>
-      <div class="pt p5">新緑ハイク</div>
-      <div class="p-upload"><i class="ti ti-cloud-upload"></i><span>写真を投稿</span></div>
+      {photo_grid_html}
     </div>
   </main>
 
@@ -1432,6 +1423,19 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
     import json as _json
     tour_reports_js = _json.dumps(TOUR_REPORTS, ensure_ascii=False)
 
+    # 当日の様子フォトグリッドをTOUR_REPORTSから動的生成（新しい順・最大6件）
+    photo_grid_items = []
+    for report_date in sorted(TOUR_REPORTS.keys(), reverse=True)[:6]:
+        r = TOUR_REPORTS[report_date]
+        title = r.get("title", "")
+        page  = r.get("page", "#")
+        photos = r.get("photos", [])
+        if photos:
+            photo_grid_items.append(
+                f'      <a href="{page}" class="pt" style="position:relative;overflow:hidden;background:#1a1a1a;">'                f'<img src="{photos[0]}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.85;" alt="{title}">'                f'<span style="position:absolute;bottom:8px;left:8px;color:#fff;font-size:11px;font-weight:500;text-shadow:0 1px 3px rgba(0,0,0,0.8);">{title}</span>'                f'</a>'
+            )
+    photo_grid_html = "\n".join(photo_grid_items) if photo_grid_items else '      <div class="pt p2" style="color:#aaa;">レポートはまだありません</div>'
+
     # 造成日記記事HTMLを生成
     articles_html = ""
     new_count = sum(1 for a in articles if a.get("category") == "New！")
@@ -1488,6 +1492,7 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
         tour_cards=tour_cards,
         sidebar_status=sidebar_status,
         tour_reports_js=tour_reports_js,
+        photo_grid_html=photo_grid_html,
         articles_html=articles_html,
         new_articles_nav=new_articles_nav,
         tamago_links=tamago_links,
