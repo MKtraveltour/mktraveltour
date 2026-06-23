@@ -136,6 +136,38 @@
     }
     .back-btn:hover { background: #7a6448; }
 
+    /* ビューワー */
+    .viewer-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.92); z-index: 9999;
+      align-items: center; justify-content: center; flex-direction: column;
+    }
+    .viewer-overlay.show { display: flex; }
+    .viewer-img {
+      max-width: 90vw; max-height: 72vh;
+      object-fit: contain; border-radius: 8px; display: block;
+    }
+    .viewer-caption {
+      color: rgba(255,255,255,0.8); font-size: 12px;
+      margin-top: 10px; text-align: center;
+    }
+    .viewer-nav {
+      display: flex; align-items: center; gap: 24px; margin-top: 14px;
+    }
+    .vn-btn {
+      background: rgba(255,255,255,0.15); border: none; color: #fff;
+      font-size: 26px; width: 48px; height: 48px; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .vn-btn:hover { background: rgba(255,255,255,0.3); }
+    .vn-btn:disabled { opacity: 0.25; cursor: default; }
+    .vn-counter { color: rgba(255,255,255,0.6); font-size: 12px; min-width: 48px; text-align: center; }
+    .viewer-close {
+      position: absolute; top: 16px; right: 20px;
+      color: #fff; font-size: 26px; cursor: pointer;
+      background: none; border: none; line-height: 1;
+    }
     @media (max-width: 600px) {
       .hero { height: 220px; }
       .hero-title { font-size: 16px; }
@@ -144,6 +176,18 @@
   </style>
 </head>
 <body>
+
+  <!-- ポップアップビューワー -->
+  <div class="viewer-overlay" id="viewer-overlay" onclick="onOverlayClick(event)">
+    <button class="viewer-close" onclick="closeViewer()">✕</button>
+    <img class="viewer-img" id="viewer-img" src="" alt="">
+    <div class="viewer-caption" id="viewer-caption"></div>
+    <div class="viewer-nav">
+      <button class="vn-btn" id="vn-prev" onclick="viewerMove(-1)">&#8249;</button>
+      <span class="vn-counter" id="vn-counter"></span>
+      <button class="vn-btn" id="vn-next" onclick="viewerMove(1)">&#8250;</button>
+    </div>
+  </div>
 
   <!-- ヒーローヘッダー -->
   <div class="hero">
@@ -161,9 +205,48 @@
   <div class="wrap">
     <div class="report-desc"><p>今年はかなりしっかりと積雪量もあり、見ごたえのある雪景色でした。</p><p>夜のとばりと白い雪、ライトアップの温かみのある光が幻想的な雰囲気を醸しています。</p><p>自然のことなので贅沢は言えませんが、毎年これくらい雪が降ればいいのに…！</p></div>
     <div class="section-title">当日の様子</div>
-    <div class="photo-grid"><a href="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourou_marupost.JPG" target="_blank" class="photo-item"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourou_marupost.JPG" alt="美山かやぶきの里冬灯廊"></a><a href="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouzizou.JPG" target="_blank" class="photo-item"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouzizou.JPG" alt="美山かやぶきの里冬灯廊"></a><a href="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouroten.JPG" target="_blank" class="photo-item"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouroten.JPG" alt="美山かやぶきの里冬灯廊"></a><a href="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutouroukakitoyane.JPG" target="_blank" class="photo-item"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutouroukakitoyane.JPG" alt="美山かやぶきの里冬灯廊"></a><a href="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyokokara.JPG" target="_blank" class="photo-item"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyokokara.JPG" alt="美山かやぶきの里冬灯廊"></a><a href="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyoruoudan.JPG" target="_blank" class="photo-item"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyoruoudan.JPG" alt="美山かやぶきの里冬灯廊"></a><a href="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyorurotary.JPG" target="_blank" class="photo-item"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyorurotary.JPG" alt="美山かやぶきの里冬灯廊"></a></div>
+    <div class="photo-grid"><div class="photo-item" onclick="openViewer(0)" style="cursor:pointer;"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourou_marupost.JPG" alt="美山かやぶきの里冬灯廊"></div><div class="photo-item" onclick="openViewer(1)" style="cursor:pointer;"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouzizou.JPG" alt="美山かやぶきの里冬灯廊"></div><div class="photo-item" onclick="openViewer(2)" style="cursor:pointer;"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouroten.JPG" alt="美山かやぶきの里冬灯廊"></div><div class="photo-item" onclick="openViewer(3)" style="cursor:pointer;"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutouroukakitoyane.JPG" alt="美山かやぶきの里冬灯廊"></div><div class="photo-item" onclick="openViewer(4)" style="cursor:pointer;"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyokokara.JPG" alt="美山かやぶきの里冬灯廊"></div><div class="photo-item" onclick="openViewer(5)" style="cursor:pointer;"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyoruoudan.JPG" alt="美山かやぶきの里冬灯廊"></div><div class="photo-item" onclick="openViewer(6)" style="cursor:pointer;"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyorurotary.JPG" alt="美山かやぶきの里冬灯廊"></div></div>
     <a href="index.html" class="back-btn">← MKトラベル手帳に戻る</a>
   </div>
 
+<script>
+  var PHOTOS = ["https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourou_marupost.JPG", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouzizou.JPG", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouroten.JPG", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutouroukakitoyane.JPG", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyokokara.JPG", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyoruoudan.JPG", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyorurotary.JPG"];
+  var _vIdx = 0;
+
+  function openViewer(idx) {
+    _vIdx = idx;
+    _updateViewer();
+    document.getElementById('viewer-overlay').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function _updateViewer() {
+    document.getElementById('viewer-img').src = PHOTOS[_vIdx];
+    document.getElementById('viewer-caption').textContent = (_vIdx + 1) + ' / ' + PHOTOS.length;
+    document.getElementById('vn-prev').disabled = (_vIdx === 0);
+    document.getElementById('vn-next').disabled = (_vIdx === PHOTOS.length - 1);
+  }
+
+  function viewerMove(delta) {
+    _vIdx = Math.max(0, Math.min(PHOTOS.length - 1, _vIdx + delta));
+    _updateViewer();
+  }
+
+  function closeViewer() {
+    document.getElementById('viewer-overlay').classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  function onOverlayClick(e) {
+    if (e.target === document.getElementById('viewer-overlay')) closeViewer();
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (!document.getElementById('viewer-overlay').classList.contains('show')) return;
+    if (e.key === 'ArrowLeft')  viewerMove(-1);
+    if (e.key === 'ArrowRight') viewerMove(1);
+    if (e.key === 'Escape')     closeViewer();
+  });
+</script>
 </body>
 </html>
