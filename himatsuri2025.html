@@ -3,153 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>鞍馬の火祭×くらま温泉 癒し旅 2025｜MKトラベル手帳</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Noto+Serif+JP:wght@400;500&display=swap" rel="stylesheet">
-  <meta name="robots" content="noindex,nofollow">
+  <title>鞍馬の火祭×くらま温泉 癒し旅 | 旅とも手帳</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    *{box-sizing:border-box;margin:0;padding:0;}
-    body{font-family:'Noto Sans JP',sans-serif;background:#f5f0e8;color:#3c2e1e;}
-    a{text-decoration:none;color:inherit;}
-    .header{background:#8b7355;color:#fff;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;}
-    .header-title{font-size:16px;font-weight:500;}
-    .back-btn{font-size:12px;color:rgba(255,255,255,0.8);display:flex;align-items:center;gap:4px;}
-    .back-btn:hover{color:#fff;}
-    .hero{position:relative;height:300px;overflow:hidden;background:#1a1a1a;}
-    .hero img{width:100%;height:100%;object-fit:cover;opacity:0.7;}
-    .hero-text{position:absolute;bottom:0;left:0;right:0;padding:24px;background:linear-gradient(transparent,rgba(0,0,0,0.7));}
-    .hero-tag{display:inline-block;background:#8b7355;color:#fff;font-size:11px;padding:3px 10px;border-radius:3px;margin-bottom:8px;}
-    .hero-title{font-family:'Noto Serif JP',serif;font-size:20px;color:#fff;line-height:1.5;}
-    .hero-date{font-size:12px;color:rgba(255,255,255,0.8);margin-top:6px;}
-    .container{max-width:800px;margin:0 auto;padding:24px 16px;}
-    .section-title{font-size:15px;font-weight:500;color:#5c4a32;border-left:4px solid #8b7355;padding-left:10px;margin-bottom:16px;}
-    .intro{background:#fff;border-radius:10px;padding:20px;margin-bottom:24px;line-height:1.9;font-size:14px;color:#5c4a32;}
-    .photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:24px;}
-    .photo-item{border-radius:8px;overflow:hidden;cursor:pointer;aspect-ratio:1;background:#1a1a1a;}
-    .photo-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.2s;display:block;}
-    .photo-item:hover img{transform:scale(1.05);}
-    .photo-item.wide{grid-column:span 2;aspect-ratio:2/1;}
-    .photo-item.tall{grid-row:span 2;aspect-ratio:1/2;}
-    /* ライトボックス */
-    .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:1000;align-items:center;justify-content:center;}
-    .lightbox.show{display:flex;}
-    .lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;border-radius:4px;}
-    .lb-close{position:absolute;top:16px;right:20px;color:#fff;font-size:28px;cursor:pointer;line-height:1;}
-    .lb-prev,.lb-next{position:absolute;top:50%;transform:translateY(-50%);color:#fff;font-size:36px;cursor:pointer;padding:10px;background:rgba(255,255,255,0.1);border-radius:50%;}
-    .lb-prev{left:16px;} .lb-next{right:16px;}
-    .lb-prev:hover,.lb-next:hover{background:rgba(255,255,255,0.2);}
-    .lb-count{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.7);font-size:12px;}
-    .back-link{display:flex;align-items:center;justify-content:center;gap:6px;background:#8b7355;color:#fff;padding:12px;border-radius:8px;font-size:13px;font-weight:500;margin-top:8px;}
-    .back-link:hover{background:#7a6448;}
-    @media(max-width:600px){
-      .photo-grid{grid-template-columns:repeat(2,1fr);}
-      .photo-item.wide{grid-column:span 1;aspect-ratio:1;}
-      .photo-item.tall{grid-row:span 1;aspect-ratio:1;}
-      .hero-title{font-size:16px;}
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans JP', sans-serif; background: #f5f0e8; color: #3c2e1e; }
+    .wrap { max-width: 800px; margin: 0 auto; padding: 24px 16px; }
+    .back-btn { display:inline-block; margin-bottom:16px; color:#8b7355; font-size:13px; text-decoration:none; }
+    .back-btn:hover { text-decoration:underline; }
+    .report-header { background:#fff; border-radius:12px; padding:20px; margin-bottom:16px; border:1px solid #e0d8cc; }
+    .report-title { font-size:18px; font-weight:500; color:#3c2e1e; margin-bottom:6px; }
+    .report-date { font-size:12px; color:#999; }
+    .report-body { background:#fff; border-radius:12px; padding:20px; border:1px solid #e0d8cc; }
   </style>
 </head>
 <body>
-
-<div class="header">
-  <a href="index.html" class="back-btn">← MKトラベル手帳に戻る</a>
-  <div class="header-title">ツアーの様子</div>
-</div>
-
-<div class="hero">
-  <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp" alt="鞍馬の火祭">
-  <div class="hero-text">
-    <div class="hero-tag">2025年 開催</div>
-    <div class="hero-title">はじめてだからこそ、特別に。<br>鞍馬の火祭×くらま温泉 癒し旅</div>
-    <div class="hero-date">📅 2025年10月22日（水）</div>
-  </div>
-</div>
-
-<div class="container">
-
-  <div class="intro">
-    京都・洛北の山里「鞍馬」に、年に一度だけ訪れる特別な夜。<br>
-    巨大な松明が夜の山里を照らし、熱気と幻想的な空気に包まれる「鞍馬の火祭」。<br>
-    祭りの余韻に浸りながら、くらま温泉でゆっくりと過ごす特別な一夜をお届けします。
-  </div>
-
-  <div class="section-title">当日の様子</div>
-  <div class="photo-grid" id="photo-grid">
-    <div class="photo-item" onclick="openLightbox(0)">
-      <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/f9b7e4277e1c0a018981566ed4e8087e-600x400.webp" alt="鞍馬の火祭1">
+  <div class="wrap">
+    <a href="index.html" class="back-btn">← 旅とも手帳トップへ</a>
+    <div class="report-header">
+      <div class="report-title">鞍馬の火祭×くらま温泉 癒し旅</div>
+      <div class="report-date">📅 催行日：2025年10月22日</div>
     </div>
-    <div class="photo-item" onclick="openLightbox(1)">
-      <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/a1dfbc0cb017b49d16787eebcd62e936-600x338.webp" alt="鞍馬の火祭2">
+    <div class="report-body">
+      
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;">
+      <a href="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp" target="_blank"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp" alt="鞍馬の火祭×くらま温泉 癒し旅" style="width:100%;border-radius:8px;object-fit:cover;aspect-ratio:4/3;display:block;"></a>
+      <a href="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/f9b7e4277e1c0a018981566ed4e8087e-600x400.webp" target="_blank"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/f9b7e4277e1c0a018981566ed4e8087e-600x400.webp" alt="鞍馬の火祭×くらま温泉 癒し旅" style="width:100%;border-radius:8px;object-fit:cover;aspect-ratio:4/3;display:block;"></a>
+      <a href="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/4a3e24e959e0275abd2df3e85320065c-600x400.webp" target="_blank"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/4a3e24e959e0275abd2df3e85320065c-600x400.webp" alt="鞍馬の火祭×くらま温泉 癒し旅" style="width:100%;border-radius:8px;object-fit:cover;aspect-ratio:4/3;display:block;"></a>
     </div>
-    <div class="photo-item" onclick="openLightbox(2)">
-      <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/e156bbf5bd914bfc6a44d0071a95809f-600x400.webp" alt="鞍馬の火祭3">
-    </div>
-    <div class="photo-item" onclick="openLightbox(3)">
-      <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/d8d8f63edff06d13bf1be10754efb202-600x400.webp" alt="鞍馬の火祭4">
-    </div>
-    <div class="photo-item" onclick="openLightbox(4)">
-      <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/4d99df6c49c6485621615b4c7b01ddf7-600x338.webp" alt="鞍馬の火祭5">
-    </div>
-    <div class="photo-item" onclick="openLightbox(5)">
-      <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp" alt="鞍馬の火祭6">
-    </div>
-    <div class="photo-item" onclick="openLightbox(6)">
-      <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/55db487c9429c9d6142cf29b38f8f5c5-400x600.webp" alt="鞍馬の火祭7">
-    </div>
-    <div class="photo-item" onclick="openLightbox(7)">
-      <img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/4a3e24e959e0275abd2df3e85320065c-600x400.webp" alt="鞍馬の火祭8">
+      
     </div>
   </div>
-
-  <a href="index.html" class="back-link">← MKトラベル手帳に戻る</a>
-
-</div>
-
-<!-- ライトボックス -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
-  <span class="lb-close" onclick="closeLightbox()">×</span>
-  <span class="lb-prev" onclick="event.stopPropagation();moveLightbox(-1)">‹</span>
-  <img id="lb-img" src="" alt="">
-  <span class="lb-next" onclick="event.stopPropagation();moveLightbox(1)">›</span>
-  <div class="lb-count" id="lb-count"></div>
-</div>
-
-<script>
-var photos = [
-  "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/f9b7e4277e1c0a018981566ed4e8087e-600x400.webp",
-  "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/a1dfbc0cb017b49d16787eebcd62e936-600x338.webp",
-  "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/e156bbf5bd914bfc6a44d0071a95809f-600x400.webp",
-  "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/d8d8f63edff06d13bf1be10754efb202-600x400.webp",
-  "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/4d99df6c49c6485621615b4c7b01ddf7-600x338.webp",
-  "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp",
-  "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/55db487c9429c9d6142cf29b38f8f5c5-400x600.webp",
-  "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/4a3e24e959e0275abd2df3e85320065c-600x400.webp",
-];
-var current = 0;
-
-function openLightbox(idx) {
-  current = idx;
-  document.getElementById('lb-img').src = photos[idx];
-  document.getElementById('lb-count').textContent = (idx+1) + ' / ' + photos.length;
-  document.getElementById('lightbox').classList.add('show');
-  document.body.style.overflow = 'hidden';
-}
-function closeLightbox(e) {
-  if (e && e.target !== document.getElementById('lightbox') && e.target !== document.querySelector('.lb-close')) return;
-  document.getElementById('lightbox').classList.remove('show');
-  document.body.style.overflow = '';
-}
-function moveLightbox(dir) {
-  current = (current + dir + photos.length) % photos.length;
-  document.getElementById('lb-img').src = photos[current];
-  document.getElementById('lb-count').textContent = (current+1) + ' / ' + photos.length;
-}
-document.addEventListener('keydown', function(e) {
-  if (document.getElementById('lightbox').classList.contains('show')) {
-    if (e.key === 'ArrowLeft') moveLightbox(-1);
-    if (e.key === 'ArrowRight') moveLightbox(1);
-    if (e.key === 'Escape') { document.getElementById('lightbox').classList.remove('show'); document.body.style.overflow = ''; }
-  }
-});
-</script>
 </body>
 </html>
