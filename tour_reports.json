@@ -5,8 +5,17 @@
     "photos": [
       "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp",
       "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/f9b7e4277e1c0a018981566ed4e8087e-600x400.webp",
-      "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/4a3e24e959e0275abd2df3e85320065c-600x400.webp"
-    ]
+      "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/4a3e24e959e0275abd2df3e85320065c-600x400.webp",
+      "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/4d99df6c49c6485621615b4c7b01ddf7-600x338.webp",
+      "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/55db487c9429c9d6142cf29b38f8f5c5-400x600.webp",
+      "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/d8d8f63edff06d13bf1be10754efb202-600x400.webp",
+      "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/e156bbf5bd914bfc6a44d0071a95809f-600x400.webp",
+      "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/f9b7e4277e1c0a018981566ed4e8087e-600x400.webp"
+    ],
+    "desc": "迫力満点の火祭とくらま温泉での夕食・温泉入浴付きのツアー。\n鞍馬の火祭と言えば交通の便が極めて悪い上に交通規制も厳しく、\n初心者が楽しむには難易度が高い祭りとして有名ですが\nタクシーでの移動なので帰りの時間を心配皆さま思い思いに、鞍馬の特別な夜を過ごしていただきました。",
+    "hero": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp",
+    "catch": "はじめてだからこそ、特別に。",
+    "shot_date": "2025年10月22日　　MKスタッフ撮影"
   },
   "2026-01-20": {
     "title": "美山かやぶきの里冬灯廊",
@@ -20,6 +29,9 @@
       "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyoruoudan.JPG",
       "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyorurotary.JPG"
     ],
-    "desc": "今年はかなりしっかりと積雪量もあり、見ごたえのある雪景色でした。\n夜のとばりと白い雪、ライトアップの温かみのある光が幻想的な雰囲気を醸しています。\n自然のことなので贅沢は言えませんが、毎年これくらい雪が降ればいいのに…！"
+    "desc": "今年はかなりしっかりと積雪量もあり、見ごたえのある雪景色でした。\n夜のとばりと白い雪、ライトアップの温かみのある光が幻想的な雰囲気を醸しています。\n自然のことなので贅沢は言えませんが、毎年これくらい雪が降ればいいのに…！",
+    "hero": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourou_marupost.JPG",
+    "catch": "優しい光に包まれる夜",
+    "shot_date": "2026年1月20日"
   }
 }
