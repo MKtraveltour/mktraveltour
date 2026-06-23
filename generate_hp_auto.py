@@ -540,6 +540,14 @@ HTML_TEMPLATE = """\
   <title>MKトラベル手帳 | MKトラベル</title>
   <!-- 公開時にこの1行を削除してください -->
   <meta name="robots" content="noindex,nofollow">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C523Q39L5Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){{dataLayer.push(arguments);}}
+    gtag('js', new Date());
+    gtag('config', 'G-C523Q39L5Q');
+  </script>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   <style>
