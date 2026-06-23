@@ -32,17 +32,16 @@ def parse_date(date_str: str, default_year: int = 2026):
 # ===== ツアーレポート辞書 =====
 # カレンダーの日付とレポートページ・写真を紐付け
 # 新しいツアーを追加するときはここに追記するだけ
-TOUR_REPORTS = {
-    "2025-10-22": {
-        "title": "鞍馬の火祭×くらま温泉 癒し旅",
-        "page": "himatsuri2025.html",
-        "photos": [
-            "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp",
-            "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/f9b7e4277e1c0a018981566ed4e8087e-600x400.webp",
-            "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/4a3e24e959e0275abd2df3e85320065c-600x400.webp",
-        ]
-    },
-}
+# TOUR_REPORTSはtour_reports.jsonから読み込む
+def _load_tour_reports():
+    import json as _json2
+    _path = Path(__file__).parent / "tour_reports.json"
+    if _path.exists():
+        with open(_path, "r", encoding="utf-8") as _f:
+            return _json2.load(_f)
+    return {}
+
+TOUR_REPORTS = _load_tour_reports()
 
 # ツアーキーワード→絵文字マッピング
 # タグ → 絵文字マッピング（優先順位順）
@@ -368,6 +367,8 @@ def build_tour_cards(tours: dict) -> str:
             if '季節' in t or '花' in t:                        filter_tags.append('flower')
             if '夏' in t:                                       filter_tags.append('summer')
             if '秋' in t:                                       filter_tags.append('autumn')
+            if '冬' in t:                                       filter_tags.append('winter')
+            if '春' in t:                                       filter_tags.append('spring')
             if '春' in t:                        filter_tags.append('spring')
             if '冬' in t:                        filter_tags.append('winter')
         data_tags = ' '.join(set(filter_tags)) or 'other'
@@ -922,6 +923,8 @@ HTML_TEMPLATE = """\
       <div class="ftab" onclick="tourFilter('flower', this)">季節の花</div>
       <div class="ftab" onclick="tourFilter('summer', this)">夏のツアー</div>
       <div class="ftab" onclick="tourFilter('autumn', this)">秋のツアー</div>
+      <div class="ftab" onclick="tourFilter('winter', this)">冬のツアー</div>
+      <div class="ftab" onclick="tourFilter('spring', this)">春のツアー</div>
     </div>
     <div class="filter-tabs" style="margin-top:-4px;">
       <div class="ftab" onclick="tourFilterStatus('confirmed', this)">✅ 催行確定</div>
