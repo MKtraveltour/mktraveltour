@@ -45,46 +45,34 @@ TOUR_REPORTS = {
 }
 
 # ツアーキーワード→絵文字マッピング
-TOUR_EMOJI = {
-    '風鈴':     '🔔',
-    'ろうそく': '🕯',
-    '送り火':   '🔥',
-    '火祭':     '🔥',
-    'あじさい': '🌸',
-    '紫陽花':   '🌸',
-    'こころうつし': '🍃',
-    '撮影':     '📷',
-    '川床':     '🍽',
-    '御所':     '🌙',
-    '右大文字': '🌙',
-    '鞍馬':     '🔥',
-    '馬':       '🐎',
-    'うまく':   '🐎',
-    '梅花藻':   '🌿',
-    '長浜':     '🏯',
-    '舞鶴':     '🌊',
-    '八幡':     '⛩',
-    '流れ橋':   '🌉',
-    '正寿院':   '🔔',
-    '花手水':   '🌸',
-    '西山':     '🍃',
-    '美山':     '🏡',
-    '友禅菊':   '💜',
-    'メタセコイア': '🌲',
-    'なりひら': '🍃',
-    '写経':     '🍵',
-    '茶の湯':   '🍵',
-    '岡林院':   '🍵',
-    'ねねと秀吉': '📜',
-    '豊国神社': '📜',
-    '高台寺':   '📜',
-}
+# タグ → 絵文字マッピング（優先順位順）
+TAG_EMOJI_MAP = [
+    # お祭り・イベント
+    ("イベント・お祭り", "🎇"),
+    ("伝統文化",         "🎇"),
+    ("ナイトツアー",     "🎇"),
+    # 季節の花
+    ("季節の花",         "🌸"),
+    # 歴史・寺社巡り
+    ("歴史",             "🏯"),
+    ("神社仏閣",         "🏯"),
+    # 体験・名所めぐり（上記に当てはまらない場合）
+    ("グルメ",           "💜"),
+    ("体験",             "💜"),
+    ("ガイド・講座",     "💜"),
+    ("景色・写真",       "💜"),
+]
+
+def get_emoji_from_tags(tags: list) -> str:
+    """タグリストから絵文字を1つ返す（優先順位順）"""
+    for tag_kw, emoji in TAG_EMOJI_MAP:
+        if tag_kw in tags:
+            return emoji
+    return "💜"  # デフォルト
 
 def get_tour_emoji(title: str) -> str:
-    for keyword, emoji in TOUR_EMOJI.items():
-        if keyword in title:
-            return emoji
-    return '📅'
+    """後方互換用（タイトルからは絵文字を返さない）"""
+    return "💜"
 
 def build_tour_js(tours: dict) -> str:
     """tour_data.json からカレンダー用JSデータを生成"""
@@ -101,6 +89,7 @@ def build_tour_js(tours: dict) -> str:
             continue
         url = tour["url"]
         title = tour["title"].replace("'", "\\'")
+        tags = tour.get("tags", [])
 
         # 催行確定・満席・few の日付を収集
         status_map = {}
@@ -133,7 +122,7 @@ def build_tour_js(tours: dict) -> str:
             t = info["type"]
             label = info["label"].replace("'", "\\'")
             note = f"{title} {label}".strip()
-            emoji = get_tour_emoji(title)
+            emoji = get_emoji_from_tags(tags)
             # 既存エントリに絵文字を追加（同じ日付に複数ツアーがある場合）
             existing_idx = None
             for i, line in enumerate(lines):
@@ -179,10 +168,8 @@ def build_tour_js(tours: dict) -> str:
         atour = tours[akey]
         atitle = atour.get("title", "")
         aurl   = atour.get("url", "")
-        aemoji = ""
-        for kw, em in TOUR_EMOJI.items():
-            if kw in atitle and em not in aemoji:
-                aemoji += em
+        atags = atour.get("tags", [])
+        aemoji = get_emoji_from_tags(atags)
         var_url2 = f"_u_{akey.replace('-','_')}"
         lines.append(f"      var {var_url2} = '{aurl}';")
         sy, sm, sd = aval["start"]
