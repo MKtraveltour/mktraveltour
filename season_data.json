@@ -21,7 +21,10 @@
       "date": "📷 2025年7月7日 ドライバー撮影",
       "desc": "6月〜9月の週末を中心に開催。色とりどりの風鈴が境内を彩る正寿院の夏。京都駅・宇治駅から送迎付きのお手軽プランです。",
       "links": [
-        {"url": "https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/", "label": "🔔 ツアー詳細を見る"}
+        {
+          "url": "https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/",
+          "label": "🔔 ツアー詳細を見る"
+        }
       ]
     },
     {
@@ -31,10 +34,13 @@
       "thumb_title": "🌊 海とあじさいの絶景",
       "img": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620%20dr%20mishimura.jpg",
       "title": "海とあじさいの絶景へ!! 舞鶴あじさい名所と絶景めぐり",
-      "date": "📷 2026年6月20日 ドライバー西村健撮影",
+      "date": "📷 2026年6月20日 ドライバー撮影",
       "desc": "海とあじさいが織りなす絶景。舞鶴のあじさい名所と絶景スポットを巡るツアーのひとコマです。",
       "links": [
-        {"url": "https://travel.mk-group.co.jp/tourkyoto/2026maizuruajisai/", "label": "🌊 ツアー詳細を見る"}
+        {
+          "label": "🌊 ツアー詳細を見る",
+          "url": "https://travel.mk-group.co.jp/tourkyoto/2026maizuruajisai/"
+        }
       ]
     },
     {
@@ -47,22 +53,34 @@
       "date": "📷 2025年10月22日 関係者撮影",
       "desc": "年に一度、鞍馬の夜を燃やす伝統の火祭。巨大な松明が山里を照らす幻想的な夜をくらま温泉でゆっくり締めくくります。",
       "links": [
-        {"url": "https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/", "label": "🏨 限定宿泊プランを見る"},
-        {"url": "https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/", "label": "🔥 1dayプランを見る"},
-        {"url": "himatsuri2025.html", "label": "📄 当日のレポートを見る"}
+        {
+          "url": "https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/",
+          "label": "🏨 限定宿泊プランを見る"
+        },
+        {
+          "url": "https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/",
+          "label": "🔥 1dayプランを見る"
+        },
+        {
+          "url": "himatsuri2025.html",
+          "label": "📄 当日のレポートを見る"
+        }
       ]
     },
     {
       "key": "fuyutourou",
       "season": "winter",
-      "label": "❄️ 冬の灯篭",
-      "thumb_title": "❄️ 冬の灯篭",
+      "label": "❄冬の灯廊",
+      "thumb_title": "❄冬の灯廊",
       "img": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyoruoudan.jpg",
-      "title": "冬の灯篭",
-      "date": "",
+      "title": "冬の灯廊",
+      "date": "２０２６年1月20日　ドライバー撮影",
       "desc": "",
       "links": [
-        {"url": "https://travel.mk-group.co.jp/tourkyoto/2025fuyutourou/", "label": "❄️ ツアー詳細を見る"}
+        {
+          "label": "❄️ ツアー詳細を見る",
+          "url": "https://travel.mk-group.co.jp/tourkyoto/2025fuyutourou/"
+        }
       ]
     }
   ]
