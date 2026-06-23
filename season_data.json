@@ -1,0 +1,69 @@
+{
+  "seasons": [
+    {
+      "key": "sakura",
+      "season": "spring",
+      "label": "🌸 春の京都",
+      "thumb_title": "🌸 美山・大野ダム",
+      "img": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250409_oonodam%20dr%20teramoto.jpg",
+      "title": "美山・大野ダム",
+      "date": "📷 2025年4月9日 ドライバー寺本撮影",
+      "desc": "春の美山、大野ダムのほとりに咲く桜。青い水面と山々を背景に、白とピンクの桜が美しく広がります。",
+      "links": []
+    },
+    {
+      "key": "furin",
+      "season": "summer",
+      "label": "🔔 風鈴まつり",
+      "thumb_title": "🔔 風鈴まつり",
+      "img": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/250707_%E6%AD%A3%E5%AF%BF%E9%99%A2_%E9%A2%A8%E9%88%B4%E3%81%BE%E3%81%A4%E3%82%8A-%E8%A5%BF%E5%B7%9D%20(6).jpg",
+      "title": "正寿院 風鈴まつり送迎プラン 2026",
+      "date": "📷 2025年7月7日 ドライバー撮影",
+      "desc": "6月〜9月の週末を中心に開催。色とりどりの風鈴が境内を彩る正寿院の夏。京都駅・宇治駅から送迎付きのお手軽プランです。",
+      "links": [
+        {"url": "https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/", "label": "🔔 ツアー詳細を見る"}
+      ]
+    },
+    {
+      "key": "maizuru",
+      "season": "summer",
+      "label": "🌊 海とあじさいの絶景",
+      "thumb_title": "🌊 海とあじさいの絶景",
+      "img": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620%20dr%20mishimura.jpg",
+      "title": "海とあじさいの絶景へ!! 舞鶴あじさい名所と絶景めぐり",
+      "date": "📷 2026年6月20日 ドライバー西村健撮影",
+      "desc": "海とあじさいが織りなす絶景。舞鶴のあじさい名所と絶景スポットを巡るツアーのひとコマです。",
+      "links": [
+        {"url": "https://travel.mk-group.co.jp/tourkyoto/2026maizuruajisai/", "label": "🌊 ツアー詳細を見る"}
+      ]
+    },
+    {
+      "key": "himatsuri",
+      "season": "autumn",
+      "label": "🔥 鞍馬の火祭",
+      "thumb_title": "🔥 鞍馬の火祭",
+      "img": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp",
+      "title": "鞍馬の火祭×くらま温泉 癒し旅",
+      "date": "📷 2025年10月22日 関係者撮影",
+      "desc": "年に一度、鞍馬の夜を燃やす伝統の火祭。巨大な松明が山里を照らす幻想的な夜をくらま温泉でゆっくり締めくくります。",
+      "links": [
+        {"url": "https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/", "label": "🏨 限定宿泊プランを見る"},
+        {"url": "https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/", "label": "🔥 1dayプランを見る"},
+        {"url": "himatsuri2025.html", "label": "📄 当日のレポートを見る"}
+      ]
+    },
+    {
+      "key": "fuyutourou",
+      "season": "winter",
+      "label": "❄️ 冬の灯篭",
+      "thumb_title": "❄️ 冬の灯篭",
+      "img": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyoruoudan.jpg",
+      "title": "冬の灯篭",
+      "date": "",
+      "desc": "",
+      "links": [
+        {"url": "https://travel.mk-group.co.jp/tourkyoto/2025fuyutourou/", "label": "❄️ ツアー詳細を見る"}
+      ]
+    }
+  ]
+}

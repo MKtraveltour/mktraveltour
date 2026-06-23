@@ -1,58 +1,58 @@
-# -*- coding: utf-8 -*-
+"""
+run.py - 旅とも手帳 一括更新スクリプト
+1. 翌年URL自動チェック（hidden:Trueのツアー）
+2. スクレイピング（tour_data.json更新）
+3. HP生成（index.html生成）
+4. GitHub push
+"""
 import subprocess
 import sys
 import os
 from datetime import datetime
 
-def install_requirements():
-    required = ["requests", "beautifulsoup4", "lxml"]
-    for pkg in required:
-        try:
-            __import__(pkg.replace("-", "_").replace("beautifulsoup4", "bs4"))
-        except ImportError:
-            print(f"Installing {pkg}...")
-            subprocess.run([sys.executable, "-m", "pip", "install", pkg], check=True)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-install_requirements()
+def run(cmd, desc):
+    print(f"\n{'='*50}")
+    print(f"▶ {desc}")
+    print('='*50)
+    result = subprocess.run(cmd, cwd=BASE_DIR, shell=True)
+    if result.returncode != 0:
+        print(f"❌ エラーが発生しました: {desc}")
+        sys.exit(1)
 
-FOLDER = r"Z:\mktravel"
+# --- 必要ライブラリの確認 ---
+try:
+    import requests
+except ImportError:
+    print("📦 requestsをインストール中...")
+    subprocess.run([sys.executable, "-m", "pip", "install", "requests"], check=True)
 
-def run_cmd(cmd, cwd=None):
-    result = subprocess.run(cmd, cwd=cwd or FOLDER, capture_output=True, text=True, encoding="utf-8")
-    if result.stdout:
-        print(result.stdout)
-    if result.stderr:
-        print(result.stderr)
-    return result.returncode
+try:
+    import bs4
+except ImportError:
+    print("📦 beautifulsoup4をインストール中...")
+    subprocess.run([sys.executable, "-m", "pip", "install", "beautifulsoup4"], check=True)
 
-def log(msg):
-    with open(os.path.join(FOLDER, "update_log.txt"), "a", encoding="utf-8") as f:
-        f.write(f"{datetime.now()} - {msg}\n")
-    print(msg)
+# --- STEP 1: 翌年URL自動チェック ---
+print("\n🔍 STEP 1: 非表示ツアーの翌年URL自動チェック")
+from check_next_year_url import check_and_update
+check_and_update()
 
-def main():
-    os.chdir(FOLDER)
-    print(f"=== 自動更新開始: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ===")
-    print("\n[1/3] ツアー情報を取得中...")
-    r1 = subprocess.run([sys.executable, "scraper.py"], cwd=FOLDER)
-    if r1.returncode != 0:
-        log("scraping failed")
-        return 1
-    print("\n[2/3] index.html を生成中...")
-    r2 = subprocess.run([sys.executable, "generate_hp_auto.py"], cwd=FOLDER)
-    if r2.returncode != 0:
-        log("html generation failed")
-        return 1
-    print("\n[3/3] GitHubにアップロード中...")
-    run_cmd(["git", "pull", "origin", "main", "--rebase"])
-    run_cmd(["git", "add", "index.html", "tour_data.json", "generate_hp_auto.py", "scraper.py", "articles.json"])
-    run_cmd(["git", "commit", "-m", f"auto update {datetime.now().strftime('%Y-%m-%d %H:%M')}"])
-    ret = run_cmd(["git", "push", "origin", "main"])
-    if ret != 0:
-        log("git push failed")
-        return 1
-    log("success")
-    return 0
+# --- STEP 2: スクレイピング ---
+run(f'"{sys.executable}" scraper.py', "STEP 2: ツアー情報スクレイピング")
 
-if __name__ == "__main__":
-    sys.exit(main())
+# --- STEP 3: HP生成 ---
+run(f'"{sys.executable}" generate_hp_auto.py', "STEP 3: index.html生成")
+
+# --- STEP 4: GitHub push ---
+print(f"\n{'='*50}")
+print("▶ STEP 4: GitHub push")
+print('='*50)
+
+now = datetime.now().strftime("%Y-%m-%d %H:%M")
+os.system('git add index.html tour_data.json tour_reports.json generate_hp_auto.py articles.json')
+os.system(f'git commit -m "auto update {now}"')
+os.system('git push origin main')
+
+print("\n✅ すべての処理が完了しました！")
