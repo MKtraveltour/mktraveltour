@@ -641,6 +641,8 @@ HTML_TEMPLATE = """\
     .news-body {{ display:flex; gap:14px; align-items:flex-start; }}
     .news-photo {{ flex:0 0 220px; max-width:220px; }}
     .news-photo img {{ width:100%; border-radius:6px; object-fit:cover; height:160px; }}
+    .news-photos {{ display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-top:10px; }}
+    .news-photos img {{ width:100%; border-radius:6px; object-fit:cover; aspect-ratio:4/3; }}
     @media (max-width: 600px) {{
       .news-body {{ flex-direction:column; }}
       .news-photo {{ flex:none; max-width:100%; width:100%; }}
@@ -1443,10 +1445,12 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
     for art in articles:
         cat = art.get("category", "")
         cat_color = {"New！": "#c0392b", "企画のたまご": "#e67e22", "レポート": "#2980b9", "完成！": "#27ae60"}.get(cat, "#8b7355")
-        photos = art.get("photos", [])
+        photos = art.get("photos", [])[:3]  # 最大3枚
         photos_html = ""
         if photos:
-            photos_html = f'<div class="news-photo"><img src="{photos[0]}" alt="{art.get("title","")}"></div>'
+            cols = len(photos)
+            imgs = "".join(f'<img src="{p}" alt="{art.get("title","")}">' for p in photos)
+            photos_html = f'<div class="news-photos" style="grid-template-columns:repeat({cols},1fr);">{imgs}</div>'
         text_html = art.get("text", "").replace("\n", "<br>")
         aid = art.get("id", "")
 
@@ -1460,11 +1464,9 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
           </div>
           <span style="margin-left:auto;font-size:10px;padding:2px 8px;border-radius:10px;background:{cat_color};color:#fff;">{cat}</span>
         </div>
-        <div class="news-body">
-          <div style="flex:1;min-width:0;">
-            <div style="font-size:13px;font-weight:500;color:#3c2e1e;margin-bottom:6px;">{art.get("title","")}</div>
-            <div class="news-text">{text_html}</div>
-          </div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:13px;font-weight:500;color:#3c2e1e;margin-bottom:6px;">{art.get("title","")}</div>
+          <div class="news-text">{text_html}</div>
           {photos_html}
         </div>
       </div>'''
