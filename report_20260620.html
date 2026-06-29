@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>初開催！📸✨ SNSで映える！【閉門後貸切】紫陽花の名刹 柳谷観音 楊谷寺スマホ撮影講座ツアー | 旅とも手帳</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C523Q39L5Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-C523Q39L5Q');
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans JP', sans-serif; background: #f5f0e8; color: #3c2e1e; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ヒーローヘッダー */
+    .hero {
+      position: relative;
+      height: 280px;
+      overflow: hidden;
+      background: #1a1a1a;
+    }
+    .hero-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      opacity: 0.65;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6));
+    }
+    .hero-body {
+      position: relative; z-index: 1;
+      height: 100%;
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 24px 20px;
+      color: #fff;
+    }
+    .hero-year {
+      font-size: 11px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 4px;
+      padding: 2px 8px;
+      display: inline-block;
+      margin-bottom: 8px;
+      backdrop-filter: blur(4px);
+    }
+    .hero-catch {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 4px;
+    }
+    .hero-title {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 8px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    }
+    .hero-date {
+      font-size: 12px;
+      color: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(4px);
+      border-radius: 4px;
+      padding: 3px 10px;
+      display: inline-block;
+    }
+
+    /* メインコンテンツ */
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+    .section-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: #5c4a32;
+      border-left: 4px solid #8b7355;
+      padding-left: 10px;
+      margin-bottom: 14px;
+    }
+
+    /* 説明文 */
+    .report-desc {
+      background: #fff;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      border: 1px solid #e0d8cc;
+      font-size: 13px;
+      line-height: 1.85;
+      color: #5c4a32;
+    }
+    .report-desc p { margin-bottom: 8px; }
+    .report-desc p:last-child { margin-bottom: 0; }
+
+    /* 写真グリッド */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 24px;
+    }
+    .photo-item img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 6px;
+      display: block;
+      transition: opacity 0.2s;
+    }
+    .photo-item:hover img { opacity: 0.9; }
+
+    /* 戻るボタン */
+    .back-btn {
+      display: block;
+      text-align: center;
+      background: #8b7355;
+      color: #fff;
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .back-btn:hover { background: #7a6448; }
+
+    /* ビューワー */
+    .viewer-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.92); z-index: 9999;
+      align-items: center; justify-content: center; flex-direction: column;
+    }
+    .viewer-overlay.show { display: flex; }
+    .viewer-img {
+      max-width: 90vw; max-height: 72vh;
+      object-fit: contain; border-radius: 8px; display: block;
+    }
+    .viewer-caption {
+      color: rgba(255,255,255,0.8); font-size: 12px;
+      margin-top: 10px; text-align: center;
+    }
+    .viewer-nav {
+      display: flex; align-items: center; gap: 24px; margin-top: 14px;
+    }
+    .vn-btn {
+      background: rgba(255,255,255,0.15); border: none; color: #fff;
+      font-size: 26px; width: 48px; height: 48px; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .vn-btn:hover { background: rgba(255,255,255,0.3); }
+    .vn-btn:disabled { opacity: 0.25; cursor: default; }
+    .vn-counter { color: rgba(255,255,255,0.6); font-size: 12px; min-width: 48px; text-align: center; }
+    .viewer-close {
+      position: absolute; top: 16px; right: 20px;
+      color: #fff; font-size: 26px; cursor: pointer;
+      background: none; border: none; line-height: 1;
+    }
+    @media (max-width: 600px) {
+      .hero { height: 220px; }
+      .hero-title { font-size: 16px; }
+      .photo-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ポップアップビューワー -->
+  <div class="viewer-overlay" id="viewer-overlay" onclick="onOverlayClick(event)">
+    <button class="viewer-close" onclick="closeViewer()">✕</button>
+    <img class="viewer-img" id="viewer-img" src="" alt="">
+    <div class="viewer-caption" id="viewer-caption"></div>
+    <div class="viewer-nav">
+      <button class="vn-btn" id="vn-prev" onclick="viewerMove(-1)">&#8249;</button>
+      <span class="vn-counter" id="vn-counter"></span>
+      <button class="vn-btn" id="vn-next" onclick="viewerMove(1)">&#8250;</button>
+    </div>
+  </div>
+
+  <!-- ヒーローヘッダー -->
+  <div class="hero">
+    <img class="hero-img" src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_hana.jpeg" alt="初開催！📸✨ SNSで映える！【閉門後貸切】紫陽花の名刹 柳谷観音 楊谷寺スマホ撮影講座ツアー">
+    <div class="hero-overlay"></div>
+    <div class="hero-body">
+      <div class="hero-year">2026年開催</div>
+      <div class="hero-catch">SNSで映える！初めての楊谷寺スマホ撮影講座！</div>
+      <div class="hero-title">初開催！📸✨ SNSで映える！【閉門後貸切】紫陽花の名刹 柳谷観音 楊谷寺スマホ撮影講座ツアー</div>
+      <div class="hero-date">📅 2026/06/20</div>
+    </div>
+  </div>
+
+  <!-- メインコンテンツ -->
+  <div class="wrap">
+    <div class="report-desc"><p>6月20日、記念すべき第1回目となる「SNSで映える！【閉門後貸切】紫陽花の名刹 柳谷観音　楊谷寺スマホ撮影講座ツアー」を開催しました！</p><p>初開催ということもあり、主催側もドキドキ…！</p><p>「楽しんでもらえるかな？」と少し緊張しながら当日を迎えました。</p><p>当日はあいにくの雨模様…☔</p><p>……どころか、途中からはバケツをひっくり返したような大雨に！！</p><p>参加者の皆さまもスタッフも、気付けばびしょ濡れになりながらの撮影会となりましたが、それもまた良い思い出になりました✨</p><p>雨に濡れた紫陽花や花手水は一段と美しく、幻想的な景色が広がっていました。</p><p>今回、撮影を教えてくださったのは、人気インフルエンサーの まっちゃん（@macchan358） さん！</p><p>まずはスマホカメラの基本設定からスタート！</p><p>グリッド機能(※)をオンにし、被写体を線の交点に配置する構図や、水平・垂直を意識した撮影方法など、初心者にも分かりやすくレクチャーしていただきました。</p><p>さらに、人物を入れた写真の撮り方も実践！</p><p>なんと……スタッフの私も急きょモデルデビュー😎✨</p><p>参加者の皆さまに撮影していただきながら…</p><p>どんな素敵な写真に仕上がったのか、私も気になるところです…！（笑）</p><p>一人ひとりに丁寧にアドバイスをしてくださり、終始和気あいあいとした雰囲気の中、笑顔あふれる撮影会となりました😊</p><p>閉門後の静かな境内では、アンブレラスカイ、花手水、紫陽花階段など、人気スポットをゆっくり巡りながら撮影📸</p></div>
+    <div class="section-title">当日の様子</div>
+    <div class="photo-grid"><div class="photo-item" onclick="openViewer(0)" style="cursor:pointer;"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_rain.jpeg" alt="初開催！📸✨ SNSで映える！【閉門後貸切】紫陽花の名刹 柳谷観音 楊谷寺スマホ撮影講座ツアー"></div><div class="photo-item" onclick="openViewer(1)" style="cursor:pointer;"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_ishidatami.jpeg" alt="初開催！📸✨ SNSで映える！【閉門後貸切】紫陽花の名刹 柳谷観音 楊谷寺スマホ撮影講座ツアー"></div><div class="photo-item" onclick="openViewer(2)" style="cursor:pointer;"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_hana.jpeg" alt="初開催！📸✨ SNSで映える！【閉門後貸切】紫陽花の名刹 柳谷観音 楊谷寺スマホ撮影講座ツアー"></div><div class="photo-item" onclick="openViewer(3)" style="cursor:pointer;"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_tesuri.jpeg" alt="初開催！📸✨ SNSで映える！【閉門後貸切】紫陽花の名刹 柳谷観音 楊谷寺スマホ撮影講座ツアー"></div><div class="photo-item" onclick="openViewer(4)" style="cursor:pointer;"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_shadow.jpeg" alt="初開催！📸✨ SNSで映える！【閉門後貸切】紫陽花の名刹 柳谷観音 楊谷寺スマホ撮影講座ツアー"></div></div>
+    <a href="index.html" class="back-btn">← MKトラベル手帳に戻る</a>
+  </div>
+
+<script>
+  var PHOTOS = ["https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_rain.jpeg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_ishidatami.jpeg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_hana.jpeg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_tesuri.jpeg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_shadow.jpeg"];
+  var _vIdx = 0;
+
+  function openViewer(idx) {
+    _vIdx = idx;
+    _updateViewer();
+    document.getElementById('viewer-overlay').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function _updateViewer() {
+    document.getElementById('viewer-img').src = PHOTOS[_vIdx];
+    document.getElementById('viewer-caption').textContent = (_vIdx + 1) + ' / ' + PHOTOS.length;
+    document.getElementById('vn-prev').disabled = (_vIdx === 0);
+    document.getElementById('vn-next').disabled = (_vIdx === PHOTOS.length - 1);
+  }
+
+  function viewerMove(delta) {
+    _vIdx = Math.max(0, Math.min(PHOTOS.length - 1, _vIdx + delta));
+    _updateViewer();
+  }
+
+  function closeViewer() {
+    document.getElementById('viewer-overlay').classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  function onOverlayClick(e) {
+    if (e.target === document.getElementById('viewer-overlay')) closeViewer();
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (!document.getElementById('viewer-overlay').classList.contains('show')) return;
+    if (e.key === 'ArrowLeft')  viewerMove(-1);
+    if (e.key === 'ArrowRight') viewerMove(1);
+    if (e.key === 'Escape')     closeViewer();
+  });
+</script>
+</body>
+</html>
