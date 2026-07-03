@@ -41,6 +41,11 @@ TOUR_URLS = {
 
     "yawata": "https://travel.mk-group.co.jp/tourkyoto/yawata/",
 
+    "shasou": "https://travel.mk-group.co.jp/tourkyoto/kyoto-car2026/",
+
+    "kayabuki_himawari": "https://travel.mk-group.co.jp/tourkyoto/kayabuki-himawari/",
+    "eigamura-jidaigeki": "https://travel.mk-group.co.jp/tourkyoto/eigamura-jidaigeki/",
+
 }
 
 HEADERS = {
@@ -121,57 +126,65 @@ def extract_dates(soup: BeautifulSoup) -> list[str]:
     return dates
 
 
+def _parse_status_line(line: str):
+    """
+    「7/2　　催行確定」「7/5　　催行まであと２名」のような1行分のテキストから
+    日付・ラベル・タイプを抽出する。該当しなければNoneを返す。
+    """
+    line = line.strip()
+    if not line:
+        return None
+
+    date_match = re.search(r"\d+/\d+", line)
+    if not date_match:
+        return None
+    date = date_match.group()
+
+    if "催行確定" in line:
+        return {"date": date, "label": "催行確定", "type": "confirmed"}
+    if "満席" in line:
+        return {"date": date, "label": "満席", "type": "full"}
+    if "催行まであと" in line or "あと" in line:
+        m = re.search(r"あと(\d+)名", line)
+        remaining = m.group(1) if m else "?"
+        return {"date": date, "label": f"あと{remaining}名", "type": "few"}
+    return None
+
+
 def extract_status(soup: BeautifulSoup) -> list[dict]:
     """
     催行状況テーブルから日付ごとのステータスを取得
     戻り値例: [{"date": "6/20", "label": "催行確定", "type": "confirmed"}, ...]
+
+    1つの<td>に複数日程が<br>区切りで詰め込まれているケース
+    （例：「7/2 催行確定<br>7/3 催行まであと３名<br>8/14 催行まであと２名」）に対応するため、
+    <td>のテキストをまとめて取得するのではなく、<br>ごとに1行ずつ分割してから
+    日付・ステータスを判定する。これにより、1日だけ催行確定でも
+    同じセル内の他の日程まで巻き込んで「催行確定」になってしまう不具合を防ぐ。
     """
     statuses = []
-    # 赤字テキスト（催行確定など）を取得
-    red_texts = soup.select(".p-tour-detail__text-red")
-    for el in red_texts:
-        text = el.get_text(strip=True)
-        if "催行確定" in text or "催行まであと" in text or "満席" in text:
-            # 日付を正規表現で抽出
-            date_matches = re.findall(r"\d+/\d+", text)
-            for date in date_matches:
-                if "催行確定" in text:
-                    statuses.append({"date": date, "label": "催行確定", "type": "confirmed"})
-                elif "満席" in text:
-                    statuses.append({"date": date, "label": "満席", "type": "full"})
-                else:
-                    # あと〇名
-                    m = re.search(r"あと(\d+)名", text)
-                    remaining = m.group(1) if m else "?"
-                    statuses.append({
-                        "date": date,
-                        "label": f"あと{remaining}名",
-                        "type": "few"
-                    })
-    # テーブル内の状況テキストも補完
+    seen_dates = set()
+
+    def add_status(item):
+        if item and item["date"] not in seen_dates:
+            seen_dates.add(item["date"])
+            statuses.append(item)
+
     content_section = soup.select_one(".p-tour-detail__content-section")
     if content_section:
-        rows = content_section.find_all("td")
-        for row in rows:
-            text = row.get_text(strip=True)
-            if "催行確定" in text or "催行まであと" in text:
-                date_matches = re.findall(r"\d+/\d+", text)
-                for date in date_matches:
-                    already = any(s["date"] == date for s in statuses)
-                    if not already:
-                        if "催行確定" in text:
-                            statuses.append({"date": date, "label": "催行確定", "type": "confirmed"})
-                        else:
-                            m = re.search(r"あと(\d+)名", text)
-                            remaining = m.group(1) if m else "?"
-                            statuses.append({
-                                "date": date,
-                                "label": f"あと{remaining}名",
-                                "type": "few"
-                            })
+        for td in content_section.find_all("td"):
+            # <br>タグを改行に置換してから1行ずつ判定する
+            html_str = td.decode_contents()
+            html_str = re.sub(r"<br\s*/?>", "\n", html_str, flags=re.IGNORECASE)
+            line_soup = BeautifulSoup(html_str, "html.parser")
+            full_text = line_soup.get_text()
+            for line in full_text.split("\n"):
+                add_status(_parse_status_line(line))
+
     # 日付なしの「満席」「催行確定」表示に対応
     # 出発予定日が1日のみの場合は常に補完を試みる
     if not statuses:
+        red_texts = soup.select(".p-tour-detail__text-red")
         date_section = soup.select_one('.p-tour-detail__departure-date')
         single_date = None
         if date_section:

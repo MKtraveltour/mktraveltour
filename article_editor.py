@@ -6,7 +6,59 @@ from tkinter import ttk, messagebox, scrolledtext
 from datetime import date
 
 ARTICLES_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "articles.json")
-CATEGORIES = ["New！", "企画のたまご", "レポート", "完成！"]
+CATEGORIES = ["New！", "企画のたまご", "進捗報告", "完成！"]
+
+# ===== ツアーバナースクレイピング =====
+
+def scrape_tour_banner(url):
+    try:
+        import urllib.request, re
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            html = resp.read().decode("utf-8", errors="ignore")
+        tm = re.search("<title>(.*?)</title>", html, re.DOTALL)
+        title = tm.group(1).strip().split("|")[0].split("｜")[0].strip() if tm else ""
+        img = ""
+        for mm in re.finditer(r"<meta\s[^>]+>", html):
+            tag = mm.group(0)
+            if "og:image" in tag:
+                cm = re.search(r'content="([^"]+)"', tag)
+                if not cm:
+                    cm = re.search(r"content='([^']+)'", tag)
+                if cm:
+                    img = cm.group(1)
+                    break
+        pm = re.search(r"大人1名[　 ]*([0-9,，]+円[～〜~][0-9,，]+円|[0-9,，]+円)", html)
+        price = pm.group(1) if pm else ""
+        return {"url": url, "title": title, "img": img, "price": price} if (title or img) else {}
+    except Exception:
+        return {}
+
+
+def convert_url_to_banner(text):
+    import re
+    pattern = r"https?://travel\.mk-group\.co\.jp/tourkyoto/[^\s\n]+"
+
+    def replace_url(m):
+        url = m.group(0).rstrip("。、）")
+        info = scrape_tour_banner(url)
+        if not info:
+            return m.group(0)
+        title = info.get("title", "")
+        img   = info.get("img", "")
+        # openSeasonPopupと同じ仕組みで呼び出すためのデータをdata属性に埋め込む
+        inner = (
+            '<a href="' + url + '" target="_blank" '
+            'style="display:block;text-align:center;background:#8b7355;color:#fff;'
+            'border-radius:6px;padding:9px;font-size:13px;font-weight:500;'
+            'margin:8px 0;text-decoration:none;">'
+            + title + '</a>'
+        )
+        return "[BANNER]" + inner + "[/BANNER]"
+
+    return re.sub(pattern, replace_url, text)
+
+
 
 # ===== データ読み書き =====
 
@@ -167,7 +219,7 @@ class ArticleEditor:
         self.listbox.delete(0, "end")
         for a in self.articles:
             cat = a.get("category", "")
-            badge = {"New！":"🆕", "企画のたまご":"🥚", "レポート":"📋", "完成！":"✅"}.get(cat, "📝")
+            badge = {"New！":"🆕", "企画のたまご":"🥚", "進捗報告":"📋", "完成！":"✅"}.get(cat, "📝")
             self.listbox.insert("end", f"{badge} {a['date']}  {a['title']}")
 
     def _on_select(self, event):
@@ -245,6 +297,16 @@ class ArticleEditor:
         if not form["title"]:
             messagebox.showwarning("入力エラー", "タイトルを入力してください")
             return
+        # 本文内のツアーURLをバナーに変換
+        original_text = form["text"]
+        if "travel.mk-group.co.jp/tourkyoto/" in original_text:
+            self.status_var.set("🔍 ツアーURLのバナー情報を取得中...")
+            self.root.update()
+            form["text"] = convert_url_to_banner(original_text)
+            if form["text"] != original_text:
+                # テキストボックスも更新
+                self.text_box.delete("1.0", "end")
+                self.text_box.insert("1.0", form["text"])
         if self.selected_index is not None:
             # 既存記事を更新
             self.articles[self.selected_index].update(form)

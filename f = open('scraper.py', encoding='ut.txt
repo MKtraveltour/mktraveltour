@@ -1,0 +1,4 @@
+f = open('scraper.py', encoding='utf-8').read()
+f = f.replace('"shasou": "https://travel.mk-group.co.jp/tourkyoto/"', '"shasou": "https://travel.mk-group.co.jp/tourkyoto/kyoto-car2026/"')
+open('scraper.py', 'w', encoding='utf-8').write(f)
+print('OK')

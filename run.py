@@ -45,14 +45,22 @@ run(f'"{sys.executable}" scraper.py', "STEP 2: ツアー情報スクレイピン
 # --- STEP 3: HP生成 ---
 run(f'"{sys.executable}" generate_hp_auto.py', "STEP 3: index.html生成")
 
+# --- STEP 3.5: レポートページ自動生成 ---
+print(f"\n{'='*50}")
+print("▶ STEP 3.5: レポートページ自動生成")
+print('='*50)
+from generate_reports import generate_all_reports
+generate_all_reports()
+
 # --- STEP 4: GitHub push ---
 print(f"\n{'='*50}")
 print("▶ STEP 4: GitHub push")
 print('='*50)
 
 now = datetime.now().strftime("%Y-%m-%d %H:%M")
-os.system('git add index.html tour_data.json tour_reports.json generate_hp_auto.py articles.json')
+os.system('git add -A')  # 新規生成HTMLも含めすべての変更を追加
 os.system(f'git commit -m "auto update {now}"')
+os.system('git pull origin main --no-edit')  # pushの前に必ずpull
 os.system('git push origin main')
 
 print("\n✅ すべての処理が完了しました！")

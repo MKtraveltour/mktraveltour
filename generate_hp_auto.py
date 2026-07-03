@@ -13,20 +13,66 @@ from pathlib import Path
 # ===== カレンダー用：日付文字列 → (year, month, day) に変換 =====
 def parse_date(date_str: str, default_year: int = 2026):
     """
-    '6/21(日)' や '10/22(木)' → (2026, 6, 21) のように変換
+    各種日付形式を (year, month, day) に変換
+    - '6/21(日)' → (2026, 6, 21)
+    - '2026年7月18日' → (2026, 7, 18)
+    - '2026年7月18日～8月23日' → (2026, 7, 18)  先頭日付を返す
+    - '7月18日～8月23日' → (2026, 7, 18)
     失敗した場合は None を返す
     """
-    # 「随時催行」「※」などの特殊文字列はスキップ
     if not date_str or "随時" in date_str or date_str.startswith("※"):
         return None
-    m = re.search(r"(\d+)/(\d+)", date_str)
+    # 年月日形式: 2026年7月18日 or 7月18日
+    m = re.search(r"(?:(\d{4})年)?(\d{1,2})月(\d{1,2})日", date_str)
     if m:
-        month = int(m.group(1))
-        day   = int(m.group(2))
-        # 月・日の範囲チェック
+        year  = int(m.group(1)) if m.group(1) else default_year
+        month = int(m.group(2))
+        day   = int(m.group(3))
         if 1 <= month <= 12 and 1 <= day <= 31:
-            return (default_year, month, day)
+            return (year, month, day)
+    # スラッシュ形式: 6/21 or 2026/6/21
+    m = re.search(r"(?:(\d{4})/)?(\d{1,2})/(\d{1,2})", date_str)
+    if m:
+        year  = int(m.group(1)) if m.group(1) else default_year
+        month = int(m.group(2))
+        day   = int(m.group(3))
+        if 1 <= month <= 12 and 1 <= day <= 31:
+            return (year, month, day)
     return None
+
+
+def parse_date_range(date_str: str, default_year: int = 2026):
+    """
+    期間形式から開始日・終了日を両方返す
+    '2026年7月18日～8月23日' → [(2026,7,18), (2026,8,23)]
+    '7/18～8/23' → [(2026,7,18), (2026,8,23)]
+    単独日付の場合は [parse_date(date_str)] を返す
+    """
+    results = []
+    # ～/〜/~ で区切られた期間形式
+    for sep in ["～", "〜", "~", "→"]:
+        if sep in date_str:
+            parts = date_str.split(sep, 1)
+            start = parse_date(parts[0].strip(), default_year)
+            if start:
+                results.append(start)
+            # 終了日は月が省略される場合がある（8月23日 など）
+            # ※以降の注釈を除去してから解析
+            end_str = re.split(r'[※＜<]', parts[1])[0].strip()
+            end = parse_date(end_str, default_year)
+            if not end:
+                # 月が省略されている場合（開始月を引き継ぐ）
+                m = re.search(r"(\d{1,2})日", end_str)
+                if m and results:
+                    end = (results[0][0], results[0][1], int(m.group(1)))
+            if end:
+                results.append(end)
+            return results
+    # 単独日付
+    d = parse_date(date_str, default_year)
+    if d:
+        return [d]
+    return []
 
 
 # ===== ツアーレポート辞書 =====
@@ -51,7 +97,40 @@ def _load_season_data():
             return _j.load(_f).get("seasons", [])
     return []
 
+def _normalize_img_url(url: str) -> str:
+    """画像URLの拡張子大文字小文字を自動解決する（.jpg/.JPG等）"""
+    if not url:
+        return url
+    try:
+        import requests as _req
+        # まず元のURLを試す
+        r = _req.head(url, timeout=5, allow_redirects=True)
+        if r.status_code == 200:
+            return url
+        # 拡張子を大文字/小文字に変換して試す
+        import os as _os
+        base, ext = _os.path.splitext(url)
+        for alt_ext in [ext.upper(), ext.lower()]:
+            if alt_ext == ext:
+                continue
+            alt_url = base + alt_ext
+            r2 = _req.head(alt_url, timeout=5, allow_redirects=True)
+            if r2.status_code == 200:
+                return alt_url
+    except Exception:
+        pass
+    return url  # 確認できなければ元のURLをそのまま返す
+
 SEASON_DATA_LIST = _load_season_data()
+
+# 画像URLの拡張子を自動解決（.jpg→.JPG等）
+for _s in SEASON_DATA_LIST:
+    if _s.get("img"):
+        _s["img"] = _normalize_img_url(_s["img"])
+
+# tour_reportsの写真URLも拡張子を自動解決
+for _rk, _rv in TOUR_REPORTS.items():
+    _rv["photos"] = [_normalize_img_url(p) for p in _rv.get("photos", [])]
 
 # ツアーキーワード→絵文字マッピング
 # タグ → 絵文字マッピング（優先順位順）
@@ -72,6 +151,41 @@ TAG_EMOJI_MAP = [
     ("景色・写真",       "💜"),
 ]
 
+def parse_excluded_dates(dates_list: list, default_year: int = 2026) -> set:
+    """datesリストから除外日を解析してsetで返す（キー形式: 'YYYY-M-D'）"""
+    excluded = set()
+    for d in dates_list:
+        if '除外日' not in d:
+            continue
+        # パターン①：＜7月15日・16日・17日＞ 形式
+        m = re.search(r'[＜<]([^＞>]+)[＞>]', d)
+        if m:
+            content = m.group(1)
+            month = None
+            for part in re.split(r'[・、,]', content):
+                part = part.strip()
+                mm = re.search(r'(\d+)月(\d+)日', part)
+                if mm:
+                    month = int(mm.group(1))
+                    day   = int(mm.group(2))
+                    excluded.add(f"{default_year}-{month}-{day}")
+                elif month and re.search(r'^\d+日$', part):
+                    day = int(re.search(r'\d+', part).group())
+                    excluded.add(f"{default_year}-{month}-{day}")
+        # パターン②：「8/17は...除外日」形式（＜〉なし）
+        # 「除外日」の直前にある最後の日付のみ抽出（期間の開始日等は除く）
+        if not m:  # ＜〉パターンが見つからなかった場合のみ
+            # 「Xは...除外日」のXを探す（直前の日付）
+            before_excluded = d[:d.find('除外日')]
+            # 「は」または「のため」の直前にある日付
+            p2 = re.search(r'(\d{1,2})/(\d{1,2})(?=は|のため|となる)', before_excluded)
+            if p2:
+                mo, dy = int(p2.group(1)), int(p2.group(2))
+                if 1 <= mo <= 12 and 1 <= dy <= 31:
+                    excluded.add(f"{default_year}-{mo}-{dy}")
+    return excluded
+
+
 def get_emoji_from_tags(tags: list) -> str:
     """タグリストから絵文字を1つ返す（優先順位順）"""
     for tag_kw, emoji in TAG_EMOJI_MAP:
@@ -89,6 +203,7 @@ def build_tour_js(tours: dict) -> str:
     SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama", "momidiya"}
 
     import datetime as _dt2, re as _re2
+    _period_queue = []  # 期間ツアーの後処理リスト
     for key, tour in tours.items():
         if key in SKIP_KEYS:
             continue
@@ -102,6 +217,8 @@ def build_tour_js(tours: dict) -> str:
 
         # 催行確定・満席・few の日付を収集
         status_map = {}
+        period_dates = set()  # 期間形式で登録された日付
+        excluded_dates = parse_excluded_dates(tour.get("dates", []))  # 除外日
         for s in tour.get("statuses", []):
             date_str = s["date"]
             parsed = parse_date(date_str)
@@ -113,20 +230,40 @@ def build_tour_js(tours: dict) -> str:
                 new_type = s["type"]
                 priority = {"confirmed": 3, "full": 2, "few": 1, "tour": 0}
                 if priority.get(new_type, 0) >= priority.get(existing, 0):
-                    status_map[k] = {"type": new_type, "label": s["label"]}
+                    if k not in excluded_dates:  # 除外日はスキップ
+                        status_map[k] = {"type": new_type, "label": s["label"]}
 
-    # 出発日すべてを「ツアーあり」として登録（まだ登録されていない日付のみ）
+        # 出発日すべてを「ツアーあり」として登録（期間形式も展開）
+        import datetime as _dt_range
         for date_str in tour.get("dates", []):
-            parsed = parse_date(date_str)
-            if parsed:
-                y, mo, d = parsed
+            date_points = parse_date_range(date_str)
+            if len(date_points) == 2:
+                # 期間形式：開始日〜終了日の全日を登録
+                try:
+                    start = _dt_range.date(*date_points[0])
+                    end   = _dt_range.date(*date_points[1])
+                    cur   = start
+                    while cur <= end:
+                        k = f"{cur.year}-{cur.month}-{cur.day}"
+                        if k not in excluded_dates:  # 除外日はperiod_datesにも追加しない
+                            period_dates.add(k)
+                            if k not in status_map:
+                                status_map[k] = {"type": "tour", "label": ""}
+                        cur += _dt_range.timedelta(days=1)
+                except Exception:
+                    pass
+            elif len(date_points) == 1:
+                y, mo, d = date_points[0]
                 k = f"{y}-{mo}-{d}"
-                if k not in status_map:
+                if k not in status_map and k not in excluded_dates:
                     status_map[k] = {"type": "tour", "label": ""}
 
         # JS コードに変換
         var_url = f"_u_{key.replace('-', '_')}"
         lines.append(f"      var {var_url} = '{url}';")
+        # 期間ツアーは後処理リストに追加（全ツアー処理後にconfirmed/fullと競合チェック）
+        if period_dates:
+            _period_queue.append((period_dates, title, var_url, get_emoji_from_tags(tags)))
         for k, info in status_map.items():
             t = info["type"]
             label = info["label"].replace("'", "\\'")
@@ -160,6 +297,24 @@ def build_tour_js(tours: dict) -> str:
             else:
                 lines.append(
                     f"      TOUR['{k}'] = {{st:'{t}', ti:'{title}', ur:{var_url}, nt:'{note}', em:'{emoji}'}};"
+                )
+
+    # 期間ツアーの後処理（全ツアー処理完了後にconfirmed/fullと競合チェック）
+    import re as _re_pd2
+    for _pd_dates, _pd_title, _pd_var_url, _pd_emoji in _period_queue:
+        for _pd_k in sorted(_pd_dates):
+            _existing = [ln for ln in lines if f"TOUR['{_pd_k}']" in ln]
+            if _existing:
+                _has_priority = any(
+                    _re_pd2.search(r"st:'(confirmed|full|few)'", ln)
+                    for ln in _existing
+                )
+                if _has_priority:
+                    continue
+            _already = any(_pd_var_url in ln for ln in _existing)
+            if not _already:
+                lines.append(
+                    f"      TOUR['{_pd_k}'] = {{st:'tour', ti:'{_pd_title}', ur:{_pd_var_url}, nt:'{_pd_title}', em:'{_pd_emoji}'}};"
                 )
 
     # 随時催行ツアー（ALWAYS_ON_TOURS）をJSに追加（通常ツアー処理の後）
@@ -399,21 +554,47 @@ def build_tour_cards(tours: dict) -> str:
             if report_badge:
                 break
 
-        # data-dates生成（カレンダーキーと同じ形式 "2026-M-D"）
-        card_date_keys = []
+        # 除外日を計算
+        card_excluded = parse_excluded_dates(dates)
+
+        # data-dates生成（カレンダーキーと同じ形式 "2026-M-D"・除外日は含めない）
+        import datetime as _dt_card
+        card_date_keys = set()
         for date_str in dates:
-            parsed = parse_date(date_str)
-            if parsed:
-                y, mo, d = parsed
-                card_date_keys.append(f"{y}-{mo}-{d}")
+            # 期間形式（6/1～9/30）は期間内の全日付を展開
+            pts = parse_date_range(date_str)
+            if len(pts) == 2:
+                try:
+                    cur = _dt_card.date(*pts[0])
+                    end = _dt_card.date(*pts[1])
+                    # 曜日フィルターを抽出（「月・木・金・土・日・祝」→{0,3,4,5,6}）
+                    _dow_map = {"月":0,"火":1,"水":2,"木":3,"金":4,"土":5,"日":6}
+                    _allowed_dow = None
+                    import re as _re_dow
+                    _dow_m = _re_dow.search(r"[（(]([月火水木金土日・祝]+)[）)]", date_str)
+                    if _dow_m:
+                        _allowed_dow = {_dow_map[c] for c in _dow_m.group(1) if c in _dow_map}
+                    while cur <= end:
+                        k = f"{cur.year}-{cur.month}-{cur.day}"
+                        if k not in card_excluded:
+                            if _allowed_dow is None or cur.weekday() in _allowed_dow:
+                                card_date_keys.add(k)
+                        cur += _dt_card.timedelta(days=1)
+                except Exception:
+                    pass
+            elif len(pts) == 1:
+                y, mo, d = pts[0]
+                k = f"{y}-{mo}-{d}"
+                if k not in card_excluded:
+                    card_date_keys.add(k)
         for s in statuses:
             parsed = parse_date(s['date'])
             if parsed:
                 y, mo, d = parsed
                 k = f"{y}-{mo}-{d}"
-                if k not in card_date_keys:
-                    card_date_keys.append(k)
-        data_dates_attr = ','.join(card_date_keys)
+                if k not in card_excluded:
+                    card_date_keys.add(k)
+        data_dates_attr = ','.join(sorted(card_date_keys))
 
         # ソートキー：最も近い未来の日付を取得
         _sort_key = _dt2.date(9999,12,30)  # デフォルトは末尾（随時催行の前）
@@ -448,6 +629,7 @@ def build_tour_cards(tours: dict) -> str:
       </div>"""))
 
     # 随時催行ツアーのカードを追加（スクレイパーカードは除外）
+    # 優先順位：期間限定随時催行（終了日近い順）→ 純粋な随時催行
     ALWAYS_ON_KEYS = ["uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama", "momidiya"]
     SKIP_KEYS = set(ALWAYS_ON_KEYS)  # 通常カードには表示しない
     for akey in ALWAYS_ON_KEYS:
@@ -461,18 +643,34 @@ def build_tour_cards(tours: dict) -> str:
         tags  = t.get("tags", [])
         tag_classes = get_tag_class(tags)
         tags_html = "".join(f'<span class="ttag {c}">{l}</span>' for c, l in tag_classes)
-        # 随時催行カードはすべてのカテゴリタブで表示されるよう"all"相当にする
         data_tags = "event exp history flower summer autumn other"
         img_html = (f'<img src="{img}" alt="{title}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display=\'none\'">') if img else ""
-        cards_entries.append((_dt2.date(9999,12,31), f"""      <div class="tour-card" data-tags="{data_tags}" data-dates="">
+
+        # 期間限定かどうか確認（datesに期間形式があれば終了日でソート）
+        _sort_always = _dt2.date(9999, 12, 31)  # 純粋な随時催行は末尾
+        _date_label  = "随時催行"
+        _badge_text  = "随時催行"
+        for _ds in t.get("dates", []):
+            _pts = parse_date_range(_ds)
+            if len(_pts) == 2:
+                # 期間限定随時催行：終了日でソート（9999/12/30より前）
+                _end = _dt2.date(*_pts[1])
+                _start = _dt2.date(*_pts[0])
+                if _end >= _dt2.date.today():
+                    _sort_always = _dt2.date(9999, 12, 30) - (_end - _dt2.date.today())
+                    _date_label = f"{_start.month}/{_start.day}～{_end.month}/{_end.day} 期間限定"
+                    _badge_text = "期間限定"
+                break
+
+        cards_entries.append((_sort_always, f"""      <div class="tour-card" data-tags="{data_tags}" data-dates="">
         <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
           {img_html}
-          <div class="sbadge br" style="z-index:1;">随時催行</div>
+          <div class="sbadge br" style="z-index:1;">{_badge_text}</div>
         </div>
         <div class="tour-body">
           <div class="tour-tags">{tags_html}</div>
           <div class="tour-title">{title}</div>
-          <div class="tour-date">随時催行</div>
+          <div class="tour-date">{_date_label}</div>
           <div class="tour-price">大人1名 {price}</div>
           <a href="{url}" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
@@ -548,8 +746,6 @@ HTML_TEMPLATE = """\
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MKトラベル手帳 | MKトラベル</title>
-  <!-- 公開時にこの1行を削除してください -->
-  <meta name="robots" content="noindex,nofollow">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-C523Q39L5Q"></script>
   <script>
@@ -582,6 +778,20 @@ HTML_TEMPLATE = """\
     .bnav-sub a:hover {{ background: #f0ebe2; color: #5c4a32; }}
     .bnav-sub a.active {{ color: #8b7355; font-weight: 500; background: #f5ede0; }}
     .new-badge {{ background: #c0392b; color: #fff; font-size: 10px; padding: 1px 6px; border-radius: 10px; font-weight: 500; }}
+    /* レポートビューワー */
+    .report-viewer-overlay {{ display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:10000;align-items:center;justify-content:center;flex-direction:column; }}
+    .report-viewer-overlay.show {{ display:flex; }}
+    .report-viewer-img {{ max-width:90vw;max-height:70vh;object-fit:contain;border-radius:8px;display:block; }}
+    .report-viewer-title {{ color:#fff;font-size:13px;margin-top:12px;text-align:center; }}
+    .report-viewer-sub {{ color:rgba(255,255,255,0.6);font-size:11px;margin-top:4px;text-align:center; }}
+    .report-viewer-nav {{ display:flex;align-items:center;gap:20px;margin-top:16px; }}
+    .rv-btn {{ background:rgba(255,255,255,0.15);border:none;color:#fff;font-size:22px;width:44px;height:44px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s; }}
+    .rv-btn:hover {{ background:rgba(255,255,255,0.3); }}
+    .rv-btn:disabled {{ opacity:0.3;cursor:default; }}
+    .rv-counter {{ color:rgba(255,255,255,0.7);font-size:12px;min-width:50px;text-align:center; }}
+    .rv-page-btn {{ background:#8b7355;color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:12px;cursor:pointer;font-family:inherit; }}
+    .rv-page-btn:hover {{ background:#7a6448; }}
+    .rv-close {{ position:absolute;top:16px;right:20px;color:#fff;font-size:24px;cursor:pointer;background:none;border:none;line-height:1; }}
     .season-popup-overlay {{ display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;align-items:center;justify-content:center; }}
     .season-popup-overlay.show {{ display:flex; }}
     .season-popup {{ background:#fff;border-radius:12px;overflow:hidden;max-width:420px;width:90%; }}
@@ -615,7 +825,7 @@ HTML_TEMPLATE = """\
     .cal-grid {{ display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }}
     .cdl {{ text-align: center; font-size: 12px; color: #999; padding: 5px 0; font-weight: 500; }}
     .cdl.sun {{ color: #c0392b; }} .cdl.sat {{ color: #2980b9; }}
-    .cd {{ text-align: center; font-size: 13px; padding: 14px 2px; border-radius: 5px; cursor: pointer; }}
+    .cd {{ text-align: center; font-size: 13px; padding: 4px 2px; border-radius: 5px; cursor: pointer; aspect-ratio: 1; display: flex; flex-direction: column; align-items: stretch; justify-content: center; min-height: 52px; }}
     .cd.has-tour  {{ background: #f0e8d8; color: #5c4a32; font-weight: 500; }}
     .cd.confirmed {{ background: #8b7355; color: #fff; font-weight: 500; }}
     .cd.full      {{ background: #c0392b; color: #fff; font-weight: 500; }}
@@ -758,11 +968,13 @@ HTML_TEMPLATE = """\
   <div class="sp-tab" onclick="spTab('past', this)">📁 過去のツアー</div>
 </div>
 <div class="sp-panel active" id="sp-diary">
-  <a href="#" onclick="filterArticles('all',this);closeSp();" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">すべて</a>
-  <a href="#" onclick="filterArticles('New！',this);closeSp();" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">New！</a>
-  <a href="#" onclick="filterArticles('企画のたまご',this);closeSp();" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">企画のたまご</a>
-  <a href="#" onclick="filterArticles('レポート',this);closeSp();" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">レポート</a>
-  <a href="#" onclick="filterArticles('完成！',this);closeSp();" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">完成！</a>
+  <a href="#" onclick="closeSp();filterArticles('all',this);" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">すべて</a>
+  <a href="#" onclick="closeSp();filterArticles('New！',this);" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">New！</a>
+  <a href="#" onclick="closeSp();filterArticles('企画のたまご',this);" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">企画のたまご</a>
+  <a href="#" onclick="closeSp();filterArticles('進捗報告',this);" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">進捗報告</a>
+  <a href="#" onclick="closeSp();filterArticles('完成！',this);" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">完成！</a>
+  <div style="font-size:13px;color:#5c4a32;padding:6px 0 4px;font-weight:500;">ツアーレポート</div>
+  {tour_report_nav_sp_html}
 </div>
 <div class="sp-panel" id="sp-season">
 {sp_season_html}
@@ -783,7 +995,12 @@ HTML_TEMPLATE = """\
     <div class="bnav-category">
       <div class="bnav-cat-label">造成日記</div>
       <div class="bnav-sub">
-        <a href="#" onclick="filterArticles('all', this)"><i class="ti ti-chevron-right"></i>すべて</a>
+        <div class="bnav-season-label" onclick="toggleSeason(this)" id="all-label">
+          <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>すべて</span>
+        </div>
+        <div class="bnav-season-body" id="all-articles-body">
+          {all_articles_nav}
+        </div>
         <div class="bnav-season-label" onclick="toggleSeason(this)" id="new-label">
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>New！</span>
 
@@ -798,7 +1015,7 @@ HTML_TEMPLATE = """\
           {tamago_links}
         </div>
         <div class="bnav-season-label" onclick="toggleSeason(this)" id="report-label">
-          <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>レポート</span>
+          <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>進捗報告</span>
         </div>
         <div class="bnav-season-body" id="report-articles-body">
           {report_links}
@@ -808,6 +1025,12 @@ HTML_TEMPLATE = """\
         </div>
         <div class="bnav-season-body" id="done-articles-body">
           {done_links}
+        </div>
+        <div class="bnav-season-label" onclick="toggleSeason(this)" id="tour-report-label">
+          <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>ツアーレポート</span>
+        </div>
+        <div class="bnav-season-body" id="tour-report-nav-body">
+          {tour_report_nav_html}
         </div>
       </div>
     </div>
@@ -967,6 +1190,20 @@ HTML_TEMPLATE = """\
 
 </div><!-- /.page-wrap -->
 
+<!-- レポートビューワー -->
+<div class="report-viewer-overlay" id="report-viewer-overlay" onclick="closeReportViewer(event)">
+  <button class="rv-close" onclick="closeReportViewer()">✕</button>
+  <img class="report-viewer-img" id="rv-img" src="" alt="">
+  <div class="report-viewer-title" id="rv-title"></div>
+  <div class="report-viewer-sub" id="rv-sub"></div>
+  <div class="report-viewer-nav">
+    <button class="rv-btn" id="rv-prev" onclick="reportViewerMove(-1)">&#8249;</button>
+    <span class="rv-counter" id="rv-counter"></span>
+    <button class="rv-btn" id="rv-next" onclick="reportViewerMove(1)">&#8250;</button>
+  </div>
+  <button class="rv-page-btn" id="rv-page-btn" onclick="reportViewerGoPage()" style="margin-top:12px;">📄 レポートページを見る</button>
+</div>
+
 <!-- 記事モーダル -->
 <div class="article-modal-overlay" id="article-modal-overlay" onclick="closeArticleModal()">
   <div class="article-modal" onclick="event.stopPropagation()">
@@ -990,6 +1227,74 @@ HTML_TEMPLATE = """\
 </div>
 
 <script>
+  // ===== レポートポップアップデータ =====
+  var REPORT_POPUP = {report_popup_js};
+  var _rvKey = null, _rvIdx = 0;
+
+  function openReportPopup(rid, idx) {{
+    var d = REPORT_POPUP[rid];
+    if (!d || !d.photos || d.photos.length === 0) {{
+      // 写真なしの場合はページに直接遷移
+      if (d && d.page && d.page !== '#') window.location.href = d.page;
+      return;
+    }}
+    _rvKey = rid;
+    _rvIdx = idx || 0;
+    _updateReportViewer();
+    document.getElementById('report-viewer-overlay').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }}
+
+  function _updateReportViewer() {{
+    var d = REPORT_POPUP[_rvKey];
+    var photos = d.photos;
+    document.getElementById('rv-img').src = photos[_rvIdx];
+    document.getElementById('rv-img').alt = d.title;
+    document.getElementById('rv-title').textContent = d.title;
+    var sub = [];
+    if (d.catch) sub.push(d.catch);
+    if (d.shot_date) sub.push(d.shot_date);
+    document.getElementById('rv-sub').textContent = sub.join('　');
+    document.getElementById('rv-counter').textContent = (_rvIdx + 1) + ' / ' + photos.length;
+    document.getElementById('rv-prev').disabled = (_rvIdx === 0);
+    document.getElementById('rv-next').disabled = (_rvIdx === photos.length - 1);
+    var pageBtn = document.getElementById('rv-page-btn');
+    if (d.page && d.page !== '#') {{
+      pageBtn.style.display = 'inline-block';
+    }} else {{
+      pageBtn.style.display = 'none';
+    }}
+  }}
+
+  function reportViewerMove(delta) {{
+    var d = REPORT_POPUP[_rvKey];
+    if (!d) return;
+    _rvIdx = Math.max(0, Math.min(d.photos.length - 1, _rvIdx + delta));
+    _updateReportViewer();
+  }}
+
+  function reportViewerGoPage() {{
+    var d = REPORT_POPUP[_rvKey];
+    if (d && d.page && d.page !== '#') window.location.href = d.page;
+  }}
+
+  function closeReportViewer(e) {{
+    if (e && e.target !== document.getElementById('report-viewer-overlay') && e.type === 'click') {{
+      if (!e.target.classList.contains('report-viewer-overlay')) return;
+    }}
+    document.getElementById('report-viewer-overlay').classList.remove('show');
+    document.body.style.overflow = '';
+    _rvKey = null;
+  }}
+
+  // キーボード操作対応
+  document.addEventListener('keydown', function(e) {{
+    if (!document.getElementById('report-viewer-overlay').classList.contains('show')) return;
+    if (e.key === 'ArrowLeft') reportViewerMove(-1);
+    if (e.key === 'ArrowRight') reportViewerMove(1);
+    if (e.key === 'Escape') closeReportViewer();
+  }});
+
   // ===== ツアーレポートデータ =====
   var TOUR_REPORTS = {tour_reports_js};
 
@@ -1029,6 +1334,28 @@ HTML_TEMPLATE = """\
   }}
   function closeSeasonPopup() {{
     document.getElementById('season-popup-overlay').classList.remove('show');
+  }}
+
+  // ツアーバナークリックで季節テーマポップアップと同じ形式で表示
+  function openTourBanner(el) {{
+    var url   = el.getAttribute('data-url');
+    var title = el.getAttribute('data-title');
+    var img   = el.getAttribute('data-img');
+    document.getElementById('sp-img').src = img || '';
+    document.getElementById('sp-img').style.display = img ? 'block' : 'none';
+    document.getElementById('sp-title').textContent = title;
+    var dateEl = document.getElementById('sp-date');
+    if (dateEl) dateEl.style.display = 'none';
+    document.getElementById('sp-desc').textContent = '';
+    var btnWrap = document.getElementById('sp-btn-wrap');
+    btnWrap.innerHTML = '';
+    var a = document.createElement('a');
+    a.href = url;
+    a.textContent = '詳細をみる →';
+    a.target = '_blank';
+    a.className = 'season-popup-btn';
+    btnWrap.appendChild(a);
+    document.getElementById('season-popup-overlay').classList.add('show');
   }}
 
   function spTab(id, el) {{
@@ -1098,13 +1425,47 @@ HTML_TEMPLATE = """\
 
   function filterArticles(cat, el) {{
     var posts = document.querySelectorAll('.news-post');
+    var visible = [];
     posts.forEach(function(p) {{
       if (cat === 'all' || p.getAttribute('data-category') === cat) {{
-        p.style.display = 'block';
-      }} else {{
-        p.style.display = 'none';
+        visible.push(p);
       }}
     }});
+    // カテゴリ選択時のみ最初の記事をモーダルで表示（allは何もしない）
+    if (cat !== 'all' && visible.length > 0) {{
+      var aid = visible[0].id ? visible[0].id.replace('article-', '') : null;
+      if (aid) scrollToArticle(aid);
+    }}
+  }}
+
+  function openArticleList(posts) {{
+    var modal = document.getElementById('article-modal-content');
+    modal.innerHTML = '<div style="font-size:14px;font-weight:500;color:#5c4a32;border-left:4px solid #8b7355;padding-left:10px;margin-bottom:14px;">造成日記 一覧</div>';
+    posts.forEach(function(p) {{
+      var title = p.querySelector('[style*="font-weight:500"]');
+      var meta  = p.querySelector('.news-dt');
+      var cat   = p.getAttribute('data-category') || '';
+      var aid   = p.id ? p.id.replace('article-', '') : null;
+      var catColors = {{'New！':'#c0392b','企画のたまご':'#e67e22','進捗報告':'#2980b9','完成！':'#27ae60'}};
+      var catColor = catColors[cat] || '#8b7355';
+      var item = document.createElement('div');
+      item.style.cssText = 'display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:1px solid #e0d8cc;border-radius:6px;margin-bottom:6px;cursor:pointer;background:#fff;';
+      item.innerHTML = (
+        '<div>'
+        + '<div style="font-size:13px;font-weight:500;color:#3c2e1e;">' + (title ? title.textContent.replace('📄','').trim() : '') + '</div>'
+        + '<div style="font-size:11px;color:#999;margin-top:2px;">' + (meta ? meta.textContent : '') + '</div>'
+        + '</div>'
+        + '<span style="font-size:10px;padding:2px 8px;border-radius:10px;background:' + catColor + ';color:#fff;flex-shrink:0;margin-left:8px;">' + cat + '</span>'
+      );
+      if (aid) {{
+        (function(id) {{
+          item.onclick = function() {{ closeArticleModal(); setTimeout(function(){{scrollToArticle(id);}}, 100); }};
+        }})(aid);
+      }}
+      modal.appendChild(item);
+    }});
+    document.getElementById('article-modal-overlay').classList.add('show');
+    document.body.style.overflow = 'hidden';
   }}
 
   function toggleSeason(el) {{
@@ -1281,7 +1642,7 @@ HTML_TEMPLATE = """\
       if (isT) {{ cl += ' today'; }}
       c.className = cl;
       if (t) {{
-        c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;">🐾</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:-2px;">' + (t.em || '') + '</span>';
+        c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;">🐾</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:1px;padding-right:2px;">' + (t.em || '') + '</span>';
       }} else {{
         c.innerHTML = '<span class="cd-num">' + d + '</span><span class="cd-paw">🐾</span>';
       }}
@@ -1411,18 +1772,74 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
         }
     season_data_js = _jsd.dumps(season_js_dict, ensure_ascii=False)
 
-    # 当日の様子フォトグリッドをTOUR_REPORTSから動的生成（新しい順・最大6件）
+    # 当日の様子フォトグリッドをTOUR_REPORTSから動的生成（新しい順・件数制限なし）
+    import json as _jreport
     photo_grid_items = []
-    for report_date in sorted(TOUR_REPORTS.keys(), reverse=True)[:6]:
+    report_popup_data = {}  # ポップアップ用データ
+    for report_date in sorted(TOUR_REPORTS.keys(), reverse=True):
+        r = TOUR_REPORTS[report_date]
+        title     = r.get("title", "")
+        page      = r.get("page", "#")
+        photos    = r.get("photos", [])
+        catch_txt = r.get("catch", "")
+        shot_date = r.get("shot_date", "")
+        rid = report_date.replace("-", "")
+        report_popup_data[rid] = {
+            "title": title, "page": page, "photos": photos,
+            "catch": catch_txt, "shot_date": shot_date,
+        }
+        # アイコン画像：heroが設定されていればhero優先、なければphotos[0]
+        hero_img = r.get("hero", "")
+        icon_img = hero_img if hero_img else (photos[0] if photos else "")
+        # pageが空の場合はポップアップで写真を表示
+        if page:
+            link_attr = f'href="{page}"'
+        else:
+            link_attr = f'href="#" onclick="openReportPopup(\'{rid}\',0);return false;"'
+        if icon_img:
+            card_html = (
+            f'<a {link_attr} class="pt" style="position:relative;overflow:hidden;background:#1a1a1a;">'
+            f'<img src="{icon_img}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.85;" alt="{title}">'
+            f'<span style="position:absolute;bottom:8px;left:8px;color:#fff;font-size:11px;font-weight:500;text-shadow:0 1px 3px rgba(0,0,0,0.8);">{title}</span>'
+            f'</a>'
+            )
+            photo_grid_items.append(card_html)
+    report_popup_js = _jreport.dumps(report_popup_data, ensure_ascii=False)
+    photo_grid_html = "\n".join(photo_grid_items) if photo_grid_items else '      <div class="pt p2" style="color:#aaa;">レポートはまだありません</div>'
+
+    # ツアーレポートナビ（左ナビ・スマホナビ用）：新しい順にヒーロー画像＋タイトルのカードリスト
+    tour_report_nav_items = []
+    tour_report_nav_sp_items = []
+    for report_date in sorted(TOUR_REPORTS.keys(), reverse=True):
         r = TOUR_REPORTS[report_date]
         title = r.get("title", "")
         page  = r.get("page", "#")
-        photos = r.get("photos", [])
-        if photos:
-            photo_grid_items.append(
-                f'      <a href="{page}" class="pt" style="position:relative;overflow:hidden;background:#1a1a1a;">'                f'<img src="{photos[0]}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.85;" alt="{title}">'                f'<span style="position:absolute;bottom:8px;left:8px;color:#fff;font-size:11px;font-weight:500;text-shadow:0 1px 3px rgba(0,0,0,0.8);">{title}</span>'                f'</a>'
+        hero_img = r.get("hero", "")
+        icon_img = hero_img if hero_img else (r.get("photos", [""])[0] if r.get("photos") else "")
+        if icon_img:
+            nav_link = f'href="{page}"' if page else f'href="#" onclick="openReportPopup(\'{rid}\',0);return false;"'
+            card = (
+                f'<a {nav_link} style="display:block;border-radius:6px;overflow:hidden;'
+                f'margin-bottom:8px;text-decoration:none;">'
+                f'<div style="aspect-ratio:1/1;overflow:hidden;border-radius:6px 6px 6px 6px;">'
+                f'<img src="{icon_img}" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">'
+                f'</div>'
+                f'<div style="padding:4px 6px 5px;background:#f5f0ea;border-radius:0 0 6px 6px;">'
+                f'<span style="font-size:10px;color:#3c2e1e;font-weight:500;line-height:1.5;word-break:break-all;">{title}</span>'
+                f'</div></a>'
             )
-    photo_grid_html = "\n".join(photo_grid_items) if photo_grid_items else '      <div class="pt p2" style="color:#aaa;">レポートはまだありません</div>'
+        else:
+            card = (
+                f'<a href="{page}" style="display:block;padding:4px 8px;font-size:10px;'
+                f'color:#7c6040;text-decoration:none;margin-bottom:2px;">'
+                f'📄 {title}</a>'
+            )
+        tour_report_nav_items.append(card)
+        # スマホ用はフォントをやや大きめ
+        sp_card = card.replace('font-size:10px;color:#3c2e1e', 'font-size:11px;color:#3c2e1e')
+        tour_report_nav_sp_items.append(sp_card)
+    tour_report_nav_html    = "\n".join(tour_report_nav_items) if tour_report_nav_items else '<div style="font-size:10px;color:#aaa;padding:4px 8px;">レポートはまだありません</div>'
+    tour_report_nav_sp_html = "\n".join(tour_report_nav_sp_items) if tour_report_nav_sp_items else ''
 
     # 造成日記記事HTMLを生成
     articles_html = ""
@@ -1432,29 +1849,45 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
     tamago_links = ""
     report_links = ""
     done_links = ""
+    all_articles_nav = ""
     for art in articles:
         aid = art.get("id", "")
         title = art.get("title", "")
         cat = art.get("category", "")
+        cat_color = {"New！": "#c0392b", "企画のたまご": "#e67e22", "進捗報告": "#2980b9", "完成！": "#27ae60"}.get(cat, "#8b7355")
         lnk = '<a href="#article-' + aid + '" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle(\''+aid+'\')">' + title + '</a>'
+        badge = f'<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:{cat_color};color:#fff;margin-left:4px;">{cat}</span>'
+        all_lnk = f'<a href="#article-{aid}" style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px 4px 14px;font-size:10px;" onclick="scrollToArticle(\'{aid}\')">{title}{badge}</a>'
+        all_articles_nav += all_lnk
         if cat == "New！":
             new_articles_nav += lnk
         elif cat == "企画のたまご":
             tamago_links += lnk
-        elif cat == "レポート":
+        elif cat == "進捗報告":
             report_links += lnk
         elif cat == "完成！":
             done_links += lnk
     for art in articles:
         cat = art.get("category", "")
-        cat_color = {"New！": "#c0392b", "企画のたまご": "#e67e22", "レポート": "#2980b9", "完成！": "#27ae60"}.get(cat, "#8b7355")
-        photos = art.get("photos", [])[:3]  # 最大3枚
+        cat_color = {"New！": "#c0392b", "企画のたまご": "#e67e22", "進捗報告": "#2980b9", "完成！": "#27ae60"}.get(cat, "#8b7355")
+        photos = art.get("photos", [])
         photos_html = ""
         if photos:
             cols = len(photos)
             imgs = "".join(f'<img src="{p}" alt="{art.get("title","")}">' for p in photos)
             photos_html = f'<div class="news-photos" style="grid-template-columns:repeat({cols},1fr);">{imgs}</div>'
-        text_html = art.get("text", "").replace("\n", "<br>")
+        # バナータグ[BANNER]...[/BANNER]をそのままHTMLとして展開
+        _raw_text = art.get("text", "")
+        import re as _re_banner
+        # [BANNER]タグ内はHTMLそのまま、それ以外は改行→<br>
+        _parts = _re_banner.split(r"(\[BANNER\].*?\[/BANNER\])", _raw_text, flags=_re_banner.DOTALL)
+        _html_parts = []
+        for _p in _parts:
+            if _p.startswith("[BANNER]"):
+                _html_parts.append(_p[8:-9])  # [BANNER]と[/BANNER]を除去
+            else:
+                _html_parts.append(_p.replace("\n", "<br>"))
+        text_html = "".join(_html_parts)
         aid = art.get("id", "")
 
         articles_html += f'''
@@ -1481,15 +1914,19 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
         sidebar_status=sidebar_status,
         tour_reports_js=tour_reports_js,
         photo_grid_html=photo_grid_html,
+        report_popup_js=report_popup_js,
         sp_season_html=sp_season_html,
         left_season_html=left_season_html,
         season_data_js=season_data_js,
         articles_html=articles_html,
+        all_articles_nav=all_articles_nav,
         new_articles_nav=new_articles_nav,
         tamago_links=tamago_links,
         report_links=report_links,
         done_links=done_links,
         new_count=new_count,
+        tour_report_nav_html=tour_report_nav_html,
+        tour_report_nav_sp_html=tour_report_nav_sp_html,
     )
 
     with open(output_path, "w", encoding="utf-8") as f:
