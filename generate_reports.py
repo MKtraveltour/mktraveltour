@@ -40,8 +40,12 @@ def generate_report_html(date_key: str, report: dict) -> str:
     # 説明文HTML（写真の上）
     desc_html = ""
     if desc:
+        import re as _re
+        # 空行（\n\n以上）で段落分割、単純な改行は<br>に変換
+        para_blocks = _re.split(r'\n{2,}', desc)
         paragraphs = "".join(
-            f'<p>{p}</p>' for p in desc.split("\n") if p.strip()
+            f'<p>{block.strip().replace(chr(10), "<br>")}</p>'
+            for block in para_blocks if block.strip()
         )
         desc_html = f'<div class="report-desc">{paragraphs}</div>'
 
