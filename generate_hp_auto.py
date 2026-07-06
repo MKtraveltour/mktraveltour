@@ -1716,13 +1716,19 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
         if s["season"] != cur_season_sp:
             cur_season_sp = s["season"]
             hdr = SEASON_HEADER.get(cur_season_sp, "")
-            mt = ' style="font-size:12px;color:#8b7355;font-weight:500;padding:4px 0;margin-top:6px;"' if sp_season_lines else ' style="font-size:12px;color:#8b7355;font-weight:500;padding:4px 0;"'
+            mt = ' style="font-size:13px;color:#8b7355;font-weight:500;padding:6px 0 4px;margin-top:8px;"' if sp_season_lines else ' style="font-size:13px;color:#8b7355;font-weight:500;padding:4px 0;"'
             sp_season_lines.append(f'  <div{mt}>{hdr}</div>')
-        _key  = s["key"]
-        thumb = s.get("label", s["title"])
+        _key    = s["key"]
+        img_url = s.get("img", "")
+        thumb   = s.get("thumb_title", s.get("label", s["title"]))
         sp_season_lines.append(
-            f'  <a href="#" onclick="openSeasonPopup(\'{_key}\');closeSp();" '
-            f'style="display:block;padding:4px 0 4px 12px;font-size:12px;color:#5c4a32;">{thumb}</a>'
+            f'  <div onclick="openSeasonPopup(\'{_key}\');closeSp();" '
+            f'style="display:block;border-radius:6px;overflow:hidden;margin-bottom:6px;cursor:pointer;">'
+            f'\n    <div style="position:relative;height:80px;overflow:hidden;border-radius:6px;">'
+            f'\n      <img src="{img_url}" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">'
+            f'\n      <div style="position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));"></div>'
+            f'\n      <span style="position:absolute;bottom:6px;left:10px;color:#fff;font-size:12px;font-weight:500;text-shadow:0 1px 3px rgba(0,0,0,0.7);">{thumb}</span>'
+            f'\n    </div>\n  </div>'
         )
     sp_season_html = "\n".join(sp_season_lines)
 
