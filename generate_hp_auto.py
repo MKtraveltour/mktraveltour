@@ -975,6 +975,7 @@ HTML_TEMPLATE = """\
   <a href="#" onclick="closeSp();filterArticles('完成！',this);" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">完成！</a>
   <div style="font-size:13px;color:#5c4a32;padding:6px 0 4px;font-weight:500;">ツアーレポート</div>
   {tour_report_nav_sp_html}
+  <a href="#" onclick="closeSp();filterArticles('backnumber',this);" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">バックナンバー</a>
 </div>
 <div class="sp-panel" id="sp-season">
 {sp_season_html}
@@ -1031,6 +1032,12 @@ HTML_TEMPLATE = """\
         </div>
         <div class="bnav-season-body" id="tour-report-nav-body">
           {tour_report_nav_html}
+        </div>
+        <div class="bnav-season-label" onclick="toggleSeason(this)" id="backnumber-label">
+          <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>バックナンバー</span>
+        </div>
+        <div class="bnav-season-body" id="backnumber-articles-body">
+          {backnumber_links}
         </div>
       </div>
     </div>
@@ -1427,11 +1434,15 @@ HTML_TEMPLATE = """\
     var posts = document.querySelectorAll('.news-post');
     var visible = [];
     posts.forEach(function(p) {{
-      if (cat === 'all' || p.getAttribute('data-category') === cat) {{
-        visible.push(p);
+      var isBn = p.getAttribute('data-backnumber') === 'true';
+      if (cat === 'backnumber') {{
+        if (isBn) visible.push(p);
+      }} else if (cat === 'all') {{
+        if (!isBn) visible.push(p);
+      }} else {{
+        if (!isBn && p.getAttribute('data-category') === cat) visible.push(p);
       }}
     }});
-    // カテゴリ選択時のみ最初の記事をモーダルで表示（allは何もしない）
     if (cat !== 'all' && visible.length > 0) {{
       var aid = visible[0].id ? visible[0].id.replace('article-', '') : null;
       if (aid) scrollToArticle(aid);
@@ -1856,23 +1867,35 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
     report_links = ""
     done_links = ""
     all_articles_nav = ""
+    backnumber_links = ""
+    from datetime import datetime as _dt, timedelta as _td
+    _cutoff = _dt.now() - _td(days=30)
     for art in articles:
         aid = art.get("id", "")
         title = art.get("title", "")
         cat = art.get("category", "")
+        # 30日以上前の記事はバックナンバー扱い
+        try:
+            art_date = _dt.strptime(art.get("date", "2000-01-01"), "%Y-%m-%d")
+            is_backnumber = art_date < _cutoff
+        except:
+            is_backnumber = False
         cat_color = {"New！": "#c0392b", "企画のたまご": "#e67e22", "進捗報告": "#2980b9", "完成！": "#27ae60"}.get(cat, "#8b7355")
         lnk = '<a href="#article-' + aid + '" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle(\''+aid+'\')">' + title + '</a>'
         badge = f'<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:{cat_color};color:#fff;margin-left:4px;">{cat}</span>'
         all_lnk = f'<a href="#article-{aid}" style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px 4px 14px;font-size:10px;" onclick="scrollToArticle(\'{aid}\')">{title}{badge}</a>'
-        all_articles_nav += all_lnk
-        if cat == "New！":
-            new_articles_nav += lnk
-        elif cat == "企画のたまご":
-            tamago_links += lnk
-        elif cat == "進捗報告":
-            report_links += lnk
-        elif cat == "完成！":
-            done_links += lnk
+        if is_backnumber:
+            backnumber_links += lnk
+        else:
+            all_articles_nav += all_lnk
+            if cat == "New！":
+                new_articles_nav += lnk
+            elif cat == "企画のたまご":
+                tamago_links += lnk
+            elif cat == "進捗報告":
+                report_links += lnk
+            elif cat == "完成！":
+                done_links += lnk
     for art in articles:
         cat = art.get("category", "")
         cat_color = {"New！": "#c0392b", "企画のたまご": "#e67e22", "進捗報告": "#2980b9", "完成！": "#27ae60"}.get(cat, "#8b7355")
@@ -1895,9 +1918,15 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
                 _html_parts.append(_p.replace("\n", "<br>"))
         text_html = "".join(_html_parts)
         aid = art.get("id", "")
+        # バックナンバー判定
+        try:
+            art_date = _dt.strptime(art.get("date", "2000-01-01"), "%Y-%m-%d")
+            bn_attr = ' data-backnumber="true"' if art_date < _cutoff else ''
+        except:
+            bn_attr = ''
 
         articles_html += f'''
-      <div class="news-post" data-category="{cat}" id="article-{aid}">
+      <div class="news-post" data-category="{cat}"{bn_attr} id="article-{aid}">
         <div class="news-meta">
           <div class="nav-avatar">{art.get("author","?")[0]}</div>
           <div>
@@ -1931,6 +1960,7 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
         report_links=report_links,
         done_links=done_links,
         new_count=new_count,
+        backnumber_links=backnumber_links,
         tour_report_nav_html=tour_report_nav_html,
         tour_report_nav_sp_html=tour_report_nav_sp_html,
     )
