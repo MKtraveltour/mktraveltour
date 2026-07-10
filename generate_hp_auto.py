@@ -123,6 +123,10 @@ def _normalize_img_url(url: str) -> str:
 
 SEASON_DATA_LIST = _load_season_data()
 
+# 季節順でソート（spring→summer→autumn→winter）して夏祭りなどが分断されないようにする
+_SEASON_ORDER = {"spring": 0, "summer": 1, "autumn": 2, "winter": 3}
+SEASON_DATA_LIST = sorted(SEASON_DATA_LIST, key=lambda s: _SEASON_ORDER.get(s.get("season", ""), 9))
+
 # 画像URLの拡張子を自動解決（.jpg→.JPG等）
 for _s in SEASON_DATA_LIST:
     if _s.get("img"):
