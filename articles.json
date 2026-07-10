@@ -1,6 +1,20 @@
 {
   "articles": [
     {
+      "id": "007",
+      "title": "紫陽花、良いですよね！",
+      "author": "Hiro",
+      "category": "企画のたまご",
+      "date": "2026-07-09",
+      "text": "先週末宝泉寺の花宝苑にお邪魔してきました。\n紫陽花の本数だけでなく種類も豊富で紫陽花好きな担当者は心躍って写真を撮って、撮って、撮って…。\nあっという間に時間が過ぎてしまいました。\n周辺は限界集落になってしまっているという事もあってか15000株も贅沢に植えられた紫陽花をほぼ貸切状態で観賞することが可能でした。\nぽつぽつと傘をたたく小雨も風情があってこれがまた大変良かったです。\n来年にはこちらを訪問できるツアーを企画できればいいな、と思っています。",
+      "photos": [
+        "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260625%20housenji%20iriguchi.jpg",
+        "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260625%20housenji%20akaihashi.jpg",
+        "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260625%20housenji%20hanamizugame.jpg"
+      ],
+      "publish_at": ""
+    },
+    {
       "id": "006",
       "title": "いざ秘境へ！",
       "author": "Hiro",
