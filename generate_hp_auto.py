@@ -968,14 +968,34 @@ HTML_TEMPLATE = """\
   <div class="sp-tab" onclick="spTab('past', this)">📁 過去のツアー</div>
 </div>
 <div class="sp-panel active" id="sp-diary">
-  <a href="#" onclick="closeSp();filterArticles('all',this);" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">すべて</a>
-  <a href="#" onclick="closeSp();filterArticles('New！',this);" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">New！</a>
-  <a href="#" onclick="closeSp();filterArticles('企画のたまご',this);" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">企画のたまご</a>
-  <a href="#" onclick="closeSp();filterArticles('進捗報告',this);" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">進捗報告</a>
-  <a href="#" onclick="closeSp();filterArticles('完成！',this);" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">完成！</a>
-  <div style="font-size:13px;color:#5c4a32;padding:6px 0 4px;font-weight:500;">ツアーレポート</div>
+  <div style="font-size:13px;color:#5c4a32;padding:6px 0 4px;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ede8e0;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='none'?'block':'none';">すべて<span style="font-size:10px;color:#8b7355;">▼</span></div>
+  <div style="display:none;padding:4px 0 6px;">
+    {all_articles_nav_sp}
+  </div>
+  <div style="font-size:13px;color:#5c4a32;padding:6px 0 4px;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ede8e0;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='none'?'block':'none';">New！<span style="font-size:10px;color:#8b7355;">▼</span></div>
+  <div style="display:none;padding:4px 0 6px;">
+    {new_articles_nav_sp}
+  </div>
+  <div style="font-size:13px;color:#5c4a32;padding:6px 0 4px;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ede8e0;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='none'?'block':'none';">企画のたまご<span style="font-size:10px;color:#8b7355;">▼</span></div>
+  <div style="display:none;padding:4px 0 6px;">
+    {tamago_links_sp}
+  </div>
+  <div style="font-size:13px;color:#5c4a32;padding:6px 0 4px;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ede8e0;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='none'?'block':'none';">進捗報告<span style="font-size:10px;color:#8b7355;">▼</span></div>
+  <div style="display:none;padding:4px 0 6px;">
+    {report_links_sp}
+  </div>
+  <div style="font-size:13px;color:#5c4a32;padding:6px 0 4px;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ede8e0;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='none'?'block':'none';">完成！<span style="font-size:10px;color:#8b7355;">▼</span></div>
+  <div style="display:none;padding:4px 0 6px;">
+    {done_links_sp}
+  </div>
+  <div style="font-size:13px;color:#5c4a32;padding:6px 0 4px;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ede8e0;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='none'?'block':'none';">ツアーレポート<span style="font-size:10px;color:#8b7355;">▼</span></div>
+  <div style="display:none;padding:4px 0 6px;">
   {tour_report_nav_sp_html}
-  <a href="#" onclick="closeSp();filterArticles('backnumber',this);" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">バックナンバー</a>
+  </div>
+  <div style="font-size:13px;color:#5c4a32;padding:6px 0 4px;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ede8e0;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='none'?'block':'none';">バックナンバー<span style="font-size:10px;color:#8b7355;">▼</span></div>
+  <div style="display:none;padding:4px 0 6px;">
+    {backnumber_links_sp}
+  </div>
 </div>
 <div class="sp-panel" id="sp-season">
 {sp_season_html}
@@ -1696,11 +1716,24 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
         # publish_atが設定されている場合は現在時刻と比較して非表示
         from datetime import datetime as _dt
         now = _dt.now()
-        articles = [
-            a for a in articles
-            if not a.get("publish_at") or
-            _dt.strptime(a["publish_at"], "%Y-%m-%d %H:%M") <= now
-        ]
+        filtered = []
+        for a in articles:
+            pa = a.get("publish_at", "")
+            if not pa:
+                # publish_at未設定 → 即時公開
+                filtered.append(a)
+            else:
+                try:
+                    pub_time = _dt.strptime(pa, "%Y-%m-%d %H:%M")
+                    if pub_time <= now:
+                        filtered.append(a)
+                    else:
+                        print(f"  ⏰ 予約投稿待機中: 「{a.get('title','')}」→ {pa}")
+                except ValueError:
+                    # 形式が不正な場合は即時公開として扱う
+                    print(f"  ⚠️ publish_atの形式エラー（即時公開扱い）: {pa}")
+                    filtered.append(a)
+        articles = filtered
 
     updated_at = datetime.now().strftime("%Y年%m月%d日 %H:%M")
     tour_js       = build_tour_js(tours)
@@ -1868,6 +1901,13 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
     done_links = ""
     all_articles_nav = ""
     backnumber_links = ""
+    # スマホ用（タップでモーダルを開くリンク、closeSp付き）
+    new_articles_nav_sp = ""
+    tamago_links_sp = ""
+    report_links_sp = ""
+    done_links_sp = ""
+    all_articles_nav_sp = ""
+    backnumber_links_sp = ""
     from datetime import datetime as _dt, timedelta as _td
     _cutoff = _dt.now() - _td(days=30)
     for art in articles:
@@ -1882,20 +1922,27 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
             is_backnumber = False
         cat_color = {"New！": "#c0392b", "企画のたまご": "#e67e22", "進捗報告": "#2980b9", "完成！": "#27ae60"}.get(cat, "#8b7355")
         lnk = '<a href="#article-' + aid + '" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle(\''+aid+'\')">' + title + '</a>'
+        lnk_sp = '<a href="#article-' + aid + '" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle(\''+aid+'\')">' + title + '</a>'
         badge = f'<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:{cat_color};color:#fff;margin-left:4px;">{cat}</span>'
         all_lnk = f'<a href="#article-{aid}" style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px 4px 14px;font-size:10px;" onclick="scrollToArticle(\'{aid}\')">{title}{badge}</a>'
         if is_backnumber:
             backnumber_links += lnk
+            backnumber_links_sp += lnk_sp
         else:
             all_articles_nav += all_lnk
+            all_articles_nav_sp += lnk_sp
             if cat == "New！":
                 new_articles_nav += lnk
+                new_articles_nav_sp += lnk_sp
             elif cat == "企画のたまご":
                 tamago_links += lnk
+                tamago_links_sp += lnk_sp
             elif cat == "進捗報告":
                 report_links += lnk
+                report_links_sp += lnk_sp
             elif cat == "完成！":
                 done_links += lnk
+                done_links_sp += lnk_sp
     for art in articles:
         cat = art.get("category", "")
         cat_color = {"New！": "#c0392b", "企画のたまご": "#e67e22", "進捗報告": "#2980b9", "完成！": "#27ae60"}.get(cat, "#8b7355")
@@ -1961,6 +2008,12 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
         done_links=done_links,
         new_count=new_count,
         backnumber_links=backnumber_links,
+        all_articles_nav_sp=all_articles_nav_sp,
+        new_articles_nav_sp=new_articles_nav_sp,
+        tamago_links_sp=tamago_links_sp,
+        report_links_sp=report_links_sp,
+        done_links_sp=done_links_sp,
+        backnumber_links_sp=backnumber_links_sp,
         tour_report_nav_html=tour_report_nav_html,
         tour_report_nav_sp_html=tour_report_nav_sp_html,
     )
