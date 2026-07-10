@@ -200,6 +200,18 @@ class ArticleEditor:
         tk.Label(pub_inner, text="例: 2026-07-01 09:00",
                  bg="#fdf5e8", fg="#aaa", font=("", 9)).pack(side="left")
 
+        # 固定表示
+        pin_frame = tk.Frame(right, bg="#f0ebe0", relief="solid", bd=1)
+        pin_frame.pack(fill="x", padx=4, pady=(6,0))
+        pin_inner = tk.Frame(pin_frame, bg="#f0ebe0", pady=6, padx=8)
+        pin_inner.pack(fill="x")
+        self.pinned_var = tk.BooleanVar()
+        tk.Checkbutton(pin_inner, text="📌 常時表示（バックナンバーに移動しない）",
+                       variable=self.pinned_var,
+                       bg="#f0ebe0", fg="#5c3a00", font=("", 10, "bold"),
+                       selectcolor="#fff", activebackground="#f0ebe0",
+                       cursor="hand2").pack(side="left")
+
         # 保存ボタン
         save_row = tk.Frame(right, bg="#faf8f5")
         save_row.pack(fill="x", padx=4, pady=10)
@@ -246,6 +258,8 @@ class ArticleEditor:
             self.use_publish_var.set(False)
             self.publish_var.set("")
             self.publish_entry.config(state="disabled")
+        # 固定表示
+        self.pinned_var.set(bool(a.get("pinned", False)))
 
     def _toggle_publish(self):
         if self.use_publish_var.get():
@@ -269,6 +283,7 @@ class ArticleEditor:
         self.use_publish_var.set(False)
         self.publish_var.set("")
         self.publish_entry.config(state="disabled")
+        self.pinned_var.set(False)
         self.listbox.selection_clear(0, "end")
         self.status_var.set("新規記事モード")
 
@@ -290,6 +305,7 @@ class ArticleEditor:
             "text":       self.text_box.get("1.0", "end").rstrip("\n"),
             "photos":     photos,
             "publish_at": publish_at,
+            "pinned":     self.pinned_var.get(),
         }
 
     def _save_article(self):

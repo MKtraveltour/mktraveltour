@@ -82,6 +82,17 @@
           "url": "https://travel.mk-group.co.jp/tourkyoto/2025fuyutourou/"
         }
       ]
+    },
+    {
+      "key": "baikamo",
+      "season": "summer",
+      "label": "暑い夏の涼やかな癒し",
+      "thumb_title": "暑い夏の涼やかな癒し",
+      "img": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/baikamo%2020250726.jpeg",
+      "title": "暑い夏の涼やかな癒し",
+      "date": "2025年07月26　MKスタッフ撮影",
+      "desc": "小さな梅の花ににた白い可愛らしい花を咲かせるのは滋賀県醒井の梅花藻です\n清流に浮かぶ百日紅が飛び石のように華やかな色を添えます",
+      "links": []
     }
   ]
 }

@@ -1917,7 +1917,7 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
         # 30日以上前の記事はバックナンバー扱い
         try:
             art_date = _dt.strptime(art.get("date", "2000-01-01"), "%Y-%m-%d")
-            is_backnumber = art_date < _cutoff
+            is_backnumber = (art_date < _cutoff) and not art.get("pinned", False)
         except:
             is_backnumber = False
         cat_color = {"New！": "#c0392b", "企画のたまご": "#e67e22", "進捗報告": "#2980b9", "完成！": "#27ae60"}.get(cat, "#8b7355")
@@ -1968,7 +1968,7 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
         # バックナンバー判定
         try:
             art_date = _dt.strptime(art.get("date", "2000-01-01"), "%Y-%m-%d")
-            bn_attr = ' data-backnumber="true"' if art_date < _cutoff else ''
+            bn_attr = ' data-backnumber="true"' if (art_date < _cutoff and not art.get("pinned", False)) else ''
         except:
             bn_attr = ''
 
