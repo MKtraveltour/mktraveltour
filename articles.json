@@ -1,6 +1,35 @@
 {
   "articles": [
     {
+      "id": "011",
+      "title": "神秘を肌で感じるパワースポット",
+      "author": "Hiro",
+      "category": "企画のたまご",
+      "date": "2026-07-14",
+      "text": "知る人ぞ知る、まさに迷い込んでしまったかのような道を進み、鉄の門を開けてたどり着いた神秘的な空間。\n賀茂神社はそんな杉林のただなかに静かにたたずんでいました。\nそびえる石の鳥居とまっすぐに続く石段はところどころ苔むしています。\n途中担当者が微かに動く影を見つけると石段を横切っていく小さなサワガニとも遭遇しました。\n同じ世界であるはずなのに市内中心部からはまさに切り離されたかのような不思議な体験が出来る今となっては貴重な場所。\n皆様にご案内できるようなツアーの種にならないか、現在模索中です！",
+      "photos": [
+        "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260625%20kamojinja%20torii.jpg",
+        "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260625%20kamojinja%20kani.jpg",
+        "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260625%20kamojinja%20kaidan.jpg"
+      ],
+      "publish_at": "2026-07-14 10:00",
+      "pinned": false
+    },
+    {
+      "id": "010",
+      "title": "今は昔",
+      "author": "Hiro",
+      "category": "企画のたまご",
+      "date": "2026-07-13",
+      "text": "整えられた石畳の参道を進んだ先に構えられた山國神社。\n大堰川のせせらぎも心地よく、京都の自然200選に選ばれたのも納得の自然を感じます。\n石鳥居を潜ったすぐ右手側に「神饌所」の文字を見つけ思わず撮影。\n担当者は実は大学生の頃とある老舗の鰻屋さんで1年ほどアルバイトをしていました。\nその老舗さんは本店のある地域の神社に毎年お正月に神饌を供えているという話を聞いたことがあり、謎の親近感で撮影しました。\nこういった場所って中を覗いてはいけないものと思いつついけないと言われるとより一層中が見たくなり、限定公開してもらえたりしないのかな…とついつい考えてしまいました。",
+      "photos": [
+        "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260625%20yamakunijinja%20honden.jpg",
+        "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260625%20yamakunijinja%20shinsensyo.jpg"
+      ],
+      "publish_at": "",
+      "pinned": false
+    },
+    {
       "id": "009",
       "title": "バックヤードツアー",
       "author": "Hiro",
