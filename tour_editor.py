@@ -337,6 +337,28 @@ class TourEditor:
             right, font=("", 10), height=3, bg="#fff", relief="solid", bd=1, wrap="word")
         self.report_desc_box.pack(fill="x", padx=4)
 
+        # 音声（ASMRスライドショー）
+        audio2_frame = tk.Frame(right, bg="#e8f0fa", relief="solid", bd=1)
+        audio2_frame.pack(fill="x", padx=4, pady=(8,0))
+        audio2_inner = tk.Frame(audio2_frame, bg="#e8f0fa", pady=6, padx=8)
+        audio2_inner.pack(fill="x")
+        tk.Label(audio2_inner, text="🎵 音声ファイル（ASMRスライドショー）",
+                 bg="#e8f0fa", fg="#1a4a8a", font=("", 10, "bold")).pack(anchor="w")
+        af2_row = tk.Frame(audio2_inner, bg="#e8f0fa")
+        af2_row.pack(fill="x", pady=(4,0))
+        tk.Label(af2_row, text="ファイル名:", bg="#e8f0fa", fg="#5c4a32", font=("", 9), width=9, anchor="w").pack(side="left")
+        self.report_audio_var = tk.StringVar()
+        tk.Entry(af2_row, textvariable=self.report_audio_var, font=("", 10), bg="#fff",
+                 relief="solid", bd=1).pack(side="left", fill="x", expand=True)
+        al2_row = tk.Frame(audio2_inner, bg="#e8f0fa")
+        al2_row.pack(fill="x", pady=(4,0))
+        tk.Label(al2_row, text="ラベル:", bg="#e8f0fa", fg="#5c4a32", font=("", 9), width=9, anchor="w").pack(side="left")
+        self.report_audio_label_var = tk.StringVar()
+        tk.Entry(al2_row, textvariable=self.report_audio_label_var, font=("", 10), bg="#fff",
+                 relief="solid", bd=1).pack(side="left", fill="x", expand=True)
+        tk.Label(audio2_inner, text="例: sound_kawa.mp3  /  ラベル: 川のせせらぎ",
+                 bg="#e8f0fa", fg="#888", font=("", 8)).pack(anchor="w", pady=(2,0))
+
         # 保存ボタン
         save_row2 = tk.Frame(right, bg="#faf8f5")
         save_row2.pack(fill="x", padx=4, pady=10)
@@ -541,6 +563,8 @@ class TourEditor:
         self.report_hero_var.set(r.get("hero", ""))
         self.report_catch_var.set(r.get("catch", ""))
         self.report_shot_date_var.set(r.get("shot_date", ""))
+        self.report_audio_var.set(r.get("audio", ""))
+        self.report_audio_label_var.set(r.get("audio_label", ""))
 
     def _new_report(self):
         self.selected_report_key = None
@@ -552,6 +576,8 @@ class TourEditor:
         self.report_hero_var.set("")
         self.report_catch_var.set("")
         self.report_shot_date_var.set("")
+        self.report_audio_var.set("")
+        self.report_audio_label_var.set("")
         self.report_listbox.selection_clear(0, "end")
         self.status_var.set("新規レポート追加モード")
 
@@ -593,7 +619,7 @@ class TourEditor:
         if not re.match(r'^\d{4}-\d{2}-\d{2}$', dt):
             messagebox.showwarning("形式エラー", "日付はYYYY-MM-DD形式で入力してください\n例: 2025-10-22"); return
 
-        self.reports[dt] = {"title": title, "page": page, "photos": photos, "desc": desc, "hero": hero, "catch": catch, "shot_date": shot_date}
+        self.reports[dt] = {"title": title, "page": page, "photos": photos, "desc": desc, "hero": hero, "catch": catch, "shot_date": shot_date, "audio": self.report_audio_var.get().strip(), "audio_label": self.report_audio_label_var.get().strip()}
         save_reports(self.reports)
         self.selected_report_key = dt
         self._refresh_report_list()

@@ -180,6 +180,28 @@ class ArticleEditor:
                                                    wrap="none")
         self.photo_box.pack(fill="x", padx=4)
 
+        # 音声
+        audio_frame = tk.Frame(right, bg="#e8f0fa", relief="solid", bd=1)
+        audio_frame.pack(fill="x", padx=4, pady=(8,0))
+        audio_inner = tk.Frame(audio_frame, bg="#e8f0fa", pady=6, padx=8)
+        audio_inner.pack(fill="x")
+        tk.Label(audio_inner, text="🎵 音声ファイル（ASMRスライドショー）",
+                 bg="#e8f0fa", fg="#1a4a8a", font=("", 10, "bold")).pack(anchor="w")
+        af_row = tk.Frame(audio_inner, bg="#e8f0fa")
+        af_row.pack(fill="x", pady=(4,0))
+        tk.Label(af_row, text="ファイル名:", bg="#e8f0fa", fg="#5c4a32", font=("", 9), width=9, anchor="w").pack(side="left")
+        self.audio_var = tk.StringVar()
+        tk.Entry(af_row, textvariable=self.audio_var, font=("", 10), bg="#fff",
+                 relief="solid", bd=1).pack(side="left", fill="x", expand=True)
+        al_row = tk.Frame(audio_inner, bg="#e8f0fa")
+        al_row.pack(fill="x", pady=(4,0))
+        tk.Label(al_row, text="ラベル:", bg="#e8f0fa", fg="#5c4a32", font=("", 9), width=9, anchor="w").pack(side="left")
+        self.audio_label_var = tk.StringVar()
+        tk.Entry(al_row, textvariable=self.audio_label_var, font=("", 10), bg="#fff",
+                 relief="solid", bd=1).pack(side="left", fill="x", expand=True)
+        tk.Label(audio_inner, text="例: sound_kawa.mp3  /  ラベル: 川のせせらぎ",
+                 bg="#e8f0fa", fg="#888", font=("", 8)).pack(anchor="w", pady=(2,0))
+
         # 予約投稿
         pub_frame = tk.Frame(right, bg="#fdf5e8", relief="solid", bd=1)
         pub_frame.pack(fill="x", padx=4, pady=(10,0))
@@ -248,6 +270,8 @@ class ArticleEditor:
         self.text_box.insert("1.0", a.get("text", ""))
         self.photo_box.delete("1.0", "end")
         self.photo_box.insert("1.0", "\n".join(a.get("photos", [])))
+        self.audio_var.set(a.get("audio", ""))
+        self.audio_label_var.set(a.get("audio_label", ""))
         # 予約投稿
         pa = a.get("publish_at", "")
         if pa:
@@ -280,6 +304,8 @@ class ArticleEditor:
         self.date_var.set(str(date.today()))
         self.text_box.delete("1.0", "end")
         self.photo_box.delete("1.0", "end")
+        self.audio_var.set("")
+        self.audio_label_var.set("")
         self.use_publish_var.set(False)
         self.publish_var.set("")
         self.publish_entry.config(state="disabled")
@@ -298,14 +324,16 @@ class ArticleEditor:
         photos = [fix_url(p.strip()) for p in self.photo_box.get("1.0", "end").strip().splitlines() if p.strip()]
         publish_at = self.publish_var.get().strip() if self.use_publish_var.get() else ""
         return {
-            "title":      self.title_var.get().strip(),
-            "author":     self.author_var.get().strip(),
-            "category":   self.cat_var.get(),
-            "date":       self.date_var.get().strip(),
-            "text":       self.text_box.get("1.0", "end").rstrip("\n"),
-            "photos":     photos,
-            "publish_at": publish_at,
-            "pinned":     self.pinned_var.get(),
+            "title":       self.title_var.get().strip(),
+            "author":      self.author_var.get().strip(),
+            "category":    self.cat_var.get(),
+            "date":        self.date_var.get().strip(),
+            "text":        self.text_box.get("1.0", "end").rstrip("\n"),
+            "photos":      photos,
+            "audio":       self.audio_var.get().strip(),
+            "audio_label": self.audio_label_var.get().strip(),
+            "publish_at":  publish_at,
+            "pinned":      self.pinned_var.get(),
         }
 
     def _save_article(self):

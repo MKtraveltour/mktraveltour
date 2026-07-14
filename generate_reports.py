@@ -20,6 +20,8 @@ def generate_report_html(date_key: str, report: dict) -> str:
     hero      = report.get("hero", photos[0] if photos else "")
     catch     = report.get("catch", "")
     shot_date = report.get("shot_date", "")
+    audio     = report.get("audio", "")
+    audio_label = report.get("audio_label", "自然の音")
 
     # 催行年
     try:
@@ -49,9 +51,81 @@ def generate_report_html(date_key: str, report: dict) -> str:
         )
         desc_html = f'<div class="report-desc">{paragraphs}</div>'
 
-    # 写真グリッド（3列・クリックでポップアップ）
+    # 写真（音声あり→スライドショー、なし→グリッド）
     photos_html = ""
-    if photos:
+    if photos and audio:
+        audio_url = f"https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/{audio}"
+        slides_js = json.dumps(photos, ensure_ascii=False)
+        photos_html = f'''<div class="slideshow-wrap">
+  <div class="slideshow-inner" id="ss-inner">
+    {"".join(f'<div class="ss-slide{" active" if i==0 else ""}" style="background-image:url({json.dumps(p)})"></div>' for i,p in enumerate(photos))}
+    <div class="ss-overlay"></div>
+    <div class="ss-controls">
+      <span class="ss-label" id="ss-label">🎵 {audio_label}</span>
+      <button class="ss-btn" id="ss-mute" onclick="ssMute()"><i class="ti ti-volume"></i></button>
+      <button class="ss-btn" id="ss-pause" onclick="ssPause()"><i class="ti ti-player-pause"></i></button>
+    </div>
+    <div class="ss-dots" id="ss-dots"></div>
+    <div class="ss-progress"><div class="ss-bar" id="ss-bar"></div></div>
+  </div>
+  <audio id="ss-audio" src="{audio_url}" loop autoplay></audio>
+</div>
+<style>
+.slideshow-wrap{{margin-bottom:24px;border-radius:12px;overflow:hidden;}}
+.slideshow-inner{{position:relative;height:340px;background:#111;}}
+.ss-slide{{position:absolute;inset:0;opacity:0;transition:opacity 2s ease;background-size:cover;background-position:center;}}
+.ss-slide.active{{opacity:1;}}
+.ss-overlay{{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.05),rgba(0,0,0,0.4));}}
+.ss-controls{{position:absolute;top:12px;right:12px;display:flex;align-items:center;gap:8px;}}
+.ss-label{{font-size:11px;color:rgba(255,255,255,0.85);background:rgba(0,0,0,0.35);padding:4px 10px;border-radius:20px;}}
+.ss-btn{{background:rgba(255,255,255,0.18);border:none;color:#fff;width:34px;height:34px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;}}
+.ss-btn:hover{{background:rgba(255,255,255,0.32);}}
+.ss-dots{{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);display:flex;gap:6px;}}
+.ss-dot{{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.4);cursor:pointer;transition:background 0.3s;}}
+.ss-dot.active{{background:#fff;}}
+.ss-progress{{position:absolute;bottom:0;left:0;right:0;height:2px;background:rgba(255,255,255,0.2);}}
+.ss-bar{{height:100%;background:rgba(255,255,255,0.7);transition:width 0.1s linear;}}
+@media(max-width:600px){{.slideshow-inner{{height:240px;}}}}
+</style>
+<script>
+(function(){{
+  var PHOTOS={slides_js};
+  var cur=0,paused=false,muted=false,prog=0,iv;
+  var INTERVAL=5000;
+  var slides=document.querySelectorAll('.ss-slide');
+  var dotsEl=document.getElementById('ss-dots');
+  var audio=document.getElementById('ss-audio');
+  audio.volume=0.6;
+  PHOTOS.forEach(function(_,i){{
+    var d=document.createElement('div');d.className='ss-dot'+(i===0?' active':'');
+    d.onclick=function(){{goTo(i);}};dotsEl.appendChild(d);
+  }});
+  function goTo(idx){{
+    slides[cur].classList.remove('active');
+    dotsEl.children[cur].classList.remove('active');
+    cur=idx;prog=0;
+    slides[cur].classList.add('active');
+    dotsEl.children[cur].classList.add('active');
+  }}
+  iv=setInterval(function(){{
+    if(paused)return;
+    prog+=100/(INTERVAL/100);
+    if(prog>=100){{goTo((cur+1)%PHOTOS.length);return;}}
+    document.getElementById('ss-bar').style.width=prog+'%';
+  }},100);
+  window.ssPause=function(){{
+    paused=!paused;
+    document.getElementById('ss-pause').innerHTML=paused?'<i class="ti ti-player-play"></i>':'<i class="ti ti-player-pause"></i>';
+    paused?audio.pause():audio.play();
+  }};
+  window.ssMute=function(){{
+    muted=!muted;audio.muted=muted;
+    document.getElementById('ss-mute').innerHTML=muted?'<i class="ti ti-volume-off"></i>':'<i class="ti ti-volume"></i>';
+    document.getElementById('ss-label').style.opacity=muted?'0.4':'1';
+  }};
+}})();
+</script>'''
+    elif photos:
         items = []
         for idx, p in enumerate(photos):
             items.append(

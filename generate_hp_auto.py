@@ -1452,6 +1452,63 @@ HTML_TEMPLATE = """\
   function closeArticleModal() {{
     document.getElementById('article-modal-overlay').classList.remove('show');
     document.body.style.overflow = '';
+    var a = document.getElementById('ss-modal-audio');
+    if (a) {{ a.pause(); a.remove(); }}
+  }}
+
+  function startSlideshow(aid, photos, audioUrl, audioLabel) {{
+    if (!photos || photos.length === 0) return;
+    var modal = document.getElementById('article-modal-content');
+    var existing = document.getElementById('ss-modal-audio');
+    if (existing) {{ existing.pause(); existing.remove(); }}
+    var ssHtml = '<div style="border-radius:10px;overflow:hidden;position:relative;background:#111;height:280px;margin-bottom:12px;" id="ss-modal-inner">';
+    photos.forEach(function(p, i) {{
+      ssHtml += '<div class="ss-slide' + (i===0?' active':'') + '" style="position:absolute;inset:0;opacity:'+(i===0?'1':'0')+';transition:opacity 2s ease;background-size:cover;background-position:center;background-image:url(' + JSON.stringify(p) + ');"></div>';
+    }});
+    ssHtml += '<div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.05),rgba(0,0,0,0.4));"></div>';
+    ssHtml += '<div style="position:absolute;top:10px;right:10px;display:flex;align-items:center;gap:6px;">';
+    ssHtml += '<span style="font-size:11px;color:rgba(255,255,255,0.9);background:rgba(0,0,0,0.35);padding:3px 9px;border-radius:20px;" id="ss-modal-label">🎵 ' + audioLabel + '</span>';
+    ssHtml += '<button style="background:rgba(255,255,255,0.2);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:13px;" onclick="ssMuteModal()" id="ss-modal-mute"><i class="ti ti-volume"></i></button>';
+    ssHtml += '<button style="background:rgba(255,255,255,0.2);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:13px;" onclick="ssPauseModal()" id="ss-modal-pause"><i class="ti ti-player-pause"></i></button>';
+    ssHtml += '</div>';
+    ssHtml += '<div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:rgba(255,255,255,0.2);"><div id="ss-modal-bar" style="height:100%;background:rgba(255,255,255,0.7);width:0%;transition:width 0.1s linear;"></div></div>';
+    ssHtml += '</div>';
+    var wrap = document.getElementById('ss-wrap-' + aid);
+    if (wrap) wrap.innerHTML = ssHtml;
+    var audio = document.createElement('audio');
+    audio.id = 'ss-modal-audio';
+    audio.src = audioUrl;
+    audio.loop = true;
+    audio.volume = 0.6;
+    document.body.appendChild(audio);
+    audio.play().catch(function(){{}});
+    var cur = 0, prog = 0, paused = false, muted = false;
+    var slides = document.querySelectorAll('#ss-modal-inner .ss-slide');
+    setInterval(function() {{
+      if (paused) return;
+      prog += 100 / 50;
+      if (prog >= 100) {{
+        slides[cur].style.opacity = '0';
+        cur = (cur + 1) % slides.length;
+        slides[cur].style.opacity = '1';
+        prog = 0;
+      }}
+      var bar = document.getElementById('ss-modal-bar');
+      if (bar) bar.style.width = prog + '%';
+    }}, 100);
+    window.ssPauseModal = function() {{
+      paused = !paused;
+      var btn = document.getElementById('ss-modal-pause');
+      if (btn) btn.innerHTML = paused ? '<i class="ti ti-player-play"></i>' : '<i class="ti ti-player-pause"></i>';
+      paused ? audio.pause() : audio.play();
+    }};
+    window.ssMuteModal = function() {{
+      muted = !muted; audio.muted = muted;
+      var btn = document.getElementById('ss-modal-mute');
+      if (btn) btn.innerHTML = muted ? '<i class="ti ti-volume-off"></i>' : '<i class="ti ti-volume"></i>';
+      var lbl = document.getElementById('ss-modal-label');
+      if (lbl) lbl.style.opacity = muted ? '0.4' : '1';
+    }};
   }}
 
   function filterArticles(cat, el) {{
@@ -1951,9 +2008,26 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
         cat = art.get("category", "")
         cat_color = {"New！": "#c0392b", "企画のたまご": "#e67e22", "進捗報告": "#2980b9", "完成！": "#27ae60"}.get(cat, "#8b7355")
         photos = art.get("photos", [])
+        audio_file = art.get("audio", "")
+        audio_label = art.get("audio_label", "自然の音")
         photos_html = ""
-        if photos:
-            cols = len(photos)
+        if photos and audio_file:
+            # 音声付き→スライドショーバッジ表示（モーダル内でJS起動）
+            aid_key = art.get("id", "")
+            audio_url = f"https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/{audio_file}"
+            slides_json = json.dumps(photos, ensure_ascii=False)
+            photos_html = (
+                f'<div style="margin-top:8px;" id="ss-wrap-{aid_key}">'
+                f'<div style="font-size:11px;color:#8b7355;background:#f5f0e8;padding:5px 10px;border-radius:6px;display:inline-block;cursor:pointer;margin-bottom:6px;" '
+                f'onclick="startSlideshow(\'{aid_key}\',{slides_json},\'{audio_url}\',\'{audio_label}\')">'
+                f'▶ 🎵 {audio_label}と写真を見る（スライドショー）</div>'
+                f'<div class="news-photos" style="grid-template-columns:repeat(3,1fr);">'
+                + "".join(f'<img src="{p}" alt="{art.get("title","")}">' for p in photos[:3])
+                + ('…' if len(photos) > 3 else '')
+                + '</div></div>'
+            )
+        elif photos:
+            cols = min(len(photos), 3)
             imgs = "".join(f'<img src="{p}" alt="{art.get("title","")}">' for p in photos)
             photos_html = f'<div class="news-photos" style="grid-template-columns:repeat({cols},1fr);">{imgs}</div>'
         # バナータグ[BANNER]...[/BANNER]をそのままHTMLとして展開
