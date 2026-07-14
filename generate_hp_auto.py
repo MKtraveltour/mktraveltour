@@ -1464,6 +1464,7 @@ HTML_TEMPLATE = """\
     var modal = document.getElementById('article-modal-content');
     var wrap = modal ? modal.querySelector('[id="ss-wrap-' + aid + '"]') : null;
     if (!wrap) wrap = document.getElementById('ss-wrap-' + aid);
+    var ssHtml = '<div style="border-radius:10px;overflow:hidden;position:relative;background:#111;height:280px;margin-bottom:12px;" id="ss-modal-inner">';
     photos.forEach(function(p, i) {{
       ssHtml += '<div class="ss-slide' + (i===0?' active':'') + '" style="position:absolute;inset:0;opacity:'+(i===0?'1':'0')+';transition:opacity 2s ease;background-size:cover;background-position:center;background-image:url(' + JSON.stringify(p) + ');"></div>';
     }});
