@@ -2022,7 +2022,7 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
                 f'<div style="margin-top:8px;" id="ss-wrap-{aid_key}">'
                 f'<div style="font-size:11px;color:#8b7355;background:#f5f0e8;padding:5px 10px;border-radius:6px;display:inline-block;cursor:pointer;margin-bottom:6px;" '
                 f'onclick="startSlideshow(\'{aid_key}\',{slides_json},\'{audio_url}\',\'{audio_label}\')">'
-                f'▶ 🎵 {audio_label}と写真を見る（スライドショー）</div>'
+                f'▶ 🎵 {audio_label}</div>'
                 f'<div class="news-photos" style="grid-template-columns:repeat(3,1fr);">'
                 + "".join(f'<img src="{p}" alt="{art.get("title","")}">' for p in photos[:3])
                 + ('…' if len(photos) > 3 else '')
