@@ -1257,7 +1257,7 @@ HTML_TEMPLATE = """\
   </div>
 </div>
 
-
+<script>
   // ===== レポートポップアップデータ =====
   var REPORT_POPUP = {report_popup_js};
   var _rvKey = null, _rvIdx = 0;
@@ -1269,7 +1269,7 @@ HTML_TEMPLATE = """\
       if (d && d.page && d.page !== '#') window.location.href = d.page;
       return;
     }}
-    _rvKey = rid;<script>
+    _rvKey = rid;
     _rvIdx = idx || 0;
     _updateReportViewer();
     document.getElementById('report-viewer-overlay').classList.add('show');

@@ -46,8 +46,6 @@ TOUR_URLS = {
     "kayabuki_himawari": "https://travel.mk-group.co.jp/tourkyoto/kayabuki-himawari/",
     "eigamura-jidaigeki": "https://travel.mk-group.co.jp/tourkyoto/eigamura-jidaigeki/",
 
-    "sagano_train": "https://travel.mk-group.co.jp/tourkyoto/sagano-train/",
-
 }
 
 HEADERS = {
@@ -289,8 +287,26 @@ def main():
             results[key] = {"key": key, "url": url, "error": "例外発生", "updated_at": datetime.now().isoformat()}
             fail += 1
 
-    # JSONに保存
+    # JSONに保存（既存の手動設定フィールドを引き継ぐ）
     out_path = Path(__file__).parent / "tour_data.json"
+
+    # 既存データを読み込み、手動設定フィールドを保持する
+    existing = {}
+    if out_path.exists():
+        try:
+            with open(out_path, "r", encoding="utf-8") as f:
+                existing = json.load(f)
+        except Exception:
+            pass
+
+    # hidden（非表示設定）と tags（手動タグ）を既存データから引き継ぐ
+    MANUAL_FIELDS = ("hidden", "tags")
+    for key, data in results.items():
+        if key in existing:
+            for field in MANUAL_FIELDS:
+                if field in existing[key]:
+                    data[field] = existing[key][field]
+
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(results, f, ensure_ascii=False, indent=2)
 
