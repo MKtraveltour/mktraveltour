@@ -1458,10 +1458,12 @@ HTML_TEMPLATE = """\
 
   function startSlideshow(aid, photos, audioUrl, audioLabel) {{
     if (!photos || photos.length === 0) return;
-    var modal = document.getElementById('article-modal-content');
     var existing = document.getElementById('ss-modal-audio');
     if (existing) {{ existing.pause(); existing.remove(); }}
-    var ssHtml = '<div style="border-radius:10px;overflow:hidden;position:relative;background:#111;height:280px;margin-bottom:12px;" id="ss-modal-inner">';
+    // モーダル内のwrap要素を優先して探す
+    var modal = document.getElementById('article-modal-content');
+    var wrap = modal ? modal.querySelector('[id="ss-wrap-' + aid + '"]') : null;
+    if (!wrap) wrap = document.getElementById('ss-wrap-' + aid);
     photos.forEach(function(p, i) {{
       ssHtml += '<div class="ss-slide' + (i===0?' active':'') + '" style="position:absolute;inset:0;opacity:'+(i===0?'1':'0')+';transition:opacity 2s ease;background-size:cover;background-position:center;background-image:url(' + JSON.stringify(p) + ');"></div>';
     }});
