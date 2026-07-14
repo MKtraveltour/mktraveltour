@@ -1476,7 +1476,6 @@ HTML_TEMPLATE = """\
     ssHtml += '</div>';
     ssHtml += '<div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:rgba(255,255,255,0.2);"><div id="ss-modal-bar" style="height:100%;background:rgba(255,255,255,0.7);width:0%;transition:width 0.1s linear;"></div></div>';
     ssHtml += '</div>';
-    var wrap = document.getElementById('ss-wrap-' + aid);
     if (wrap) wrap.innerHTML = ssHtml;
     var audio = document.createElement('audio');
     audio.id = 'ss-modal-audio';
