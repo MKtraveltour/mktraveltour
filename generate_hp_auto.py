@@ -2017,7 +2017,7 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
             # 音声付き→スライドショーバッジ表示（モーダル内でJS起動）
             aid_key = art.get("id", "")
             audio_url = f"https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/{audio_file}"
-            slides_json = json.dumps(photos, ensure_ascii=False)
+            slides_json = json.dumps(photos, ensure_ascii=False).replace('"', '&quot;')
             photos_html = (
                 f'<div style="margin-top:8px;" id="ss-wrap-{aid_key}">'
                 f'<div style="font-size:11px;color:#8b7355;background:#f5f0e8;padding:5px 10px;border-radius:6px;display:inline-block;cursor:pointer;margin-bottom:6px;" '
