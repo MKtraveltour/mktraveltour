@@ -57,23 +57,30 @@ print(f"\n{'='*50}")
 print("▶ STEP 4: GitHub push")
 print('='*50)
 
+import glob, time
+
 now = datetime.now().strftime("%Y-%m-%d %H:%M")
 
-# ネットワークドライブ対応: packファイルを極小化してリネームエラーを防ぐ
-os.system('git config gc.auto 0')           # 自動GC無効
-os.system('git config pack.windowMemory 0') # packメモリ制限
-os.system('git config pack.depth 0')        # pack圧縮なし（tmpファイルが最小になる）
-os.system('git config pack.window 0')       # pack圧縮なし
+# ネットワークドライブ対応: すべての自動メンテナンスを無効化
+os.system('git config gc.auto 0')
+os.system('git config gc.autoDetach false')
+os.system('git config gc.cruftPacks false')
+os.system('git config pack.windowMemory 0')
+os.system('git config pack.depth 0')
+os.system('git config pack.window 0')
+os.system('git config core.multiPackIndex false')      # multi-pack-index無効
+os.system('git config fetch.writeCommitGraph false')   # commitGraph書き込み無効
+os.system('git config maintenance.auto false')         # 自動メンテナンス完全無効
+os.system('git config maintenance.strategy none')
 
-# pushの前に残留tmpファイルを削除（リネーム失敗の原因になる）
-import glob, time
+# pushの前に残留tmpファイルを削除
 pack_dir = os.path.join(BASE_DIR, '.git', 'objects', 'pack')
 for tmp_file in glob.glob(os.path.join(pack_dir, '.tmp-*')):
     try:
         os.remove(tmp_file)
-        print(f"🗑️ 残留tmpファイルを削除: {os.path.basename(tmp_file)}")
+        print(f"🗑️ 残留tmpファイル削除: {os.path.basename(tmp_file)}")
     except Exception as e:
-        print(f"⚠️ tmp削除失敗（無視）: {e}")
+        print(f"⚠️ tmp削除スキップ: {e}")
 
 os.system('git add -A')
 os.system(f'git commit -m "auto update {now}"')
@@ -87,15 +94,15 @@ for attempt in range(1, 4):
         shell=True, cwd=BASE_DIR
     ).returncode
     if ret == 0:
+        print("✅ Push成功")
         break
     print(f"⚠️ Push失敗（{attempt}/3回目）。3秒後に再試行...")
     time.sleep(3)
-    # リトライ前に残留tmpを再削除
     for tmp_file in glob.glob(os.path.join(pack_dir, '.tmp-*')):
         try: os.remove(tmp_file)
         except: pass
 else:
-    print("❌ Pushが3回失敗しました。ネットワーク状態を確認してください。")
+    print("❌ Pushが3回失敗しました。")
     sys.exit(1)
 
 print("\n✅ すべての処理が完了しました！")
