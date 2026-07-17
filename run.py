@@ -58,9 +58,12 @@ print("▶ STEP 4: GitHub push")
 print('='*50)
 
 now = datetime.now().strftime("%Y-%m-%d %H:%M")
+# ネットワークドライブ対応: packファイルのリネームエラーを防ぐ設定
+os.system('git config gc.auto 0')          # 自動GC無効（packリネームが起きない）
+os.system('git config pack.windowMemory 0') # packメモリ制限
 os.system('git add -A')  # 新規生成HTMLも含めすべての変更を追加
 os.system(f'git commit -m "auto update {now}"')
 os.system('git pull origin main --no-edit')  # pushの前に必ずpull
-os.system('git push origin main')
+os.system('git push --no-thin origin main')  # --no-thin でpackリネームを抑制
 
 print("\n✅ すべての処理が完了しました！")
