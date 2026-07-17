@@ -46,6 +46,8 @@ TOUR_URLS = {
     "kayabuki_himawari": "https://travel.mk-group.co.jp/tourkyoto/kayabuki-himawari/",
     "eigamura-jidaigeki": "https://travel.mk-group.co.jp/tourkyoto/eigamura-jidaigeki/",
 
+    "chikubushima": "https://travel.mk-group.co.jp/tourkyoto/chikubushima2026/",
+
 }
 
 HEADERS = {
