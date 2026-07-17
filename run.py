@@ -58,12 +58,44 @@ print("▶ STEP 4: GitHub push")
 print('='*50)
 
 now = datetime.now().strftime("%Y-%m-%d %H:%M")
-# ネットワークドライブ対応: packファイルのリネームエラーを防ぐ設定
-os.system('git config gc.auto 0')          # 自動GC無効（packリネームが起きない）
+
+# ネットワークドライブ対応: packファイルを極小化してリネームエラーを防ぐ
+os.system('git config gc.auto 0')           # 自動GC無効
 os.system('git config pack.windowMemory 0') # packメモリ制限
-os.system('git add -A')  # 新規生成HTMLも含めすべての変更を追加
+os.system('git config pack.depth 0')        # pack圧縮なし（tmpファイルが最小になる）
+os.system('git config pack.window 0')       # pack圧縮なし
+
+# pushの前に残留tmpファイルを削除（リネーム失敗の原因になる）
+import glob, time
+pack_dir = os.path.join(BASE_DIR, '.git', 'objects', 'pack')
+for tmp_file in glob.glob(os.path.join(pack_dir, '.tmp-*')):
+    try:
+        os.remove(tmp_file)
+        print(f"🗑️ 残留tmpファイルを削除: {os.path.basename(tmp_file)}")
+    except Exception as e:
+        print(f"⚠️ tmp削除失敗（無視）: {e}")
+
+os.system('git add -A')
 os.system(f'git commit -m "auto update {now}"')
-os.system('git pull origin main --no-edit')  # pushの前に必ずpull
-os.system('git push --no-thin origin main')  # --no-thin でpackリネームを抑制
+os.system('git pull origin main --no-edit')
+
+# push（失敗時は最大3回リトライ）
+print("📤 GitHub pushを開始...")
+for attempt in range(1, 4):
+    ret = subprocess.run(
+        'git push --no-thin origin main',
+        shell=True, cwd=BASE_DIR
+    ).returncode
+    if ret == 0:
+        break
+    print(f"⚠️ Push失敗（{attempt}/3回目）。3秒後に再試行...")
+    time.sleep(3)
+    # リトライ前に残留tmpを再削除
+    for tmp_file in glob.glob(os.path.join(pack_dir, '.tmp-*')):
+        try: os.remove(tmp_file)
+        except: pass
+else:
+    print("❌ Pushが3回失敗しました。ネットワーク状態を確認してください。")
+    sys.exit(1)
 
 print("\n✅ すべての処理が完了しました！")
