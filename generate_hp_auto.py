@@ -1227,6 +1227,7 @@ HTML_TEMPLATE = """\
   <img class="report-viewer-img" id="rv-img" src="" alt="">
   <div class="report-viewer-title" id="rv-title"></div>
   <div class="report-viewer-sub" id="rv-sub"></div>
+  <div id="rv-desc" style="display:none;max-width:90vw;max-height:20vh;overflow-y:auto;margin-top:10px;color:rgba(255,255,255,0.85);font-size:12px;line-height:1.7;text-align:left;white-space:pre-wrap;background:rgba(255,255,255,0.08);border-radius:8px;padding:10px 14px;"></div>
   <div class="report-viewer-nav">
     <button class="rv-btn" id="rv-prev" onclick="reportViewerMove(-1)">&#8249;</button>
     <span class="rv-counter" id="rv-counter"></span>
@@ -1294,6 +1295,15 @@ HTML_TEMPLATE = """\
       pageBtn.style.display = 'inline-block';
     }} else {{
       pageBtn.style.display = 'none';
+    }}
+    var descEl = document.getElementById('rv-desc');
+    if (descEl) {{
+      if (d.desc && !d.page) {{
+        descEl.textContent = d.desc;
+        descEl.style.display = 'block';
+      }} else {{
+        descEl.style.display = 'none';
+      }}
     }}
   }}
 
@@ -1897,9 +1907,10 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
         catch_txt = r.get("catch", "")
         shot_date = r.get("shot_date", "")
         rid = report_date.replace("-", "")
+        desc_txt  = r.get("desc", "")
         report_popup_data[rid] = {
             "title": title, "page": page, "photos": photos,
-            "catch": catch_txt, "shot_date": shot_date,
+            "catch": catch_txt, "shot_date": shot_date, "desc": desc_txt,
         }
         # アイコン画像：heroが設定されていればhero優先、なければphotos[0]
         hero_img = r.get("hero", "")
