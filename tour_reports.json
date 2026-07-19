@@ -61,5 +61,25 @@
     "hero": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/benibanasyakuyaku_04.jpg",
     "catch": "『珍しい花があるから、見においで。』その一言から始まった旅。",
     "shot_date": "2026-05-24"
+  },
+  "2026-07-19": {
+    "title": "タクシーで快適♪宇治田原を満喫！正寿院と寺社巡りの旅",
+    "page": "report_20260719.html",
+    "photos": [
+      "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/ujidawara%20inome%200719.jpg",
+      "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/ujidawara%20tyouzu%200719.jpg",
+      "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/ujidawara%20neteru%200719.jpg",
+      "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/ujidawara%20huurinhimawari%200719.jpg",
+      "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/ujidawara%20huurinhana%200719.jpg",
+      "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/ujidawara%20teruteru%200719.jpg",
+      "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/ujidawara%20bousi%200719.jpg",
+      "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/ujidawara%20kurage%200719.jpg"
+    ],
+    "desc": "正寿院へいつでもお気軽に！をテーマに販売している本ツアーに同行したドライバーから現地の写真が届きました！\n猪目窓から向日葵、風鈴を撮影しようとスマホを上に向ければ澄み渡った青空が覗いています。\n季節感溢れる色彩鮮やかな光景ですが、通年募集プランですので秋や冬にはまた違った様子を撮影していただけます！",
+    "hero": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/ujidawara%20inome%200719.jpg",
+    "catch": "あなたにあった一期一会の風景を～夏本番～",
+    "shot_date": "2026年7月１９日",
+    "audio": "",
+    "audio_label": ""
   }
 }
