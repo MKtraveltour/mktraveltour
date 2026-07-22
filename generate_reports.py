@@ -13,6 +13,16 @@ REPORTS_PATH = BASE_DIR / "tour_reports.json"
 def key_to_filename(date_key: str) -> str:
     return "report_" + date_key.replace("-", "") + ".html"
 
+def _fix_url(u):
+    if not u: return u
+    u = u.strip()
+    if u.startswith("https://raw.githubusercontent.com"): return u
+    u = u.replace("https://github.com/MKtraveltour/mktraveltour/blob/main/",
+                  "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/")
+    if not u.startswith("http"):
+        u = "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/" + u
+    return u
+
 def generate_report_html(date_key: str, report: dict) -> str:
     title     = report.get("title", "")
     photos    = report.get("photos", [])
@@ -54,11 +64,16 @@ def generate_report_html(date_key: str, report: dict) -> str:
     # 写真（音声あり→スライドショー、なし→グリッド）
     photos_html = ""
     if photos and audio:
-        audio_url = f"https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/{audio}"
+        audio_url = _fix_url(audio)
         slides_js = json.dumps(photos, ensure_ascii=False)
+        # スライドHTML生成（シングルクォートでCSSのurl()を囲む）
+        slides_html = ""
+        for _i, _p in enumerate(photos):
+            _act = " active" if _i == 0 else ""
+            slides_html += f'<div class="ss-slide{_act}" style="background-image:url(\'{_p}\')"></div>'
         photos_html = f'''<div class="slideshow-wrap">
   <div class="slideshow-inner" id="ss-inner">
-    {"".join(f'<div class="ss-slide{" active" if i==0 else ""}" style="background-image:url({json.dumps(p)})"></div>' for i,p in enumerate(photos))}
+    {slides_html}
     <div class="ss-overlay"></div>
     <div class="ss-controls">
       <span class="ss-label" id="ss-label">🎵 {audio_label}</span>
