@@ -66,15 +66,17 @@
     "title": "正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】",
     "page": "hu-rinmatsuri2026.html",
     "photos": [
-      "https://github.com/MKtraveltour/mktraveltour/blob/35ba57cb24abfd338bd188d93110856ce1bcfbae/229580_0.jpg",
-      "https://github.com/MKtraveltour/mktraveltour/blob/35ba57cb24abfd338bd188d93110856ce1bcfbae/229585_0.jpg",
-      "https://github.com/MKtraveltour/mktraveltour/blob/35ba57cb24abfd338bd188d93110856ce1bcfbae/S__43032704_0.jpg"
+      "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/229580_0.jpg",
+      "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/229585_0.jpg",
+      "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/S__43032704_0.jpg",
+      "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/229582_0.jpg",
+      "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/229581_0.jpg"
     ],
-    "desc": "夏の京都の厳しい暑さの中でも、風鈴の音色がこの場所に涼しさを届けてくれます。\n現在販売中の本ツアーに同行したドライバーから現地の写真が届きました。\n期間限定で開催されている正寿院の「風鈴まつり」では、2,000を超す風鈴が境内を埋め尽くす幻想的なひとときをお過ごしいただけます。",
-    "hero": "https://github.com/MKtraveltour/mktraveltour/blob/35ba57cb24abfd338bd188d93110856ce1bcfbae/229586_0.jpg",
+    "desc": "夏の厳しい暑さの中でも、風鈴の音色が涼しさを届けてくれます。\n現在販売中の本ツアーに同行したドライバーから現地の写真が届きました。\n期間限定で開催されている正寿院の「風鈴まつり」では、2,000を超す風鈴が境内を埋め尽くす幻想的なひとときをお過ごしいただけます。",
+    "hero": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/229586_0.jpg",
     "catch": "風鈴が誘う　音のオアシス",
     "shot_date": "2026年07月19日",
-    "audio": "https://github.com/MKtraveltour/mktraveltour/blob/d221ffdc6ab4b08599adc8a6576fab437fc08d9e/c722b031-51bf-4c10-afb7-00079e4a6771.mp3",
+    "audio": "https://github.com/MKtraveltour/mktraveltour/blob/main/c722b031-51bf-4c10-afb7-00079e4a6771.mp3",
     "audio_label": "風鈴の音色"
   }
 }
