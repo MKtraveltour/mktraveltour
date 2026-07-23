@@ -833,6 +833,7 @@ HTML_TEMPLATE = """\
     .cd.has-tour  {{ background: #f0e8d8; color: #5c4a32; font-weight: 500; }}
     .cd.confirmed {{ background: #8b7355; color: #fff; font-weight: 500; }}
     .cd.full      {{ background: #c0392b; color: #fff; font-weight: 500; }}
+    .cd.has-report {{ background: #e8f0e8; color: #2a5a3a; font-weight: 500; }}
     .cd.today     {{ outline: 3px solid #fff; outline-offset: -3px; box-shadow: 0 0 0 3px #8b7355; }}
     .cal-legend {{ display: flex; gap: 16px; margin-top: 10px; flex-wrap: wrap; }}
     .cl-item {{ display: flex; align-items: center; gap: 5px; font-size: 12px; color: #888; }}
@@ -1111,6 +1112,7 @@ HTML_TEMPLATE = """\
         <div class="cl-item"><div class="cl-dot" style="background:#f0e8d8;border:1px solid #c5b8a8;"></div>ツアーあり</div>
         <div class="cl-item"><div class="cl-dot" style="background:#8b7355;"></div>催行確定</div>
         <div class="cl-item"><div class="cl-dot" style="background:#c0392b;"></div>満席</div>
+        <div class="cl-item"><div class="cl-dot" style="background:#e8f0e8;border:1px solid #a8c5a8;"></div>📷 催行済レポートあり</div>
         <div class="cl-item"><div class="cl-dot" style="outline:2px solid #8b7355;outline-offset:-1px;"></div>本日</div>
       </div>
       <p style="font-size:11px;color:#999;margin-top:8px;">※色付き日付をクリックするとツアー詳細ページを開きます</p>
@@ -1607,9 +1609,18 @@ HTML_TEMPLATE = """\
   // 正寿院（宇治田原）は木(3)金(4)土(5)日(0)のみ表示
   var SHOJUIN_WEEKDAYS = [0, 4, 5, 6]; // JS: 日=0,月=1,火=2,水=3,木=4,金=5,土=6
   function tourFilterByDate(dateKey) {{
+    // 日付キーを正規化（"2026-7-19" → "2026-07-19"）TOUR_REPORTS検索用
+    var normKey = (function(k) {{
+      var p = k.split('-');
+      if (p.length !== 3) return k;
+      return p[0] + '-' + (p[1].length < 2 ? '0'+p[1] : p[1]) + '-' + (p[2].length < 2 ? '0'+p[2] : p[2]);
+    }})(dateKey);
     var parts = dateKey.split('-');
     var d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
     var dow = d.getDay(); // 0=日,1=月,...,6=土
+    // 過去日判定
+    var todayMid = new Date(); todayMid.setHours(0,0,0,0);
+    var isPast = d < todayMid;
     var cards = document.querySelectorAll('#tours-grid .tour-card');
     var count = 0;
     cards.forEach(function(card) {{
@@ -1644,7 +1655,7 @@ HTML_TEMPLATE = """\
       var numEl = c.querySelector('.cd-num');
       if (numEl && numEl.textContent == String(parseInt(d)) &&
           (c.classList.contains('has-tour') || c.classList.contains('confirmed') ||
-           c.classList.contains('full') || c.classList.contains('few'))) {{
+           c.classList.contains('full') || c.classList.contains('few') || c.classList.contains('has-report'))) {{
         c.classList.add('selected');
         numEl.style.display = 'none';
         var paw = c.querySelector('.cd-paw');
@@ -1654,7 +1665,19 @@ HTML_TEMPLATE = """\
     var note = document.getElementById('tour-filter-note');
     var mParts = dateKey.split('-');
     var label = mParts.length === 3 ? mParts[1] + '/' + mParts[2] : dateKey;
-    if (note) {{ note.textContent = label + ' のツアーを表示中（' + count + '件）'; note.classList.add('show'); }}
+    if (note) {{
+      if (isPast && TOUR_REPORTS[normKey]) {{
+        var rptTitle = TOUR_REPORTS[normKey].title || '';
+        note.textContent = label + ' 催行済み ― ' + rptTitle;
+        note.style.background = '#e8f5e8';
+        note.style.color = '#2a5a3a';
+      }} else {{
+        note.textContent = label + ' のツアーを表示中（' + count + '件）';
+        note.style.background = '';
+        note.style.color = '';
+      }}
+      note.classList.add('show');
+    }}
     var reset = document.getElementById('tour-reset');
     if (reset) reset.style.display = 'inline';
     var noResult = document.getElementById('tour-no-result');
@@ -1666,8 +1689,8 @@ HTML_TEMPLATE = """\
     var reportSection = document.getElementById('tour-report-section');
     var reportPhotos  = document.getElementById('tour-report-photos');
     var reportLink    = document.getElementById('tour-report-link');
-    if (reportSection && TOUR_REPORTS[dateKey]) {{
-      var report = TOUR_REPORTS[dateKey];
+    if (reportSection && TOUR_REPORTS[normKey]) {{
+      var report = TOUR_REPORTS[normKey];
       reportSection.style.display = 'block';
       reportLink.href = report.page;
       reportPhotos.innerHTML = '';
@@ -1740,20 +1763,29 @@ HTML_TEMPLATE = """\
       var c = document.createElement('div');
       var k = y + '-' + m + '-' + d;
       var t = TOUR[k];
+      // 過去日でTOUR_REPORTSにレポートがある日をマーク
+      var rk = y + '-' + String(m).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+      var cellDate = new Date(y, m-1, d);
+      var todayMid2 = new Date(td.getFullYear(), td.getMonth(), td.getDate());
+      var rpt = (!t && cellDate < todayMid2 && TOUR_REPORTS) ? (TOUR_REPORTS[rk] || null) : null;
       var isT = (y === td.getFullYear() && m === td.getMonth()+1 && d === td.getDate());
       var cl = 'cd';
       if (t) {{ cl += t.st === 'confirmed' ? ' confirmed' : t.st === 'full' ? ' full' : ' has-tour'; }}
+      else if (rpt) {{ cl += ' has-report'; }}
       if (isT) {{ cl += ' today'; }}
       c.className = cl;
       if (t) {{
         c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;">🐾</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:1px;padding-right:2px;">' + (t.em || '') + '</span>';
-      }} else {{
-        c.innerHTML = '<span class="cd-num">' + d + '</span><span class="cd-paw">🐾</span>';
-      }}
-      if (t) {{
         c.title = t.nt;
         c.style.cursor = 'pointer';
         (function(k) {{ c.onclick = function() {{ tourFilterByDate(k); }}; }})(k);
+      }} else if (rpt) {{
+        c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;">🐾</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:1px;padding-right:2px;">📷</span>';
+        c.title = rpt.title;
+        c.style.cursor = 'pointer';
+        (function(k) {{ c.onclick = function() {{ tourFilterByDate(k); }}; }})(k);
+      }} else {{
+        c.innerHTML = '<span class="cd-num">' + d + '</span><span class="cd-paw">🐾</span>';
       }}
       grid.appendChild(c);
     }}
