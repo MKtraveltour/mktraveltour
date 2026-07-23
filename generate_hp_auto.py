@@ -1645,11 +1645,51 @@ HTML_TEMPLATE = """\
     if (note) note.textContent = count + '件のツアーを表示中';
   }}
 
-  // 初期カウント表示
+  // 初期カウント表示 + レポートありツアーに📷バッジを追加
   window.addEventListener('load', function() {{
     var cards = document.querySelectorAll('.tour-card');
     var note  = document.getElementById('tour-count');
     if (note) note.textContent = cards.length + '件のツアーを表示中';
+
+    // TOUR_REPORTSの日付をSet化（正規化済み）
+    var reportDates = {{}};
+    Object.keys(TOUR_REPORTS).forEach(function(k) {{
+      // ridをオブジェクトに埋め込む（例: "2026-07-19" → rid="20260719"）
+      var entry = Object.assign({{}}, TOUR_REPORTS[k]);
+      entry._rid = k.replace(/-/g, '');
+      reportDates[k] = entry;
+    }});
+    function normD(k) {{
+      var p = k.split('-');
+      if (p.length !== 3) return k;
+      return p[0] + '-' + (p[1].length<2?'0'+p[1]:p[1]) + '-' + (p[2].length<2?'0'+p[2]:p[2]);
+    }}
+
+    cards.forEach(function(card) {{
+      var datesAttr = card.getAttribute('data-dates') || '';
+      var dates = datesAttr.split(',').filter(Boolean);
+      var matched = null;
+      for (var i = 0; i < dates.length; i++) {{
+        var nk = normD(dates[i].trim());
+        if (reportDates[nk]) {{ matched = reportDates[nk]; break; }}
+      }}
+      if (matched) {{
+        var tagsEl = card.querySelector('.tour-tags');
+        if (tagsEl) {{
+          var badge = document.createElement('a');
+          badge.href = matched.page || '#';
+          badge.title = '📷 レポートあり：' + matched.title;
+          badge.style.cssText = 'font-size:10px;padding:2px 7px;border-radius:3px;border:1px solid #5a8a5a;background:#e8f0e8;color:#2a5a3a;text-decoration:none;display:inline-flex;align-items:center;gap:3px;';
+          badge.innerHTML = '<i class="ti ti-camera" style="font-size:11px;"></i> レポートあり';
+          if (!matched.page) {{
+            (function(rid) {{
+              badge.onclick = function(e) {{ e.preventDefault(); openReportPopup(rid, 0); }};
+            }})(matched._rid);
+          }}
+          tagsEl.appendChild(badge);
+        }}
+      }}
+    }});
   }});
 
   // 正寿院（宇治田原）は木(3)金(4)土(5)日(0)のみ表示
@@ -1846,7 +1886,7 @@ HTML_TEMPLATE = """\
       if (isT) {{ cl += ' today'; }}
       c.className = cl;
       if (t) {{
-        c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;font-size:18px;">📷</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:1px;padding-right:2px;">' + (t.em || '') + '</span>';
+        c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;">🐾</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:1px;padding-right:2px;">' + (t.em || '') + '</span>';
         c.title = t.nt;
         c.style.cursor = 'pointer';
         (function(k) {{ c.onclick = function() {{ tourFilterByDate(k); }}; }})(k);
