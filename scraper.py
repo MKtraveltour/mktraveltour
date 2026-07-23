@@ -48,6 +48,8 @@ TOUR_URLS = {
 
     "chikubushima": "https://travel.mk-group.co.jp/tourkyoto/chikubushima2026/",
 
+    "benibanashakuyaku": "https://travel.mk-group.co.jp/tourkyoto/2026benibanashakuyaku/",
+
 }
 
 HEADERS = {

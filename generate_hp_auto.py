@@ -888,7 +888,12 @@ HTML_TEMPLATE = """\
     .news-dt {{ font-size: 11px; color: #999; }}
     .news-text {{ font-size: 12px; color: #3c2e1e; line-height: 1.6; }}
     .news-tag {{ color: #8b7355; font-size: 11px; margin-top: 4px; }}
-    .photo-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-bottom: 20px; }}
+    .photo-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px; }}
+    .report-card {{ display:block;border-radius:8px;overflow:hidden;background:#fff;border:1px solid #e0d8cc;text-decoration:none;transition:box-shadow 0.2s; }}
+    .report-card:hover {{ box-shadow:0 2px 8px rgba(139,115,85,0.15); }}
+    .report-card-img {{ aspect-ratio:4/3;overflow:hidden;background:#1a1a1a; }}
+    .report-card-img img {{ width:100%;height:100%;object-fit:cover;display:block; }}
+    .report-card-title {{ padding:6px 8px;background:#faf8f5;font-size:11px;color:#3c2e1e;font-weight:500;line-height:1.4; }}
     .pt {{ border-radius: 6px; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #fff; font-weight: 500; cursor: pointer; }}
     .p1{{ background:#6b8e6b; }} .p2{{ background:#c5a87a; }} .p3{{ background:#7c9cc5; }}
     .p4{{ background:#c57a9c; }} .p5{{ background:#7cc57a; }}
@@ -1841,7 +1846,7 @@ HTML_TEMPLATE = """\
       if (isT) {{ cl += ' today'; }}
       c.className = cl;
       if (t) {{
-        c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;">🐾</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:1px;padding-right:2px;">' + (t.em || '') + '</span>';
+        c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;font-size:18px;">📷</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:1px;padding-right:2px;">' + (t.em || '') + '</span>';
         c.title = t.nt;
         c.style.cursor = 'pointer';
         (function(k) {{ c.onclick = function() {{ tourFilterByDate(k); }}; }})(k);
@@ -2020,9 +2025,9 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
             link_attr = f'href="#" onclick="openReportPopup(\'{rid}\',0);return false;"'
         if icon_img:
             card_html = (
-            f'<a {link_attr} class="pt" style="position:relative;overflow:hidden;background:#1a1a1a;">'
-            f'<img src="{icon_img}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.85;" alt="{title}">'
-            f'<span style="position:absolute;bottom:8px;left:8px;color:#fff;font-size:11px;font-weight:500;text-shadow:0 1px 3px rgba(0,0,0,0.8);">{title}</span>'
+            f'<a {link_attr} class="report-card">'
+            f'<div class="report-card-img"><img src="{icon_img}" alt="{title}"></div>'
+            f'<div class="report-card-title">{title}</div>'
             f'</a>'
             )
             photo_grid_items.append(card_html)
