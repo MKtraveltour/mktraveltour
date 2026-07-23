@@ -1878,20 +1878,45 @@ HTML_TEMPLATE = """\
       var rk = y + '-' + String(m).padStart(2,'0') + '-' + String(d).padStart(2,'0');
       var cellDate = new Date(y, m-1, d);
       var todayMid2 = new Date(td.getFullYear(), td.getMonth(), td.getDate());
-      var rpt = (!t && cellDate < todayMid2 && TOUR_REPORTS) ? (TOUR_REPORTS[rk] || null) : null;
+      // 過去・未来で別判定
+      var isPast = cellDate < todayMid2;
+      // TOUR_REPORTSは過去日のみ参照（未来は催行確定が優先のため不要）
+      var rpt = (isPast && TOUR_REPORTS) ? (TOUR_REPORTS[rk] || null) : null;
+      var hasContent = rpt && ((rpt.photos && rpt.photos.length > 0) || (rpt.page && rpt.page !== ''));
       var isT = (y === td.getFullYear() && m === td.getMonth()+1 && d === td.getDate());
       var cl = 'cd';
-      if (t) {{ cl += t.st === 'confirmed' ? ' confirmed' : t.st === 'full' ? ' full' : ' has-tour'; }}
-      else if (rpt) {{ cl += ' has-report'; }}
+
+      if (isPast) {{
+        // 過去: レポートあり > 催行確定
+        if (hasContent) {{
+          cl += ' has-report';                                          // 緑（最優先）
+        }} else if ((t && t.st === 'confirmed') || (rpt && rpt.st === 'confirmed')) {{
+          cl += ' confirmed';                                           // 茶
+        }} else if (t && t.st === 'full') {{
+          cl += ' full';                                                // 赤
+        }} else if (t || rpt) {{
+          cl += ' has-tour';                                            // ベージュ
+        }}
+      }} else {{
+        // 未来/当日: 催行確定 > レポートあり（TOURデータ優先）
+        if (t) {{ cl += t.st === 'confirmed' ? ' confirmed' : t.st === 'full' ? ' full' : ' has-tour'; }}
+      }}
       if (isT) {{ cl += ' today'; }}
       c.className = cl;
-      if (t) {{
+
+      // innerHTML・onclick: 過去でレポートありならレポート優先
+      if (hasContent) {{
+        c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;font-size:18px;">📷</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:1px;padding-right:2px;"></span>';
+        c.title = rpt.title;
+        c.style.cursor = 'pointer';
+        (function(k) {{ c.onclick = function() {{ tourFilterByDate(k); }}; }})(k);
+      }} else if (t) {{
         c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;">🐾</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:1px;padding-right:2px;">' + (t.em || '') + '</span>';
         c.title = t.nt;
         c.style.cursor = 'pointer';
         (function(k) {{ c.onclick = function() {{ tourFilterByDate(k); }}; }})(k);
       }} else if (rpt) {{
-        c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;font-size:18px;">📷</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:1px;padding-right:2px;"></span>';
+        c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;">🐾</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:1px;padding-right:2px;"></span>';
         c.title = rpt.title;
         c.style.cursor = 'pointer';
         (function(k) {{ c.onclick = function() {{ tourFilterByDate(k); }}; }})(k);
