@@ -1021,32 +1021,32 @@ HTML_TEMPLATE = """\
     <div class="bnav-category">
       <div class="bnav-cat-label">造成日記</div>
       <div class="bnav-sub">
-        <div class="bnav-season-label" onclick="toggleSeason(this)" id="all-label">
+        <div class="bnav-season-label" onclick="openArticleCards('all')" id="all-label">
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>すべて</span>
         </div>
         <div class="bnav-season-body" id="all-articles-body">
           {all_articles_nav}
         </div>
-        <div class="bnav-season-label" onclick="toggleSeason(this)" id="new-label">
+        <div class="bnav-season-label" onclick="openArticleCards('New！')" id="new-label">
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>New！</span>
 
         </div>
         <div class="bnav-season-body" id="new-articles-body">
           {new_articles_nav}
         </div>
-        <div class="bnav-season-label" onclick="toggleSeason(this)" id="tamago-label">
+        <div class="bnav-season-label" onclick="openArticleCards('企画のたまご')" id="tamago-label">
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>企画のたまご</span>
         </div>
         <div class="bnav-season-body" id="tamago-articles-body">
           {tamago_links}
         </div>
-        <div class="bnav-season-label" onclick="toggleSeason(this)" id="report-label">
+        <div class="bnav-season-label" onclick="openArticleCards('進捗報告')" id="report-label">
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>進捗報告</span>
         </div>
         <div class="bnav-season-body" id="report-articles-body">
           {report_links}
         </div>
-        <div class="bnav-season-label" onclick="toggleSeason(this)" id="done-label">
+        <div class="bnav-season-label" onclick="openArticleCards('完成！')" id="done-label">
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>完成！</span>
         </div>
         <div class="bnav-season-body" id="done-articles-body">
@@ -1058,7 +1058,7 @@ HTML_TEMPLATE = """\
         <div class="bnav-season-body" id="tour-report-nav-body">
           {tour_report_nav_html}
         </div>
-        <div class="bnav-season-label" onclick="toggleSeason(this)" id="backnumber-label">
+        <div class="bnav-season-label" onclick="openArticleCards('backnumber')" id="backnumber-label">
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>バックナンバー</span>
         </div>
         <div class="bnav-season-body" id="backnumber-articles-body">
@@ -1526,6 +1526,10 @@ HTML_TEMPLATE = """\
   }}
 
   function filterArticles(cat, el) {{
+    openArticleCards(cat);
+  }}
+
+  function openArticleCards(cat) {{
     var posts = document.querySelectorAll('.news-post');
     var visible = [];
     posts.forEach(function(p) {{
@@ -1538,10 +1542,47 @@ HTML_TEMPLATE = """\
         if (!isBn && p.getAttribute('data-category') === cat) visible.push(p);
       }}
     }});
-    if (cat !== 'all' && visible.length > 0) {{
-      var aid = visible[0].id ? visible[0].id.replace('article-', '') : null;
-      if (aid) scrollToArticle(aid);
+    var catNames = {{'all':'造成日記 すべて','backnumber':'バックナンバー','New！':'New！','企画のたまご':'企画のたまご','進捗報告':'進捗報告','完成！':'完成！'}};
+    var modal = document.getElementById('article-modal-content');
+    modal.innerHTML = '<div style="font-size:14px;font-weight:500;color:#5c4a32;border-left:4px solid #8b7355;padding-left:10px;margin-bottom:16px;">' + (catNames[cat] || cat) + '</div>';
+    if (visible.length === 0) {{
+      modal.innerHTML += '<div style="color:#999;font-size:13px;text-align:center;padding:20px;">記事がありません</div>';
     }}
+    visible.forEach(function(p) {{
+      var titleEl = p.querySelector('[style*="font-weight:500"]');
+      var meta    = p.querySelector('.news-dt');
+      var textEl  = p.querySelector('.news-text');
+      var imgEl   = p.querySelector('.news-photo img, .news-photos img');
+      var cat2    = p.getAttribute('data-category') || '';
+      var aid     = p.id ? p.id.replace('article-', '') : null;
+      var catColors = {{'New！':'#c0392b','企画のたまご':'#e67e22','進捗報告':'#2980b9','完成！':'#27ae60'}};
+      var catColor = catColors[cat2] || '#8b7355';
+      var titleText = titleEl ? titleEl.textContent.replace('📄','').trim() : '';
+      var preview   = textEl ? textEl.textContent.trim().replace(/\\s+/g,' ').substring(0,70) + '…' : '';
+      var card = document.createElement('div');
+      card.style.cssText = 'display:flex;gap:12px;align-items:flex-start;padding:12px;border:1px solid #e0d8cc;border-radius:10px;margin-bottom:10px;cursor:pointer;background:#fff;transition:box-shadow 0.2s;';
+      card.onmouseover = function(){{this.style.boxShadow='0 2px 8px rgba(139,115,85,0.15)';}};
+      card.onmouseout  = function(){{this.style.boxShadow='';}};
+      var imgHtml = imgEl
+        ? '<img src="' + imgEl.src + '" style="width:72px;height:72px;object-fit:cover;border-radius:6px;flex-shrink:0;">'
+        : '<div style="width:72px;height:72px;border-radius:6px;background:#f0ebe2;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:24px;">📔</div>';
+      card.innerHTML = imgHtml
+        + '<div style="flex:1;min-width:0;">'
+        + '<span style="font-size:10px;padding:1px 7px;border-radius:8px;background:' + catColor + ';color:#fff;display:inline-block;margin-bottom:5px;">' + cat2 + '</span>'
+        + '<div style="font-size:13px;font-weight:500;color:#3c2e1e;line-height:1.4;margin-bottom:4px;">' + titleText + '</div>'
+        + '<div style="font-size:11px;color:#aaa;margin-bottom:5px;">' + (meta ? meta.textContent : '') + '</div>'
+        + '<div style="font-size:11px;color:#7c6040;line-height:1.6;">' + preview + '</div>'
+        + '</div>'
+        + '<div style="font-size:11px;color:#8b7355;white-space:nowrap;align-self:center;">読む&nbsp;→</div>';
+      if (aid) {{
+        (function(id) {{
+          card.onclick = function() {{ closeArticleModal(); setTimeout(function(){{scrollToArticle(id);}},100); }};
+        }})(aid);
+      }}
+      modal.appendChild(card);
+    }});
+    document.getElementById('article-modal-overlay').classList.add('show');
+    document.body.style.overflow = 'hidden';
   }}
 
   function openArticleList(posts) {{
@@ -1685,6 +1726,22 @@ HTML_TEMPLATE = """\
     var tabNote = document.getElementById('tour-count');
     if (tabNote) tabNote.textContent = count + '件のツアーを表示中';
 
+    // 過去レポート日: 募集中セクションを非表示、過去モードフラグ
+    var _pastHide = isPast && TOUR_REPORTS[normKey];
+    document.querySelectorAll('.filter-tabs').forEach(function(el) {{
+      el.style.display = _pastHide ? 'none' : '';
+    }});
+    var _tgEl = document.getElementById('tours-grid');
+    var _tcEl = document.getElementById('tour-count');
+    if (_tgEl) _tgEl.style.display = _pastHide ? 'none' : '';
+    if (_tcEl) _tcEl.style.display = _pastHide ? 'none' : '';
+    // 募集中のツアー section-header を非表示
+    document.querySelectorAll('.section-header .section-title').forEach(function(t) {{
+      if (t.textContent.indexOf('募集中') !== -1) {{
+        t.closest('.section-header').style.display = _pastHide ? 'none' : '';
+      }}
+    }});
+
     // ツアーレポート表示
     var reportSection = document.getElementById('tour-report-section');
     var reportPhotos  = document.getElementById('tour-report-photos');
@@ -1712,6 +1769,15 @@ HTML_TEMPLATE = """\
 
   function tourReset() {{
     document.querySelectorAll('#tours-grid .tour-card').forEach(function(c) {{ c.classList.remove('hidden'); }});
+    // 過去モードで隠したセクションを元に戻す
+    document.querySelectorAll('.filter-tabs').forEach(function(el) {{ el.style.display = ''; }});
+    var _tgEl = document.getElementById('tours-grid');
+    var _tcEl = document.getElementById('tour-count');
+    if (_tgEl) _tgEl.style.display = '';
+    if (_tcEl) _tcEl.style.display = '';
+    document.querySelectorAll('.section-header .section-title').forEach(function(t) {{
+      if (t.textContent.indexOf('募集中') !== -1) t.closest('.section-header').style.display = '';
+    }});
     document.querySelectorAll('.cd').forEach(function(c) {{
       c.classList.remove('selected');
       var paw = c.querySelector('.cd-paw');
@@ -1780,7 +1846,7 @@ HTML_TEMPLATE = """\
         c.style.cursor = 'pointer';
         (function(k) {{ c.onclick = function() {{ tourFilterByDate(k); }}; }})(k);
       }} else if (rpt) {{
-        c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;">🐾</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:1px;padding-right:2px;">📷</span>';
+        c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;font-size:18px;">📷</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:1px;padding-right:2px;"></span>';
         c.title = rpt.title;
         c.style.cursor = 'pointer';
         (function(k) {{ c.onclick = function() {{ tourFilterByDate(k); }}; }})(k);
