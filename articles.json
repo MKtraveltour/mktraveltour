@@ -1,6 +1,22 @@
 {
   "articles": [
     {
+      "id": "013",
+      "title": "時代劇の聖地巡礼！",
+      "author": "Hiro",
+      "category": "完成！",
+      "date": "2026-07-28",
+      "text": "プレスリリースが始まっている時代劇ツアーで訪れる場所を一つご紹介！\nこちらの写真どこの写真かわかりますか…？\nそう、大覚寺大沢池周辺の写真です。\n水戸黄門、暴れん坊将軍、必殺仕事人など数々の有名時代劇に登場する大覚寺…。\n以前刀剣ツアーでご一緒させて頂く機会があり、弊社のではないですがジャンボタクシーが明智門に引っかかってしまったことがあるというちょっと怖い話を伺ったことがあります。\n懐かしいなと思うと同時にまた弊社ツアーでご一緒させて頂ける機会があったことを嬉しく思います。",
+      "photos": [
+        "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/oosawaike_torii.jpeg",
+        "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/oosakaike_tatemono.jpeg"
+      ],
+      "audio": "",
+      "audio_label": "",
+      "publish_at": "",
+      "pinned": false
+    },
+    {
       "id": "012",
       "title": "暑すぎる…",
       "author": "Hiro",
