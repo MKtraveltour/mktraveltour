@@ -50,6 +50,8 @@ TOUR_URLS = {
 
     "benibanashakuyaku": "https://travel.mk-group.co.jp/tourkyoto/2026benibanashakuyaku/",
 
+    "window_night": "https://travel.mk-group.co.jp/tourkyoto/window_night/",
+
 }
 
 HEADERS = {
