@@ -307,16 +307,23 @@ def build_tour_js(tours: dict) -> str:
     import re as _re_pd2
     for _pd_dates, _pd_title, _pd_var_url, _pd_emoji in _period_queue:
         for _pd_k in sorted(_pd_dates):
-            _existing = [ln for ln in lines if f"TOUR['{_pd_k}']" in ln]
-            if _existing:
-                _has_priority = any(
-                    _re_pd2.search(r"st:'(confirmed|full|few)'", ln)
-                    for ln in _existing
-                )
-                if _has_priority:
-                    continue
-            _already = any(_pd_var_url in ln for ln in _existing)
-            if not _already:
+            # 既存エントリのインデックスを探す
+            _existing_idx = None
+            for _i, _ln in enumerate(lines):
+                if f"TOUR['{_pd_k}']" in _ln:
+                    _existing_idx = _i
+                    break
+
+            if _existing_idx is not None:
+                # 既存エントリあり → 上書きせず絵文字だけ追加（重複TourJS防止）
+                _ex_line = lines[_existing_idx]
+                _m2 = _re_pd2.search(r"em:'([^']*)'", _ex_line)
+                if _m2 and _pd_emoji and _pd_emoji not in _m2.group(1):
+                    lines[_existing_idx] = _ex_line.replace(
+                        f"em:'{_m2.group(1)}'", f"em:'{_m2.group(1)}{_pd_emoji}'"
+                    )
+            else:
+                # 既存エントリなし → 新規作成
                 lines.append(
                     f"      TOUR['{_pd_k}'] = {{st:'tour', ti:'{_pd_title}', ur:{_pd_var_url}, nt:'{_pd_title}', em:'{_pd_emoji}'}};"
                 )
@@ -577,7 +584,11 @@ def build_tour_cards(tours: dict) -> str:
                     import re as _re_dow
                     _dow_m = _re_dow.search(r"[（(]([月火水木金土日・祝]+)[）)]", date_str)
                     if _dow_m:
-                        _allowed_dow = {_dow_map[c] for c in _dow_m.group(1) if c in _dow_map}
+                        _group = _dow_m.group(1)
+                        # 単独曜日「(土)」は日付の曜日表記のみ→フィルターとして扱わない
+                        # 複数曜日「（月・木・金・土・日）」のみ運行曜日フィルターとして認識
+                        if '・' in _group or len([c for c in _group if c in _dow_map]) >= 2:
+                            _allowed_dow = {_dow_map[c] for c in _group if c in _dow_map}
                     while cur <= end:
                         k = f"{cur.year}-{cur.month}-{cur.day}"
                         if k not in card_excluded:
@@ -833,7 +844,6 @@ HTML_TEMPLATE = """\
     .cd.has-tour  {{ background: #f0e8d8; color: #5c4a32; font-weight: 500; }}
     .cd.confirmed {{ background: #8b7355; color: #fff; font-weight: 500; }}
     .cd.full      {{ background: #c0392b; color: #fff; font-weight: 500; }}
-    .cd.has-report {{ background: #e8f0e8; color: #2a5a3a; font-weight: 500; }}
     .cd.today     {{ outline: 3px solid #fff; outline-offset: -3px; box-shadow: 0 0 0 3px #8b7355; }}
     .cal-legend {{ display: flex; gap: 16px; margin-top: 10px; flex-wrap: wrap; }}
     .cl-item {{ display: flex; align-items: center; gap: 5px; font-size: 12px; color: #888; }}
@@ -888,12 +898,7 @@ HTML_TEMPLATE = """\
     .news-dt {{ font-size: 11px; color: #999; }}
     .news-text {{ font-size: 12px; color: #3c2e1e; line-height: 1.6; }}
     .news-tag {{ color: #8b7355; font-size: 11px; margin-top: 4px; }}
-    .photo-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px; }}
-    .report-card {{ display:block;border-radius:8px;overflow:hidden;background:#fff;border:1px solid #e0d8cc;text-decoration:none;transition:box-shadow 0.2s; }}
-    .report-card:hover {{ box-shadow:0 2px 8px rgba(139,115,85,0.15); }}
-    .report-card-img {{ aspect-ratio:4/3;overflow:hidden;background:#1a1a1a; }}
-    .report-card-img img {{ width:100%;height:100%;object-fit:cover;display:block; }}
-    .report-card-title {{ padding:6px 8px;background:#faf8f5;font-size:11px;color:#3c2e1e;font-weight:500;line-height:1.4; }}
+    .photo-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-bottom: 20px; }}
     .pt {{ border-radius: 6px; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #fff; font-weight: 500; cursor: pointer; }}
     .p1{{ background:#6b8e6b; }} .p2{{ background:#c5a87a; }} .p3{{ background:#7c9cc5; }}
     .p4{{ background:#c57a9c; }} .p5{{ background:#7cc57a; }}
@@ -1026,32 +1031,32 @@ HTML_TEMPLATE = """\
     <div class="bnav-category">
       <div class="bnav-cat-label">造成日記</div>
       <div class="bnav-sub">
-        <div class="bnav-season-label" onclick="openArticleCards('all')" id="all-label">
+        <div class="bnav-season-label" onclick="toggleSeason(this)" id="all-label">
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>すべて</span>
         </div>
         <div class="bnav-season-body" id="all-articles-body">
           {all_articles_nav}
         </div>
-        <div class="bnav-season-label" onclick="openArticleCards('New！')" id="new-label">
+        <div class="bnav-season-label" onclick="toggleSeason(this)" id="new-label">
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>New！</span>
 
         </div>
         <div class="bnav-season-body" id="new-articles-body">
           {new_articles_nav}
         </div>
-        <div class="bnav-season-label" onclick="openArticleCards('企画のたまご')" id="tamago-label">
+        <div class="bnav-season-label" onclick="toggleSeason(this)" id="tamago-label">
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>企画のたまご</span>
         </div>
         <div class="bnav-season-body" id="tamago-articles-body">
           {tamago_links}
         </div>
-        <div class="bnav-season-label" onclick="openArticleCards('進捗報告')" id="report-label">
+        <div class="bnav-season-label" onclick="toggleSeason(this)" id="report-label">
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>進捗報告</span>
         </div>
         <div class="bnav-season-body" id="report-articles-body">
           {report_links}
         </div>
-        <div class="bnav-season-label" onclick="openArticleCards('完成！')" id="done-label">
+        <div class="bnav-season-label" onclick="toggleSeason(this)" id="done-label">
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>完成！</span>
         </div>
         <div class="bnav-season-body" id="done-articles-body">
@@ -1063,7 +1068,7 @@ HTML_TEMPLATE = """\
         <div class="bnav-season-body" id="tour-report-nav-body">
           {tour_report_nav_html}
         </div>
-        <div class="bnav-season-label" onclick="openArticleCards('backnumber')" id="backnumber-label">
+        <div class="bnav-season-label" onclick="toggleSeason(this)" id="backnumber-label">
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>バックナンバー</span>
         </div>
         <div class="bnav-season-body" id="backnumber-articles-body">
@@ -1117,7 +1122,6 @@ HTML_TEMPLATE = """\
         <div class="cl-item"><div class="cl-dot" style="background:#f0e8d8;border:1px solid #c5b8a8;"></div>ツアーあり</div>
         <div class="cl-item"><div class="cl-dot" style="background:#8b7355;"></div>催行確定</div>
         <div class="cl-item"><div class="cl-dot" style="background:#c0392b;"></div>満席</div>
-        <div class="cl-item"><div class="cl-dot" style="background:#e8f0e8;border:1px solid #a8c5a8;"></div>📷 催行済レポートあり</div>
         <div class="cl-item"><div class="cl-dot" style="outline:2px solid #8b7355;outline-offset:-1px;"></div>本日</div>
       </div>
       <p style="font-size:11px;color:#999;margin-top:8px;">※色付き日付をクリックするとツアー詳細ページを開きます</p>
@@ -1234,7 +1238,6 @@ HTML_TEMPLATE = """\
   <img class="report-viewer-img" id="rv-img" src="" alt="">
   <div class="report-viewer-title" id="rv-title"></div>
   <div class="report-viewer-sub" id="rv-sub"></div>
-  <div id="rv-desc" style="display:none;max-width:90vw;max-height:20vh;overflow-y:auto;margin-top:10px;color:rgba(255,255,255,0.85);font-size:12px;line-height:1.7;text-align:left;white-space:pre-wrap;background:rgba(255,255,255,0.08);border-radius:8px;padding:10px 14px;"></div>
   <div class="report-viewer-nav">
     <button class="rv-btn" id="rv-prev" onclick="reportViewerMove(-1)">&#8249;</button>
     <span class="rv-counter" id="rv-counter"></span>
@@ -1265,7 +1268,7 @@ HTML_TEMPLATE = """\
   </div>
 </div>
 
-<script>
+
   // ===== レポートポップアップデータ =====
   var REPORT_POPUP = {report_popup_js};
   var _rvKey = null, _rvIdx = 0;
@@ -1277,7 +1280,7 @@ HTML_TEMPLATE = """\
       if (d && d.page && d.page !== '#') window.location.href = d.page;
       return;
     }}
-    _rvKey = rid;
+    _rvKey = rid;<script>
     _rvIdx = idx || 0;
     _updateReportViewer();
     document.getElementById('report-viewer-overlay').classList.add('show');
@@ -1302,15 +1305,6 @@ HTML_TEMPLATE = """\
       pageBtn.style.display = 'inline-block';
     }} else {{
       pageBtn.style.display = 'none';
-    }}
-    var descEl = document.getElementById('rv-desc');
-    if (descEl) {{
-      if (d.desc && !d.page) {{
-        descEl.textContent = d.desc;
-        descEl.style.display = 'block';
-      }} else {{
-        descEl.style.display = 'none';
-      }}
     }}
   }}
 
@@ -1483,8 +1477,8 @@ HTML_TEMPLATE = """\
     if (!wrap) wrap = document.getElementById('ss-wrap-' + aid);
     var ssHtml = '<div style="border-radius:10px;overflow:hidden;position:relative;background:#111;height:280px;margin-bottom:12px;" id="ss-modal-inner">';
     photos.forEach(function(p, i) {{
-      ssHtml += '<div class="ss-slide' + (i===0?' active':'') + '" style="position:absolute;inset:0;opacity:'+(i===0?'1':'0')+';transition:opacity 2s ease;background-size:cover;background-position:center;background-image:url(' + p + ');"></div>';
-    }}); // ← ここに }}); を追加しました
+      ssHtml += '<div class="ss-slide' + (i===0?' active':'') + '" style="position:absolute;inset:0;opacity:'+(i===0?'1':'0')+';transition:opacity 2s ease;background-size:cover;background-position:center;background-image:url(\'' + p + '\');"></div>';
+    }}); // ← ここに }});
     ssHtml += '<div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.05),rgba(0,0,0,0.4));"></div>';
     ssHtml += '<div style="position:absolute;top:10px;right:10px;display:flex;align-items:center;gap:6px;">';
     ssHtml += '<span style="font-size:11px;color:rgba(255,255,255,0.9);background:rgba(0,0,0,0.35);padding:3px 9px;border-radius:20px;" id="ss-modal-label">🎵 ' + audioLabel + '</span>';
@@ -1531,10 +1525,6 @@ HTML_TEMPLATE = """\
   }}
 
   function filterArticles(cat, el) {{
-    openArticleCards(cat);
-  }}
-
-  function openArticleCards(cat) {{
     var posts = document.querySelectorAll('.news-post');
     var visible = [];
     posts.forEach(function(p) {{
@@ -1547,47 +1537,10 @@ HTML_TEMPLATE = """\
         if (!isBn && p.getAttribute('data-category') === cat) visible.push(p);
       }}
     }});
-    var catNames = {{'all':'造成日記 すべて','backnumber':'バックナンバー','New！':'New！','企画のたまご':'企画のたまご','進捗報告':'進捗報告','完成！':'完成！'}};
-    var modal = document.getElementById('article-modal-content');
-    modal.innerHTML = '<div style="font-size:14px;font-weight:500;color:#5c4a32;border-left:4px solid #8b7355;padding-left:10px;margin-bottom:16px;">' + (catNames[cat] || cat) + '</div>';
-    if (visible.length === 0) {{
-      modal.innerHTML += '<div style="color:#999;font-size:13px;text-align:center;padding:20px;">記事がありません</div>';
+    if (cat !== 'all' && visible.length > 0) {{
+      var aid = visible[0].id ? visible[0].id.replace('article-', '') : null;
+      if (aid) scrollToArticle(aid);
     }}
-    visible.forEach(function(p) {{
-      var titleEl = p.querySelector('[style*="font-weight:500"]');
-      var meta    = p.querySelector('.news-dt');
-      var textEl  = p.querySelector('.news-text');
-      var imgEl   = p.querySelector('.news-photo img, .news-photos img');
-      var cat2    = p.getAttribute('data-category') || '';
-      var aid     = p.id ? p.id.replace('article-', '') : null;
-      var catColors = {{'New！':'#c0392b','企画のたまご':'#e67e22','進捗報告':'#2980b9','完成！':'#27ae60'}};
-      var catColor = catColors[cat2] || '#8b7355';
-      var titleText = titleEl ? titleEl.textContent.replace('📄','').trim() : '';
-      var preview   = textEl ? textEl.textContent.trim().replace(/\\s+/g,' ').substring(0,70) + '…' : '';
-      var card = document.createElement('div');
-      card.style.cssText = 'display:flex;gap:12px;align-items:flex-start;padding:12px;border:1px solid #e0d8cc;border-radius:10px;margin-bottom:10px;cursor:pointer;background:#fff;transition:box-shadow 0.2s;';
-      card.onmouseover = function(){{this.style.boxShadow='0 2px 8px rgba(139,115,85,0.15)';}};
-      card.onmouseout  = function(){{this.style.boxShadow='';}};
-      var imgHtml = imgEl
-        ? '<img src="' + imgEl.src + '" style="width:72px;height:72px;object-fit:cover;border-radius:6px;flex-shrink:0;">'
-        : '<div style="width:72px;height:72px;border-radius:6px;background:#f0ebe2;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:24px;">📔</div>';
-      card.innerHTML = imgHtml
-        + '<div style="flex:1;min-width:0;">'
-        + '<span style="font-size:10px;padding:1px 7px;border-radius:8px;background:' + catColor + ';color:#fff;display:inline-block;margin-bottom:5px;">' + cat2 + '</span>'
-        + '<div style="font-size:13px;font-weight:500;color:#3c2e1e;line-height:1.4;margin-bottom:4px;">' + titleText + '</div>'
-        + '<div style="font-size:11px;color:#aaa;margin-bottom:5px;">' + (meta ? meta.textContent : '') + '</div>'
-        + '<div style="font-size:11px;color:#7c6040;line-height:1.6;">' + preview + '</div>'
-        + '</div>'
-        + '<div style="font-size:11px;color:#8b7355;white-space:nowrap;align-self:center;">読む&nbsp;→</div>';
-      if (aid) {{
-        (function(id) {{
-          card.onclick = function() {{ closeArticleModal(); setTimeout(function(){{scrollToArticle(id);}},100); }};
-        }})(aid);
-      }}
-      modal.appendChild(card);
-    }});
-    document.getElementById('article-modal-overlay').classList.add('show');
-    document.body.style.overflow = 'hidden';
   }}
 
   function openArticleList(posts) {{
@@ -1645,68 +1598,19 @@ HTML_TEMPLATE = """\
     if (note) note.textContent = count + '件のツアーを表示中';
   }}
 
-  // 初期カウント表示 + レポートありツアーに📷バッジを追加
+  // 初期カウント表示
   window.addEventListener('load', function() {{
     var cards = document.querySelectorAll('.tour-card');
     var note  = document.getElementById('tour-count');
     if (note) note.textContent = cards.length + '件のツアーを表示中';
-
-    // TOUR_REPORTSの日付をSet化（正規化済み）
-    var reportDates = {{}};
-    Object.keys(TOUR_REPORTS).forEach(function(k) {{
-      // ridをオブジェクトに埋め込む（例: "2026-07-19" → rid="20260719"）
-      var entry = Object.assign({{}}, TOUR_REPORTS[k]);
-      entry._rid = k.replace(/-/g, '');
-      reportDates[k] = entry;
-    }});
-    function normD(k) {{
-      var p = k.split('-');
-      if (p.length !== 3) return k;
-      return p[0] + '-' + (p[1].length<2?'0'+p[1]:p[1]) + '-' + (p[2].length<2?'0'+p[2]:p[2]);
-    }}
-
-    cards.forEach(function(card) {{
-      var datesAttr = card.getAttribute('data-dates') || '';
-      var dates = datesAttr.split(',').filter(Boolean);
-      var matched = null;
-      for (var i = 0; i < dates.length; i++) {{
-        var nk = normD(dates[i].trim());
-        if (reportDates[nk]) {{ matched = reportDates[nk]; break; }}
-      }}
-      if (matched) {{
-        var tagsEl = card.querySelector('.tour-tags');
-        if (tagsEl) {{
-          var badge = document.createElement('a');
-          badge.href = matched.page || '#';
-          badge.title = '📷 レポートあり：' + matched.title;
-          badge.style.cssText = 'font-size:10px;padding:2px 7px;border-radius:3px;border:1px solid #5a8a5a;background:#e8f0e8;color:#2a5a3a;text-decoration:none;display:inline-flex;align-items:center;gap:3px;';
-          badge.innerHTML = '<i class="ti ti-camera" style="font-size:11px;"></i> レポートあり';
-          if (!matched.page) {{
-            (function(rid) {{
-              badge.onclick = function(e) {{ e.preventDefault(); openReportPopup(rid, 0); }};
-            }})(matched._rid);
-          }}
-          tagsEl.appendChild(badge);
-        }}
-      }}
-    }});
   }});
 
   // 正寿院（宇治田原）は木(3)金(4)土(5)日(0)のみ表示
   var SHOJUIN_WEEKDAYS = [0, 4, 5, 6]; // JS: 日=0,月=1,火=2,水=3,木=4,金=5,土=6
   function tourFilterByDate(dateKey) {{
-    // 日付キーを正規化（"2026-7-19" → "2026-07-19"）TOUR_REPORTS検索用
-    var normKey = (function(k) {{
-      var p = k.split('-');
-      if (p.length !== 3) return k;
-      return p[0] + '-' + (p[1].length < 2 ? '0'+p[1] : p[1]) + '-' + (p[2].length < 2 ? '0'+p[2] : p[2]);
-    }})(dateKey);
     var parts = dateKey.split('-');
     var d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
     var dow = d.getDay(); // 0=日,1=月,...,6=土
-    // 過去日判定
-    var todayMid = new Date(); todayMid.setHours(0,0,0,0);
-    var isPast = d < todayMid;
     var cards = document.querySelectorAll('#tours-grid .tour-card');
     var count = 0;
     cards.forEach(function(card) {{
@@ -1741,7 +1645,7 @@ HTML_TEMPLATE = """\
       var numEl = c.querySelector('.cd-num');
       if (numEl && numEl.textContent == String(parseInt(d)) &&
           (c.classList.contains('has-tour') || c.classList.contains('confirmed') ||
-           c.classList.contains('full') || c.classList.contains('few') || c.classList.contains('has-report'))) {{
+           c.classList.contains('full') || c.classList.contains('few'))) {{
         c.classList.add('selected');
         numEl.style.display = 'none';
         var paw = c.querySelector('.cd-paw');
@@ -1751,19 +1655,7 @@ HTML_TEMPLATE = """\
     var note = document.getElementById('tour-filter-note');
     var mParts = dateKey.split('-');
     var label = mParts.length === 3 ? mParts[1] + '/' + mParts[2] : dateKey;
-    if (note) {{
-      if (isPast && TOUR_REPORTS[normKey]) {{
-        var rptTitle = TOUR_REPORTS[normKey].title || '';
-        note.textContent = label + ' 催行済み ― ' + rptTitle;
-        note.style.background = '#e8f5e8';
-        note.style.color = '#2a5a3a';
-      }} else {{
-        note.textContent = label + ' のツアーを表示中（' + count + '件）';
-        note.style.background = '';
-        note.style.color = '';
-      }}
-      note.classList.add('show');
-    }}
+    if (note) {{ note.textContent = label + ' のツアーを表示中（' + count + '件）'; note.classList.add('show'); }}
     var reset = document.getElementById('tour-reset');
     if (reset) reset.style.display = 'inline';
     var noResult = document.getElementById('tour-no-result');
@@ -1771,28 +1663,12 @@ HTML_TEMPLATE = """\
     var tabNote = document.getElementById('tour-count');
     if (tabNote) tabNote.textContent = count + '件のツアーを表示中';
 
-    // 過去レポート日: 募集中セクションを非表示、過去モードフラグ
-    var _pastHide = isPast && TOUR_REPORTS[normKey];
-    document.querySelectorAll('.filter-tabs').forEach(function(el) {{
-      el.style.display = _pastHide ? 'none' : '';
-    }});
-    var _tgEl = document.getElementById('tours-grid');
-    var _tcEl = document.getElementById('tour-count');
-    if (_tgEl) _tgEl.style.display = _pastHide ? 'none' : '';
-    if (_tcEl) _tcEl.style.display = _pastHide ? 'none' : '';
-    // 募集中のツアー section-header を非表示
-    document.querySelectorAll('.section-header .section-title').forEach(function(t) {{
-      if (t.textContent.indexOf('募集中') !== -1) {{
-        t.closest('.section-header').style.display = _pastHide ? 'none' : '';
-      }}
-    }});
-
     // ツアーレポート表示
     var reportSection = document.getElementById('tour-report-section');
     var reportPhotos  = document.getElementById('tour-report-photos');
     var reportLink    = document.getElementById('tour-report-link');
-    if (reportSection && TOUR_REPORTS[normKey]) {{
-      var report = TOUR_REPORTS[normKey];
+    if (reportSection && TOUR_REPORTS[dateKey]) {{
+      var report = TOUR_REPORTS[dateKey];
       reportSection.style.display = 'block';
       reportLink.href = report.page;
       reportPhotos.innerHTML = '';
@@ -1814,15 +1690,6 @@ HTML_TEMPLATE = """\
 
   function tourReset() {{
     document.querySelectorAll('#tours-grid .tour-card').forEach(function(c) {{ c.classList.remove('hidden'); }});
-    // 過去モードで隠したセクションを元に戻す
-    document.querySelectorAll('.filter-tabs').forEach(function(el) {{ el.style.display = ''; }});
-    var _tgEl = document.getElementById('tours-grid');
-    var _tcEl = document.getElementById('tour-count');
-    if (_tgEl) _tgEl.style.display = '';
-    if (_tcEl) _tcEl.style.display = '';
-    document.querySelectorAll('.section-header .section-title').forEach(function(t) {{
-      if (t.textContent.indexOf('募集中') !== -1) t.closest('.section-header').style.display = '';
-    }});
     document.querySelectorAll('.cd').forEach(function(c) {{
       c.classList.remove('selected');
       var paw = c.querySelector('.cd-paw');
@@ -1874,54 +1741,20 @@ HTML_TEMPLATE = """\
       var c = document.createElement('div');
       var k = y + '-' + m + '-' + d;
       var t = TOUR[k];
-      // 過去日でTOUR_REPORTSにレポートがある日をマーク
-      var rk = y + '-' + String(m).padStart(2,'0') + '-' + String(d).padStart(2,'0');
-      var cellDate = new Date(y, m-1, d);
-      var todayMid2 = new Date(td.getFullYear(), td.getMonth(), td.getDate());
-      // 過去・未来で別判定
-      var isPast = cellDate < todayMid2;
-      // TOUR_REPORTSは過去日のみ参照（未来は催行確定が優先のため不要）
-      var rpt = (isPast && TOUR_REPORTS) ? (TOUR_REPORTS[rk] || null) : null;
-      var hasContent = rpt && ((rpt.photos && rpt.photos.length > 0) || (rpt.page && rpt.page !== ''));
       var isT = (y === td.getFullYear() && m === td.getMonth()+1 && d === td.getDate());
       var cl = 'cd';
-
-      if (isPast) {{
-        // 過去: レポートあり > 催行確定
-        if (hasContent) {{
-          cl += ' has-report';                                          // 緑（最優先）
-        }} else if ((t && t.st === 'confirmed') || (rpt && rpt.st === 'confirmed')) {{
-          cl += ' confirmed';                                           // 茶
-        }} else if (t && t.st === 'full') {{
-          cl += ' full';                                                // 赤
-        }} else if (t || rpt) {{
-          cl += ' has-tour';                                            // ベージュ
-        }}
-      }} else {{
-        // 未来/当日: 催行確定 > レポートあり（TOURデータ優先）
-        if (t) {{ cl += t.st === 'confirmed' ? ' confirmed' : t.st === 'full' ? ' full' : ' has-tour'; }}
-      }}
+      if (t) {{ cl += t.st === 'confirmed' ? ' confirmed' : t.st === 'full' ? ' full' : ' has-tour'; }}
       if (isT) {{ cl += ' today'; }}
       c.className = cl;
-
-      // innerHTML・onclick: 過去でレポートありならレポート優先
-      if (hasContent) {{
-        c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;font-size:18px;">📷</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:1px;padding-right:2px;"></span>';
-        c.title = rpt.title;
-        c.style.cursor = 'pointer';
-        (function(k) {{ c.onclick = function() {{ tourFilterByDate(k); }}; }})(k);
-      }} else if (t) {{
+      if (t) {{
         c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;">🐾</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:1px;padding-right:2px;">' + (t.em || '') + '</span>';
+      }} else {{
+        c.innerHTML = '<span class="cd-num">' + d + '</span><span class="cd-paw">🐾</span>';
+      }}
+      if (t) {{
         c.title = t.nt;
         c.style.cursor = 'pointer';
         (function(k) {{ c.onclick = function() {{ tourFilterByDate(k); }}; }})(k);
-      }} else if (rpt) {{
-        c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;">🐾</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:1px;padding-right:2px;"></span>';
-        c.title = rpt.title;
-        c.style.cursor = 'pointer';
-        (function(k) {{ c.onclick = function() {{ tourFilterByDate(k); }}; }})(k);
-      }} else {{
-        c.innerHTML = '<span class="cd-num">' + d + '</span><span class="cd-paw">🐾</span>';
       }}
       grid.appendChild(c);
     }}
@@ -2075,10 +1908,9 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
         catch_txt = r.get("catch", "")
         shot_date = r.get("shot_date", "")
         rid = report_date.replace("-", "")
-        desc_txt  = r.get("desc", "")
         report_popup_data[rid] = {
             "title": title, "page": page, "photos": photos,
-            "catch": catch_txt, "shot_date": shot_date, "desc": desc_txt,
+            "catch": catch_txt, "shot_date": shot_date,
         }
         # アイコン画像：heroが設定されていればhero優先、なければphotos[0]
         hero_img = r.get("hero", "")
@@ -2090,9 +1922,9 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
             link_attr = f'href="#" onclick="openReportPopup(\'{rid}\',0);return false;"'
         if icon_img:
             card_html = (
-            f'<a {link_attr} class="report-card">'
-            f'<div class="report-card-img"><img src="{icon_img}" alt="{title}"></div>'
-            f'<div class="report-card-title">{title}</div>'
+            f'<a {link_attr} class="pt" style="position:relative;overflow:hidden;background:#1a1a1a;">'
+            f'<img src="{icon_img}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.85;" alt="{title}">'
+            f'<span style="position:absolute;bottom:8px;left:8px;color:#fff;font-size:11px;font-weight:500;text-shadow:0 1px 3px rgba(0,0,0,0.8);">{title}</span>'
             f'</a>'
             )
             photo_grid_items.append(card_html)

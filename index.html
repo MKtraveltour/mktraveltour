@@ -87,7 +87,6 @@
     .cd.has-tour  { background: #f0e8d8; color: #5c4a32; font-weight: 500; }
     .cd.confirmed { background: #8b7355; color: #fff; font-weight: 500; }
     .cd.full      { background: #c0392b; color: #fff; font-weight: 500; }
-    .cd.has-report { background: #e8f0e8; color: #2a5a3a; font-weight: 500; }
     .cd.today     { outline: 3px solid #fff; outline-offset: -3px; box-shadow: 0 0 0 3px #8b7355; }
     .cal-legend { display: flex; gap: 16px; margin-top: 10px; flex-wrap: wrap; }
     .cl-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #888; }
@@ -142,12 +141,7 @@
     .news-dt { font-size: 11px; color: #999; }
     .news-text { font-size: 12px; color: #3c2e1e; line-height: 1.6; }
     .news-tag { color: #8b7355; font-size: 11px; margin-top: 4px; }
-    .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px; }
-    .report-card { display:block;border-radius:8px;overflow:hidden;background:#fff;border:1px solid #e0d8cc;text-decoration:none;transition:box-shadow 0.2s; }
-    .report-card:hover { box-shadow:0 2px 8px rgba(139,115,85,0.15); }
-    .report-card-img { aspect-ratio:4/3;overflow:hidden;background:#1a1a1a; }
-    .report-card-img img { width:100%;height:100%;object-fit:cover;display:block; }
-    .report-card-title { padding:6px 8px;background:#faf8f5;font-size:11px;color:#3c2e1e;font-weight:500;line-height:1.4; }
+    .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-bottom: 20px; }
     .pt { border-radius: 6px; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #fff; font-weight: 500; cursor: pointer; }
     .p1{ background:#6b8e6b; } .p2{ background:#c5a87a; } .p3{ background:#7c9cc5; }
     .p4{ background:#c57a9c; } .p5{ background:#7cc57a; }
@@ -326,7 +320,7 @@
   <a href="https://www.mk-group.co.jp/mktravel/list_008_2024" target="_blank" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">📁 2024年</a>
 </div>
 
-<p class="updated-note">最終更新: 2026年08月06日 09:41</p>
+<p class="updated-note">最終更新: 2026年08月06日 10:59</p>
 
 <div class="page-wrap">
 
@@ -336,32 +330,32 @@
     <div class="bnav-category">
       <div class="bnav-cat-label">造成日記</div>
       <div class="bnav-sub">
-        <div class="bnav-season-label" onclick="openArticleCards('all')" id="all-label">
+        <div class="bnav-season-label" onclick="toggleSeason(this)" id="all-label">
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>すべて</span>
         </div>
         <div class="bnav-season-body" id="all-articles-body">
           <a href="#article-014" style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px 4px 14px;font-size:10px;" onclick="scrollToArticle('014')">とても魅力的な施設でした<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:#e67e22;color:#fff;margin-left:4px;">企画のたまご</span></a><a href="#article-013" style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px 4px 14px;font-size:10px;" onclick="scrollToArticle('013')">時代劇の聖地巡礼！<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:#27ae60;color:#fff;margin-left:4px;">完成！</span></a><a href="#article-011" style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px 4px 14px;font-size:10px;" onclick="scrollToArticle('011')">神秘を肌で感じるパワースポット<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:#2980b9;color:#fff;margin-left:4px;">進捗報告</span></a><a href="#article-012" style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px 4px 14px;font-size:10px;" onclick="scrollToArticle('012')">暑すぎる…<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:#e67e22;color:#fff;margin-left:4px;">企画のたまご</span></a><a href="#article-010" style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px 4px 14px;font-size:10px;" onclick="scrollToArticle('010')">今は昔<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:#e67e22;color:#fff;margin-left:4px;">企画のたまご</span></a><a href="#article-007" style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px 4px 14px;font-size:10px;" onclick="scrollToArticle('007')">紫陽花、良いですよね！<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:#e67e22;color:#fff;margin-left:4px;">企画のたまご</span></a><a href="#article-008" style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px 4px 14px;font-size:10px;" onclick="scrollToArticle('008')">旅とも手帳手引<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:#c0392b;color:#fff;margin-left:4px;">New！</span></a>
         </div>
-        <div class="bnav-season-label" onclick="openArticleCards('New！')" id="new-label">
+        <div class="bnav-season-label" onclick="toggleSeason(this)" id="new-label">
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>New！</span>
 
         </div>
         <div class="bnav-season-body" id="new-articles-body">
           <a href="#article-008" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('008')">旅とも手帳手引</a>
         </div>
-        <div class="bnav-season-label" onclick="openArticleCards('企画のたまご')" id="tamago-label">
+        <div class="bnav-season-label" onclick="toggleSeason(this)" id="tamago-label">
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>企画のたまご</span>
         </div>
         <div class="bnav-season-body" id="tamago-articles-body">
           <a href="#article-014" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('014')">とても魅力的な施設でした</a><a href="#article-012" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('012')">暑すぎる…</a><a href="#article-010" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('010')">今は昔</a><a href="#article-007" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('007')">紫陽花、良いですよね！</a>
         </div>
-        <div class="bnav-season-label" onclick="openArticleCards('進捗報告')" id="report-label">
+        <div class="bnav-season-label" onclick="toggleSeason(this)" id="report-label">
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>進捗報告</span>
         </div>
         <div class="bnav-season-body" id="report-articles-body">
           <a href="#article-011" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('011')">神秘を肌で感じるパワースポット</a>
         </div>
-        <div class="bnav-season-label" onclick="openArticleCards('完成！')" id="done-label">
+        <div class="bnav-season-label" onclick="toggleSeason(this)" id="done-label">
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>完成！</span>
         </div>
         <div class="bnav-season-body" id="done-articles-body">
@@ -377,7 +371,7 @@
 <a href="report_20260120.html" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:8px;text-decoration:none;"><div style="aspect-ratio:1/1;overflow:hidden;border-radius:6px 6px 6px 6px;"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyoruoudan.JPG" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"></div><div style="padding:4px 6px 5px;background:#f5f0ea;border-radius:0 0 6px 6px;"><span style="font-size:10px;color:#3c2e1e;font-weight:500;line-height:1.5;word-break:break-all;">美山かやぶきの里冬灯廊</span></div></a>
 <a href="himatsuri2025.html" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:8px;text-decoration:none;"><div style="aspect-ratio:1/1;overflow:hidden;border-radius:6px 6px 6px 6px;"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"></div><div style="padding:4px 6px 5px;background:#f5f0ea;border-radius:0 0 6px 6px;"><span style="font-size:10px;color:#3c2e1e;font-weight:500;line-height:1.5;word-break:break-all;">鞍馬の火祭×くらま温泉 癒し旅</span></div></a>
         </div>
-        <div class="bnav-season-label" onclick="openArticleCards('backnumber')" id="backnumber-label">
+        <div class="bnav-season-label" onclick="toggleSeason(this)" id="backnumber-label">
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>バックナンバー</span>
         </div>
         <div class="bnav-season-body" id="backnumber-articles-body">
@@ -709,7 +703,6 @@
         <div class="cl-item"><div class="cl-dot" style="background:#f0e8d8;border:1px solid #c5b8a8;"></div>ツアーあり</div>
         <div class="cl-item"><div class="cl-dot" style="background:#8b7355;"></div>催行確定</div>
         <div class="cl-item"><div class="cl-dot" style="background:#c0392b;"></div>満席</div>
-        <div class="cl-item"><div class="cl-dot" style="background:#e8f0e8;border:1px solid #a8c5a8;"></div>📷 催行済レポートあり</div>
         <div class="cl-item"><div class="cl-dot" style="outline:2px solid #8b7355;outline-offset:-1px;"></div>本日</div>
       </div>
       <p style="font-size:11px;color:#999;margin-top:8px;">※色付き日付をクリックするとツアー詳細ページを開きます</p>
@@ -751,7 +744,7 @@
     </div>
     <div class="tour-count" id="tour-count"></div>
     <div class="tours-grid" id="tours-grid">
-      <div class="tour-card" data-tags="event history exp" data-dates="2026-6-1,2026-6-11,2026-6-12,2026-6-13,2026-6-14,2026-6-15,2026-6-18,2026-6-19,2026-6-20,2026-6-21,2026-6-22,2026-6-25,2026-6-26,2026-6-27,2026-6-28,2026-6-29,2026-6-4,2026-6-5,2026-6-6,2026-6-7,2026-6-8,2026-7-10,2026-7-11,2026-7-12,2026-7-13,2026-7-16,2026-7-17,2026-7-18,2026-7-19,2026-7-2,2026-7-20,2026-7-23,2026-7-24,2026-7-25,2026-7-26,2026-7-27,2026-7-3,2026-7-30,2026-7-31,2026-7-4,2026-7-5,2026-7-6,2026-7-9,2026-8-1,2026-8-10,2026-8-13,2026-8-14,2026-8-15,2026-8-16,2026-8-2,2026-8-20,2026-8-21,2026-8-22,2026-8-23,2026-8-24,2026-8-27,2026-8-28,2026-8-29,2026-8-3,2026-8-30,2026-8-31,2026-8-6,2026-8-7,2026-8-8,2026-8-9,2026-9-10,2026-9-11,2026-9-12,2026-9-13,2026-9-14,2026-9-17,2026-9-18,2026-9-19,2026-9-20,2026-9-21,2026-9-24,2026-9-25,2026-9-26,2026-9-27,2026-9-28,2026-9-3,2026-9-4,2026-9-5,2026-9-6,2026-9-7">
+      <div class="tour-card" data-tags="history event exp" data-dates="2026-6-1,2026-6-11,2026-6-12,2026-6-13,2026-6-14,2026-6-15,2026-6-18,2026-6-19,2026-6-20,2026-6-21,2026-6-22,2026-6-25,2026-6-26,2026-6-27,2026-6-28,2026-6-29,2026-6-4,2026-6-5,2026-6-6,2026-6-7,2026-6-8,2026-7-10,2026-7-11,2026-7-12,2026-7-13,2026-7-16,2026-7-17,2026-7-18,2026-7-19,2026-7-2,2026-7-20,2026-7-23,2026-7-24,2026-7-25,2026-7-26,2026-7-27,2026-7-3,2026-7-30,2026-7-31,2026-7-4,2026-7-5,2026-7-6,2026-7-9,2026-8-1,2026-8-10,2026-8-13,2026-8-14,2026-8-15,2026-8-16,2026-8-2,2026-8-20,2026-8-21,2026-8-22,2026-8-23,2026-8-24,2026-8-27,2026-8-28,2026-8-29,2026-8-3,2026-8-30,2026-8-31,2026-8-6,2026-8-7,2026-8-8,2026-8-9,2026-9-10,2026-9-11,2026-9-12,2026-9-13,2026-9-14,2026-9-17,2026-9-18,2026-9-19,2026-9-20,2026-9-21,2026-9-24,2026-9-25,2026-9-26,2026-9-27,2026-9-28,2026-9-3,2026-9-4,2026-9-5,2026-9-6,2026-9-7">
         <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2024/04/2021shojuin_furin_bn.jpg" alt="正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bc" style="z-index:1;">催行確定日あり</div>
@@ -777,7 +770,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/okuribi2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="event history exp summer" data-dates="2026-8-16">
+      <div class="tour-card" data-tags="history event exp summer" data-dates="2026-8-16">
         <div class="tour-img" style="background:#4a7c6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/okuribi2.png" alt="京都の夏を送る夜～御所から望む右大文字と湯葉懐石～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bfull" style="z-index:1;">満席</div>
@@ -816,7 +809,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/miyama-ishida/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="exp" data-dates="2026-7-18,2026-7-25,2026-8-1,2026-8-15,2026-8-22,2026-8-8">
+      <div class="tour-card" data-tags="exp" data-dates="2026-7-18,2026-7-19,2026-7-20,2026-7-21,2026-7-22,2026-7-23,2026-7-24,2026-7-25,2026-7-26,2026-7-27,2026-7-28,2026-7-29,2026-7-30,2026-7-31,2026-8-1,2026-8-10,2026-8-11,2026-8-12,2026-8-13,2026-8-14,2026-8-15,2026-8-16,2026-8-17,2026-8-18,2026-8-19,2026-8-2,2026-8-20,2026-8-21,2026-8-22,2026-8-23,2026-8-3,2026-8-4,2026-8-5,2026-8-6,2026-8-7,2026-8-8,2026-8-9">
         <div class="tour-img" style="background:#4a7c6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/06/top-tango-1.png" alt="夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge br" style="z-index:1;">募集中</div>
@@ -829,7 +822,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/tango-private/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="history exp" data-dates="2026-7-18,2026-7-25,2026-8-1,2026-8-15,2026-8-22,2026-8-29,2026-8-8">
+      <div class="tour-card" data-tags="history exp" data-dates="2026-7-18,2026-7-19,2026-7-20,2026-7-21,2026-7-22,2026-7-23,2026-7-24,2026-7-25,2026-7-26,2026-7-27,2026-7-28,2026-7-29,2026-7-30,2026-7-31,2026-8-1,2026-8-10,2026-8-11,2026-8-12,2026-8-13,2026-8-14,2026-8-15,2026-8-16,2026-8-17,2026-8-18,2026-8-19,2026-8-2,2026-8-20,2026-8-21,2026-8-22,2026-8-23,2026-8-24,2026-8-25,2026-8-26,2026-8-27,2026-8-28,2026-8-29,2026-8-3,2026-8-30,2026-8-31,2026-8-4,2026-8-5,2026-8-6,2026-8-7,2026-8-8,2026-8-9">
         <div class="tour-img" style="background:#4a7c6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/06/shasotop.png" alt="歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge br" style="z-index:1;">募集中</div>
@@ -842,7 +835,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/kyoto-car2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="other" data-dates="2026-8-1,2026-8-15,2026-8-22,2026-8-29,2026-8-8">
+      <div class="tour-card" data-tags="other" data-dates="2026-8-1,2026-8-10,2026-8-11,2026-8-12,2026-8-13,2026-8-14,2026-8-15,2026-8-16,2026-8-17,2026-8-18,2026-8-19,2026-8-2,2026-8-20,2026-8-21,2026-8-22,2026-8-23,2026-8-24,2026-8-25,2026-8-26,2026-8-27,2026-8-28,2026-8-29,2026-8-3,2026-8-30,2026-8-31,2026-8-4,2026-8-5,2026-8-6,2026-8-7,2026-8-8,2026-8-9">
         <div class="tour-img" style="background:#3a2a1a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/07/shasotop-n.png" alt="夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge br" style="z-index:1;">募集中</div>
@@ -855,7 +848,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/window_night/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="event history exp summer" data-dates="2026-9-19">
+      <div class="tour-card" data-tags="history event exp summer" data-dates="2026-9-19">
         <div class="tour-img" style="background:#6b8e6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/06/eigamuramain.png" alt="【24名様限定】往年の時代劇ファンの皆様へ！ 太秦映画村バックヤード見学と名ロケ地巡り" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge br" style="z-index:1;">募集中</div>
@@ -868,7 +861,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/eigamura-jidaigeki/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="event autumn history exp" data-dates="2026-10-22">
+      <div class="tour-card" data-tags="history event exp autumn" data-dates="2026-10-22">
         <div class="tour-img" style="background:#3a2a1a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/宿泊トップ.png" alt="【限定宿泊プラン】 くらま温泉で迎える 鞍馬の火祭 特別な一夜" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge br" style="z-index:1;">募集中</div>
@@ -881,7 +874,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="event autumn history exp" data-dates="2026-10-22">
+      <div class="tour-card" data-tags="history event exp autumn" data-dates="2026-10-22">
         <div class="tour-img" style="background:#6b8e6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/1day.png" alt="昼の鞍馬散策と夜の火祭へ  ～くらま温泉で過ごす特別な一日～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bfull" style="z-index:1;">満席</div>
@@ -894,7 +887,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="event autumn history exp" data-dates="2026-10-22">
+      <div class="tour-card" data-tags="history event exp autumn" data-dates="2026-10-22">
         <div class="tour-img" style="background:#3a2a1a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/夜トップ.png" alt="間近で体感する迫力！くらま温泉×鞍馬の火祭 観覧ツアー ～帰り時間を気にせず楽しむ特別な一夜～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bfull" style="z-index:1;">満席</div>
@@ -1007,11 +1000,11 @@
       <div class="section-title"><i class="ti ti-camera" style="font-size:14px;vertical-align:-2px;margin-right:5px;"></i>当日の様子</div>
     </div>
     <div class="photo-grid">
-      <a href="hu-rinmatsuri2026.html" class="report-card"><div class="report-card-img"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/229586_0.jpg" alt="正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】"></div><div class="report-card-title">正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】</div></a>
-<a href="sumaho_20260620.html" class="report-card"><div class="report-card-img"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_hana.jpeg" alt="初開催！📸✨ SNSで映える！【閉門後貸切】紫陽花の名刹 柳谷観音 楊谷寺スマホ撮影講座ツアー"></div><div class="report-card-title">初開催！📸✨ SNSで映える！【閉門後貸切】紫陽花の名刹 柳谷観音 楊谷寺スマホ撮影講座ツアー</div></a>
-<a href="syakuyaku_20260524.html" class="report-card"><div class="report-card-img"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/benibanasyakuyaku_04.jpg" alt="【2日間限定】幻の花「ベニバナヤマシャクヤク」特別鑑賞と美山かやぶきの里めぐり"></div><div class="report-card-title">【2日間限定】幻の花「ベニバナヤマシャクヤク」特別鑑賞と美山かやぶきの里めぐり</div></a>
-<a href="report_20260120.html" class="report-card"><div class="report-card-img"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyoruoudan.JPG" alt="美山かやぶきの里冬灯廊"></div><div class="report-card-title">美山かやぶきの里冬灯廊</div></a>
-<a href="himatsuri2025.html" class="report-card"><div class="report-card-img"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp" alt="鞍馬の火祭×くらま温泉 癒し旅"></div><div class="report-card-title">鞍馬の火祭×くらま温泉 癒し旅</div></a>
+      <a href="hu-rinmatsuri2026.html" class="pt" style="position:relative;overflow:hidden;background:#1a1a1a;"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/229586_0.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.85;" alt="正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】"><span style="position:absolute;bottom:8px;left:8px;color:#fff;font-size:11px;font-weight:500;text-shadow:0 1px 3px rgba(0,0,0,0.8);">正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】</span></a>
+<a href="sumaho_20260620.html" class="pt" style="position:relative;overflow:hidden;background:#1a1a1a;"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_hana.jpeg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.85;" alt="初開催！📸✨ SNSで映える！【閉門後貸切】紫陽花の名刹 柳谷観音 楊谷寺スマホ撮影講座ツアー"><span style="position:absolute;bottom:8px;left:8px;color:#fff;font-size:11px;font-weight:500;text-shadow:0 1px 3px rgba(0,0,0,0.8);">初開催！📸✨ SNSで映える！【閉門後貸切】紫陽花の名刹 柳谷観音 楊谷寺スマホ撮影講座ツアー</span></a>
+<a href="syakuyaku_20260524.html" class="pt" style="position:relative;overflow:hidden;background:#1a1a1a;"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/benibanasyakuyaku_04.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.85;" alt="【2日間限定】幻の花「ベニバナヤマシャクヤク」特別鑑賞と美山かやぶきの里めぐり"><span style="position:absolute;bottom:8px;left:8px;color:#fff;font-size:11px;font-weight:500;text-shadow:0 1px 3px rgba(0,0,0,0.8);">【2日間限定】幻の花「ベニバナヤマシャクヤク」特別鑑賞と美山かやぶきの里めぐり</span></a>
+<a href="report_20260120.html" class="pt" style="position:relative;overflow:hidden;background:#1a1a1a;"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyoruoudan.JPG" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.85;" alt="美山かやぶきの里冬灯廊"><span style="position:absolute;bottom:8px;left:8px;color:#fff;font-size:11px;font-weight:500;text-shadow:0 1px 3px rgba(0,0,0,0.8);">美山かやぶきの里冬灯廊</span></a>
+<a href="himatsuri2025.html" class="pt" style="position:relative;overflow:hidden;background:#1a1a1a;"><img src="https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.85;" alt="鞍馬の火祭×くらま温泉 癒し旅"><span style="position:absolute;bottom:8px;left:8px;color:#fff;font-size:11px;font-weight:500;text-shadow:0 1px 3px rgba(0,0,0,0.8);">鞍馬の火祭×くらま温泉 癒し旅</span></a>
     </div>
   </main>
 
@@ -1067,7 +1060,6 @@
   <img class="report-viewer-img" id="rv-img" src="" alt="">
   <div class="report-viewer-title" id="rv-title"></div>
   <div class="report-viewer-sub" id="rv-sub"></div>
-  <div id="rv-desc" style="display:none;max-width:90vw;max-height:20vh;overflow-y:auto;margin-top:10px;color:rgba(255,255,255,0.85);font-size:12px;line-height:1.7;text-align:left;white-space:pre-wrap;background:rgba(255,255,255,0.08);border-radius:8px;padding:10px 14px;"></div>
   <div class="report-viewer-nav">
     <button class="rv-btn" id="rv-prev" onclick="reportViewerMove(-1)">&#8249;</button>
     <span class="rv-counter" id="rv-counter"></span>
@@ -1098,9 +1090,9 @@
   </div>
 </div>
 
-<script>
+
   // ===== レポートポップアップデータ =====
-  var REPORT_POPUP = {"20260719": {"title": "正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】", "page": "hu-rinmatsuri2026.html", "photos": ["https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/229580_0.jpg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/229585_0.jpg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/S__43032704_0.jpg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/229582_0.jpg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/229581_0.jpg"], "catch": "風鈴が誘う　音のオアシス", "shot_date": "2026年07月19日", "desc": "夏の厳しい暑さの中でも、風鈴の音色が涼しさを届けてくれます。\n現在販売中の本ツアーに同行したドライバーから現地の写真が届きました。\n期間限定で開催されている正寿院の「風鈴まつり」では、2,000を超す風鈴が境内を埋め尽くす幻想的なひとときをお過ごしいただけます。"}, "20260620": {"title": "初開催！📸✨ SNSで映える！【閉門後貸切】紫陽花の名刹 柳谷観音 楊谷寺スマホ撮影講座ツアー", "page": "sumaho_20260620.html", "photos": ["https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_rain.jpeg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_ishidatami.jpeg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_hana.jpeg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_tesuri.jpeg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_shadow.jpeg"], "catch": "SNSで映える！初めての楊谷寺スマホ撮影講座！", "shot_date": "2026/06/20", "desc": "初開催！📸✨ SNSで映える！【閉門後貸切】紫陽花の名刹 柳谷観音 楊谷寺スマホ撮影講座ツアー\n\n6月20日、記念すべき第1回目となる「SNSで映える！【閉門後貸切】紫陽花の名刹 柳谷観音 楊谷寺スマホ撮影講座ツアー」を開催しました！\n初開催ということもあり、主催側もドキドキ…！\n「楽しんでもらえるかな？」と少し緊張しながら当日を迎えました。\n\n当日はあいにくの雨模様…☔\n……どころか、途中からはバケツをひっくり返したような大雨に！！\n参加者の皆さまもスタッフも、気付けばびしょ濡れになりながらの撮影会となりましたが、それもまた良い思い出になりました✨\n\n雨に濡れた紫陽花や花手水は一段と美しく、幻想的な景色が広がっていました。\n\n今回、撮影を教えてくださったのは、人気インフルエンサーの まっちゃん（@macchan358） さん！\n\nまずはスマホカメラの基本設定からスタート！\nグリッド機能(※)をオンにし、被写体を線の交点に配置する構図や、水平・垂直を意識した撮影方法など、初心者にも分かりやすくレクチャーしていただきました。\n\nさらに、人物を入れた写真の撮り方も実践！\n\nなんと……スタッフの私も急きょモデルデビュー😎✨\n\n参加者の皆さまに撮影していただきながら…\nどんな素敵な写真に仕上がったのか、私も気になるところです…！（笑）\n\n一人ひとりに丁寧にアドバイスをしてくださり、終始和気あいあいとした雰囲気の中、笑顔あふれる撮影会となりました😊\n\n閉門後の静かな境内では、アンブレラスカイ、花手水、紫陽花階段など、人気スポットをゆっくり巡りながら撮影📸\n\nそして夜には、浄土苑のライトアップ✨\n\n昼間とはまったく違う幻想的な世界が広がり、自由撮影の時間には、皆さま思い思いの一枚を撮影されていました。\n\n初開催で不安もありましたが、参加者の皆さまから「楽しかった！」「また参加したい！」という嬉しいお声をいただき、スタッフ一同ほっとひと安心。\n\n雨も、びしょ濡れになったことも、モデルデビューしたことも（笑）、全部ひっくるめて忘れられない素敵な1日になりました☔✨\n\nまた季節を変えて、第2回も開催できればと思っています！\n\n次回はどんな景色に出会えるのか、今から楽しみです📸"}, "20260524": {"title": "【2日間限定】幻の花「ベニバナヤマシャクヤク」特別鑑賞と美山かやぶきの里めぐり", "page": "syakuyaku_20260524.html", "photos": ["https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/benibanasyakuyaku_02.jpg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/benibanasyakuyaku_01.jpg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/benibanasyakuyaku_03.jpg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/benibanasyakuyaku_04.jpg"], "catch": "『珍しい花があるから、見においで。』その一言から始まった旅。", "shot_date": "2026-05-24", "desc": "5月23日・24日の2日間限定で開催した「ベニバナヤマシャクヤク鑑賞ツアー」\nこのツアーは、美山自然文化村 河鹿荘さんから「珍しい花があるから、見においで。」\nと声をかけていただいたことがきっかけで生まれた、MKトラベル初開催のツアーです。\n\n花の命は、わずか3～4日。\nその短い時間だけ咲く、可憐なベニバナヤマシャクヤク。\n「この景色を、たくさんの方に見ていただきたい。」\nそんな想いを込めて企画しました。\n\nツアー終了後にお寄せいただいたアンケートには、\n\n「ベニバナヤマシャクヤクが群生している姿に感動した。」\n「ベニバナシャクヤクが美しく印象深かった」\n「少人数でゆったり過ごせ、すばらいコースだった。」\n「かやぶきの里ののどかな雰囲気に癒された。」\n「運転手さんの語りが良かった。」\n\nなど、温かいお言葉がたくさん。\n\n一つひとつ読ませていただきながら、美山での時間を楽しんでいただけたことが伝わり、\nとても嬉しく、励みになりました。\n\n初めての開催ということもあり、準備を進める中では期待と同じくらい不安もありましたが、\nこのツアーを企画して本当に良かったと感じています。\n\nこれからも、その季節、その土地だからこそ出会える景色や物語をお届けできるようなツアーを企画してまいります。"}, "20260120": {"title": "美山かやぶきの里冬灯廊", "page": "report_20260120.html", "photos": ["https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourou_marupost.JPG", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouzizou.JPG", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouroten.JPG", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutouroukakitoyane.JPG", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyokokara.JPG", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyoruoudan.JPG", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyorurotary.JPG"], "catch": "優しい光に包まれる夜", "shot_date": "2026年1月20日", "desc": "今年はかなりしっかりと積雪量もあり、見ごたえのある雪景色でした。\n夜のとばりと白い雪、ライトアップの温かみのある光が幻想的な雰囲気を醸しています。\n自然のことなので贅沢は言えませんが、毎年これくらい雪が降ればいいのに…！"}, "20251022": {"title": "鞍馬の火祭×くらま温泉 癒し旅", "page": "himatsuri2025.html", "photos": ["https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/f9b7e4277e1c0a018981566ed4e8087e-600x400.webp", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/4a3e24e959e0275abd2df3e85320065c-600x400.webp", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/4d99df6c49c6485621615b4c7b01ddf7-600x338.webp", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/55db487c9429c9d6142cf29b38f8f5c5-400x600.webp", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/d8d8f63edff06d13bf1be10754efb202-600x400.webp", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/e156bbf5bd914bfc6a44d0071a95809f-600x400.webp"], "catch": "はじめてだからこそ、特別に。", "shot_date": "2025年10月22日　　MKスタッフ撮影", "desc": "迫力満点の火祭とくらま温泉での夕食・温泉入浴付きのツアー。\n鞍馬の火祭と言えば交通の便が極めて悪い上に交通規制も厳しく、\n初心者が楽しむには難易度が高い祭りとして有名ですが\nタクシーでの移動なので帰りの時間を心配皆さま思い思いに、鞍馬の特別な夜を過ごしていただきました。"}};
+  var REPORT_POPUP = {"20260719": {"title": "正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】", "page": "hu-rinmatsuri2026.html", "photos": ["https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/229580_0.jpg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/229585_0.jpg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/S__43032704_0.jpg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/229582_0.jpg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/229581_0.jpg"], "catch": "風鈴が誘う　音のオアシス", "shot_date": "2026年07月19日"}, "20260620": {"title": "初開催！📸✨ SNSで映える！【閉門後貸切】紫陽花の名刹 柳谷観音 楊谷寺スマホ撮影講座ツアー", "page": "sumaho_20260620.html", "photos": ["https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_rain.jpeg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_ishidatami.jpeg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_hana.jpeg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_tesuri.jpeg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/20260620_youkokuji_shadow.jpeg"], "catch": "SNSで映える！初めての楊谷寺スマホ撮影講座！", "shot_date": "2026/06/20"}, "20260524": {"title": "【2日間限定】幻の花「ベニバナヤマシャクヤク」特別鑑賞と美山かやぶきの里めぐり", "page": "syakuyaku_20260524.html", "photos": ["https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/benibanasyakuyaku_02.jpg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/benibanasyakuyaku_01.jpg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/benibanasyakuyaku_03.jpg", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/benibanasyakuyaku_04.jpg"], "catch": "『珍しい花があるから、見においで。』その一言から始まった旅。", "shot_date": "2026-05-24"}, "20260120": {"title": "美山かやぶきの里冬灯廊", "page": "report_20260120.html", "photos": ["https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourou_marupost.JPG", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouzizou.JPG", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouroten.JPG", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutouroukakitoyane.JPG", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyokokara.JPG", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyoruoudan.JPG", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/260120_fuyutourouyorurotary.JPG"], "catch": "優しい光に包まれる夜", "shot_date": "2026年1月20日"}, "20251022": {"title": "鞍馬の火祭×くらま温泉 癒し旅", "page": "himatsuri2025.html", "photos": ["https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/21f355c5596cd370e7f58f9c99c3b246-600x400.webp", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/f9b7e4277e1c0a018981566ed4e8087e-600x400.webp", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/4a3e24e959e0275abd2df3e85320065c-600x400.webp", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/4d99df6c49c6485621615b4c7b01ddf7-600x338.webp", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/55db487c9429c9d6142cf29b38f8f5c5-400x600.webp", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/d8d8f63edff06d13bf1be10754efb202-600x400.webp", "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/e156bbf5bd914bfc6a44d0071a95809f-600x400.webp"], "catch": "はじめてだからこそ、特別に。", "shot_date": "2025年10月22日　　MKスタッフ撮影"}};
   var _rvKey = null, _rvIdx = 0;
 
   function openReportPopup(rid, idx) {
@@ -1110,7 +1102,7 @@
       if (d && d.page && d.page !== '#') window.location.href = d.page;
       return;
     }
-    _rvKey = rid;
+    _rvKey = rid;<script>
     _rvIdx = idx || 0;
     _updateReportViewer();
     document.getElementById('report-viewer-overlay').classList.add('show');
@@ -1135,15 +1127,6 @@
       pageBtn.style.display = 'inline-block';
     } else {
       pageBtn.style.display = 'none';
-    }
-    var descEl = document.getElementById('rv-desc');
-    if (descEl) {
-      if (d.desc && !d.page) {
-        descEl.textContent = d.desc;
-        descEl.style.display = 'block';
-      } else {
-        descEl.style.display = 'none';
-      }
     }
   }
 
@@ -1316,8 +1299,8 @@
     if (!wrap) wrap = document.getElementById('ss-wrap-' + aid);
     var ssHtml = '<div style="border-radius:10px;overflow:hidden;position:relative;background:#111;height:280px;margin-bottom:12px;" id="ss-modal-inner">';
     photos.forEach(function(p, i) {
-      ssHtml += '<div class="ss-slide' + (i===0?' active':'') + '" style="position:absolute;inset:0;opacity:'+(i===0?'1':'0')+';transition:opacity 2s ease;background-size:cover;background-position:center;background-image:url(' + p + ');"></div>';
-    }); // ← ここに }); を追加しました
+      ssHtml += '<div class="ss-slide' + (i===0?' active':'') + '" style="position:absolute;inset:0;opacity:'+(i===0?'1':'0')+';transition:opacity 2s ease;background-size:cover;background-position:center;background-image:url('' + p + '');"></div>';
+    }); // ← ここに });
     ssHtml += '<div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.05),rgba(0,0,0,0.4));"></div>';
     ssHtml += '<div style="position:absolute;top:10px;right:10px;display:flex;align-items:center;gap:6px;">';
     ssHtml += '<span style="font-size:11px;color:rgba(255,255,255,0.9);background:rgba(0,0,0,0.35);padding:3px 9px;border-radius:20px;" id="ss-modal-label">🎵 ' + audioLabel + '</span>';
@@ -1364,10 +1347,6 @@
   }
 
   function filterArticles(cat, el) {
-    openArticleCards(cat);
-  }
-
-  function openArticleCards(cat) {
     var posts = document.querySelectorAll('.news-post');
     var visible = [];
     posts.forEach(function(p) {
@@ -1380,47 +1359,10 @@
         if (!isBn && p.getAttribute('data-category') === cat) visible.push(p);
       }
     });
-    var catNames = {'all':'造成日記 すべて','backnumber':'バックナンバー','New！':'New！','企画のたまご':'企画のたまご','進捗報告':'進捗報告','完成！':'完成！'};
-    var modal = document.getElementById('article-modal-content');
-    modal.innerHTML = '<div style="font-size:14px;font-weight:500;color:#5c4a32;border-left:4px solid #8b7355;padding-left:10px;margin-bottom:16px;">' + (catNames[cat] || cat) + '</div>';
-    if (visible.length === 0) {
-      modal.innerHTML += '<div style="color:#999;font-size:13px;text-align:center;padding:20px;">記事がありません</div>';
+    if (cat !== 'all' && visible.length > 0) {
+      var aid = visible[0].id ? visible[0].id.replace('article-', '') : null;
+      if (aid) scrollToArticle(aid);
     }
-    visible.forEach(function(p) {
-      var titleEl = p.querySelector('[style*="font-weight:500"]');
-      var meta    = p.querySelector('.news-dt');
-      var textEl  = p.querySelector('.news-text');
-      var imgEl   = p.querySelector('.news-photo img, .news-photos img');
-      var cat2    = p.getAttribute('data-category') || '';
-      var aid     = p.id ? p.id.replace('article-', '') : null;
-      var catColors = {'New！':'#c0392b','企画のたまご':'#e67e22','進捗報告':'#2980b9','完成！':'#27ae60'};
-      var catColor = catColors[cat2] || '#8b7355';
-      var titleText = titleEl ? titleEl.textContent.replace('📄','').trim() : '';
-      var preview   = textEl ? textEl.textContent.trim().replace(/\s+/g,' ').substring(0,70) + '…' : '';
-      var card = document.createElement('div');
-      card.style.cssText = 'display:flex;gap:12px;align-items:flex-start;padding:12px;border:1px solid #e0d8cc;border-radius:10px;margin-bottom:10px;cursor:pointer;background:#fff;transition:box-shadow 0.2s;';
-      card.onmouseover = function(){this.style.boxShadow='0 2px 8px rgba(139,115,85,0.15)';};
-      card.onmouseout  = function(){this.style.boxShadow='';};
-      var imgHtml = imgEl
-        ? '<img src="' + imgEl.src + '" style="width:72px;height:72px;object-fit:cover;border-radius:6px;flex-shrink:0;">'
-        : '<div style="width:72px;height:72px;border-radius:6px;background:#f0ebe2;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:24px;">📔</div>';
-      card.innerHTML = imgHtml
-        + '<div style="flex:1;min-width:0;">'
-        + '<span style="font-size:10px;padding:1px 7px;border-radius:8px;background:' + catColor + ';color:#fff;display:inline-block;margin-bottom:5px;">' + cat2 + '</span>'
-        + '<div style="font-size:13px;font-weight:500;color:#3c2e1e;line-height:1.4;margin-bottom:4px;">' + titleText + '</div>'
-        + '<div style="font-size:11px;color:#aaa;margin-bottom:5px;">' + (meta ? meta.textContent : '') + '</div>'
-        + '<div style="font-size:11px;color:#7c6040;line-height:1.6;">' + preview + '</div>'
-        + '</div>'
-        + '<div style="font-size:11px;color:#8b7355;white-space:nowrap;align-self:center;">読む&nbsp;→</div>';
-      if (aid) {
-        (function(id) {
-          card.onclick = function() { closeArticleModal(); setTimeout(function(){scrollToArticle(id);},100); };
-        })(aid);
-      }
-      modal.appendChild(card);
-    });
-    document.getElementById('article-modal-overlay').classList.add('show');
-    document.body.style.overflow = 'hidden';
   }
 
   function openArticleList(posts) {
@@ -1478,68 +1420,19 @@
     if (note) note.textContent = count + '件のツアーを表示中';
   }
 
-  // 初期カウント表示 + レポートありツアーに📷バッジを追加
+  // 初期カウント表示
   window.addEventListener('load', function() {
     var cards = document.querySelectorAll('.tour-card');
     var note  = document.getElementById('tour-count');
     if (note) note.textContent = cards.length + '件のツアーを表示中';
-
-    // TOUR_REPORTSの日付をSet化（正規化済み）
-    var reportDates = {};
-    Object.keys(TOUR_REPORTS).forEach(function(k) {
-      // ridをオブジェクトに埋め込む（例: "2026-07-19" → rid="20260719"）
-      var entry = Object.assign({}, TOUR_REPORTS[k]);
-      entry._rid = k.replace(/-/g, '');
-      reportDates[k] = entry;
-    });
-    function normD(k) {
-      var p = k.split('-');
-      if (p.length !== 3) return k;
-      return p[0] + '-' + (p[1].length<2?'0'+p[1]:p[1]) + '-' + (p[2].length<2?'0'+p[2]:p[2]);
-    }
-
-    cards.forEach(function(card) {
-      var datesAttr = card.getAttribute('data-dates') || '';
-      var dates = datesAttr.split(',').filter(Boolean);
-      var matched = null;
-      for (var i = 0; i < dates.length; i++) {
-        var nk = normD(dates[i].trim());
-        if (reportDates[nk]) { matched = reportDates[nk]; break; }
-      }
-      if (matched) {
-        var tagsEl = card.querySelector('.tour-tags');
-        if (tagsEl) {
-          var badge = document.createElement('a');
-          badge.href = matched.page || '#';
-          badge.title = '📷 レポートあり：' + matched.title;
-          badge.style.cssText = 'font-size:10px;padding:2px 7px;border-radius:3px;border:1px solid #5a8a5a;background:#e8f0e8;color:#2a5a3a;text-decoration:none;display:inline-flex;align-items:center;gap:3px;';
-          badge.innerHTML = '<i class="ti ti-camera" style="font-size:11px;"></i> レポートあり';
-          if (!matched.page) {
-            (function(rid) {
-              badge.onclick = function(e) { e.preventDefault(); openReportPopup(rid, 0); };
-            })(matched._rid);
-          }
-          tagsEl.appendChild(badge);
-        }
-      }
-    });
   });
 
   // 正寿院（宇治田原）は木(3)金(4)土(5)日(0)のみ表示
   var SHOJUIN_WEEKDAYS = [0, 4, 5, 6]; // JS: 日=0,月=1,火=2,水=3,木=4,金=5,土=6
   function tourFilterByDate(dateKey) {
-    // 日付キーを正規化（"2026-7-19" → "2026-07-19"）TOUR_REPORTS検索用
-    var normKey = (function(k) {
-      var p = k.split('-');
-      if (p.length !== 3) return k;
-      return p[0] + '-' + (p[1].length < 2 ? '0'+p[1] : p[1]) + '-' + (p[2].length < 2 ? '0'+p[2] : p[2]);
-    })(dateKey);
     var parts = dateKey.split('-');
     var d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
     var dow = d.getDay(); // 0=日,1=月,...,6=土
-    // 過去日判定
-    var todayMid = new Date(); todayMid.setHours(0,0,0,0);
-    var isPast = d < todayMid;
     var cards = document.querySelectorAll('#tours-grid .tour-card');
     var count = 0;
     cards.forEach(function(card) {
@@ -1574,7 +1467,7 @@
       var numEl = c.querySelector('.cd-num');
       if (numEl && numEl.textContent == String(parseInt(d)) &&
           (c.classList.contains('has-tour') || c.classList.contains('confirmed') ||
-           c.classList.contains('full') || c.classList.contains('few') || c.classList.contains('has-report'))) {
+           c.classList.contains('full') || c.classList.contains('few'))) {
         c.classList.add('selected');
         numEl.style.display = 'none';
         var paw = c.querySelector('.cd-paw');
@@ -1584,19 +1477,7 @@
     var note = document.getElementById('tour-filter-note');
     var mParts = dateKey.split('-');
     var label = mParts.length === 3 ? mParts[1] + '/' + mParts[2] : dateKey;
-    if (note) {
-      if (isPast && TOUR_REPORTS[normKey]) {
-        var rptTitle = TOUR_REPORTS[normKey].title || '';
-        note.textContent = label + ' 催行済み ― ' + rptTitle;
-        note.style.background = '#e8f5e8';
-        note.style.color = '#2a5a3a';
-      } else {
-        note.textContent = label + ' のツアーを表示中（' + count + '件）';
-        note.style.background = '';
-        note.style.color = '';
-      }
-      note.classList.add('show');
-    }
+    if (note) { note.textContent = label + ' のツアーを表示中（' + count + '件）'; note.classList.add('show'); }
     var reset = document.getElementById('tour-reset');
     if (reset) reset.style.display = 'inline';
     var noResult = document.getElementById('tour-no-result');
@@ -1604,28 +1485,12 @@
     var tabNote = document.getElementById('tour-count');
     if (tabNote) tabNote.textContent = count + '件のツアーを表示中';
 
-    // 過去レポート日: 募集中セクションを非表示、過去モードフラグ
-    var _pastHide = isPast && TOUR_REPORTS[normKey];
-    document.querySelectorAll('.filter-tabs').forEach(function(el) {
-      el.style.display = _pastHide ? 'none' : '';
-    });
-    var _tgEl = document.getElementById('tours-grid');
-    var _tcEl = document.getElementById('tour-count');
-    if (_tgEl) _tgEl.style.display = _pastHide ? 'none' : '';
-    if (_tcEl) _tcEl.style.display = _pastHide ? 'none' : '';
-    // 募集中のツアー section-header を非表示
-    document.querySelectorAll('.section-header .section-title').forEach(function(t) {
-      if (t.textContent.indexOf('募集中') !== -1) {
-        t.closest('.section-header').style.display = _pastHide ? 'none' : '';
-      }
-    });
-
     // ツアーレポート表示
     var reportSection = document.getElementById('tour-report-section');
     var reportPhotos  = document.getElementById('tour-report-photos');
     var reportLink    = document.getElementById('tour-report-link');
-    if (reportSection && TOUR_REPORTS[normKey]) {
-      var report = TOUR_REPORTS[normKey];
+    if (reportSection && TOUR_REPORTS[dateKey]) {
+      var report = TOUR_REPORTS[dateKey];
       reportSection.style.display = 'block';
       reportLink.href = report.page;
       reportPhotos.innerHTML = '';
@@ -1647,15 +1512,6 @@
 
   function tourReset() {
     document.querySelectorAll('#tours-grid .tour-card').forEach(function(c) { c.classList.remove('hidden'); });
-    // 過去モードで隠したセクションを元に戻す
-    document.querySelectorAll('.filter-tabs').forEach(function(el) { el.style.display = ''; });
-    var _tgEl = document.getElementById('tours-grid');
-    var _tcEl = document.getElementById('tour-count');
-    if (_tgEl) _tgEl.style.display = '';
-    if (_tcEl) _tcEl.style.display = '';
-    document.querySelectorAll('.section-header .section-title').forEach(function(t) {
-      if (t.textContent.indexOf('募集中') !== -1) t.closest('.section-header').style.display = '';
-    });
     document.querySelectorAll('.cd').forEach(function(c) {
       c.classList.remove('selected');
       var paw = c.querySelector('.cd-paw');
@@ -1824,108 +1680,6 @@
       TOUR['2026-5-23'] = {st:'tour', ti:'【募集終了】【2日間限定】幻の花「ベニバナヤマシャクヤク」特別鑑賞と美山かやぶきの里めぐり', ur:_u_benibanashakuyaku, nt:'【募集終了】【2日間限定】幻の花「ベニバナヤマシャクヤク」特別鑑賞と美山かやぶきの里めぐり', em:'💜🏯'};
       TOUR['2026-5-24'] = {st:'tour', ti:'【募集終了】【2日間限定】幻の花「ベニバナヤマシャクヤク」特別鑑賞と美山かやぶきの里めぐり', ur:_u_benibanashakuyaku, nt:'【募集終了】【2日間限定】幻の花「ベニバナヤマシャクヤク」特別鑑賞と美山かやぶきの里めぐり', em:'💜🏯'};
       var _u_window_night = 'https://travel.mk-group.co.jp/tourkyoto/window_night/';
-      TOUR['2026-6-12'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇'};
-      TOUR['2026-6-13'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇'};
-      TOUR['2026-6-14'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇'};
-      TOUR['2026-6-15'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇'};
-      TOUR['2026-6-16'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇'};
-      TOUR['2026-6-17'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇'};
-      TOUR['2026-6-18'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇'};
-      TOUR['2026-6-19'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇'};
-      TOUR['2026-6-21'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇'};
-      TOUR['2026-6-22'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇'};
-      TOUR['2026-6-23'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇'};
-      TOUR['2026-6-24'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇'};
-      TOUR['2026-6-25'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇'};
-      TOUR['2026-6-26'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇'};
-      TOUR['2026-6-27'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇'};
-      TOUR['2026-6-28'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇'};
-      TOUR['2026-6-29'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇'};
-      TOUR['2026-6-30'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇'};
-      TOUR['2026-7-18'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-7-20'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-7-21'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-7-22'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-7-23'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-7-24'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-7-25'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-7-26'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-7-27'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-7-28'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-7-29'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-7-30'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-7-31'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-8-1'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-8-10'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-8-11'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-8-12'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-8-15'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-8-18'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-8-19'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-8-2'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-8-20'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-8-21'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-8-3'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-8-4'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-8-5'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-8-6'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-8-8'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-8-9'] = {st:'tour', ti:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', ur:_u_tango, nt:'夏休みは家族で丹後へ！夏の丹後満喫プライベートツアー', em:'💜'};
-      TOUR['2026-7-18'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-7-20'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-7-21'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-7-22'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-7-23'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-7-24'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-7-25'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-7-26'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-7-27'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-7-28'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-7-29'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-7-30'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-7-31'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-8-1'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-8-10'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-8-11'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-8-12'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-8-15'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-8-17'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-8-18'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-8-19'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-8-2'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-8-20'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-8-21'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-8-25'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-8-26'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-8-3'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-8-30'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-8-31'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-8-4'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-8-5'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-8-6'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-8-8'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-8-9'] = {st:'tour', ti:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', ur:_u_shasou, nt:'歩かなくても京都は楽しい。ベテランドライバーと巡る 京都車窓観光', em:'🏯'};
-      TOUR['2026-8-1'] = {st:'tour', ti:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', ur:_u_window_night, nt:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', em:'💜'};
-      TOUR['2026-8-10'] = {st:'tour', ti:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', ur:_u_window_night, nt:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', em:'💜'};
-      TOUR['2026-8-11'] = {st:'tour', ti:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', ur:_u_window_night, nt:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', em:'💜'};
-      TOUR['2026-8-12'] = {st:'tour', ti:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', ur:_u_window_night, nt:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', em:'💜'};
-      TOUR['2026-8-15'] = {st:'tour', ti:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', ur:_u_window_night, nt:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', em:'💜'};
-      TOUR['2026-8-17'] = {st:'tour', ti:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', ur:_u_window_night, nt:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', em:'💜'};
-      TOUR['2026-8-18'] = {st:'tour', ti:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', ur:_u_window_night, nt:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', em:'💜'};
-      TOUR['2026-8-19'] = {st:'tour', ti:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', ur:_u_window_night, nt:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', em:'💜'};
-      TOUR['2026-8-2'] = {st:'tour', ti:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', ur:_u_window_night, nt:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', em:'💜'};
-      TOUR['2026-8-20'] = {st:'tour', ti:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', ur:_u_window_night, nt:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', em:'💜'};
-      TOUR['2026-8-21'] = {st:'tour', ti:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', ur:_u_window_night, nt:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', em:'💜'};
-      TOUR['2026-8-25'] = {st:'tour', ti:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', ur:_u_window_night, nt:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', em:'💜'};
-      TOUR['2026-8-26'] = {st:'tour', ti:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', ur:_u_window_night, nt:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', em:'💜'};
-      TOUR['2026-8-3'] = {st:'tour', ti:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', ur:_u_window_night, nt:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', em:'💜'};
-      TOUR['2026-8-30'] = {st:'tour', ti:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', ur:_u_window_night, nt:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', em:'💜'};
-      TOUR['2026-8-31'] = {st:'tour', ti:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', ur:_u_window_night, nt:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', em:'💜'};
-      TOUR['2026-8-4'] = {st:'tour', ti:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', ur:_u_window_night, nt:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', em:'💜'};
-      TOUR['2026-8-5'] = {st:'tour', ti:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', ur:_u_window_night, nt:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', em:'💜'};
-      TOUR['2026-8-6'] = {st:'tour', ti:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', ur:_u_window_night, nt:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', em:'💜'};
-      TOUR['2026-8-8'] = {st:'tour', ti:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', ur:_u_window_night, nt:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', em:'💜'};
-      TOUR['2026-8-9'] = {st:'tour', ti:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', ur:_u_window_night, nt:'夜の京都さんぽ ～車窓から楽しむ古都の街並みと絶景夜景～', em:'💜'};
       var _u_uma = 'https://travel.mk-group.co.jp/tourkyoto/eto-uma/';
       TOUR['2026-1-1'] = {st:'tour', ti:'物事が“うまく”進む一年に　馬ゆかりの社めぐり日帰りツアー', ur:_u_uma, nt:'物事が“うまく”進む一年に　馬ゆかりの社めぐり日帰りツアー', em:'🏯'};
       TOUR['2026-1-2'] = {st:'tour', ti:'物事が“うまく”進む一年に　馬ゆかりの社めぐり日帰りツアー', ur:_u_uma, nt:'物事が“うまく”進む一年に　馬ゆかりの社めぐり日帰りツアー', em:'🏯'};
@@ -2200,54 +1954,20 @@
       var c = document.createElement('div');
       var k = y + '-' + m + '-' + d;
       var t = TOUR[k];
-      // 過去日でTOUR_REPORTSにレポートがある日をマーク
-      var rk = y + '-' + String(m).padStart(2,'0') + '-' + String(d).padStart(2,'0');
-      var cellDate = new Date(y, m-1, d);
-      var todayMid2 = new Date(td.getFullYear(), td.getMonth(), td.getDate());
-      // 過去・未来で別判定
-      var isPast = cellDate < todayMid2;
-      // TOUR_REPORTSは過去日のみ参照（未来は催行確定が優先のため不要）
-      var rpt = (isPast && TOUR_REPORTS) ? (TOUR_REPORTS[rk] || null) : null;
-      var hasContent = rpt && ((rpt.photos && rpt.photos.length > 0) || (rpt.page && rpt.page !== ''));
       var isT = (y === td.getFullYear() && m === td.getMonth()+1 && d === td.getDate());
       var cl = 'cd';
-
-      if (isPast) {
-        // 過去: レポートあり > 催行確定
-        if (hasContent) {
-          cl += ' has-report';                                          // 緑（最優先）
-        } else if ((t && t.st === 'confirmed') || (rpt && rpt.st === 'confirmed')) {
-          cl += ' confirmed';                                           // 茶
-        } else if (t && t.st === 'full') {
-          cl += ' full';                                                // 赤
-        } else if (t || rpt) {
-          cl += ' has-tour';                                            // ベージュ
-        }
-      } else {
-        // 未来/当日: 催行確定 > レポートあり（TOURデータ優先）
-        if (t) { cl += t.st === 'confirmed' ? ' confirmed' : t.st === 'full' ? ' full' : ' has-tour'; }
-      }
+      if (t) { cl += t.st === 'confirmed' ? ' confirmed' : t.st === 'full' ? ' full' : ' has-tour'; }
       if (isT) { cl += ' today'; }
       c.className = cl;
-
-      // innerHTML・onclick: 過去でレポートありならレポート優先
-      if (hasContent) {
-        c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;font-size:18px;">📷</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:1px;padding-right:2px;"></span>';
-        c.title = rpt.title;
-        c.style.cursor = 'pointer';
-        (function(k) { c.onclick = function() { tourFilterByDate(k); }; })(k);
-      } else if (t) {
+      if (t) {
         c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;">🐾</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:1px;padding-right:2px;">' + (t.em || '') + '</span>';
+      } else {
+        c.innerHTML = '<span class="cd-num">' + d + '</span><span class="cd-paw">🐾</span>';
+      }
+      if (t) {
         c.title = t.nt;
         c.style.cursor = 'pointer';
         (function(k) { c.onclick = function() { tourFilterByDate(k); }; })(k);
-      } else if (rpt) {
-        c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;">🐾</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:1px;padding-right:2px;"></span>';
-        c.title = rpt.title;
-        c.style.cursor = 'pointer';
-        (function(k) { c.onclick = function() { tourFilterByDate(k); }; })(k);
-      } else {
-        c.innerHTML = '<span class="cd-num">' + d + '</span><span class="cd-paw">🐾</span>';
       }
       grid.appendChild(c);
     }
