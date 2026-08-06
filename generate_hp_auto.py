@@ -1268,7 +1268,7 @@ HTML_TEMPLATE = """\
   </div>
 </div>
 
-
+<script>
   // ===== レポートポップアップデータ =====
   var REPORT_POPUP = {report_popup_js};
   var _rvKey = null, _rvIdx = 0;
@@ -1280,7 +1280,7 @@ HTML_TEMPLATE = """\
       if (d && d.page && d.page !== '#') window.location.href = d.page;
       return;
     }}
-    _rvKey = rid;<script>
+    _rvKey = rid;
     _rvIdx = idx || 0;
     _updateReportViewer();
     document.getElementById('report-viewer-overlay').classList.add('show');
@@ -1477,7 +1477,7 @@ HTML_TEMPLATE = """\
     if (!wrap) wrap = document.getElementById('ss-wrap-' + aid);
     var ssHtml = '<div style="border-radius:10px;overflow:hidden;position:relative;background:#111;height:280px;margin-bottom:12px;" id="ss-modal-inner">';
     photos.forEach(function(p, i) {{
-      ssHtml += '<div class="ss-slide' + (i===0?' active':'') + '" style="position:absolute;inset:0;opacity:'+(i===0?'1':'0')+';transition:opacity 2s ease;background-size:cover;background-position:center;background-image:url(\'' + p + '\');"></div>';
+      ssHtml += '<div class="ss-slide' + (i===0?' active':'') + '" style="position:absolute;inset:0;opacity:'+(i===0?'1':'0')+';transition:opacity 2s ease;background-size:cover;background-position:center;background-image:url(' + p + ');"></div>';
     }}); // ← ここに }});
     ssHtml += '<div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.05),rgba(0,0,0,0.4));"></div>';
     ssHtml += '<div style="position:absolute;top:10px;right:10px;display:flex;align-items:center;gap:6px;">';
