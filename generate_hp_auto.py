@@ -1123,6 +1123,7 @@ HTML_TEMPLATE = """\
         <div class="cl-item"><div class="cl-dot" style="background:#f0e8d8;border:1px solid #c5b8a8;"></div>ツアーあり</div>
         <div class="cl-item"><div class="cl-dot" style="background:#8b7355;"></div>催行確定</div>
         <div class="cl-item"><div class="cl-dot" style="background:#c0392b;"></div>満席</div>
+        <div class="cl-item"><div class="cl-dot" style="background:#e8f0e8;border:1px solid #a8c5a8;"></div>📷 催行済レポートあり</div>
         <div class="cl-item"><div class="cl-dot" style="outline:2px solid #8b7355;outline-offset:-1px;"></div>本日</div>
       </div>
       <p style="font-size:11px;color:#999;margin-top:8px;">※色付き日付をクリックするとツアー詳細ページを開きます</p>
