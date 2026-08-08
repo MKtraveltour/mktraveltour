@@ -844,6 +844,7 @@ HTML_TEMPLATE = """\
     .cd.has-tour  {{ background: #f0e8d8; color: #5c4a32; font-weight: 500; }}
     .cd.confirmed {{ background: #8b7355; color: #fff; font-weight: 500; }}
     .cd.full      {{ background: #c0392b; color: #fff; font-weight: 500; }}
+    .cd.has-report {{ background: #e8f0e8; color: #2a5a3a; font-weight: 500; }}
     .cd.today     {{ outline: 3px solid #fff; outline-offset: -3px; box-shadow: 0 0 0 3px #8b7355; }}
     .cal-legend {{ display: flex; gap: 16px; margin-top: 10px; flex-wrap: wrap; }}
     .cl-item {{ display: flex; align-items: center; gap: 5px; font-size: 12px; color: #888; }}
@@ -1741,20 +1742,59 @@ HTML_TEMPLATE = """\
       var c = document.createElement('div');
       var k = y + '-' + m + '-' + d;
       var t = TOUR[k];
+      // 過去日でTOUR_REPORTSにレポートがある日をマーク
+      var rk = y + '-' + String(m).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+      var cellDate = new Date(y, m-1, d);
+      var todayMid2 = new Date(td.getFullYear(), td.getMonth(), td.getDate());
+      // 過去・未来で別判定
+      var isPast = cellDate < todayMid2;
+      // TOUR_REPORTSは過去日のみ参照（未来は催行確定が優先のため不要）
+      var rpt = (isPast && TOUR_REPORTS) ? (TOUR_REPORTS[rk] || null) : null;
+      // refフィールドがあれば参照先のデータを使う
+      var rptResolved = rpt;
+      if (rpt && rpt.ref && TOUR_REPORTS[rpt.ref]) {{
+        rptResolved = Object.assign({{}}, TOUR_REPORTS[rpt.ref], {{title: rpt.title || TOUR_REPORTS[rpt.ref].title}});
+      }}
+      var hasContent = rptResolved && ((rptResolved.photos && rptResolved.photos.length > 0) || (rptResolved.page && rptResolved.page !== ''));
       var isT = (y === td.getFullYear() && m === td.getMonth()+1 && d === td.getDate());
       var cl = 'cd';
-      if (t) {{ cl += t.st === 'confirmed' ? ' confirmed' : t.st === 'full' ? ' full' : ' has-tour'; }}
+
+      if (isPast) {{
+        // 過去: レポートあり（写真orページ）> 催行確定
+        if (hasContent) {{
+          cl += ' has-report';
+        }} else if ((t && t.st === 'confirmed') || (rpt && rpt.st === 'confirmed')) {{
+          cl += ' confirmed';
+        }} else if (t && t.st === 'full') {{
+          cl += ' full';
+        }} else if (t || rpt) {{
+          cl += ' has-tour';
+        }}
+      }} else {{
+        // 未来/当日: 催行確定 > レポートあり（TOURデータ優先）
+        if (t) {{ cl += t.st === 'confirmed' ? ' confirmed' : t.st === 'full' ? ' full' : ' has-tour'; }}
+      }}
       if (isT) {{ cl += ' today'; }}
       c.className = cl;
-      if (t) {{
+
+      // innerHTML・onclick: 過去でレポートありならレポート優先
+      if (hasContent) {{
+        c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;font-size:18px;">📷</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:1px;padding-right:2px;"></span>';
+        c.title = rptResolved.title || rpt.title;
+        c.style.cursor = 'pointer';
+        (function(k) {{ c.onclick = function() {{ tourFilterByDate(k); }}; }})(k);
+      }} else if (t) {{
         c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;">🐾</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:1px;padding-right:2px;">' + (t.em || '') + '</span>';
-      }} else {{
-        c.innerHTML = '<span class="cd-num">' + d + '</span><span class="cd-paw">🐾</span>';
-      }}
-      if (t) {{
         c.title = t.nt;
         c.style.cursor = 'pointer';
         (function(k) {{ c.onclick = function() {{ tourFilterByDate(k); }}; }})(k);
+      }} else if (rpt) {{
+        c.innerHTML = '<span class="cd-num" style="display:block;text-align:center;">' + d + '</span><span class="cd-paw" style="display:none;text-align:center;">🐾</span><span style="display:block;text-align:right;font-size:9px;line-height:1;margin-top:1px;padding-right:2px;"></span>';
+        c.title = rpt.title;
+        c.style.cursor = 'pointer';
+        (function(k) {{ c.onclick = function() {{ tourFilterByDate(k); }}; }})(k);
+      }} else {{
+        c.innerHTML = '<span class="cd-num">' + d + '</span><span class="cd-paw">🐾</span>';
       }}
       grid.appendChild(c);
     }}
