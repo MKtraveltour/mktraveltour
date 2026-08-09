@@ -858,7 +858,8 @@ HTML_TEMPLATE = """\
     .tour-card.hidden {{ display: none; }}
     .cd.selected {{ outline: 2px solid #e8a0b0; outline-offset: -2px; }}
     .cd-paw {{ display: none; filter: sepia(1) saturate(3) hue-rotate(300deg) brightness(1.3); font-size: 26px; line-height: 1; text-align: center; }}
-    .filter-note {{ font-size: 12px; color: var(--color-text-secondary, #888); background: #f5f0e8; border-radius: 6px; padding: 8px 12px; margin-bottom: 12px; display: none; }}
+    .filter-note {{ font-size: 12px; color: var(--color-text-secondary, #888); background: #f5f0e8; border-radius: 6px; padding: 8px 12px; margin-bottom: 12px; display: none; scroll-margin-top: 70px; }}
+    #tour-report-section {{ scroll-margin-top: 70px; }}
     .filter-note.show {{ display: block; }}
     .reset-link {{ font-size: 12px; color: #8b7355; cursor: pointer; text-decoration: underline; display: none; }}
     .tour-card {{ background: #fff; border: 1px solid #d0c4b0; border-radius: 10px; overflow: hidden; transition: box-shadow 0.2s; }}
@@ -1702,11 +1703,7 @@ HTML_TEMPLATE = """\
       : document.getElementById('tour-filter-note');
     if (scrollTarget) {{
       setTimeout(function() {{
-        var rect = scrollTarget.getBoundingClientRect();
-        var navEl = document.querySelector('.nav');
-        var navH = navEl ? navEl.offsetHeight : 0;
-        var currentTop = window.pageYOffset || document.documentElement.scrollTop;
-        window.scrollTo({{ top: currentTop + rect.top - navH - 12, behavior: 'smooth' }});
+        scrollTarget.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
       }}, 80);
     }}
   }}
