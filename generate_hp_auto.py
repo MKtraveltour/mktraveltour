@@ -1143,6 +1143,7 @@ HTML_TEMPLATE = """\
     </div>
 
     <!-- 募集中ツアー -->
+    <span id="tours-anchor" style="display:block;position:relative;top:-70px;visibility:hidden;"></span>
     <div class="section-header">
       <div class="section-title">募集中のツアー</div>
       <div style="display:flex;align-items:center;gap:10px;">
@@ -1697,12 +1698,13 @@ HTML_TEMPLATE = """\
       reportSection.style.display = 'none';
     }}
 
-    // 日付クリック後にツアー欄へジャンプ
+    // 日付クリック後にツアー欄へジャンプ（目次アンカーと同じ仕組み）
     setTimeout(function() {{
-      var jumpTo = (isPast && TOUR_REPORTS[normKey] && reportSection)
-        ? reportSection
-        : document.getElementById('tour-filter-note');
-      if (jumpTo) jumpTo.scrollIntoView();
+      if (isPast && TOUR_REPORTS[normKey] && reportSection) {{
+        reportSection.scrollIntoView();
+      }} else {{
+        window.location.hash = 'tours-anchor';
+      }}
     }}, 50);
   }}
 
