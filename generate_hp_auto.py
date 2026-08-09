@@ -1698,12 +1698,15 @@ HTML_TEMPLATE = """\
       reportSection.style.display = 'none';
     }}
 
-    // 日付クリック後にツアー欄へジャンプ（目次アンカーと同じ仕組み）
+    // 日付クリック後にツアー欄へジャンプ
     setTimeout(function() {{
+      var anchor = document.getElementById('tours-anchor');
       if (isPast && TOUR_REPORTS[normKey] && reportSection) {{
         reportSection.scrollIntoView();
-      }} else {{
-        window.location.hash = 'tours-anchor';
+      }} else if (anchor) {{
+        // 同じhashが既にセットされていても動くよう一度リセット
+        window.location.hash = '';
+        setTimeout(function() {{ window.location.hash = 'tours-anchor'; }}, 0);
       }}
     }}, 50);
   }}
