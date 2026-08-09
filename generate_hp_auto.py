@@ -1126,7 +1126,14 @@ HTML_TEMPLATE = """\
         <div class="cl-item"><div class="cl-dot" style="background:#e8f0e8;border:1px solid #a8c5a8;"></div>📷 催行済レポートあり</div>
         <div class="cl-item"><div class="cl-dot" style="outline:2px solid #8b7355;outline-offset:-1px;"></div>本日</div>
       </div>
-      <p style="font-size:11px;color:#999;margin-top:8px;">※色付き日付をクリックするとツアー詳細ページを開きます</p>
+      <div style="margin-top:8px;font-size:11px;color:#999;display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <span style="font-weight:500;color:#888;">絵文字：</span>
+        <span>🎇 お祭り・イベント</span>
+        <span>🌸 季節の花</span>
+        <span>🏯 歴史・社寺巡り</span>
+        <span>💜 体験・名所めぐり</span>
+      </div>
+      <p style="font-size:11px;color:#999;margin-top:6px;">※色付き日付をクリックするとツアー詳細ページを開きます</p>
       <!-- 直近の催行状況（カレンダー下） -->
       <div style="margin-top:14px;border-top:1px solid #e0d8cc;padding-top:12px;">
         <div style="font-size:13px;font-weight:500;color:#5c4a32;margin-bottom:8px;"><i class="ti ti-list-check" style="font-size:13px;vertical-align:-2px;margin-right:4px;"></i>直近の催行状況</div>
