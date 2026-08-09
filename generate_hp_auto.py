@@ -1702,8 +1702,12 @@ HTML_TEMPLATE = """\
       : document.getElementById('tour-filter-note');
     if (scrollTarget) {{
       setTimeout(function() {{
-        scrollTarget.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
-      }}, 50);
+        var rect = scrollTarget.getBoundingClientRect();
+        var navEl = document.querySelector('.nav');
+        var navH = navEl ? navEl.offsetHeight : 0;
+        var currentTop = window.pageYOffset || document.documentElement.scrollTop;
+        window.scrollTo({{ top: currentTop + rect.top - navH - 12, behavior: 'smooth' }});
+      }}, 80);
     }}
   }}
 
