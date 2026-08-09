@@ -1695,6 +1695,16 @@ HTML_TEMPLATE = """\
     }} else if (reportSection) {{
       reportSection.style.display = 'none';
     }}
+
+    // 過去レポート日はレポートセクションへ、それ以外はフィルターノートへスクロール
+    var scrollTarget = (isPast && TOUR_REPORTS[normKey] && reportSection)
+      ? reportSection
+      : document.getElementById('tour-filter-note');
+    if (scrollTarget) {{
+      setTimeout(function() {{
+        scrollTarget.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
+      }}, 50);
+    }}
   }}
 
   function tourReset() {{
