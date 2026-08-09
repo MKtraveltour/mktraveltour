@@ -1697,15 +1697,13 @@ HTML_TEMPLATE = """\
       reportSection.style.display = 'none';
     }}
 
-    // 過去レポート日はレポートセクションへ、それ以外はフィルターノートへスクロール
-    var scrollTarget = (isPast && TOUR_REPORTS[normKey] && reportSection)
-      ? reportSection
-      : document.getElementById('tour-filter-note');
-    if (scrollTarget) {{
-      setTimeout(function() {{
-        scrollTarget.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
-      }}, 80);
-    }}
+    // 日付クリック後にツアー欄へジャンプ
+    setTimeout(function() {{
+      var jumpTo = (isPast && TOUR_REPORTS[normKey] && reportSection)
+        ? reportSection
+        : document.getElementById('tour-filter-note');
+      if (jumpTo) jumpTo.scrollIntoView();
+    }}, 50);
   }}
 
   function tourReset() {{
