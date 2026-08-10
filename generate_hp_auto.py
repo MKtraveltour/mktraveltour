@@ -1143,7 +1143,7 @@ HTML_TEMPLATE = """\
     </div>
 
     <!-- 募集中ツアー -->
-    <span id="tours-anchor" style="display:block;position:relative;top:-70px;visibility:hidden;"></span>
+    <span id="tours-anchor" style="display:block;height:0;overflow:hidden;"></span>
     <div class="section-header">
       <div class="section-title">募集中のツアー</div>
       <div style="display:flex;align-items:center;gap:10px;">
@@ -1698,15 +1698,16 @@ HTML_TEMPLATE = """\
       reportSection.style.display = 'none';
     }}
 
-    // 日付クリック後にツアー欄へジャンプ
+    // 日付クリック後にツアー欄へジャンプ（window.scrollTo直接指定）
     setTimeout(function() {{
-      var anchor = document.getElementById('tours-anchor');
-      if (isPast && TOUR_REPORTS[normKey] && reportSection) {{
-        reportSection.scrollIntoView();
-      }} else if (anchor) {{
-        // 同じhashが既にセットされていても動くよう一度リセット
-        window.location.hash = '';
-        setTimeout(function() {{ window.location.hash = 'tours-anchor'; }}, 0);
+      var target = (isPast && TOUR_REPORTS[normKey] && reportSection)
+        ? reportSection
+        : document.getElementById('tours-anchor');
+      if (target) {{
+        var rect = target.getBoundingClientRect();
+        var absTop = rect.top + (window.pageYOffset || document.documentElement.scrollTop);
+        var navH = (document.querySelector('.nav') || {{offsetHeight:60}}).offsetHeight;
+        window.scrollTo(0, absTop - navH - 8);
       }}
     }}, 50);
   }}
