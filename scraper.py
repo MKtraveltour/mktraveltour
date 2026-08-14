@@ -54,6 +54,10 @@ TOUR_URLS = {
 
     "ayabe-nouryou": "https://travel.mk-group.co.jp/tourkyoto/ayabe-nouryou/",
 
+    "miyama-soba": "https://travel.mk-group.co.jp/tourkyoto/miyama-soba2026/",
+
+    "nuigurumi2026": "https://travel.mk-group.co.jp/tourkyoto/nuigurumi2026/",
+
 }
 
 HEADERS = {
