@@ -17,7 +17,7 @@
       "景色・写真",
       "京都西山"
     ],
-    "updated_at": "2026-08-10T17:35:53.442055",
+    "updated_at": "2026-08-14T11:17:57.058741",
     "error": null
   },
   "ayabe_ajisai": {
@@ -38,7 +38,7 @@
       "神社仏閣",
       "景色・写真"
     ],
-    "updated_at": "2026-08-10T17:35:53.713242",
+    "updated_at": "2026-08-14T11:17:57.965835",
     "error": null
   },
   "rousoku": {
@@ -68,7 +68,7 @@
       "日帰り旅行",
       "夏のツアー"
     ],
-    "updated_at": "2026-08-10T17:35:53.969646",
+    "updated_at": "2026-08-14T11:17:58.919363",
     "error": null
   },
   "himatsuri_stay": {
@@ -90,7 +90,7 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-08-10T17:35:54.242066",
+    "updated_at": "2026-08-14T11:17:59.858960",
     "error": null
   },
   "okuribi": {
@@ -119,7 +119,7 @@
       "乗合",
       "夏のツアー"
     ],
-    "updated_at": "2026-08-10T17:35:54.512262",
+    "updated_at": "2026-08-14T11:18:00.852362",
     "error": null
   },
   "kokoro_utsushi": {
@@ -143,13 +143,13 @@
       "期間限定",
       "送迎場所指定OK"
     ],
-    "updated_at": "2026-08-10T17:35:54.798050",
+    "updated_at": "2026-08-14T11:18:01.800884",
     "error": null
   },
   "satsuei": {
     "key": "satsuei",
     "url": "https://travel.mk-group.co.jp/tourkyoto/photo_yokokuji/",
-    "title": "SNSで映える！ 【閉門後貸切】紫陽花の名刹・柳谷観音 楊谷寺スマホ撮影講座ツアー",
+    "title": "【募集終了】SNSで映える！ 【閉門後貸切】紫陽花の名刹・柳谷観音 楊谷寺スマホ撮影講座ツアー",
     "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/top-3.png",
     "price": "14,800円～15,800円（税込）",
     "dates": [
@@ -170,7 +170,7 @@
       "ガイド・講座",
       "期間限定"
     ],
-    "updated_at": "2026-08-10T17:35:55.052840",
+    "updated_at": "2026-08-14T11:18:02.810753",
     "error": null
   },
   "momidiya": {
@@ -197,7 +197,7 @@
       "夏のツアー",
       "夏旅"
     ],
-    "updated_at": "2026-08-10T17:35:55.324298",
+    "updated_at": "2026-08-14T11:18:03.392320",
     "error": null
   },
   "himatsuri_1day": {
@@ -225,7 +225,7 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-08-10T17:35:55.596310",
+    "updated_at": "2026-08-14T11:18:04.437140",
     "error": null
   },
   "furin_shojuin2026": {
@@ -282,7 +282,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-08-10T17:35:55.866477",
+    "updated_at": "2026-08-14T11:18:04.936004",
     "error": null
   },
   "migidaimonji2026": {
@@ -312,7 +312,7 @@
       "乗合",
       "夏のツアー"
     ],
-    "updated_at": "2026-08-10T17:35:56.137792",
+    "updated_at": "2026-08-14T11:18:05.963381",
     "error": null
   },
   "himatsuri2026": {
@@ -340,7 +340,7 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-08-10T17:35:56.410198",
+    "updated_at": "2026-08-14T11:18:07.087941",
     "error": null
   },
   "miyama_ishida": {
@@ -362,7 +362,7 @@
       "歴史",
       "京都美山"
     ],
-    "updated_at": "2026-08-10T17:35:56.681239",
+    "updated_at": "2026-08-14T11:18:08.335014",
     "error": null
   },
   "yuzengiku2026": {
@@ -386,7 +386,7 @@
       "夏のツアー",
       "夏旅"
     ],
-    "updated_at": "2026-08-10T17:35:56.953361",
+    "updated_at": "2026-08-14T11:18:09.304120",
     "error": null
   },
   "yokokuji_shuttle": {
@@ -409,7 +409,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-08-10T17:35:57.239423",
+    "updated_at": "2026-08-14T11:18:10.506446",
     "error": null
   },
   "shojuin_sogei": {
@@ -437,7 +437,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-08-10T17:35:57.526409",
+    "updated_at": "2026-08-14T11:18:11.658779",
     "error": null
   },
   "uma": {
@@ -468,7 +468,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-08-10T17:35:57.797301",
+    "updated_at": "2026-08-14T11:18:12.823515",
     "error": null
   },
   "narihira_nishiyama": {
@@ -491,7 +491,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-08-10T17:35:58.084089",
+    "updated_at": "2026-08-14T11:18:14.007133",
     "error": null
   },
   "tango": {
@@ -513,7 +513,7 @@
       "貸切",
       "日帰り旅行"
     ],
-    "updated_at": "2026-08-10T17:35:58.370318",
+    "updated_at": "2026-08-14T11:18:15.172231",
     "error": null
   },
   "baikamo2026": {
@@ -538,7 +538,7 @@
       "日帰り旅行",
       "夏のツアー"
     ],
-    "updated_at": "2026-08-10T17:35:58.642341",
+    "updated_at": "2026-08-14T11:18:16.332380",
     "error": null
   },
   "maizuru_ajisai": {
@@ -563,7 +563,7 @@
       "神社仏閣",
       "景色・写真"
     ],
-    "updated_at": "2026-08-10T17:35:58.929791",
+    "updated_at": "2026-08-14T11:18:17.960382",
     "error": null
   },
   "yawata": {
@@ -585,7 +585,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-08-10T17:35:59.216387",
+    "updated_at": "2026-08-14T11:18:19.122055",
     "error": null
   },
   "shasou": {
@@ -606,7 +606,7 @@
       "歴史",
       "京都美山"
     ],
-    "updated_at": "2026-08-10T17:35:59.502491",
+    "updated_at": "2026-08-14T11:18:20.308120",
     "error": null
   },
   "kayabuki_himawari": {
@@ -621,7 +621,7 @@
     ],
     "statuses": [],
     "tags": [],
-    "updated_at": "2026-08-10T17:35:59.758189",
+    "updated_at": "2026-08-14T11:18:20.777496",
     "error": null,
     "hidden": true
   },
@@ -646,7 +646,7 @@
       "乗合",
       "夏のツアー"
     ],
-    "updated_at": "2026-08-10T17:36:00.044446",
+    "updated_at": "2026-08-14T11:18:21.982172",
     "error": null
   },
   "chikubushima": {
@@ -674,7 +674,7 @@
       "history",
       "summer"
     ],
-    "updated_at": "2026-08-10T17:36:00.331207",
+    "updated_at": "2026-08-14T11:18:23.027079",
     "error": null,
     "hidden": false
   },
@@ -692,7 +692,7 @@
     "tags": [
       "flower"
     ],
-    "updated_at": "2026-08-10T17:36:00.618306",
+    "updated_at": "2026-08-14T11:18:26.285516",
     "error": null,
     "hidden": false
   },
@@ -711,7 +711,27 @@
       "history",
       "summer"
     ],
-    "updated_at": "2026-08-10T17:36:00.953455",
+    "updated_at": "2026-08-14T11:18:27.484902",
+    "error": null,
+    "hidden": false
+  },
+  "ayabe-nouryou": {
+    "key": "ayabe-nouryou",
+    "url": "https://travel.mk-group.co.jp/tourkyoto/ayabe-nouryou/",
+    "title": "風・水・音に癒される 綾部納涼紀行",
+    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/08/メイン画像.png",
+    "price": "12,300円（税込）",
+    "dates": [
+      "8/26(水)",
+      "8/27(木)",
+      "8/28(金)"
+    ],
+    "statuses": [],
+    "tags": [
+      "event",
+      "history"
+    ],
+    "updated_at": "2026-08-14T11:18:28.508577",
     "error": null,
     "hidden": false
   }

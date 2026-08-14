@@ -52,6 +52,8 @@ TOUR_URLS = {
 
     "window_night": "https://travel.mk-group.co.jp/tourkyoto/window_night/",
 
+    "ayabe-nouryou": "https://travel.mk-group.co.jp/tourkyoto/ayabe-nouryou/",
+
 }
 
 HEADERS = {
