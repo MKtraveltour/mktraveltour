@@ -1702,15 +1702,13 @@ HTML_TEMPLATE = """\
     setTimeout(function() {{
       var jumpEl = (isPast && TOUR_REPORTS[normKey] && reportSection)
         ? reportSection
-        : document.getElementById('tours-anchor');
+        : document.getElementById('tours-grid');
       if (!jumpEl) return;
       var navH = 0;
       var nav = document.querySelector('.nav');
       if (nav) navH = nav.offsetHeight;
-      var top = 0;
-      var el = jumpEl;
-      while (el) {{ top += el.offsetTop; el = el.offsetParent; }}
-      window.scrollTo(0, top - navH - 8);
+      var rect = jumpEl.getBoundingClientRect();
+      window.scrollBy(0, rect.top - navH - 8);
     }}, 50);
   }}
 
