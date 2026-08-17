@@ -17,7 +17,7 @@
       "景色・写真",
       "京都西山"
     ],
-    "updated_at": "2026-08-16T15:50:44.544307",
+    "updated_at": "2026-08-17T10:20:10.591572",
     "error": null
   },
   "ayabe_ajisai": {
@@ -38,7 +38,7 @@
       "神社仏閣",
       "景色・写真"
     ],
-    "updated_at": "2026-08-16T15:50:44.861783",
+    "updated_at": "2026-08-17T10:20:11.747676",
     "error": null
   },
   "rousoku": {
@@ -68,7 +68,7 @@
       "日帰り旅行",
       "夏のツアー"
     ],
-    "updated_at": "2026-08-16T15:50:45.190257",
+    "updated_at": "2026-08-17T10:20:12.713403",
     "error": null
   },
   "himatsuri_stay": {
@@ -90,25 +90,19 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-08-16T15:50:45.534890",
+    "updated_at": "2026-08-17T10:20:13.205883",
     "error": null
   },
   "okuribi": {
     "key": "okuribi",
     "url": "https://travel.mk-group.co.jp/tourkyoto/okuribi2026/",
-    "title": "【限定40名】京の夜空を彩る「五山の送り火」特別鑑賞ツアー",
+    "title": "【募集終了】【限定40名】京の夜空を彩る「五山の送り火」特別鑑賞ツアー",
     "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/okuribi.png",
     "price": "23,800円（税込）",
     "dates": [
       "8/16(日)"
     ],
-    "statuses": [
-      {
-        "date": "8/16",
-        "label": "満席",
-        "type": "full"
-      }
-    ],
+    "statuses": [],
     "tags": [
       "催行確定日あり",
       "景色・写真",
@@ -119,7 +113,7 @@
       "乗合",
       "夏のツアー"
     ],
-    "updated_at": "2026-08-16T15:50:45.861748",
+    "updated_at": "2026-08-17T10:20:14.124231",
     "error": null
   },
   "kokoro_utsushi": {
@@ -143,7 +137,7 @@
       "期間限定",
       "送迎場所指定OK"
     ],
-    "updated_at": "2026-08-16T15:50:46.212506",
+    "updated_at": "2026-08-17T10:20:15.042302",
     "error": null
   },
   "satsuei": {
@@ -170,7 +164,7 @@
       "ガイド・講座",
       "期間限定"
     ],
-    "updated_at": "2026-08-16T15:50:46.549907",
+    "updated_at": "2026-08-17T10:20:16.040290",
     "error": null
   },
   "momidiya": {
@@ -197,7 +191,7 @@
       "夏のツアー",
       "夏旅"
     ],
-    "updated_at": "2026-08-16T15:50:46.925836",
+    "updated_at": "2026-08-17T10:20:16.959393",
     "error": null
   },
   "himatsuri_1day": {
@@ -225,7 +219,7 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-08-16T15:50:47.281048",
+    "updated_at": "2026-08-17T10:20:17.910331",
     "error": null
   },
   "furin_shojuin2026": {
@@ -240,18 +234,13 @@
     ],
     "statuses": [
       {
-        "date": "8/14",
-        "label": "催行確定",
-        "type": "confirmed"
-      },
-      {
         "date": "8/24",
         "label": "あと３名",
         "type": "few"
       },
       {
         "date": "8/27",
-        "label": "あと３名",
+        "label": "あと２名",
         "type": "few"
       },
       {
@@ -260,18 +249,23 @@
         "type": "few"
       },
       {
-        "date": "8/16",
-        "label": "あと４名",
-        "type": "few"
-      },
-      {
         "date": "8/23",
-        "label": "あと３名",
-        "type": "few"
+        "label": "催行確定",
+        "type": "confirmed"
       },
       {
         "date": "9/19",
         "label": "あと３名",
+        "type": "few"
+      },
+      {
+        "date": "9/23",
+        "label": "あと２名",
+        "type": "few"
+      },
+      {
+        "date": "9/27",
+        "label": "あと２名",
         "type": "few"
       }
     ],
@@ -282,25 +276,19 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-08-16T15:50:47.638046",
+    "updated_at": "2026-08-17T10:20:18.194198",
     "error": null
   },
   "migidaimonji2026": {
     "key": "migidaimonji2026",
     "url": "https://travel.mk-group.co.jp/tourkyoto/migidaimonji2026/",
-    "title": "京都の夏を送る夜～御所から望む右大文字と湯葉懐石～",
+    "title": "【募集終了】京都の夏を送る夜～御所から望む右大文字と湯葉懐石～",
     "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/okuribi2.png",
     "price": "13,000円（税込）",
     "dates": [
       "8/16(日)"
     ],
-    "statuses": [
-      {
-        "date": "8/16",
-        "label": "催行確定",
-        "type": "confirmed"
-      }
-    ],
+    "statuses": [],
     "tags": [
       "催行確定日あり",
       "景色・写真",
@@ -312,7 +300,7 @@
       "乗合",
       "夏のツアー"
     ],
-    "updated_at": "2026-08-16T15:50:47.983672",
+    "updated_at": "2026-08-17T10:20:18.971313",
     "error": null
   },
   "himatsuri2026": {
@@ -340,7 +328,7 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-08-16T15:50:48.351713",
+    "updated_at": "2026-08-17T10:20:19.779999",
     "error": null
   },
   "miyama_ishida": {
@@ -362,7 +350,7 @@
       "歴史",
       "京都美山"
     ],
-    "updated_at": "2026-08-16T15:50:48.715938",
+    "updated_at": "2026-08-17T10:20:20.681323",
     "error": null
   },
   "yuzengiku2026": {
@@ -386,7 +374,7 @@
       "夏のツアー",
       "夏旅"
     ],
-    "updated_at": "2026-08-16T15:50:49.054686",
+    "updated_at": "2026-08-17T10:20:21.644253",
     "error": null
   },
   "yokokuji_shuttle": {
@@ -409,7 +397,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-08-16T15:50:49.430218",
+    "updated_at": "2026-08-17T10:20:22.594405",
     "error": null
   },
   "shojuin_sogei": {
@@ -437,7 +425,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-08-16T15:50:49.759625",
+    "updated_at": "2026-08-17T10:20:23.656403",
     "error": null
   },
   "uma": {
@@ -468,7 +456,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-08-16T15:50:50.108978",
+    "updated_at": "2026-08-17T10:20:24.591182",
     "error": null
   },
   "narihira_nishiyama": {
@@ -491,7 +479,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-08-16T15:50:50.440510",
+    "updated_at": "2026-08-17T10:20:25.526065",
     "error": null
   },
   "tango": {
@@ -513,7 +501,7 @@
       "貸切",
       "日帰り旅行"
     ],
-    "updated_at": "2026-08-16T15:50:50.809049",
+    "updated_at": "2026-08-17T10:20:26.397072",
     "error": null
   },
   "baikamo2026": {
@@ -538,7 +526,7 @@
       "日帰り旅行",
       "夏のツアー"
     ],
-    "updated_at": "2026-08-16T15:50:51.179410",
+    "updated_at": "2026-08-17T10:20:27.204451",
     "error": null
   },
   "maizuru_ajisai": {
@@ -563,7 +551,7 @@
       "神社仏閣",
       "景色・写真"
     ],
-    "updated_at": "2026-08-16T15:50:51.542859",
+    "updated_at": "2026-08-17T10:20:27.995721",
     "error": null
   },
   "yawata": {
@@ -585,7 +573,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-08-16T15:50:51.878847",
+    "updated_at": "2026-08-17T10:20:29.057410",
     "error": null
   },
   "shasou": {
@@ -606,7 +594,7 @@
       "歴史",
       "京都美山"
     ],
-    "updated_at": "2026-08-16T15:50:52.225309",
+    "updated_at": "2026-08-17T10:20:30.006638",
     "error": null
   },
   "kayabuki_himawari": {
@@ -621,7 +609,7 @@
     ],
     "statuses": [],
     "tags": [],
-    "updated_at": "2026-08-16T15:50:52.545602",
+    "updated_at": "2026-08-17T10:20:30.908790",
     "error": null,
     "hidden": true
   },
@@ -646,7 +634,7 @@
       "乗合",
       "夏のツアー"
     ],
-    "updated_at": "2026-08-16T15:50:52.851340",
+    "updated_at": "2026-08-17T10:20:31.875907",
     "error": null
   },
   "chikubushima": {
@@ -674,7 +662,7 @@
       "history",
       "summer"
     ],
-    "updated_at": "2026-08-16T15:50:53.187551",
+    "updated_at": "2026-08-17T10:20:32.825225",
     "error": null,
     "hidden": false
   },
@@ -692,7 +680,7 @@
     "tags": [
       "flower"
     ],
-    "updated_at": "2026-08-16T15:50:53.515474",
+    "updated_at": "2026-08-17T10:20:33.759224",
     "error": null,
     "hidden": false
   },
@@ -711,7 +699,7 @@
       "history",
       "summer"
     ],
-    "updated_at": "2026-08-16T15:50:53.847161",
+    "updated_at": "2026-08-17T10:20:34.701000",
     "error": null,
     "hidden": false
   },
@@ -731,7 +719,7 @@
       "event",
       "history"
     ],
-    "updated_at": "2026-08-16T15:50:54.236873",
+    "updated_at": "2026-08-17T10:20:35.481552",
     "error": null,
     "hidden": false
   },
@@ -746,11 +734,22 @@
       "9/27(日)",
       "10/3(土)"
     ],
-    "statuses": [],
+    "statuses": [
+      {
+        "date": "9/22",
+        "label": "あと３名",
+        "type": "few"
+      },
+      {
+        "date": "10/3",
+        "label": "あと４名",
+        "type": "few"
+      }
+    ],
     "tags": [
       "exp"
     ],
-    "updated_at": "2026-08-16T15:50:54.610109",
+    "updated_at": "2026-08-17T10:20:35.755111",
     "error": null,
     "hidden": false
   },
@@ -763,11 +762,17 @@
     "dates": [
       "9/20(日)"
     ],
-    "statuses": [],
+    "statuses": [
+      {
+        "date": "9/20",
+        "label": "催行確定",
+        "type": "confirmed"
+      }
+    ],
     "tags": [
       "event"
     ],
-    "updated_at": "2026-08-16T15:50:55.661479",
+    "updated_at": "2026-08-17T10:20:36.369191",
     "error": null,
     "hidden": false
   }
