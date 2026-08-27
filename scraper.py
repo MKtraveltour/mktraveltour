@@ -60,6 +60,8 @@ TOUR_URLS = {
 
     "chishaku-in_warajiya": "https://travel.mk-group.co.jp/tourkyoto/warajiya2026/",
 
+    "nuigurumi_tuika": "https://travel.mk-group.co.jp/tourkyoto/nuigurumi2026-2/",
+
 }
 
 HEADERS = {
