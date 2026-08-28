@@ -61,6 +61,11 @@ TOUR_URLS = {
     "chishaku-in_warajiya": "https://travel.mk-group.co.jp/tourkyoto/warajiya2026/",
 
     "nuigurumi_tuika": "https://travel.mk-group.co.jp/tourkyoto/nuigurumi2026-2/",
+    "ayabe_momiji2026": "https://travel.mk-group.co.jp/tourkyoto/ayabe_momiji2026/",
+
+    "konan_momiji2026": "https://travel.mk-group.co.jp/tourkyoto/konan_momiji2026/",
+
+    "nishiyama_half2026": "https://travel.mk-group.co.jp/tourkyoto/nishiyama_half2026/",
 
 }
 
