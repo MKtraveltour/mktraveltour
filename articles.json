@@ -1,6 +1,24 @@
 {
   "articles": [
     {
+      "id": "018",
+      "title": "夜に浮かぶ紅葉",
+      "author": "Hiro",
+      "category": "進捗報告",
+      "date": "2026-09-02",
+      "text": "まだまだ暑い日が続いていますね。\n先程月初の作業を同僚に促され9月に入ったことを思い知った担当者です。\n間もなく販売が開始となるツアーについて昨年の準備中の写真をチラ見せ。\n紅葉のライトアップツアーを予定しております。\n京都といえばやはり紅葉でしょうか。夜の観光も送迎付きなら安心ですよね。",
+      "photos": [
+        "houjouji_iriguti.jpg",
+        "houjouji_ishikabe.jpg",
+        "houjouji_light.jpg",
+        "houjouji_niwa.jpg"
+      ],
+      "audio": "",
+      "audio_label": "",
+      "publish_at": "",
+      "pinned": false
+    },
+    {
       "id": "017",
       "title": "果たして需要はいかほどでしょうか。",
       "author": "Hiro",
