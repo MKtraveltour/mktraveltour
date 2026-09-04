@@ -1658,21 +1658,23 @@ HTML_TEMPLATE = """\
   function removeFav(id) {{ saveFavs(getFavs().filter(function(f){{return f.id!==id;}})); renderFavs(); }}
   function renderFavs() {{
     var favs = getFavs();
-    var countEl = document.getElementById('fav-count');
-    if (countEl) countEl.textContent = favs.length;
+    // id重複対策: querySelectorAllで全ての要素を更新
+    document.querySelectorAll('#fav-count, .fav-count').forEach(function(el) {{
+      el.textContent = favs.length;
+    }});
     document.querySelectorAll('.fav-btn').forEach(function(btn) {{
       var id = btn.closest('.tour-card').getAttribute('data-tour-id');
       var active = favs.some(function(f){{return f.id===id;}});
       btn.classList.toggle('active', active);
       btn.textContent = active ? '♥' : '♡';
     }});
-    var listEl = document.getElementById('fav-list');
-    if (!listEl) return;
-    if (!favs.length) {{ listEl.innerHTML = '<p class="fav-empty">ツアーカードの ♡ を押して保存</p>'; return; }}
-    listEl.innerHTML = favs.map(function(f) {{
-      return '<div class="fav-item"><a href="'+f.url+'" target="_blank">'+f.name+'</a>'
-           + '<button class="fav-remove" data-fid="'+f.id+'" onclick="removeFav(this.dataset.fid)" title="解除">✕</button></div>';
-    }}).join('');
+    document.querySelectorAll('#fav-list').forEach(function(listEl) {{
+      if (!favs.length) {{ listEl.innerHTML = '<p class="fav-empty">ツアーカードの ♡ を押して保存</p>'; return; }}
+      listEl.innerHTML = favs.map(function(f) {{
+        return '<div class="fav-item"><a href="'+f.url+'" target="_blank">'+f.name+'</a>'
+             + '<button class="fav-remove" data-fid="'+f.id+'" onclick="removeFav(this.dataset.fid)" title="解除">✕</button></div>';
+      }}).join('');
+    }});
   }}
 
   // 初期カウント表示
