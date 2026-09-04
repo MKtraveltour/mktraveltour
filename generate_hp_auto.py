@@ -1225,13 +1225,6 @@ HTML_TEMPLATE = """\
       <a href="https://www.youtube.com/c/MKofficial_ch" target="_blank" class="sns-btn sns-youtube"><i class="ti ti-brand-youtube" style="font-size:15px"></i>YouTube</a>
     </div>
 
-    <div class="sb-block fav-panel" style="background:#fdf5e8;border-color:#e0c88a">
-      <div class="fav-panel-head">
-        <span class="fav-panel-title">♡ お気に入り</span>
-        <span class="fav-count" id="fav-count">0</span>
-      </div>
-      <div id="fav-list"><p class="fav-empty">ツアーカードの ♡ を押して保存</p></div>
-    </div>
     <div class="sb-block fav-panel">
       <div class="fav-panel-head">
         <span class="fav-panel-title">♡ お気に入り</span>
