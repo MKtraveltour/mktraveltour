@@ -681,10 +681,11 @@ def build_tour_cards(tours: dict) -> str:
                     _badge_text = "期間限定"
                 break
 
-        cards_entries.append((_sort_always, f"""      <div class="tour-card" data-tags="{data_tags}" data-dates="">
+        cards_entries.append((_sort_always, f"""      <div class="tour-card" data-tags="{data_tags}" data-dates="" data-tour-id="{akey}" data-tour-url="{url}">
         <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
           {img_html}
           <div class="sbadge br" style="z-index:1;">{_badge_text}</div>
+          <button class="fav-btn" onclick="toggleFav(this)" title="お気に入り">♡</button>
         </div>
         <div class="tour-body">
           <div class="tour-tags">{tags_html}</div>
