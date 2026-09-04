@@ -107,6 +107,19 @@
     .reset-link { font-size: 12px; color: #8b7355; cursor: pointer; text-decoration: underline; display: none; }
     .tour-card { background: #fff; border: 1px solid #d0c4b0; border-radius: 10px; overflow: hidden; transition: box-shadow 0.2s; }
     .tour-card:hover { box-shadow: 0 2px 10px rgba(139,115,85,0.15); }
+    .fav-btn { position:absolute;top:8px;right:8px;background:rgba(255,255,255,0.92);border:none;border-radius:999px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;z-index:2;box-shadow:0 2px 6px rgba(0,0,0,0.15);transition:transform 0.15s; }
+    .fav-btn:hover { transform:scale(1.15); }
+    .fav-btn.active { background:#fff0f0; }
+    .fav-panel { background:#fff;border:1px solid #e0c88a;border-radius:12px;padding:14px;margin-bottom:12px; }
+    .fav-panel-head { display:flex;align-items:center;justify-content:space-between;margin-bottom:10px; }
+    .fav-panel-title { font-size:13px;font-weight:500;color:#5c4a32; }
+    .fav-count { background:#8b7355;color:#fff;border-radius:999px;padding:1px 8px;font-size:11px;font-weight:500; }
+    .fav-empty { font-size:11px;color:#aaa;text-align:center;padding:10px 0; }
+    .fav-item { display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f0e8dc;font-size:11px; }
+    .fav-item:last-child { border-bottom:none; }
+    .fav-item a { color:#5c4a32;font-weight:500;flex:1;line-height:1.4; }
+    .fav-item a:hover { text-decoration:underline; }
+    .fav-remove { border:none;background:none;color:#c0a888;cursor:pointer;font-size:13px;padding:0 0 0 6px;flex-shrink:0; }
     .tour-img { width: 100%; height: 200px; position: relative; overflow: hidden; font-size: 13px; color: #fff; font-weight: 500; background: #1a1a1a; }
     .sbadge { position: absolute; top: 6px; right: 6px; font-size: 11px; padding: 2px 10px; border-radius: 4px; font-weight: 500; }
     .bc { background: #27ae60; color: #fff; } .bfw { background: #e67e22; color: #fff; }
@@ -230,7 +243,7 @@
 <div class="sp-panel active" id="sp-diary">
   <div style="font-size:13px;color:#5c4a32;padding:6px 0 4px;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ede8e0;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='none'?'block':'none';">すべて<span style="font-size:10px;color:#8b7355;">▼</span></div>
   <div style="display:none;padding:4px 0 6px;">
-    <a href="#article-018" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('018')">夜に浮かぶ紅葉</a><a href="#article-017" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('017')">果たして需要はいかほどでしょうか。</a><a href="#article-015" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('015')">彩り豊かに、風に舞う風車</a><a href="#article-016" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('016')">生まれたばかりの可愛いが詰まったその名もぬいぐるみ神社</a><a href="#article-014" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('014')">とても魅力的な施設でした</a><a href="#article-008" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('008')">旅とも手帳手引</a>
+    <a href="#article-018" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('018')">夜に浮かぶ紅葉</a><a href="#article-017" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('017')">果たして需要はいかほどでしょうか。</a><a href="#article-015" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('015')">彩り豊かに、風に舞う風車</a><a href="#article-016" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('016')">生まれたばかりの可愛いが詰まったその名もぬいぐるみ神社</a><a href="#article-008" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('008')">旅とも手帳手引</a>
   </div>
   <div style="font-size:13px;color:#5c4a32;padding:6px 0 4px;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ede8e0;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='none'?'block':'none';">New！<span style="font-size:10px;color:#8b7355;">▼</span></div>
   <div style="display:none;padding:4px 0 6px;">
@@ -238,7 +251,7 @@
   </div>
   <div style="font-size:13px;color:#5c4a32;padding:6px 0 4px;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ede8e0;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='none'?'block':'none';">企画のたまご<span style="font-size:10px;color:#8b7355;">▼</span></div>
   <div style="display:none;padding:4px 0 6px;">
-    <a href="#article-014" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('014')">とても魅力的な施設でした</a>
+    
   </div>
   <div style="font-size:13px;color:#5c4a32;padding:6px 0 4px;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ede8e0;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='none'?'block':'none';">進捗報告<span style="font-size:10px;color:#8b7355;">▼</span></div>
   <div style="display:none;padding:4px 0 6px;">
@@ -260,7 +273,7 @@
   </div>
   <div style="font-size:13px;color:#5c4a32;padding:6px 0 4px;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ede8e0;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='none'?'block':'none';">バックナンバー<span style="font-size:10px;color:#8b7355;">▼</span></div>
   <div style="display:none;padding:4px 0 6px;">
-    <a href="#article-013" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('013')">時代劇の聖地巡礼！</a><a href="#article-011" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('011')">神秘を肌で感じるパワースポット</a><a href="#article-012" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('012')">暑すぎる…</a><a href="#article-010" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('010')">今は昔</a><a href="#article-007" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('007')">紫陽花、良いですよね！</a><a href="#article-009" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('009')">バックヤードツアー</a><a href="#article-004" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('004')">中の人2号です</a><a href="#article-003" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('003')">仲間が増えました</a><a href="#article-006" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('006')">いざ秘境へ！</a><a href="#article-001" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('001')">担当よりご挨拶</a><a href="#article-005" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('005')">あいにくの天気の中</a><a href="#article-002" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('002')">美山のとある場所より</a>
+    <a href="#article-014" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('014')">とても魅力的な施設でした</a><a href="#article-013" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('013')">時代劇の聖地巡礼！</a><a href="#article-011" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('011')">神秘を肌で感じるパワースポット</a><a href="#article-012" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('012')">暑すぎる…</a><a href="#article-010" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('010')">今は昔</a><a href="#article-007" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('007')">紫陽花、良いですよね！</a><a href="#article-009" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('009')">バックヤードツアー</a><a href="#article-004" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('004')">中の人2号です</a><a href="#article-003" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('003')">仲間が増えました</a><a href="#article-006" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('006')">いざ秘境へ！</a><a href="#article-001" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('001')">担当よりご挨拶</a><a href="#article-005" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('005')">あいにくの天気の中</a><a href="#article-002" style="display:block;padding:5px 12px;font-size:12px;color:#5c4a32;" onclick="closeSp();scrollToArticle('002')">美山のとある場所より</a>
   </div>
 </div>
 <div class="sp-panel" id="sp-season">
@@ -324,7 +337,7 @@
   <a href="https://www.mk-group.co.jp/mktravel/list_008_2024" target="_blank" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">📁 2024年</a>
 </div>
 
-<p class="updated-note">最終更新: 2026年09月02日 16:46</p>
+<p class="updated-note">最終更新: 2026年09月04日 13:53</p>
 
 <div class="page-wrap">
 
@@ -338,7 +351,7 @@
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>すべて</span>
         </div>
         <div class="bnav-season-body" id="all-articles-body">
-          <a href="#article-018" style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px 4px 14px;font-size:10px;" onclick="scrollToArticle('018')">夜に浮かぶ紅葉<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:#2980b9;color:#fff;margin-left:4px;">進捗報告</span></a><a href="#article-017" style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px 4px 14px;font-size:10px;" onclick="scrollToArticle('017')">果たして需要はいかほどでしょうか。<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:#c0392b;color:#fff;margin-left:4px;">New！</span></a><a href="#article-015" style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px 4px 14px;font-size:10px;" onclick="scrollToArticle('015')">彩り豊かに、風に舞う風車<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:#27ae60;color:#fff;margin-left:4px;">完成！</span></a><a href="#article-016" style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px 4px 14px;font-size:10px;" onclick="scrollToArticle('016')">生まれたばかりの可愛いが詰まったその名もぬいぐるみ神社<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:#2980b9;color:#fff;margin-left:4px;">進捗報告</span></a><a href="#article-014" style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px 4px 14px;font-size:10px;" onclick="scrollToArticle('014')">とても魅力的な施設でした<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:#e67e22;color:#fff;margin-left:4px;">企画のたまご</span></a><a href="#article-008" style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px 4px 14px;font-size:10px;" onclick="scrollToArticle('008')">旅とも手帳手引<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:#c0392b;color:#fff;margin-left:4px;">New！</span></a>
+          <a href="#article-018" style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px 4px 14px;font-size:10px;" onclick="scrollToArticle('018')">夜に浮かぶ紅葉<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:#2980b9;color:#fff;margin-left:4px;">進捗報告</span></a><a href="#article-017" style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px 4px 14px;font-size:10px;" onclick="scrollToArticle('017')">果たして需要はいかほどでしょうか。<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:#c0392b;color:#fff;margin-left:4px;">New！</span></a><a href="#article-015" style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px 4px 14px;font-size:10px;" onclick="scrollToArticle('015')">彩り豊かに、風に舞う風車<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:#27ae60;color:#fff;margin-left:4px;">完成！</span></a><a href="#article-016" style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px 4px 14px;font-size:10px;" onclick="scrollToArticle('016')">生まれたばかりの可愛いが詰まったその名もぬいぐるみ神社<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:#2980b9;color:#fff;margin-left:4px;">進捗報告</span></a><a href="#article-008" style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px 4px 14px;font-size:10px;" onclick="scrollToArticle('008')">旅とも手帳手引<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:#c0392b;color:#fff;margin-left:4px;">New！</span></a>
         </div>
         <div class="bnav-season-label" onclick="toggleSeason(this)" id="new-label">
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>New！</span>
@@ -351,7 +364,7 @@
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>企画のたまご</span>
         </div>
         <div class="bnav-season-body" id="tamago-articles-body">
-          <a href="#article-014" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('014')">とても魅力的な施設でした</a>
+          
         </div>
         <div class="bnav-season-label" onclick="toggleSeason(this)" id="report-label">
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>進捗報告</span>
@@ -381,7 +394,7 @@
           <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-chevron-right" style="font-size:11px;"></i>バックナンバー</span>
         </div>
         <div class="bnav-season-body" id="backnumber-articles-body">
-          <a href="#article-013" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('013')">時代劇の聖地巡礼！</a><a href="#article-011" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('011')">神秘を肌で感じるパワースポット</a><a href="#article-012" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('012')">暑すぎる…</a><a href="#article-010" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('010')">今は昔</a><a href="#article-007" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('007')">紫陽花、良いですよね！</a><a href="#article-009" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('009')">バックヤードツアー</a><a href="#article-004" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('004')">中の人2号です</a><a href="#article-003" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('003')">仲間が増えました</a><a href="#article-006" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('006')">いざ秘境へ！</a><a href="#article-001" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('001')">担当よりご挨拶</a><a href="#article-005" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('005')">あいにくの天気の中</a><a href="#article-002" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('002')">美山のとある場所より</a>
+          <a href="#article-014" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('014')">とても魅力的な施設でした</a><a href="#article-013" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('013')">時代劇の聖地巡礼！</a><a href="#article-011" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('011')">神秘を肌で感じるパワースポット</a><a href="#article-012" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('012')">暑すぎる…</a><a href="#article-010" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('010')">今は昔</a><a href="#article-007" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('007')">紫陽花、良いですよね！</a><a href="#article-009" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('009')">バックヤードツアー</a><a href="#article-004" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('004')">中の人2号です</a><a href="#article-003" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('003')">仲間が増えました</a><a href="#article-006" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('006')">いざ秘境へ！</a><a href="#article-001" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('001')">担当よりご挨拶</a><a href="#article-005" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('005')">あいにくの天気の中</a><a href="#article-002" style="padding-left:30px;font-size:10px;" onclick="scrollToArticle('002')">美山のとある場所より</a>
         </div>
       </div>
     </div>
@@ -542,7 +555,7 @@
           <div class="news-photos" style="grid-template-columns:repeat(3,1fr);"><img src="2026731_nuigurumijinja_gosyuin.jpg" alt="生まれたばかりの可愛いが詰まったその名もぬいぐるみ神社"><img src="2026731_nuigurumijinja_mado.jpg" alt="生まれたばかりの可愛いが詰まったその名もぬいぐるみ神社"><img src="2026731_nuigurumijinja_syamusyo.jpg" alt="生まれたばかりの可愛いが詰まったその名もぬいぐるみ神社"><img src="2026731_nuigurumijinja_tyouzu.jpg" alt="生まれたばかりの可愛いが詰まったその名もぬいぐるみ神社"></div>
         </div>
       </div>
-      <div class="news-post" data-category="企画のたまご" id="article-014">
+      <div class="news-post" data-category="企画のたまご" data-backnumber="true" id="article-014">
         <div class="news-meta">
           <div class="nav-avatar">S</div>
           <div>
@@ -819,10 +832,11 @@
     </div>
     <div class="tour-count" id="tour-count"></div>
     <div class="tours-grid" id="tours-grid">
-      <div class="tour-card" data-tags="other" data-dates="2026-9-11,2026-9-13,2026-9-6">
+      <div class="tour-card" data-tags="other" data-dates="2026-9-11,2026-9-13,2026-9-6" data-tour-id="2026-9-13" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/chikubushima2026/">
         <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2025/07/chikubushima-top.png" alt="びわ湖にある神秘の島「竹生島」と人気スポット「ラ コリーナ近江八幡」へ" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bfw" style="z-index:1;">あと５名</div>
+          <button class="fav-btn" onclick="toggleFav(this)" title="お気に入り">♡</button>
         </div>
         <div class="tour-body">
           <div class="tour-tags"><span class="ttag te">体験・名所巡り</span></div>
@@ -832,10 +846,11 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/chikubushima2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="history exp event" data-dates="2026-6-1,2026-6-11,2026-6-12,2026-6-13,2026-6-14,2026-6-15,2026-6-18,2026-6-19,2026-6-20,2026-6-21,2026-6-22,2026-6-25,2026-6-26,2026-6-27,2026-6-28,2026-6-29,2026-6-4,2026-6-5,2026-6-6,2026-6-7,2026-6-8,2026-7-10,2026-7-11,2026-7-12,2026-7-13,2026-7-16,2026-7-17,2026-7-18,2026-7-19,2026-7-2,2026-7-20,2026-7-23,2026-7-24,2026-7-25,2026-7-26,2026-7-27,2026-7-3,2026-7-30,2026-7-31,2026-7-4,2026-7-5,2026-7-6,2026-7-9,2026-8-1,2026-8-10,2026-8-13,2026-8-14,2026-8-15,2026-8-16,2026-8-2,2026-8-20,2026-8-21,2026-8-22,2026-8-23,2026-8-24,2026-8-27,2026-8-28,2026-8-29,2026-8-3,2026-8-30,2026-8-31,2026-8-6,2026-8-7,2026-8-8,2026-8-9,2026-9-10,2026-9-11,2026-9-12,2026-9-13,2026-9-14,2026-9-17,2026-9-18,2026-9-19,2026-9-20,2026-9-21,2026-9-22,2026-9-23,2026-9-24,2026-9-25,2026-9-26,2026-9-27,2026-9-28,2026-9-3,2026-9-4,2026-9-5,2026-9-6,2026-9-7">
+      <div class="tour-card" data-tags="history exp event" data-dates="2026-6-1,2026-6-11,2026-6-12,2026-6-13,2026-6-14,2026-6-15,2026-6-18,2026-6-19,2026-6-20,2026-6-21,2026-6-22,2026-6-25,2026-6-26,2026-6-27,2026-6-28,2026-6-29,2026-6-4,2026-6-5,2026-6-6,2026-6-7,2026-6-8,2026-7-10,2026-7-11,2026-7-12,2026-7-13,2026-7-16,2026-7-17,2026-7-18,2026-7-19,2026-7-2,2026-7-20,2026-7-23,2026-7-24,2026-7-25,2026-7-26,2026-7-27,2026-7-3,2026-7-30,2026-7-31,2026-7-4,2026-7-5,2026-7-6,2026-7-9,2026-8-1,2026-8-10,2026-8-13,2026-8-14,2026-8-15,2026-8-16,2026-8-2,2026-8-20,2026-8-21,2026-8-22,2026-8-23,2026-8-24,2026-8-27,2026-8-28,2026-8-29,2026-8-3,2026-8-30,2026-8-31,2026-8-6,2026-8-7,2026-8-8,2026-8-9,2026-9-10,2026-9-11,2026-9-12,2026-9-13,2026-9-14,2026-9-17,2026-9-18,2026-9-19,2026-9-20,2026-9-21,2026-9-22,2026-9-23,2026-9-24,2026-9-25,2026-9-26,2026-9-27,2026-9-28,2026-9-3,2026-9-4,2026-9-5,2026-9-6,2026-9-7" data-tour-id="2026-9-27" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/">
         <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2024/04/2021shojuin_furin_bn.jpg" alt="正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bfw" style="z-index:1;">あと２名</div>
+          <button class="fav-btn" onclick="toggleFav(this)" title="お気に入り">♡</button>
         </div>
         <div class="tour-body">
           <div class="tour-tags"><span class="ttag th">歴史・社寺巡り</span><span class="ttag te">体験・名所巡り</span></div>
@@ -845,10 +860,11 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="summer history exp event" data-dates="2026-9-19">
+      <div class="tour-card" data-tags="summer history exp event" data-dates="2026-9-19" data-tour-id="2026-9-19" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/eigamura-jidaigeki/">
         <div class="tour-img" style="background:#6b8e6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/06/eigamuramain.png" alt="【24名様限定】往年の時代劇ファンの皆様へ！ 太秦映画村バックヤード見学と名ロケ地巡り" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bc" style="z-index:1;">催行確定</div>
+          <button class="fav-btn" onclick="toggleFav(this)" title="お気に入り">♡</button>
         </div>
         <div class="tour-body">
           <div class="tour-tags"><span class="ttag te">体験・名所巡り</span><span class="ttag th">歴史・社寺巡り</span></div>
@@ -858,10 +874,11 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/eigamura-jidaigeki/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="other" data-dates="2026-9-20">
+      <div class="tour-card" data-tags="other" data-dates="2026-9-20" data-tour-id="2026-9-20" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/nuigurumi2026/">
         <div class="tour-img" style="background:#4a7c6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/08/top.png" alt="ぬいぐるみと一緒に楽しむ特別な一日　ぬいぐるみ神社 秋のどんぐり感謝祭へ" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bc" style="z-index:1;">催行確定</div>
+          <button class="fav-btn" onclick="toggleFav(this)" title="お気に入り">♡</button>
         </div>
         <div class="tour-body">
           <div class="tour-tags"><span class="ttag te">体験・名所巡り</span></div>
@@ -871,10 +888,11 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/nuigurumi2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="other" data-dates="2026-9-20">
+      <div class="tour-card" data-tags="other" data-dates="2026-9-20" data-tour-id="2026-9-20" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/nuigurumi2026-2/">
         <div class="tour-img" style="background:#6b8e6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/08/top2.png" alt="【好評につき追加設定！】ぬいぐるみと一緒に楽しむ特別な一日 -ぬいぐるみ神社 秋のどんぐり感謝祭へ-" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bc" style="z-index:1;">催行確定</div>
+          <button class="fav-btn" onclick="toggleFav(this)" title="お気に入り">♡</button>
         </div>
         <div class="tour-body">
           <div class="tour-tags"><span class="ttag te">体験・名所巡り</span></div>
@@ -884,10 +902,11 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/nuigurumi2026-2/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="other" data-dates="2026-10-3,2026-9-22,2026-9-27">
+      <div class="tour-card" data-tags="other" data-dates="2026-10-3,2026-9-22,2026-9-27" data-tour-id="2026-10-3" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/miyama-soba2026/">
         <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/08/top-2.png" alt="白いそばの花に会いに。秋の美山をめぐる小さな旅" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bc" style="z-index:1;">催行確定日あり</div>
+          <button class="fav-btn" onclick="toggleFav(this)" title="お気に入り">♡</button>
         </div>
         <div class="tour-body">
           <div class="tour-tags"><span class="ttag te">体験・名所巡り</span></div>
@@ -897,10 +916,11 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/miyama-soba2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="autumn history exp event" data-dates="2026-10-22">
+      <div class="tour-card" data-tags="history exp autumn event" data-dates="2026-10-22" data-tour-id="2026-10-22" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/">
         <div class="tour-img" style="background:#3a2a1a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/宿泊トップ.png" alt="【限定宿泊プラン】 くらま温泉で迎える 鞍馬の火祭 特別な一夜" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge br" style="z-index:1;">募集中</div>
+          <button class="fav-btn" onclick="toggleFav(this)" title="お気に入り">♡</button>
         </div>
         <div class="tour-body">
           <div class="tour-tags"><span class="ttag th">歴史・社寺巡り</span><span class="ttag te">体験・名所巡り</span></div>
@@ -910,10 +930,11 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="autumn history exp event" data-dates="2026-10-22">
+      <div class="tour-card" data-tags="history exp autumn event" data-dates="2026-10-22" data-tour-id="2026-10-22" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/">
         <div class="tour-img" style="background:#6b8e6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/1day.png" alt="昼の鞍馬散策と夜の火祭へ  ～くらま温泉で過ごす特別な一日～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bfull" style="z-index:1;">満席</div>
+          <button class="fav-btn" onclick="toggleFav(this)" title="お気に入り">♡</button>
         </div>
         <div class="tour-body">
           <div class="tour-tags"><span class="ttag th">歴史・社寺巡り</span><span class="ttag te">体験・名所巡り</span></div>
@@ -923,10 +944,11 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="autumn history exp event" data-dates="2026-10-22">
+      <div class="tour-card" data-tags="history exp autumn event" data-dates="2026-10-22" data-tour-id="2026-10-22" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/kuramanohimatsuri2026/">
         <div class="tour-img" style="background:#3a2a1a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/夜トップ.png" alt="間近で体感する迫力！くらま温泉×鞍馬の火祭 観覧ツアー ～帰り時間を気にせず楽しむ特別な一夜～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bfull" style="z-index:1;">満席</div>
+          <button class="fav-btn" onclick="toggleFav(this)" title="お気に入り">♡</button>
         </div>
         <div class="tour-body">
           <div class="tour-tags"><span class="ttag th">歴史・社寺巡り</span><span class="ttag te">体験・名所巡り</span></div>
@@ -936,10 +958,11 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/kuramanohimatsuri2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="other" data-dates="2026-11-21,2026-11-22,2026-11-23,2026-11-24,2026-11-25,2026-11-26,2026-11-27,2026-11-28,2026-11-29,2026-11-30,2026-12-1,2026-12-2,2026-12-3,2026-12-4,2026-12-5,2026-12-6">
+      <div class="tour-card" data-tags="other" data-dates="2026-11-21,2026-11-22,2026-11-23,2026-11-24,2026-11-25,2026-11-26,2026-11-27,2026-11-28,2026-11-29,2026-11-30,2026-12-1,2026-12-2,2026-12-3,2026-12-4,2026-12-5,2026-12-6" data-tour-id="2026-11-28" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/nishiyama_half2026/">
         <div class="tour-img" style="background:#3a2a1a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/08/トップ用画像2.png" alt="京都・西山、紅葉をめぐる半日 ～タクシーで訪れる、静かな秋の名刹～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bfw" style="z-index:1;">あと２名</div>
+          <button class="fav-btn" onclick="toggleFav(this)" title="お気に入り">♡</button>
         </div>
         <div class="tour-body">
           <div class="tour-tags"><span class="ttag te">体験・名所巡り</span></div>
@@ -949,10 +972,11 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/nishiyama_half2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="other" data-dates="2026-11-22,2026-11-28">
+      <div class="tour-card" data-tags="other" data-dates="2026-11-22,2026-11-28" data-tour-id="2026-11-28" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/ayabe_momiji2026/">
         <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2025/09/トップ用.jpg" alt="美しき秋を贅沢に愉しむ大人旅 ～綾部・茅葺き屋根と庭園を望む料亭ゆう月の雅なランチ～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bfw" style="z-index:1;">あと４名</div>
+          <button class="fav-btn" onclick="toggleFav(this)" title="お気に入り">♡</button>
         </div>
         <div class="tour-body">
           <div class="tour-tags"><span class="ttag te">体験・名所巡り</span></div>
@@ -962,10 +986,11 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/ayabe_momiji2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="other" data-dates="2026-11-18,2026-11-19,2026-11-20,2026-11-21,2026-11-22,2026-11-23,2026-11-24,2026-11-25,2026-11-26,2026-11-27,2026-11-28,2026-11-29,2026-11-30,2026-12-1,2026-12-2,2026-12-3,2026-12-4,2026-12-5,2026-12-6">
+      <div class="tour-card" data-tags="other" data-dates="2026-11-18,2026-11-19,2026-11-20,2026-11-21,2026-11-22,2026-11-23,2026-11-24,2026-11-25,2026-11-26,2026-11-27,2026-11-28,2026-11-29,2026-11-30,2026-12-1,2026-12-2,2026-12-3,2026-12-4,2026-12-5,2026-12-6" data-tour-id="2026-11-24" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/konan_momiji2026/">
         <div class="tour-img" style="background:#4a7c6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2025/09/トップ用-1.png" alt="タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bfw" style="z-index:1;">あと３名</div>
+          <button class="fav-btn" onclick="toggleFav(this)" title="お気に入り">♡</button>
         </div>
         <div class="tour-body">
           <div class="tour-tags"><span class="ttag te">体験・名所巡り</span></div>
@@ -1001,10 +1026,11 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/momijiya-takao2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="history exp" data-dates="">
+      <div class="tour-card" data-tags="history exp" data-dates="" data-tour-id="2026-10-22" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/yawata/">
         <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2025/02/トップ-1.png" alt="京都・八幡の隠れた名所巡り ～流れ橋と歴史の旅～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge br" style="z-index:1;">募集中</div>
+          <button class="fav-btn" onclick="toggleFav(this)" title="お気に入り">♡</button>
         </div>
         <div class="tour-body">
           <div class="tour-tags"><span class="ttag th">歴史・社寺巡り</span><span class="ttag te">体験・名所巡り</span></div>
@@ -1014,10 +1040,11 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/yawata/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="other" data-dates="2026-8-28,2026-8-29,2026-8-30,2026-8-31,2026-9-1,2026-9-10,2026-9-11,2026-9-12,2026-9-13,2026-9-14,2026-9-15,2026-9-16,2026-9-17,2026-9-18,2026-9-19,2026-9-2,2026-9-20,2026-9-21,2026-9-22,2026-9-23,2026-9-24,2026-9-25,2026-9-26,2026-9-27,2026-9-28,2026-9-29,2026-9-3,2026-9-30,2026-9-4,2026-9-5,2026-9-6,2026-9-7,2026-9-8,2026-9-9">
+      <div class="tour-card" data-tags="other" data-dates="2026-8-28,2026-8-29,2026-8-30,2026-8-31,2026-9-1,2026-9-10,2026-9-11,2026-9-12,2026-9-13,2026-9-14,2026-9-15,2026-9-16,2026-9-17,2026-9-18,2026-9-19,2026-9-2,2026-9-20,2026-9-21,2026-9-22,2026-9-23,2026-9-24,2026-9-25,2026-9-26,2026-9-27,2026-9-28,2026-9-29,2026-9-3,2026-9-30,2026-9-4,2026-9-5,2026-9-6,2026-9-7,2026-9-8,2026-9-9" data-tour-id="2026-9-30" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/warajiya2026/">
         <div class="tour-img" style="background:#3a2a1a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/08/top-1.png" alt="好きな京都を、好きなように。智積院と老舗「わらじや」で楽しむ大人の半日旅" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge br" style="z-index:1;">募集中</div>
+          <button class="fav-btn" onclick="toggleFav(this)" title="お気に入り">♡</button>
         </div>
         <div class="tour-body">
           <div class="tour-tags"><span class="ttag te">体験・名所巡り</span></div>
@@ -1108,6 +1135,20 @@
       <a href="https://www.youtube.com/c/MKofficial_ch" target="_blank" class="sns-btn sns-youtube"><i class="ti ti-brand-youtube" style="font-size:15px"></i>YouTube</a>
     </div>
 
+    <div class="sb-block fav-panel" style="background:#fdf5e8;border-color:#e0c88a">
+      <div class="fav-panel-head">
+        <span class="fav-panel-title">♡ お気に入り</span>
+        <span class="fav-count" id="fav-count">0</span>
+      </div>
+      <div id="fav-list"><p class="fav-empty">ツアーカードの ♡ を押して保存</p></div>
+    </div>
+    <div class="sb-block fav-panel">
+      <div class="fav-panel-head">
+        <span class="fav-panel-title">♡ お気に入り</span>
+        <span class="fav-count" id="fav-count">0</span>
+      </div>
+      <div id="fav-list"><p class="fav-empty">ツアーカードの ♡ を押して保存</p></div>
+    </div>
     <div class="sb-block" style="background:#fdf5e8;border-color:#e0c88a">
       <div style="font-size:12px;font-weight:500;color:#5c4a32;margin-bottom:5px">マイページ</div>
       <div style="font-size:12px;color:#7c5c2e;margin-bottom:8px">予約確認・お気に入り管理</div>
@@ -1508,6 +1549,40 @@
     });
     var note = document.getElementById('tour-count');
     if (note) note.textContent = count + '件のツアーを表示中';
+  }
+
+  // ===== お気に入り機能 =====
+  function getFavs() { try { return JSON.parse(localStorage.getItem('mk_favs') || '[]'); } catch(e) { return []; } }
+  function saveFavs(list) { localStorage.setItem('mk_favs', JSON.stringify(list)); }
+  function toggleFav(btn) {
+    var card = btn.closest('.tour-card');
+    var id   = card.getAttribute('data-tour-id');
+    var name = card.querySelector('.tour-title') ? card.querySelector('.tour-title').textContent.replace('📄','').trim() : '';
+    var url  = card.getAttribute('data-tour-url') || '#';
+    var favs = getFavs();
+    var found = false;
+    for (var i = 0; i < favs.length; i++) { if (favs[i].id === id) { favs.splice(i,1); found=true; break; } }
+    if (!found) favs.push({id:id, name:name, url:url});
+    saveFavs(favs); renderFavs();
+  }
+  function removeFav(id) { saveFavs(getFavs().filter(function(f){return f.id!==id;})); renderFavs(); }
+  function renderFavs() {
+    var favs = getFavs();
+    var countEl = document.getElementById('fav-count');
+    if (countEl) countEl.textContent = favs.length;
+    document.querySelectorAll('.fav-btn').forEach(function(btn) {
+      var id = btn.closest('.tour-card').getAttribute('data-tour-id');
+      var active = favs.some(function(f){return f.id===id;});
+      btn.classList.toggle('active', active);
+      btn.textContent = active ? '♥' : '♡';
+    });
+    var listEl = document.getElementById('fav-list');
+    if (!listEl) return;
+    if (!favs.length) { listEl.innerHTML = '<p class="fav-empty">ツアーカードの ♡ を押して保存</p>'; return; }
+    listEl.innerHTML = favs.map(function(f) {
+      return '<div class="fav-item"><a href="'+f.url+'" target="_blank">'+f.name+'</a>'
+           + '<button class="fav-remove" data-fid="'+f.id+'" onclick="removeFav(this.dataset.fid)" title="解除">✕</button></div>';
+    }).join('');
   }
 
   // 初期カウント表示

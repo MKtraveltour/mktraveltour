@@ -629,10 +629,11 @@ def build_tour_cards(tours: dict) -> str:
                         _sort_key = _dt_val
                 except: pass
 
-        cards_entries.append((_sort_key, f"""      <div class="tour-card" data-tags="{data_tags}" data-dates="{data_dates_attr}">
+        cards_entries.append((_sort_key, f"""      <div class="tour-card" data-tags="{data_tags}" data-dates="{data_dates_attr}" data-tour-id="{k}" data-tour-url="{url}">
         <div class="tour-img" style="background:{bg_color};position:relative;overflow:hidden;">
           {img_html}
           <div class="sbadge {badge_cls}" style="z-index:1;">{badge_text}</div>
+          <button class="fav-btn" onclick="toggleFav(this)" title="お気に入り">♡</button>
         </div>
         <div class="tour-body">
           <div class="tour-tags">{tag_html}</div>
@@ -864,6 +865,19 @@ HTML_TEMPLATE = """\
     .reset-link {{ font-size: 12px; color: #8b7355; cursor: pointer; text-decoration: underline; display: none; }}
     .tour-card {{ background: #fff; border: 1px solid #d0c4b0; border-radius: 10px; overflow: hidden; transition: box-shadow 0.2s; }}
     .tour-card:hover {{ box-shadow: 0 2px 10px rgba(139,115,85,0.15); }}
+    .fav-btn {{ position:absolute;top:8px;right:8px;background:rgba(255,255,255,0.92);border:none;border-radius:999px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;z-index:2;box-shadow:0 2px 6px rgba(0,0,0,0.15);transition:transform 0.15s; }}
+    .fav-btn:hover {{ transform:scale(1.15); }}
+    .fav-btn.active {{ background:#fff0f0; }}
+    .fav-panel {{ background:#fff;border:1px solid #e0c88a;border-radius:12px;padding:14px;margin-bottom:12px; }}
+    .fav-panel-head {{ display:flex;align-items:center;justify-content:space-between;margin-bottom:10px; }}
+    .fav-panel-title {{ font-size:13px;font-weight:500;color:#5c4a32; }}
+    .fav-count {{ background:#8b7355;color:#fff;border-radius:999px;padding:1px 8px;font-size:11px;font-weight:500; }}
+    .fav-empty {{ font-size:11px;color:#aaa;text-align:center;padding:10px 0; }}
+    .fav-item {{ display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f0e8dc;font-size:11px; }}
+    .fav-item:last-child {{ border-bottom:none; }}
+    .fav-item a {{ color:#5c4a32;font-weight:500;flex:1;line-height:1.4; }}
+    .fav-item a:hover {{ text-decoration:underline; }}
+    .fav-remove {{ border:none;background:none;color:#c0a888;cursor:pointer;font-size:13px;padding:0 0 0 6px;flex-shrink:0; }}
     .tour-img {{ width: 100%; height: 200px; position: relative; overflow: hidden; font-size: 13px; color: #fff; font-weight: 500; background: #1a1a1a; }}
     .sbadge {{ position: absolute; top: 6px; right: 6px; font-size: 11px; padding: 2px 10px; border-radius: 4px; font-weight: 500; }}
     .bc {{ background: #27ae60; color: #fff; }} .bfw {{ background: #e67e22; color: #fff; }}
@@ -1207,6 +1221,20 @@ HTML_TEMPLATE = """\
       <a href="https://www.youtube.com/c/MKofficial_ch" target="_blank" class="sns-btn sns-youtube"><i class="ti ti-brand-youtube" style="font-size:15px"></i>YouTube</a>
     </div>
 
+    <div class="sb-block fav-panel" style="background:#fdf5e8;border-color:#e0c88a">
+      <div class="fav-panel-head">
+        <span class="fav-panel-title">♡ お気に入り</span>
+        <span class="fav-count" id="fav-count">0</span>
+      </div>
+      <div id="fav-list"><p class="fav-empty">ツアーカードの ♡ を押して保存</p></div>
+    </div>
+    <div class="sb-block fav-panel">
+      <div class="fav-panel-head">
+        <span class="fav-panel-title">♡ お気に入り</span>
+        <span class="fav-count" id="fav-count">0</span>
+      </div>
+      <div id="fav-list"><p class="fav-empty">ツアーカードの ♡ を押して保存</p></div>
+    </div>
     <div class="sb-block" style="background:#fdf5e8;border-color:#e0c88a">
       <div style="font-size:12px;font-weight:500;color:#5c4a32;margin-bottom:5px">マイページ</div>
       <div style="font-size:12px;color:#7c5c2e;margin-bottom:8px">予約確認・お気に入り管理</div>
@@ -1607,6 +1635,40 @@ HTML_TEMPLATE = """\
     }});
     var note = document.getElementById('tour-count');
     if (note) note.textContent = count + '件のツアーを表示中';
+  }}
+
+  // ===== お気に入り機能 =====
+  function getFavs() {{ try {{ return JSON.parse(localStorage.getItem('mk_favs') || '[]'); }} catch(e) {{ return []; }} }}
+  function saveFavs(list) {{ localStorage.setItem('mk_favs', JSON.stringify(list)); }}
+  function toggleFav(btn) {{
+    var card = btn.closest('.tour-card');
+    var id   = card.getAttribute('data-tour-id');
+    var name = card.querySelector('.tour-title') ? card.querySelector('.tour-title').textContent.replace('📄','').trim() : '';
+    var url  = card.getAttribute('data-tour-url') || '#';
+    var favs = getFavs();
+    var found = false;
+    for (var i = 0; i < favs.length; i++) {{ if (favs[i].id === id) {{ favs.splice(i,1); found=true; break; }} }}
+    if (!found) favs.push({{id:id, name:name, url:url}});
+    saveFavs(favs); renderFavs();
+  }}
+  function removeFav(id) {{ saveFavs(getFavs().filter(function(f){{return f.id!==id;}})); renderFavs(); }}
+  function renderFavs() {{
+    var favs = getFavs();
+    var countEl = document.getElementById('fav-count');
+    if (countEl) countEl.textContent = favs.length;
+    document.querySelectorAll('.fav-btn').forEach(function(btn) {{
+      var id = btn.closest('.tour-card').getAttribute('data-tour-id');
+      var active = favs.some(function(f){{return f.id===id;}});
+      btn.classList.toggle('active', active);
+      btn.textContent = active ? '♥' : '♡';
+    }});
+    var listEl = document.getElementById('fav-list');
+    if (!listEl) return;
+    if (!favs.length) {{ listEl.innerHTML = '<p class="fav-empty">ツアーカードの ♡ を押して保存</p>'; return; }}
+    listEl.innerHTML = favs.map(function(f) {{
+      return '<div class="fav-item"><a href="'+f.url+'" target="_blank">'+f.name+'</a>'
+           + '<button class="fav-remove" data-fid="'+f.id+'" onclick="removeFav(this.dataset.fid)" title="解除">✕</button></div>';
+    }}).join('');
   }}
 
   // 初期カウント表示
