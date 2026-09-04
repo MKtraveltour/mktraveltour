@@ -545,8 +545,11 @@ def build_tour_cards(tours: dict) -> str:
             if '秋' in t:                                       filter_tags.append('autumn')
             if '冬' in t:                                       filter_tags.append('winter')
             if '春' in t:                                       filter_tags.append('spring')
-            if '春' in t:                        filter_tags.append('spring')
-            if '冬' in t:                        filter_tags.append('winter')
+        # タイトルからも季節を補完（タグに季節が含まれない場合のフォールバック）
+        if '紅葉' in title or '秋' in title or 'もみじ' in title: filter_tags.append('autumn')
+        if '夏' in title or '花火' in title or '納涼' in title:   filter_tags.append('summer')
+        if '春' in title or '桜' in title or '梅' in title:       filter_tags.append('spring')
+        if '冬' in title or '雪' in title:                         filter_tags.append('winter')
         data_tags = ' '.join(set(filter_tags)) or 'other'
 
         # レポートバッジ生成（月日だけで照合）
