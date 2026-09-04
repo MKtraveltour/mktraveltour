@@ -869,7 +869,7 @@ HTML_TEMPLATE = """\
     .reset-link {{ font-size: 12px; color: #8b7355; cursor: pointer; text-decoration: underline; display: none; }}
     .tour-card {{ background: #fff; border: 1px solid #d0c4b0; border-radius: 10px; overflow: hidden; transition: box-shadow 0.2s; }}
     .tour-card:hover {{ box-shadow: 0 2px 10px rgba(139,115,85,0.15); }}
-    .fav-btn {{ position:absolute;top:8px;right:8px;background:rgba(255,255,255,0.92);border:none;border-radius:999px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;z-index:2;box-shadow:0 2px 6px rgba(0,0,0,0.15);transition:transform 0.15s; }}
+    .fav-btn {{ position:absolute;top:8px;left:8px;background:rgba(255,255,255,0.92);border:none;border-radius:999px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;z-index:2;box-shadow:0 2px 6px rgba(0,0,0,0.15);transition:transform 0.15s; }}
     .fav-btn:hover {{ transform:scale(1.15); }}
     .fav-btn.active {{ background:#fff0f0; }}
     .fav-panel {{ background:#fff;border:1px solid #e0c88a;border-radius:12px;padding:14px;margin-bottom:12px; }}
