@@ -16,7 +16,7 @@ TOUR_REPORTS_PATH = os.path.join(BASE_DIR, "tour_reports.json")
 SCRAPER_PATH      = os.path.join(BASE_DIR, "scraper.py")
 RUN_PATH          = os.path.join(BASE_DIR, "run.py")
 
-TAGS_OPTIONS = ["event", "exp", "history", "flower", "summer", "autumn", "winter", "spring", "other"]
+TAGS_OPTIONS = ["event", "exp", "history", "flower", "summer", "autumn", "winter", "spring", "ガイド・講座", "other"]
 TAG_LABELS   = {
     "event":   "イベント・お祭り",
     "exp":     "体験・名所巡り",
@@ -26,6 +26,7 @@ TAG_LABELS   = {
     "autumn":  "秋のツアー",
     "winter":  "冬のツアー",
     "spring":  "春のツアー",
+    "ガイド・講座": "ガイド・講座あり",
     "other":   "その他",
 }
 SEASON_DATA_PATH = os.path.join(BASE_DIR, "season_data.json")
