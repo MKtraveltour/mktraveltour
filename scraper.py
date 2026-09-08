@@ -67,6 +67,10 @@ TOUR_URLS = {
 
     "nishiyama_half2026": "https://travel.mk-group.co.jp/tourkyoto/nishiyama_half2026/",
 
+    "hojoji-day": "https://travel.mk-group.co.jp/tourkyoto/kameoka-momiji2026/",
+
+    "hojoji-night": "https://travel.mk-group.co.jp/tourkyoto/hojoji-light2026/",
+
 }
 
 HEADERS = {

@@ -17,7 +17,7 @@
       "景色・写真",
       "京都西山"
     ],
-    "updated_at": "2026-09-08T08:45:09.564107",
+    "updated_at": "2026-09-08T17:15:44.057804",
     "error": null
   },
   "ayabe_ajisai": {
@@ -38,7 +38,7 @@
       "神社仏閣",
       "景色・写真"
     ],
-    "updated_at": "2026-09-08T08:45:10.575230",
+    "updated_at": "2026-09-08T17:15:44.550892",
     "error": null
   },
   "rousoku": {
@@ -68,7 +68,7 @@
       "日帰り旅行",
       "夏のツアー"
     ],
-    "updated_at": "2026-09-08T08:45:12.155438",
+    "updated_at": "2026-09-08T17:15:45.478115",
     "error": null
   },
   "himatsuri_stay": {
@@ -90,7 +90,7 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-09-08T08:45:13.451648",
+    "updated_at": "2026-09-08T17:15:46.504124",
     "error": null
   },
   "okuribi": {
@@ -113,7 +113,7 @@
       "乗合",
       "夏のツアー"
     ],
-    "updated_at": "2026-09-08T08:45:14.931060",
+    "updated_at": "2026-09-08T17:15:47.442831",
     "error": null
   },
   "kokoro_utsushi": {
@@ -137,7 +137,7 @@
       "期間限定",
       "送迎場所指定OK"
     ],
-    "updated_at": "2026-09-08T08:45:16.576704",
+    "updated_at": "2026-09-08T17:15:48.431105",
     "error": null
   },
   "satsuei": {
@@ -164,7 +164,7 @@
       "ガイド・講座",
       "期間限定"
     ],
-    "updated_at": "2026-09-08T08:45:18.687468",
+    "updated_at": "2026-09-08T17:15:49.419853",
     "error": null
   },
   "momidiya": {
@@ -191,7 +191,7 @@
       "夏のツアー",
       "夏旅"
     ],
-    "updated_at": "2026-09-08T08:45:19.921008",
+    "updated_at": "2026-09-08T17:15:49.949496",
     "error": null
   },
   "himatsuri_1day": {
@@ -219,7 +219,7 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-09-08T08:45:23.944446",
+    "updated_at": "2026-09-08T17:15:50.856446",
     "error": null
   },
   "furin_shojuin2026": {
@@ -234,13 +234,8 @@
     ],
     "statuses": [
       {
-        "date": "9/11",
-        "label": "あと２名",
-        "type": "few"
-      },
-      {
         "date": "9/17",
-        "label": "あと３名",
+        "label": "あと１名",
         "type": "few"
       },
       {
@@ -250,8 +245,8 @@
       },
       {
         "date": "9/12",
-        "label": "あと２名",
-        "type": "few"
+        "label": "催行確定",
+        "type": "confirmed"
       },
       {
         "date": "9/19",
@@ -286,7 +281,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-09-08T08:45:24.388207",
+    "updated_at": "2026-09-08T17:15:51.689538",
     "error": null
   },
   "migidaimonji2026": {
@@ -310,7 +305,7 @@
       "乗合",
       "夏のツアー"
     ],
-    "updated_at": "2026-09-08T08:45:25.867681",
+    "updated_at": "2026-09-08T17:15:52.629974",
     "error": null
   },
   "himatsuri2026": {
@@ -338,7 +333,7 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-09-08T08:45:27.054804",
+    "updated_at": "2026-09-08T17:15:53.591730",
     "error": null
   },
   "miyama_ishida": {
@@ -360,7 +355,7 @@
       "歴史",
       "京都美山"
     ],
-    "updated_at": "2026-09-08T08:45:28.338540",
+    "updated_at": "2026-09-08T17:15:54.555543",
     "error": null
   },
   "yuzengiku2026": {
@@ -384,7 +379,7 @@
       "夏のツアー",
       "夏旅"
     ],
-    "updated_at": "2026-09-08T08:45:30.106408",
+    "updated_at": "2026-09-08T17:15:55.533441",
     "error": null
   },
   "yokokuji_shuttle": {
@@ -407,7 +402,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-09-08T08:45:31.277320",
+    "updated_at": "2026-09-08T17:15:57.031264",
     "error": null
   },
   "shojuin_sogei": {
@@ -435,7 +430,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-09-08T08:45:32.385677",
+    "updated_at": "2026-09-08T17:15:58.034414",
     "error": null
   },
   "uma": {
@@ -466,7 +461,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-09-08T08:45:33.397422",
+    "updated_at": "2026-09-08T17:15:58.969549",
     "error": null
   },
   "narihira_nishiyama": {
@@ -495,7 +490,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-09-08T08:45:33.855249",
+    "updated_at": "2026-09-08T17:15:59.958595",
     "error": null
   },
   "tango": {
@@ -517,7 +512,7 @@
       "貸切",
       "日帰り旅行"
     ],
-    "updated_at": "2026-09-08T08:45:34.926688",
+    "updated_at": "2026-09-08T17:16:00.734691",
     "error": null
   },
   "baikamo2026": {
@@ -542,7 +537,7 @@
       "日帰り旅行",
       "夏のツアー"
     ],
-    "updated_at": "2026-09-08T08:45:36.072067",
+    "updated_at": "2026-09-08T17:16:01.803852",
     "error": null
   },
   "maizuru_ajisai": {
@@ -567,7 +562,7 @@
       "神社仏閣",
       "景色・写真"
     ],
-    "updated_at": "2026-09-08T08:45:37.235288",
+    "updated_at": "2026-09-08T17:16:02.571545",
     "error": null
   },
   "yawata": {
@@ -589,7 +584,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-09-08T08:45:38.268305",
+    "updated_at": "2026-09-08T17:16:03.487600",
     "error": null
   },
   "shasou": {
@@ -610,7 +605,7 @@
       "歴史",
       "京都美山"
     ],
-    "updated_at": "2026-09-08T08:45:39.314941",
+    "updated_at": "2026-09-08T17:16:04.253910",
     "error": null
   },
   "kayabuki_himawari": {
@@ -625,7 +620,7 @@
     ],
     "statuses": [],
     "tags": [],
-    "updated_at": "2026-09-08T08:45:40.349194",
+    "updated_at": "2026-09-08T17:16:05.164123",
     "error": null,
     "hidden": true
   },
@@ -656,7 +651,7 @@
       "乗合",
       "夏のツアー"
     ],
-    "updated_at": "2026-09-08T08:45:41.225535",
+    "updated_at": "2026-09-08T17:16:06.055736",
     "error": null
   },
   "chikubushima": {
@@ -682,7 +677,7 @@
       "history",
       "summer"
     ],
-    "updated_at": "2026-09-08T08:45:42.258098",
+    "updated_at": "2026-09-08T17:16:06.990873",
     "error": null,
     "hidden": false
   },
@@ -700,7 +695,7 @@
     "tags": [
       "flower"
     ],
-    "updated_at": "2026-09-08T08:45:42.952451",
+    "updated_at": "2026-09-08T17:16:07.759644",
     "error": null,
     "hidden": false
   },
@@ -719,7 +714,7 @@
       "history",
       "summer"
     ],
-    "updated_at": "2026-09-08T08:45:43.719869",
+    "updated_at": "2026-09-08T17:16:08.685165",
     "error": null,
     "hidden": false
   },
@@ -739,7 +734,7 @@
       "event",
       "history"
     ],
-    "updated_at": "2026-09-08T08:45:44.755608",
+    "updated_at": "2026-09-08T17:16:09.155157",
     "error": null,
     "hidden": false
   },
@@ -769,7 +764,7 @@
     "tags": [
       "exp"
     ],
-    "updated_at": "2026-09-08T08:45:45.671180",
+    "updated_at": "2026-09-08T17:16:10.086224",
     "error": null,
     "hidden": false
   },
@@ -792,7 +787,7 @@
     "tags": [
       "event"
     ],
-    "updated_at": "2026-09-08T08:45:46.014688",
+    "updated_at": "2026-09-08T17:16:10.391842",
     "error": null,
     "hidden": false
   },
@@ -810,7 +805,7 @@
     "tags": [
       "exp"
     ],
-    "updated_at": "2026-09-08T08:45:47.051113",
+    "updated_at": "2026-09-08T17:16:11.173041",
     "error": null,
     "hidden": false
   },
@@ -833,7 +828,7 @@
     "tags": [
       "event"
     ],
-    "updated_at": "2026-09-08T08:45:47.940558",
+    "updated_at": "2026-09-08T17:16:12.095815",
     "error": null,
     "hidden": false
   },
@@ -858,7 +853,7 @@
       "history",
       "autumn"
     ],
-    "updated_at": "2026-09-08T08:45:48.927181",
+    "updated_at": "2026-09-08T17:16:12.383646",
     "error": null,
     "hidden": false
   },
@@ -882,7 +877,7 @@
       "history",
       "autumn"
     ],
-    "updated_at": "2026-09-08T08:45:50.136289",
+    "updated_at": "2026-09-08T17:16:13.153085",
     "error": null,
     "hidden": false
   },
@@ -922,7 +917,49 @@
       "history",
       "autumn"
     ],
-    "updated_at": "2026-09-08T08:45:50.968085",
+    "updated_at": "2026-09-08T17:16:14.082747",
+    "error": null,
+    "hidden": false
+  },
+  "hojoji-day": {
+    "key": "hojoji-day",
+    "url": "https://travel.mk-group.co.jp/tourkyoto/kameoka-momiji2026/",
+    "title": "紅葉の亀岡、心ほどける秋旅。法常寺で出会う、特別なひととき",
+    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/08/トップ用2.jpg",
+    "price": "15,800円（税込）",
+    "dates": [
+      "11/21(土)",
+      "11/29(日)"
+    ],
+    "statuses": [],
+    "tags": [
+      "autumn"
+    ],
+    "updated_at": "2026-09-08T17:16:14.998129",
+    "error": null,
+    "hidden": false
+  },
+  "hojoji-night": {
+    "key": "hojoji-night",
+    "url": "https://travel.mk-group.co.jp/tourkyoto/hojoji-light2026/",
+    "title": "【京都駅発着】法常寺 紅葉ライトアップ送迎プラン ～亀岡の名刹で過ごす、秋の夜～",
+    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/09/top.png",
+    "price": "7,800円（税込）",
+    "dates": [
+      "11/21(土)",
+      "11/22(日)",
+      "11/23(月)",
+      "11/27(金)",
+      "11/28(土)",
+      "11/29(日)"
+    ],
+    "statuses": [],
+    "tags": [
+      "event",
+      "history",
+      "autumn"
+    ],
+    "updated_at": "2026-09-08T17:16:15.932911",
     "error": null,
     "hidden": false
   }
