@@ -1,6 +1,24 @@
 {
   "articles": [
     {
+      "id": "020",
+      "title": "試食会をしてきました！",
+      "author": "Hiro",
+      "category": "進捗報告",
+      "date": "2026-09-09",
+      "text": "9/8　亀岡エリアで秋のツアーの下見・昼食の試食会を行ってきました！\nあいにくの雨模様もあり道中は深い霧に包まれ幻想的な風景に遭遇することも。\n\n亀岡市内の視察の後、亀岡の老舗「御料理 玉川楼」でいよいよお楽しみの試食会です！\n\n担当者3人分でテーブルがいっぱいになるくらいのボリュームと細かな技術が冴えわたる食事の数々…！\nツアーページに掲載するための写真素材の撮影と分かっているのに箸をとったらそのまま口に運びたくなる彩りに我慢を強いられていました。\n\n先附からと一口食べれば繊細な味付けに心を奪われ、炊き合わせも一つ一つが丁寧に調理されていることを伺える美味しさでした。\n茶碗蒸しも定番の具材だけでなく色々入っていたのですが担当者が和食をあまり作らないので判別できず…。\n後日お品書きを頂けるとのことなのでまた詳細をご報告したいと思います！\n\n今回の玉川楼が行程に含まれているツアーは既に販売が開始されています！\n普段非公開の寺社の解説付きの紅葉のツアーです！老舗の伝統が息づくお料理を是非皆様もご賞味ください！\n\n京都観光タクシーツアー\n紅葉の亀岡、心ほどける秋旅。法常寺で出会う、特別なひととき\n[BANNER]<a href=\"https://travel.mk-group.co.jp/tourkyoto/kameoka-momiji2026/\" target=\"_blank\" style=\"display:block;text-align:center;background:#8b7355;color:#fff;border-radius:6px;padding:9px;font-size:13px;font-weight:500;margin:8px 0;text-decoration:none;\">紅葉の亀岡、心ほどける秋旅。法常寺で出会う、特別なひととき</a>[/BANNER]",
+      "photos": [
+        "260908_tamakawarou_zentai.jpg",
+        "260908_tamakawarou_table.jpg",
+        "260908_tamakawarou_sakiduke.jpg",
+        "260908_tamakawarou_hassun.jpg"
+      ],
+      "audio": "",
+      "audio_label": "",
+      "publish_at": "",
+      "pinned": false
+    },
+    {
       "id": "019",
       "title": "新たな機能を追加しました！",
       "author": "Hiro",
