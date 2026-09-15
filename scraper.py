@@ -71,6 +71,8 @@ TOUR_URLS = {
 
     "hojoji-night": "https://travel.mk-group.co.jp/tourkyoto/hojoji-light2026/",
 
+    "shizuhamo_base-2026": "https://travel.mk-group.co.jp/tourkyoto/sadou-2026/",
+
 }
 
 HEADERS = {
