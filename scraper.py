@@ -73,6 +73,12 @@ TOUR_URLS = {
 
     "shizuhamo_base-2026": "https://travel.mk-group.co.jp/tourkyoto/sadou-2026/",
 
+    "kayabuki_housui": "https://travel.mk-group.co.jp/tourkyoto/housui-winter2026/",
+
+    "youkoku_special_private": "https://travel.mk-group.co.jp/tourkyoto/youkokuji-limited2026/",
+
+    "kyotanba_kuromame": "https://travel.mk-group.co.jp/tourkyoto/kyotanba-kuromame2026/",
+
 }
 
 HEADERS = {
