@@ -36,6 +36,20 @@
     .bnav-sub a:hover { background: #f0ebe2; color: #5c4a32; }
     .bnav-sub a.active { color: #8b7355; font-weight: 500; background: #f5ede0; }
     .new-badge { background: #c0392b; color: #fff; font-size: 10px; padding: 1px 6px; border-radius: 10px; font-weight: 500; }
+    /* 紅葉ツアー ピックアップ */
+    .momiji-pickup { background: linear-gradient(180deg,#fdf6ec,#f7ede0); border: 1px solid #e6d5b8; border-radius: 12px; padding: 14px; margin: 14px auto; max-width: 1200px; }
+    .momiji-pickup-head { display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; padding: 0 2px 10px; }
+    .momiji-pickup-title { font-size: 16px; font-weight: 500; color: #8b3a1e; }
+    .momiji-pickup-sub { font-size: 12px; color: #a07a4a; }
+    .momiji-pickup-scroll { display:flex; gap:10px; overflow-x:auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; scrollbar-width: thin; }
+    .momiji-card { flex: 0 0 180px; background:#fff; border:1px solid #e6d5b8; border-radius:10px; overflow:hidden; text-decoration:none; transition: box-shadow 0.2s, transform 0.2s; }
+    .momiji-card:hover { box-shadow: 0 4px 14px rgba(139,58,30,0.18); transform: translateY(-2px); }
+    .momiji-card-img { width:100%; height:120px; background:#c9b28a; overflow:hidden; }
+    .momiji-card-img img { width:100%; height:100%; object-fit:cover; display:block; }
+    .momiji-card-body { padding: 8px 10px 10px; }
+    .momiji-card-title { font-size: 12px; font-weight: 500; color: #3c2e1e; line-height: 1.4; margin-bottom: 4px; display:-webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .momiji-card-price { font-size: 11px; color: #8b3a1e; }
+    @media (min-width: 900px) { .momiji-pickup-scroll { flex-wrap: wrap; overflow-x: visible; } .momiji-card { flex: 0 0 calc(16.666% - 9px); } }
     /* レポートビューワー */
     .report-viewer-overlay { display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:10000;align-items:center;justify-content:center;flex-direction:column; }
     .report-viewer-overlay.show { display:flex; }
@@ -234,6 +248,57 @@
   </div>
 </div>
 
+<div class="momiji-pickup" id="momiji-pickup-section">
+  <div class="momiji-pickup-head">
+    <span class="momiji-pickup-title">🍁 紅葉のツアー ピックアップ</span>
+    <span class="momiji-pickup-sub">この秋おすすめの紅葉ツアーをご紹介</span>
+  </div>
+  <div class="momiji-pickup-scroll">
+      <a href="https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/" target="_blank" class="momiji-card">
+        <div class="momiji-card-img"><img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/宿泊トップ.png" alt="【限定宿泊プラン】 くらま温泉で迎える 鞍馬の火祭 特別な一夜" loading="lazy"></div>
+        <div class="momiji-card-body">
+          <div class="momiji-card-title">【限定宿泊プラン】 くらま温泉で迎える 鞍馬の火祭 特別な一夜</div>
+          <div class="momiji-card-price">67,000円～135,000円（税込）</div>
+        </div>
+      </a>
+      <a href="https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/" target="_blank" class="momiji-card">
+        <div class="momiji-card-img"><img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/1day.png" alt="昼の鞍馬散策と夜の火祭へ  ～くらま温泉で過ごす特別な一日～" loading="lazy"></div>
+        <div class="momiji-card-body">
+          <div class="momiji-card-title">昼の鞍馬散策と夜の火祭へ  ～くらま温泉で過ごす特別な一日～</div>
+          <div class="momiji-card-price">26,800円（税込）</div>
+        </div>
+      </a>
+      <a href="https://travel.mk-group.co.jp/tourkyoto/kuramanohimatsuri2026/" target="_blank" class="momiji-card">
+        <div class="momiji-card-img"><img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/夜トップ.png" alt="間近で体感する迫力！くらま温泉×鞍馬の火祭 観覧ツアー ～帰り時間を気にせず楽しむ特別な一夜～" loading="lazy"></div>
+        <div class="momiji-card-body">
+          <div class="momiji-card-title">間近で体感する迫力！くらま温泉×鞍馬の火祭 観覧ツアー ～帰り時間を気にせず楽しむ特別な一夜～</div>
+          <div class="momiji-card-price">25,800円（税込）</div>
+        </div>
+      </a>
+      <a href="https://travel.mk-group.co.jp/tourkyoto/kyotanba-kuromame2026/" target="_blank" class="momiji-card">
+        <div class="momiji-card-img"><img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/09/黒枝豆トップ.jpg" alt="実りの秋、丹波へ。～「新丹波黒」収穫体験と丹波の味覚を楽しむ小さな旅～" loading="lazy"></div>
+        <div class="momiji-card-body">
+          <div class="momiji-card-title">実りの秋、丹波へ。～「新丹波黒」収穫体験と丹波の味覚を楽しむ小さな旅～</div>
+          <div class="momiji-card-price">14,800円（税込）</div>
+        </div>
+      </a>
+      <a href="https://travel.mk-group.co.jp/tourkyoto/nishiyama_half2026/" target="_blank" class="momiji-card">
+        <div class="momiji-card-img"><img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/08/トップ用画像2.png" alt="京都・西山、紅葉をめぐる半日 ～タクシーで訪れる、静かな秋の名刹～" loading="lazy"></div>
+        <div class="momiji-card-body">
+          <div class="momiji-card-title">京都・西山、紅葉をめぐる半日 ～タクシーで訪れる、静かな秋の名刹～</div>
+          <div class="momiji-card-price">8,800円（税込）</div>
+        </div>
+      </a>
+      <a href="https://travel.mk-group.co.jp/tourkyoto/kameoka-momiji2026/" target="_blank" class="momiji-card">
+        <div class="momiji-card-img"><img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/08/トップ用2.jpg" alt="紅葉の亀岡、心ほどける秋旅。法常寺で出会う、特別なひととき" loading="lazy"></div>
+        <div class="momiji-card-body">
+          <div class="momiji-card-title">紅葉の亀岡、心ほどける秋旅。法常寺で出会う、特別なひととき</div>
+          <div class="momiji-card-price">15,800円（税込）</div>
+        </div>
+      </a>
+  </div>
+</div>
+
 <!-- スマホ用タブナビ -->
 <div class="sp-tabs" id="sp-tabs">
   <div class="sp-tab active" onclick="spTab('diary', this)">📔 造成日記</div>
@@ -351,7 +416,7 @@
   <a href="https://www.mk-group.co.jp/mktravel/list_008_2024" target="_blank" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">📁 2024年</a>
 </div>
 
-<p class="updated-note">最終更新: 2026年09月24日 10:49</p>
+<p class="updated-note">最終更新: 2026年09月24日 12:57</p>
 
 <div class="page-wrap">
 
@@ -935,7 +1000,7 @@
     </div>
     <div class="tour-count" id="tour-count"></div>
     <div class="tours-grid" id="tours-grid">
-      <div class="tour-card" data-tags="history exp event" data-dates="2026-6-1,2026-6-11,2026-6-12,2026-6-13,2026-6-14,2026-6-15,2026-6-18,2026-6-19,2026-6-20,2026-6-21,2026-6-22,2026-6-25,2026-6-26,2026-6-27,2026-6-28,2026-6-29,2026-6-4,2026-6-5,2026-6-6,2026-6-7,2026-6-8,2026-7-10,2026-7-11,2026-7-12,2026-7-13,2026-7-16,2026-7-17,2026-7-18,2026-7-19,2026-7-2,2026-7-20,2026-7-23,2026-7-24,2026-7-25,2026-7-26,2026-7-27,2026-7-3,2026-7-30,2026-7-31,2026-7-4,2026-7-5,2026-7-6,2026-7-9,2026-8-1,2026-8-10,2026-8-13,2026-8-14,2026-8-15,2026-8-16,2026-8-2,2026-8-20,2026-8-21,2026-8-22,2026-8-23,2026-8-24,2026-8-27,2026-8-28,2026-8-29,2026-8-3,2026-8-30,2026-8-31,2026-8-6,2026-8-7,2026-8-8,2026-8-9,2026-9-10,2026-9-11,2026-9-12,2026-9-13,2026-9-14,2026-9-17,2026-9-18,2026-9-19,2026-9-20,2026-9-21,2026-9-24,2026-9-25,2026-9-26,2026-9-27,2026-9-28,2026-9-3,2026-9-4,2026-9-5,2026-9-6,2026-9-7" data-tour-id="2026-9-27" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/">
+      <div class="tour-card" data-tags="history event exp" data-dates="2026-6-1,2026-6-11,2026-6-12,2026-6-13,2026-6-14,2026-6-15,2026-6-18,2026-6-19,2026-6-20,2026-6-21,2026-6-22,2026-6-25,2026-6-26,2026-6-27,2026-6-28,2026-6-29,2026-6-4,2026-6-5,2026-6-6,2026-6-7,2026-6-8,2026-7-10,2026-7-11,2026-7-12,2026-7-13,2026-7-16,2026-7-17,2026-7-18,2026-7-19,2026-7-2,2026-7-20,2026-7-23,2026-7-24,2026-7-25,2026-7-26,2026-7-27,2026-7-3,2026-7-30,2026-7-31,2026-7-4,2026-7-5,2026-7-6,2026-7-9,2026-8-1,2026-8-10,2026-8-13,2026-8-14,2026-8-15,2026-8-16,2026-8-2,2026-8-20,2026-8-21,2026-8-22,2026-8-23,2026-8-24,2026-8-27,2026-8-28,2026-8-29,2026-8-3,2026-8-30,2026-8-31,2026-8-6,2026-8-7,2026-8-8,2026-8-9,2026-9-10,2026-9-11,2026-9-12,2026-9-13,2026-9-14,2026-9-17,2026-9-18,2026-9-19,2026-9-20,2026-9-21,2026-9-24,2026-9-25,2026-9-26,2026-9-27,2026-9-28,2026-9-3,2026-9-4,2026-9-5,2026-9-6,2026-9-7" data-tour-id="2026-9-27" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/furin-shojuin2026/">
         <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2024/04/2021shojuin_furin_bn.jpg" alt="正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bfw" style="z-index:1;">あと２名</div>
@@ -963,7 +1028,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/miyama-soba2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="history exp event autumn" data-dates="2026-10-22" data-tour-id="2026-10-22" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/">
+      <div class="tour-card" data-tags="history autumn event exp" data-dates="2026-10-22" data-tour-id="2026-10-22" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/">
         <div class="tour-img" style="background:#3a2a1a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/宿泊トップ.png" alt="【限定宿泊プラン】 くらま温泉で迎える 鞍馬の火祭 特別な一夜" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bfull" style="z-index:1;">満席</div>
@@ -977,7 +1042,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="history exp event autumn" data-dates="2026-10-22" data-tour-id="2026-10-22" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/">
+      <div class="tour-card" data-tags="history autumn event exp" data-dates="2026-10-22" data-tour-id="2026-10-22" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/">
         <div class="tour-img" style="background:#6b8e6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/1day.png" alt="昼の鞍馬散策と夜の火祭へ  ～くらま温泉で過ごす特別な一日～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bfull" style="z-index:1;">満席</div>
@@ -991,7 +1056,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="history exp event autumn" data-dates="2026-10-22" data-tour-id="2026-10-22" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/kuramanohimatsuri2026/">
+      <div class="tour-card" data-tags="history autumn event exp" data-dates="2026-10-22" data-tour-id="2026-10-22" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/kuramanohimatsuri2026/">
         <div class="tour-img" style="background:#3a2a1a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/夜トップ.png" alt="間近で体感する迫力！くらま温泉×鞍馬の火祭 観覧ツアー ～帰り時間を気にせず楽しむ特別な一夜～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bfull" style="z-index:1;">満席</div>
@@ -1061,10 +1126,10 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/hojoji-light2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="other" data-dates="2026-11-21,2026-11-23,2026-11-25,2026-11-26,2026-11-29,2026-12-2,2026-12-4,2026-12-5" data-tour-id="2026-12-5" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/youkokuji-limited2026/">
+      <div class="tour-card" data-tags="other" data-dates="2026-11-21,2026-11-23,2026-11-25,2026-11-26,2026-11-29,2026-12-2,2026-12-4,2026-12-5" data-tour-id="2026-12-2" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/youkokuji-limited2026/">
         <div class="tour-img" style="background:#6b8e6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/09/トップ用2-2.jpg" alt="【9名様限定・特別貸切】誰もいない朝の柳谷観音 楊谷寺へ ～開門前の静寂に包まれる、京都西山の特別な朝～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
-          <div class="sbadge br" style="z-index:1;">募集中</div>
+          <div class="sbadge bfw" style="z-index:1;">あと４名</div>
           <button class="fav-btn" onclick="toggleFav(this)" title="お気に入り">♡</button>
         </div>
         <div class="tour-body">
@@ -1078,7 +1143,7 @@
       <div class="tour-card" data-tags="autumn" data-dates="2026-11-22,2026-11-28" data-tour-id="2026-11-28" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/ayabe_momiji2026/">
         <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2025/09/トップ用.jpg" alt="美しき秋を贅沢に愉しむ大人旅 ～綾部・茅葺き屋根と庭園を望む料亭ゆう月の雅なランチ～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
-          <div class="sbadge bfw" style="z-index:1;">あと１名</div>
+          <div class="sbadge bc" style="z-index:1;">催行確定日あり</div>
           <button class="fav-btn" onclick="toggleFav(this)" title="お気に入り">♡</button>
         </div>
         <div class="tour-body">
@@ -1106,7 +1171,7 @@
       <div class="tour-card" data-tags="other" data-dates="2026-12-1" data-tour-id="2026-12-1" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/housui-winter2026/">
         <div class="tour-img" style="background:#3a2a1a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/09/トップ用.jpg" alt="【12/1限定】迫力の一斉放水！美山かやぶきの里を訪ねて～ゆば尽くしの昼食と、美山の小さな旅～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
-          <div class="sbadge br" style="z-index:1;">募集中</div>
+          <div class="sbadge bfw" style="z-index:1;">あと５名</div>
           <button class="fav-btn" onclick="toggleFav(this)" title="お気に入り">♡</button>
         </div>
         <div class="tour-body">
@@ -1173,7 +1238,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/warajiya2026/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="exp" data-dates="2027-1-6" data-tour-id="2027-1-6" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/sadou-2026/">
+      <div class="tour-card" data-tags="exp" data-dates="2026-9-30" data-tour-id="2026-9-30" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/sadou-2026/">
         <div class="tour-img" style="background:#4a7c6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/09/トップ用.png" alt="自分で点てるから、もっと思い出に残る。京町屋 茶道体験ツアー" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge br" style="z-index:1;">募集中</div>
@@ -1727,8 +1792,21 @@
   var SHOJUIN_WEEKDAYS = [0, 4, 5, 6]; // JS: 日=0,月=1,火=2,水=3,木=4,金=5,土=6
   function tourFilterByDate(dateKey) {
     var parts = dateKey.split('-');
-    var d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+    var pY = parseInt(parts[0]), pM = parseInt(parts[1]), pD = parseInt(parts[2]);
+    var d = new Date(pY, pM-1, pD);
     var dow = d.getDay(); // 0=日,1=月,...,6=土
+    // TOUR_REPORTSはゼロ埋め形式（例: 2026-09-05）で保存されているため、
+    // dateKey（ゼロ埋めなし。例: 2026-9-5）とは別にnormKeyを作って検索に使う
+    var normKey = pY + '-' + String(pM).padStart(2,'0') + '-' + String(pD).padStart(2,'0');
+    var todayMidF = new Date();
+    todayMidF = new Date(todayMidF.getFullYear(), todayMidF.getMonth(), todayMidF.getDate());
+    var isPast = d < todayMidF;
+    // ref（他日への参照）があれば解決する（drawCalと同じロジック）
+    var rawReport = TOUR_REPORTS[normKey];
+    var reportResolved = rawReport;
+    if (rawReport && rawReport.ref && TOUR_REPORTS[rawReport.ref]) {
+      reportResolved = Object.assign({}, TOUR_REPORTS[rawReport.ref], {title: rawReport.title || TOUR_REPORTS[rawReport.ref].title});
+    }
     var cards = document.querySelectorAll('#tours-grid .tour-card');
     var count = 0;
     cards.forEach(function(card) {
@@ -1785,8 +1863,8 @@
     var reportSection = document.getElementById('tour-report-section');
     var reportPhotos  = document.getElementById('tour-report-photos');
     var reportLink    = document.getElementById('tour-report-link');
-    if (reportSection && TOUR_REPORTS[dateKey]) {
-      var report = TOUR_REPORTS[dateKey];
+    if (reportSection && reportResolved) {
+      var report = reportResolved;
       reportSection.style.display = 'block';
       reportLink.href = report.page;
       reportPhotos.innerHTML = '';
@@ -1807,7 +1885,7 @@
 
     // 日付クリック後にツアー欄へジャンプ
     setTimeout(function() {
-      var jumpEl = (isPast && TOUR_REPORTS[normKey] && reportSection)
+      var jumpEl = (isPast && reportResolved && reportSection)
         ? reportSection
         : document.getElementById('tours-grid');
       if (!jumpEl) return;
@@ -1962,8 +2040,8 @@
       TOUR['2026-9-16'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇💜🏯'};
       TOUR['2026-9-17'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇💜🏯'};
       TOUR['2026-9-18'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇💜🏯'};
-      TOUR['2026-9-19'] = {st:'confirmed', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇💜🏯'};
-      TOUR['2026-9-20'] = {st:'confirmed', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇💜🏯'};
+      TOUR['2026-9-19'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇💜🏯'};
+      TOUR['2026-9-20'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇💜🏯'};
       TOUR['2026-9-21'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇💜🏯'};
       TOUR['2026-9-22'] = {st:'confirmed', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇💜🏯'};
       TOUR['2026-9-23'] = {st:'tour', ti:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', ur:_u_furin_shojuin2026, nt:'正寿院 風鈴まつり送迎プラン 2026【京都駅・宇治駅発着】', em:'🎇💜🏯'};
@@ -1991,17 +2069,17 @@
       var _u_window_night = 'https://travel.mk-group.co.jp/tourkyoto/window_night/';
       var _u_ayabe_nouryou = 'https://travel.mk-group.co.jp/tourkyoto/ayabe-nouryou/';
       var _u_miyama_soba = 'https://travel.mk-group.co.jp/tourkyoto/miyama-soba2026/';
-      TOUR['2026-10-3'] = {st:'few', ti:'白いそばの花に会いに。秋の美山をめぐる小さな旅', ur:_u_miyama_soba, nt:'白いそばの花に会いに。秋の美山をめぐる小さな旅 あと３名', em:'💜🏯'};
+      TOUR['2026-10-3'] = {st:'confirmed', ti:'白いそばの花に会いに。秋の美山をめぐる小さな旅', ur:_u_miyama_soba, nt:'白いそばの花に会いに。秋の美山をめぐる小さな旅 催行確定', em:'💜🏯'};
       var _u_nuigurumi2026 = 'https://travel.mk-group.co.jp/tourkyoto/nuigurumi2026/';
       var _u_chishaku_in_warajiya = 'https://travel.mk-group.co.jp/tourkyoto/warajiya2026/';
       var _u_nuigurumi_tuika = 'https://travel.mk-group.co.jp/tourkyoto/nuigurumi2026-2/';
       var _u_ayabe_momiji2026 = 'https://travel.mk-group.co.jp/tourkyoto/ayabe_momiji2026/';
-      TOUR['2026-11-28'] = {st:'few', ti:'美しき秋を贅沢に愉しむ大人旅 ～綾部・茅葺き屋根と庭園を望む料亭ゆう月の雅なランチ～', ur:_u_ayabe_momiji2026, nt:'美しき秋を贅沢に愉しむ大人旅 ～綾部・茅葺き屋根と庭園を望む料亭ゆう月の雅なランチ～ あと１名', em:'💜🏯'};
+      TOUR['2026-11-28'] = {st:'confirmed', ti:'美しき秋を贅沢に愉しむ大人旅 ～綾部・茅葺き屋根と庭園を望む料亭ゆう月の雅なランチ～', ur:_u_ayabe_momiji2026, nt:'美しき秋を贅沢に愉しむ大人旅 ～綾部・茅葺き屋根と庭園を望む料亭ゆう月の雅なランチ～ 催行確定', em:'💜🏯'};
       TOUR['2026-11-22'] = {st:'tour', ti:'美しき秋を贅沢に愉しむ大人旅 ～綾部・茅葺き屋根と庭園を望む料亭ゆう月の雅なランチ～', ur:_u_ayabe_momiji2026, nt:'美しき秋を贅沢に愉しむ大人旅 ～綾部・茅葺き屋根と庭園を望む料亭ゆう月の雅なランチ～', em:'💜🏯'};
       var _u_konan_momiji2026 = 'https://travel.mk-group.co.jp/tourkyoto/konan_momiji2026/';
       TOUR['2026-11-24'] = {st:'few', ti:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', ur:_u_konan_momiji2026, nt:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～ あと２名', em:'💜🏯'};
       TOUR['2026-11-25'] = {st:'confirmed', ti:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', ur:_u_konan_momiji2026, nt:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～ 催行確定', em:'💜🏯'};
-      TOUR['2026-11-27'] = {st:'few', ti:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', ur:_u_konan_momiji2026, nt:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～ あと２名', em:'💜🏯'};
+      TOUR['2026-11-27'] = {st:'confirmed', ti:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', ur:_u_konan_momiji2026, nt:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～ 催行確定', em:'💜🏯'};
       TOUR['2026-11-29'] = {st:'few', ti:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', ur:_u_konan_momiji2026, nt:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～ あと２名', em:'💜🏯'};
       TOUR['2026-11-18'] = {st:'tour', ti:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', ur:_u_konan_momiji2026, nt:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', em:'💜🏯'};
       TOUR['2026-11-19'] = {st:'tour', ti:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', ur:_u_konan_momiji2026, nt:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', em:'💜🏯'};
@@ -2010,8 +2088,8 @@
       TOUR['2026-11-23'] = {st:'tour', ti:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', ur:_u_konan_momiji2026, nt:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', em:'💜🏯'};
       TOUR['2026-11-26'] = {st:'tour', ti:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', ur:_u_konan_momiji2026, nt:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', em:'💜🏯'};
       TOUR['2026-11-30'] = {st:'tour', ti:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', ur:_u_konan_momiji2026, nt:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', em:'💜🏯'};
-      TOUR['2026-12-1'] = {st:'tour', ti:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', ur:_u_konan_momiji2026, nt:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', em:'💜🏯'};
-      TOUR['2026-12-2'] = {st:'tour', ti:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', ur:_u_konan_momiji2026, nt:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', em:'💜🏯'};
+      TOUR['2026-12-1'] = {st:'few', ti:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', ur:_u_konan_momiji2026, nt:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', em:'💜🏯'};
+      TOUR['2026-12-2'] = {st:'few', ti:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', ur:_u_konan_momiji2026, nt:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', em:'💜🏯'};
       TOUR['2026-12-3'] = {st:'tour', ti:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', ur:_u_konan_momiji2026, nt:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', em:'💜🏯'};
       TOUR['2026-12-4'] = {st:'tour', ti:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', ur:_u_konan_momiji2026, nt:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', em:'💜🏯'};
       TOUR['2026-12-5'] = {st:'tour', ti:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', ur:_u_konan_momiji2026, nt:'タクシーでめぐる 湖南三山送迎ツアー ～混雑回避でスムーズ観光～', em:'💜🏯'};
@@ -2020,7 +2098,6 @@
       var _u_hojoji_day = 'https://travel.mk-group.co.jp/tourkyoto/kameoka-momiji2026/';
       var _u_hojoji_night = 'https://travel.mk-group.co.jp/tourkyoto/hojoji-light2026/';
       var _u_shizuhamo_base_2026 = 'https://travel.mk-group.co.jp/tourkyoto/sadou-2026/';
-      TOUR['2027-1-6'] = {st:'tour', ti:'自分で点てるから、もっと思い出に残る。京町屋 茶道体験ツアー', ur:_u_shizuhamo_base_2026, nt:'自分で点てるから、もっと思い出に残る。京町屋 茶道体験ツアー', em:'💜'};
       var _u_kayabuki_housui = 'https://travel.mk-group.co.jp/tourkyoto/housui-winter2026/';
       var _u_youkoku_special_private = 'https://travel.mk-group.co.jp/tourkyoto/youkokuji-limited2026/';
       var _u_kyotanba_kuromame = 'https://travel.mk-group.co.jp/tourkyoto/kyotanba-kuromame2026/';
