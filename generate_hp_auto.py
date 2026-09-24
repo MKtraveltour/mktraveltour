@@ -701,6 +701,102 @@ def build_tour_cards(tours: dict) -> str:
     return "\n".join(html for _, html in cards_entries)
 
 
+def build_momiji_pickup(tours: dict, max_items: int = 6) -> str:
+    """
+    タグに「autumn」または「秋のツアー」を含むツアーをピックアップして、
+    ヘッダー直下に表示する紅葉ツアー特集セクションのHTMLを生成する。
+    既存のカレンダー／ツアー一覧のJS（フィルター・お気に入り等）には一切依存しない、
+    画像とリンクだけの独立した静的ブロック。
+    """
+    import datetime as _dt3, re as _re3
+    _today = _dt3.date.today()
+    SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama", "momidiya"}
+    AUTUMN_TAGS = {"autumn", "秋のツアー"}
+
+    def _is_all_past(tour):
+        dates = tour.get("dates", [])
+        if not dates:
+            return False
+        future_found = False
+        date_found = False
+        for d in dates:
+            if "随時" in str(d):
+                return False
+            for m in _re3.finditer(r"(\d{1,2})/(\d{1,2})", str(d)):
+                mo, day = int(m.group(1)), int(m.group(2))
+                try:
+                    dt = _dt3.date(_today.year, mo, day)
+                    date_found = True
+                    if dt >= _today:
+                        future_found = True
+                except Exception:
+                    pass
+        if not date_found:
+            return False
+        return not future_found
+
+    def _nearest_date(tour):
+        best = _dt3.date(9999, 12, 30)
+        for d in tour.get("dates", []):
+            for m in _re3.finditer(r"(\d{1,2})/(\d{1,2})", str(d)):
+                mo, day = int(m.group(1)), int(m.group(2))
+                try:
+                    dt = _dt3.date(_today.year, mo, day)
+                    if dt >= _today and dt < best:
+                        best = dt
+                except Exception:
+                    pass
+        return best
+
+    picked = []
+    for key, tour in tours.items():
+        if key in SKIP_KEYS:
+            continue
+        if tour.get("error") or tour.get("hidden"):
+            continue
+        title = tour.get("title", "")
+        if "募集終了" in title or "受付終了" in title:
+            continue
+        if _is_all_past(tour):
+            continue
+        tags = tour.get("tags", [])
+        if not AUTUMN_TAGS.intersection(tags):
+            continue
+        picked.append((_nearest_date(tour), key, tour))
+
+    if not picked:
+        return ""
+
+    picked.sort(key=lambda x: x[0])
+    picked = picked[:max_items]
+
+    cards = []
+    for _, key, tour in picked:
+        title = tour.get("title", "")
+        url   = tour.get("url", "")
+        image = tour.get("image", "")
+        price = tour.get("price", "")
+        img_html = f'<img src="{image}" alt="{title}" loading="lazy">' if image else ""
+        cards.append(f"""      <a href="{url}" target="_blank" class="momiji-card">
+        <div class="momiji-card-img">{img_html}</div>
+        <div class="momiji-card-body">
+          <div class="momiji-card-title">{title}</div>
+          <div class="momiji-card-price">{price}</div>
+        </div>
+      </a>""")
+
+    cards_html = "\n".join(cards)
+    return f"""<div class="momiji-pickup" id="momiji-pickup-section">
+  <div class="momiji-pickup-head">
+    <span class="momiji-pickup-title">🍁 紅葉のツアー ピックアップ</span>
+    <span class="momiji-pickup-sub">この秋おすすめの紅葉ツアーをご紹介</span>
+  </div>
+  <div class="momiji-pickup-scroll">
+{cards_html}
+  </div>
+</div>"""
+
+
 def build_sidebar_status(tours: dict) -> str:
     """直近の催行状況リストを生成（今日以降のみ・日付近い順）"""
     import datetime as _dt, re as _re
@@ -798,6 +894,20 @@ HTML_TEMPLATE = """\
     .bnav-sub a:hover {{ background: #f0ebe2; color: #5c4a32; }}
     .bnav-sub a.active {{ color: #8b7355; font-weight: 500; background: #f5ede0; }}
     .new-badge {{ background: #c0392b; color: #fff; font-size: 10px; padding: 1px 6px; border-radius: 10px; font-weight: 500; }}
+    /* 紅葉ツアー ピックアップ */
+    .momiji-pickup {{ background: linear-gradient(180deg,#fdf6ec,#f7ede0); border: 1px solid #e6d5b8; border-radius: 12px; padding: 14px; margin: 14px auto; max-width: 1200px; }}
+    .momiji-pickup-head {{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; padding: 0 2px 10px; }}
+    .momiji-pickup-title {{ font-size: 16px; font-weight: 500; color: #8b3a1e; }}
+    .momiji-pickup-sub {{ font-size: 12px; color: #a07a4a; }}
+    .momiji-pickup-scroll {{ display:flex; gap:10px; overflow-x:auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; scrollbar-width: thin; }}
+    .momiji-card {{ flex: 0 0 180px; background:#fff; border:1px solid #e6d5b8; border-radius:10px; overflow:hidden; text-decoration:none; transition: box-shadow 0.2s, transform 0.2s; }}
+    .momiji-card:hover {{ box-shadow: 0 4px 14px rgba(139,58,30,0.18); transform: translateY(-2px); }}
+    .momiji-card-img {{ width:100%; height:120px; background:#c9b28a; overflow:hidden; }}
+    .momiji-card-img img {{ width:100%; height:100%; object-fit:cover; display:block; }}
+    .momiji-card-body {{ padding: 8px 10px 10px; }}
+    .momiji-card-title {{ font-size: 12px; font-weight: 500; color: #3c2e1e; line-height: 1.4; margin-bottom: 4px; display:-webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }}
+    .momiji-card-price {{ font-size: 11px; color: #8b3a1e; }}
+    @media (min-width: 900px) {{ .momiji-pickup-scroll {{ flex-wrap: wrap; overflow-x: visible; }} .momiji-card {{ flex: 0 0 calc(16.666% - 9px); }} }}
     /* レポートビューワー */
     .report-viewer-overlay {{ display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:10000;align-items:center;justify-content:center;flex-direction:column; }}
     .report-viewer-overlay.show {{ display:flex; }}
@@ -995,6 +1105,8 @@ HTML_TEMPLATE = """\
     <p style="color:#8b7355;">ＭＫが案内する、ここだけの京都</p>
   </div>
 </div>
+
+{momiji_pickup_html}
 
 <!-- スマホ用タブナビ -->
 <div class="sp-tabs" id="sp-tabs">
@@ -1681,8 +1793,21 @@ HTML_TEMPLATE = """\
   var SHOJUIN_WEEKDAYS = [0, 4, 5, 6]; // JS: 日=0,月=1,火=2,水=3,木=4,金=5,土=6
   function tourFilterByDate(dateKey) {{
     var parts = dateKey.split('-');
-    var d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+    var pY = parseInt(parts[0]), pM = parseInt(parts[1]), pD = parseInt(parts[2]);
+    var d = new Date(pY, pM-1, pD);
     var dow = d.getDay(); // 0=日,1=月,...,6=土
+    // TOUR_REPORTSはゼロ埋め形式（例: 2026-09-05）で保存されているため、
+    // dateKey（ゼロ埋めなし。例: 2026-9-5）とは別にnormKeyを作って検索に使う
+    var normKey = pY + '-' + String(pM).padStart(2,'0') + '-' + String(pD).padStart(2,'0');
+    var todayMidF = new Date();
+    todayMidF = new Date(todayMidF.getFullYear(), todayMidF.getMonth(), todayMidF.getDate());
+    var isPast = d < todayMidF;
+    // ref（他日への参照）があれば解決する（drawCalと同じロジック）
+    var rawReport = TOUR_REPORTS[normKey];
+    var reportResolved = rawReport;
+    if (rawReport && rawReport.ref && TOUR_REPORTS[rawReport.ref]) {{
+      reportResolved = Object.assign({{}}, TOUR_REPORTS[rawReport.ref], {{title: rawReport.title || TOUR_REPORTS[rawReport.ref].title}});
+    }}
     var cards = document.querySelectorAll('#tours-grid .tour-card');
     var count = 0;
     cards.forEach(function(card) {{
@@ -1739,8 +1864,8 @@ HTML_TEMPLATE = """\
     var reportSection = document.getElementById('tour-report-section');
     var reportPhotos  = document.getElementById('tour-report-photos');
     var reportLink    = document.getElementById('tour-report-link');
-    if (reportSection && TOUR_REPORTS[dateKey]) {{
-      var report = TOUR_REPORTS[dateKey];
+    if (reportSection && reportResolved) {{
+      var report = reportResolved;
       reportSection.style.display = 'block';
       reportLink.href = report.page;
       reportPhotos.innerHTML = '';
@@ -1761,7 +1886,7 @@ HTML_TEMPLATE = """\
 
     // 日付クリック後にツアー欄へジャンプ
     setTimeout(function() {{
-      var jumpEl = (isPast && TOUR_REPORTS[normKey] && reportSection)
+      var jumpEl = (isPast && reportResolved && reportSection)
         ? reportSection
         : document.getElementById('tours-grid');
       if (!jumpEl) return;
@@ -1936,6 +2061,7 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
     updated_at = datetime.now().strftime("%Y年%m月%d日 %H:%M")
     tour_js       = build_tour_js(tours)
     tour_cards    = build_tour_cards(tours)
+    momiji_pickup_html = build_momiji_pickup(tours)
     sidebar_status = build_sidebar_status(tours)
 
     # TOUR_REPORTSをJSオブジェクトに変換
@@ -2208,6 +2334,7 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
         updated_at=updated_at,
         tour_js=tour_js,
         tour_cards=tour_cards,
+        momiji_pickup_html=momiji_pickup_html,
         sidebar_status=sidebar_status,
         tour_reports_js=tour_reports_js,
         photo_grid_html=photo_grid_html,
