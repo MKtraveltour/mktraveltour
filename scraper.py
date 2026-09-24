@@ -175,7 +175,7 @@ def _parse_status_line(line: str):
 
     if "催行確定" in line:
         return {"date": date, "label": "催行確定", "type": "confirmed"}
-    if "満席" in line:
+    if "満席" in line or "満室" in line:
         return {"date": date, "label": "満席", "type": "full"}
     if "催行まであと" in line or "あと" in line:
         m = re.search(r"あと(\d+)名", line)
@@ -214,7 +214,7 @@ def extract_status(soup: BeautifulSoup) -> list[dict]:
             for line in full_text.split("\n"):
                 add_status(_parse_status_line(line))
 
-    # 日付なしの「満席」「催行確定」表示に対応
+    # 日付なしの「満席」「満室」「催行確定」表示に対応
     # 出発予定日が1日のみの場合は常に補完を試みる
     if not statuses:
         red_texts = soup.select(".p-tour-detail__text-red")
@@ -233,7 +233,7 @@ def extract_status(soup: BeautifulSoup) -> list[dict]:
 
         for el in red_texts:
             text = el.get_text(strip=True)
-            is_full = '満席' in text and not re.search(r'\d+/\d+', text)
+            is_full = ('満席' in text or '満室' in text) and not re.search(r'\d+/\d+', text)
             is_confirmed = '催行確定' in text and not re.search(r'\d+/\d+', text)
             if is_full or is_confirmed:
                 target_date = single_date
@@ -258,7 +258,7 @@ def extract_status(soup: BeautifulSoup) -> list[dict]:
                 if '催行確定' in text:
                     statuses.append({'date': single_date, 'label': '催行確定', 'type': 'confirmed'})
                     break
-                elif '満席' in text:
+                elif '満席' in text or '満室' in text:
                     statuses.append({'date': single_date, 'label': '満席', 'type': 'full'})
                     break
     return statuses
