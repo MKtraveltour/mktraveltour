@@ -711,6 +711,8 @@ def build_momiji_pickup(tours: dict, max_items: int = 6) -> str:
     import datetime as _dt3, re as _re3
     _today = _dt3.date.today()
     SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama", "momidiya"}
+    # 紅葉ピックアップから手動で除外したいツアー（タグはautumnでも紅葉の内容ではないもの等）
+    MOMIJI_MANUAL_EXCLUDE = {"kyotanba_kuromame"}
     AUTUMN_TAGS = {"autumn", "秋のツアー"}
 
     def _is_all_past(tour):
@@ -750,7 +752,7 @@ def build_momiji_pickup(tours: dict, max_items: int = 6) -> str:
 
     picked = []
     for key, tour in tours.items():
-        if key in SKIP_KEYS:
+        if key in SKIP_KEYS or key in MOMIJI_MANUAL_EXCLUDE:
             continue
         if tour.get("error") or tour.get("hidden"):
             continue
@@ -761,6 +763,11 @@ def build_momiji_pickup(tours: dict, max_items: int = 6) -> str:
             continue
         tags = tour.get("tags", [])
         if not AUTUMN_TAGS.intersection(tags):
+            continue
+        # 満席のツアーは除外する（ツアーカードのバッジ判定と同じロジック）
+        statuses = tour.get("statuses", [])
+        status_types = [s.get("type") for s in statuses]
+        if "full" in status_types and "confirmed" not in status_types:
             continue
         picked.append((_nearest_date(tour), key, tour))
 
