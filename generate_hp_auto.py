@@ -798,7 +798,9 @@ def build_momiji_pickup(tours: dict, max_items: int = 6) -> str:
     <span class="momiji-pickup-title">🍁 紅葉のツアー ピックアップ</span>
     <span class="momiji-pickup-sub">この秋おすすめの紅葉ツアーをご紹介</span>
   </div>
-  <div class="momiji-pickup-scroll">
+  <div class="momiji-carousel-wrap">
+  <button class="momiji-btn momiji-btn-prev" onclick="momijiMove(-1)">&#8249;</button>
+  <div class="momiji-pickup-scroll" id="momiji-scroll">
 {cards_html}
   </div>
 </div>"""
@@ -906,15 +908,33 @@ HTML_TEMPLATE = """\
     .momiji-pickup-head {{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; padding: 0 2px 10px; }}
     .momiji-pickup-title {{ font-size: 16px; font-weight: 500; color: #8b3a1e; }}
     .momiji-pickup-sub {{ font-size: 12px; color: #a07a4a; }}
-    .momiji-pickup-scroll {{ display:flex; gap:10px; overflow-x:auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; scrollbar-width: thin; }}
-    .momiji-card {{ flex: 0 0 180px; background:#fff; border:1px solid #e6d5b8; border-radius:10px; overflow:hidden; text-decoration:none; transition: box-shadow 0.2s, transform 0.2s; }}
-    .momiji-card:hover {{ box-shadow: 0 4px 14px rgba(139,58,30,0.18); transform: translateY(-2px); }}
-    .momiji-card-img {{ width:100%; height:120px; background:#c9b28a; overflow:hidden; }}
+    /* カルーセル本体 */
+    .momiji-carousel-wrap {{ position:relative; overflow:hidden; padding: 8px 0 12px; }}
+    .momiji-pickup-scroll {{
+      display:flex; gap:0; overflow-x:scroll; scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch; scrollbar-width:none; padding: 12px 0;
+    }}
+    .momiji-pickup-scroll::-webkit-scrollbar {{ display:none; }}
+    .momiji-card {{
+      flex: 0 0 200px; background:#fff; border:1px solid #e6d5b8; border-radius:10px;
+      overflow:hidden; text-decoration:none; margin: 0 8px;
+      scroll-snap-align:center;
+      transition: transform 0.35s ease, box-shadow 0.35s ease, opacity 0.35s ease;
+      transform: scale(0.85); opacity: 0.65;
+    }}
+    .momiji-card.is-active {{
+      transform: scale(1); opacity: 1;
+      box-shadow: 0 6px 20px rgba(139,58,30,0.25);
+    }}
+    .momiji-card-img {{ width:100%; height:130px; background:#c9b28a; overflow:hidden; }}
     .momiji-card-img img {{ width:100%; height:100%; object-fit:cover; display:block; }}
     .momiji-card-body {{ padding: 8px 10px 10px; }}
     .momiji-card-title {{ font-size: 12px; font-weight: 500; color: #3c2e1e; line-height: 1.4; margin-bottom: 4px; display:-webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }}
     .momiji-card-price {{ font-size: 11px; color: #8b3a1e; }}
-    @media (min-width: 900px) {{ .momiji-pickup-scroll {{ flex-wrap: wrap; overflow-x: visible; }} .momiji-card {{ flex: 0 0 calc(16.666% - 9px); }} }}
+    /* 前後ボタン */
+    .momiji-btn {{ position:absolute; top:50%; transform:translateY(-50%); background:rgba(139,58,30,0.75); color:#fff; border:none; border-radius:50%; width:32px; height:32px; font-size:16px; cursor:pointer; z-index:2; display:flex; align-items:center; justify-content:center; }}
+    .momiji-btn-prev {{ left:4px; }}
+    .momiji-btn-next {{ right:4px; }}
     /* レポートビューワー */
     .report-viewer-overlay {{ display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:10000;align-items:center;justify-content:center;flex-direction:column; }}
     .report-viewer-overlay.show {{ display:flex; }}
@@ -1753,6 +1773,28 @@ HTML_TEMPLATE = """\
     if (note) note.textContent = count + '件のツアーを表示中';
   }}
 
+  // ===== 紅葉カルーセル =====
+  function momijiUpdateActive() {{
+    var scroll = document.getElementById('momiji-scroll');
+    if (!scroll) return;
+    var cards = scroll.querySelectorAll('.momiji-card');
+    var center = scroll.scrollLeft + scroll.offsetWidth / 2;
+    var closest = null, minDist = Infinity;
+    cards.forEach(function(card) {{
+      var cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      var dist = Math.abs(cardCenter - center);
+      if (dist < minDist) {{ minDist = dist; closest = card; }}
+    }});
+    cards.forEach(function(card) {{ card.classList.toggle('is-active', card === closest); }});
+  }}
+  function momijiMove(dir) {{
+    var scroll = document.getElementById('momiji-scroll');
+    if (!scroll) return;
+    var card = scroll.querySelector('.momiji-card');
+    var step = card ? card.offsetWidth + 16 : 220;
+    scroll.scrollBy({{ left: dir * step, behavior: 'smooth' }});
+  }}
+
   // ===== お気に入り機能 =====
   function getFavs() {{ try {{ return JSON.parse(localStorage.getItem('mk_favs') || '[]'); }} catch(e) {{ return []; }} }}
   function saveFavs(list) {{ localStorage.setItem('mk_favs', JSON.stringify(list)); }}
@@ -1794,6 +1836,17 @@ HTML_TEMPLATE = """\
     var cards = document.querySelectorAll('.tour-card');
     var note  = document.getElementById('tour-count');
     if (note) note.textContent = cards.length + '件のツアーを表示中';
+    // お気に入り初期表示
+    renderFavs();
+    // 紅葉カルーセル初期化
+    var momijiScroll = document.getElementById('momiji-scroll');
+    if (momijiScroll) {{
+      momijiScroll.addEventListener('scroll', momijiUpdateActive, {{passive:true}});
+      setTimeout(function() {{
+        var first = momijiScroll.querySelector('.momiji-card');
+        if (first) first.classList.add('is-active');
+      }}, 100);
+    }}
   }});
 
   // 正寿院（宇治田原）は木(3)金(4)土(5)日(0)のみ表示
