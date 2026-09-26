@@ -79,6 +79,8 @@ TOUR_URLS = {
 
     "kyotanba_kuromame": "https://travel.mk-group.co.jp/tourkyoto/kyotanba-kuromame2026/",
 
+    "bishamon2026": "https://travel.mk-group.co.jp/tourkyoto/bishamon2026autumn/?",
+
 }
 
 HEADERS = {
