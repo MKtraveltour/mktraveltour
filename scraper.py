@@ -81,6 +81,8 @@ TOUR_URLS = {
 
     "bishamon2026": "https://travel.mk-group.co.jp/tourkyoto/bishamon2026autumn/?",
 
+    "keihoku-kouyou2026": "https://travel.mk-group.co.jp/tourkyoto/keihoku-kouyou2026/",
+
 }
 
 HEADERS = {
