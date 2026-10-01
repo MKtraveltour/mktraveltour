@@ -3,6 +3,7 @@ run.py - 旅とも手帳 一括更新スクリプト
 1. 翌年URL自動チェック（hidden:Trueのツアー）
 2. スクレイピング（tour_data.json更新）
 3. HP生成（index.html生成）
+   3.6 紅葉ツアー特集ページ更新（momiji2026.html）
 4. GitHub push
 """
 import subprocess
@@ -51,6 +52,17 @@ print("▶ STEP 3.5: レポートページ自動生成")
 print('='*50)
 from generate_reports import generate_all_reports
 generate_all_reports()
+
+# --- STEP 3.6: 紅葉ツアー特集ページ更新 ---
+# エラーが出ても本体（旅とも手帳）の更新・pushは止めない
+print(f"\n{'='*50}")
+print("▶ STEP 3.6: 紅葉ツアー特集ページ更新（momiji2026.html）")
+print('='*50)
+try:
+    import build_momiji
+    build_momiji.main()
+except Exception as e:
+    print(f"⚠️ 紅葉ページの更新でエラーが出ました（本体の更新はそのまま続けます）: {e}")
 
 # --- STEP 4: GitHub push ---
 print(f"\n{'='*50}")

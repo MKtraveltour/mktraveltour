@@ -237,7 +237,6 @@ button{font-family:inherit}
           <div class="chips" id="chips" role="group" aria-label="条件で絞り込む"></div>
           <label class="sort">並び順
             <select id="sort">
-              <option value="default">おすすめ順</option>
               <option value="date">開催日が早い順</option>
               <option value="price">料金が安い順</option>
             </select>
@@ -651,7 +650,7 @@ var TOURS = [
  }
 ];
 var AREA_NOTES = {"西山": "善峯寺・楊谷寺ほか", "亀岡": "法常寺 昼と夜", "綾部": "安國寺・料亭ゆう月", "山科": "毘沙門堂と穴場", "湖南": "滋賀・湖南三山", "京北": "常照皇寺と里山"};
-var UPDATED_AT = '2026年10月1日 14:34';
+var UPDATED_AT = '2026年10月1日 14:42';
 /* ==TOURS_END== */
 
 /* エリア・絞り込み条件・月タブはTOURSから自動で作ります */
@@ -670,7 +669,7 @@ TOURS.forEach(function(t){ t.dates.forEach(function(d){ var k=d.slice(0,7); if(M
 MONTHS.sort();
 
 /* ===== 状態 ===== */
-var state={date:null, area:null, tag:null, sort:'default', month:MONTHS[0]||'2026-11'};
+var state={date:null, area:null, tag:null, sort:'date', month:MONTHS[0]||'2026-11'};
 
 /* ===== お気に入り（端末に保存） ===== */
 var FAV_KEY='mkMomiji2026Favorites';
@@ -706,7 +705,11 @@ function filtered(){
     return true;
   });
   if(state.sort==='price') list=list.slice().sort(function(a,b){return a.price-b.price});
-  if(state.sort==='date') list=list.slice().sort(function(a,b){return a.dates[0]<b.dates[0]?-1:1});
+  if(state.sort==='date') list=list.slice().sort(function(a,b){
+    // 最初の開催日が早い順。同じ日なら料金が安い順
+    if(a.dates[0]!==b.dates[0]) return a.dates[0]<b.dates[0]?-1:1;
+    return a.price-b.price;
+  });
   return list;
 }
 
