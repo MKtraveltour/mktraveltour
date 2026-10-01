@@ -1,6 +1,29 @@
 {
   "_説明": "紅葉ページの補足情報です。tour_editor.pyで「紅葉ツアー」にチェックしたツアーは、ここに書かなくても自動で載ります。ここに書くと、エリア・説明文・行程・絞り込みタグが付き、並び順もこの順になります。",
   "output_html": "momiji2026.html",
+  "_hero説明": "ページ上部のスライドショー写真です。GitHubの写真ページのURL（github.com/…/blob/main/…）をそのまま貼ってもOK。上から順に表示されます。position は写真のどこを中心に見せるか（\"center\"＝真ん中、\"center 30%\"＝上寄り、\"center 70%\"＝下寄り）。",
+  "hero_images": [
+    {
+      "url": "https://github.com/MKtraveltour/mktraveltour/blob/main/iwatoochiba_by_driver.jpg",
+      "caption": "📷 岩戸落葉神社　ドライバー撮影",
+      "position": "center"
+    },
+    {
+      "url": "https://github.com/MKtraveltour/mktraveltour/blob/main/bisyamondou_by_driver.jpg",
+      "caption": "📷 毘沙門堂　ドライバー撮影",
+      "position": "center"
+    },
+    {
+      "url": "https://github.com/MKtraveltour/mktraveltour/blob/main/jousyoukouji_by_driver.jpg",
+      "caption": "📷 常照皇寺　ドライバー撮影",
+      "position": "center"
+    },
+    {
+      "url": "https://github.com/MKtraveltour/mktraveltour/blob/main/youkokuji_by_driver.jpeg",
+      "caption": "📷 柳谷観音 楊谷寺　ドライバー撮影",
+      "position": "center"
+    }
+  ],
   "exclude": [],
   "_exclude説明": "自動で載ってしまうけれど載せたくないツアーのキーを書きます（例: [\"momidiya\"]）",
   "area_notes": {

@@ -148,14 +148,15 @@ def split_title(title):
 
 # ---------- 組み立て ----------
 
-MOMIJI_TAG = "momiji"   # tour_editor.py の「紅葉ツアー」チェックで付くタグ
+MOMIJI_TAGS = {"momiji", "紅葉", "紅葉ツアー", "🍁紅葉ツアー"}   # tour_editor.py の「紅葉ツアー」チェックで付くタグ
 MOMIJI_WORDS = ("紅葉", "もみじ")
 
 
 def is_momiji(td):
     """旅とも手帳側で紅葉ツアーと判断できるか（タグ または タイトル）"""
     title = td.get("title", "")
-    return MOMIJI_TAG in (td.get("tags") or []) or any(w in title for w in MOMIJI_WORDS)
+    tags = {str(t).strip() for t in (td.get("tags") or [])}
+    return bool(tags & MOMIJI_TAGS) or any(w in title for w in MOMIJI_WORDS)
 
 
 def build(config, tour_data, today):
@@ -187,7 +188,13 @@ def build(config, tour_data, today):
         parsed = [norm_date(x, today) for x in raw_dates]
         dates = sorted({d for d in parsed if d and d >= today})
         if not dates:
-            if key in conf_by_key:
+            if key not in conf_by_key:
+                if not raw_dates:
+                    notes.append(f"🕒 {key}: 紅葉ツアーとして検知しましたが、開催日がまだ取得されていません"
+                                 f"（run.py でスクレイパーが動いたあとに掲載されます）→「{title_raw[:30]}」")
+                elif not any(parsed):
+                    notes.append(f"⚠ {key}: 紅葉ツアーとして検知しましたが、開催日を読み取れませんでした（例: {raw_dates[:3]}）")
+            else:
                 if not raw_dates:
                     notes.append(f"・{key}: tour_data.json に開催日が入っていないため掲載しません")
                 elif not any(parsed):
@@ -231,12 +238,18 @@ def build(config, tour_data, today):
     return tours, notes
 
 
-def render_block(tours, area_notes, updated_at):
+def fix_github_url(u):
+    """github.com の写真ページURLを、表示用（raw）のURLに変える"""
+    return re.sub(r"^https://github\.com/([^/]+)/([^/]+)/blob/", r"https://raw.githubusercontent.com/\1/\2/", u.strip())
+
+
+def render_block(tours, area_notes, updated_at, hero_images=None):
     js = json.dumps(tours, ensure_ascii=False, indent=1).replace("</", "<\\/")
     an = json.dumps(area_notes, ensure_ascii=False)
     return (f"{START_MARK} この行から ==TOURS_END== までは更新スクリプトが自動で書き換えます */\n"
             f"var TOURS = {js};\n"
             f"var AREA_NOTES = {an};\n"
+            f"var HERO_IMAGES = {json.dumps(hero_images or [], ensure_ascii=False, indent=1)};\n"
             f"var UPDATED_AT = '{updated_at}';\n"
             f"{END_MARK}")
 
@@ -251,7 +264,10 @@ def main(check_only=False):
     now = datetime.now()
     updated_at = f"{now.year}年{now.month}月{now.day}日 {now:%H:%M}"
 
-    print(f"🍁 紅葉ページ：{len(tours)}件のツアーを掲載します")
+    hero = [{"url": fix_github_url(h["url"]), "caption": h.get("caption", ""), "position": h.get("position", "center")}
+            for h in config.get("hero_images", []) if h.get("url")]
+
+    print(f"🍁 紅葉ページ：{len(tours)}件のツアーを掲載します（トップ写真 {len(hero)}枚）")
     for t in tours:
         print(f"   {t['statusText']:<8} {t['title'][:24]}（{len(t['dates'])}日）")
     for n in notes:
@@ -268,7 +284,7 @@ def main(check_only=False):
     if s < 0 or e < 0:
         print(f"❌ {os.path.basename(html_path)} に ==TOURS_START== / ==TOURS_END== が見つかりません")
         return 1
-    new_html = html[:s] + render_block(tours, config.get("area_notes", {}), updated_at) + html[e + len(END_MARK):]
+    new_html = html[:s] + render_block(tours, config.get("area_notes", {}), updated_at, hero) + html[e + len(END_MARK):]
 
     tmp = html_path + ".tmp"
     with open(tmp, "w", encoding="utf-8", newline="\n") as f:

@@ -650,7 +650,29 @@ var TOURS = [
  }
 ];
 var AREA_NOTES = {"西山": "善峯寺・楊谷寺ほか", "亀岡": "法常寺 昼と夜", "綾部": "安國寺・料亭ゆう月", "山科": "毘沙門堂と穴場", "湖南": "滋賀・湖南三山", "京北": "常照皇寺と里山"};
-var UPDATED_AT = '2026年10月1日 14:50';
+var HERO_IMAGES = [
+ {
+  "url": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/iwatoochiba_by_driver.jpg",
+  "caption": "📷 岩戸落葉神社　ドライバー撮影",
+  "position": "center"
+ },
+ {
+  "url": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/bisyamondou_by_driver.jpg",
+  "caption": "📷 毘沙門堂　ドライバー撮影",
+  "position": "center"
+ },
+ {
+  "url": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/jousyoukouji_by_driver.jpg",
+  "caption": "📷 常照皇寺　ドライバー撮影",
+  "position": "center"
+ },
+ {
+  "url": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/youkokuji_by_driver.jpeg",
+  "caption": "📷 柳谷観音 楊谷寺　ドライバー撮影",
+  "position": "center"
+ }
+];
+var UPDATED_AT = '2026年10月1日 16:10';
 /* ==TOURS_END== */
 
 /* エリア・絞り込み条件・月タブはTOURSから自動で作ります */
@@ -853,7 +875,7 @@ renderAll(); renderFavs();
   var imgs=(typeof HERO_IMAGES!=='undefined'&&HERO_IMAGES.length)?HERO_IMAGES:[{url:TOURS.length?TOURS[0].img:'',caption:''}];
   var box=document.getElementById('hero-slides'), dots=document.getElementById('hero-dots'), cap=document.getElementById('hero-caption');
   box.innerHTML=imgs.map(function(im,i){
-    return '<div class="hero-slide'+(i===0?' on':'')+'"><img src="'+im.url+'" alt="" '+(i===0?'fetchpriority="high"':'loading="lazy"')+'></div>';
+    return '<div class="hero-slide'+(i===0?' on':'')+'"><img src="'+im.url+'" alt="" style="object-position:'+(im.position||'center')+'" '+(i===0?'fetchpriority="high"':'loading="lazy"')+'></div>';
   }).join('');
   if(imgs.length>1){
     dots.innerHTML=imgs.map(function(_,i){ return '<button type="button" aria-label="'+(i+1)+'枚目の写真" aria-current="'+(i===0)+'" data-i="'+i+'"></button>'; }).join('');
