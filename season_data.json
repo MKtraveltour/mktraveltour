@@ -124,7 +124,18 @@
       "img": "bisyamondou_kouyoudayori.jpg",
       "title": "錦を一面に敷きつめて",
       "date": "2025年　11月末日",
-      "desc": "",
+      "desc": "毘沙門堂での１枚。まるで赤絨毯のような美しさでお出迎え。",
+      "links": []
+    },
+    {
+      "key": "iwatoochiba",
+      "season": "summer",
+      "label": "黄金の森を仰ぐ",
+      "thumb_title": "黄金の森を仰ぐ",
+      "img": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/iwatoochiba_by_driver.jpg",
+      "title": "山々が色づく京北へ",
+      "date": "2021年11月11日",
+      "desc": "京北の紅葉ツアーでも立ち寄る岩戸落葉神社。空いっぱいに広がるイチョウが壮大です。",
       "links": []
     }
   ]
