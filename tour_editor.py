@@ -16,7 +16,7 @@ TOUR_REPORTS_PATH = os.path.join(BASE_DIR, "tour_reports.json")
 SCRAPER_PATH      = os.path.join(BASE_DIR, "scraper.py")
 RUN_PATH          = os.path.join(BASE_DIR, "run.py")
 
-TAGS_OPTIONS = ["event", "exp", "history", "flower", "summer", "autumn", "winter", "spring", "ガイド・講座", "other"]
+TAGS_OPTIONS = ["event", "exp", "history", "flower", "summer", "autumn", "winter", "spring", "momiji", "other"]
 TAG_LABELS   = {
     "event":   "イベント・お祭り",
     "exp":     "体験・名所巡り",
@@ -26,7 +26,7 @@ TAG_LABELS   = {
     "autumn":  "秋のツアー",
     "winter":  "冬のツアー",
     "spring":  "春のツアー",
-    "ガイド・講座": "ガイド・講座あり",
+    "momiji":  "🍁 紅葉ツアー",
     "other":   "その他",
 }
 SEASON_DATA_PATH = os.path.join(BASE_DIR, "season_data.json")
@@ -229,12 +229,6 @@ class TourEditor:
                   relief="flat", cursor="hand2", pady=6).pack(
                       side="left", expand=True, fill="x")
 
-        tk.Frame(right, bg="#d0c8bc", height=1).pack(fill="x", padx=4, pady=(0,4))
-        tk.Button(right, text="🗑  このツアーをtour_data.jsonから完全削除する",
-                  command=self._delete_tour,
-                  bg="#7f1f1f", fg="#fff", font=("", 9),
-                  relief="flat", cursor="hand2", pady=4).pack(fill="x", padx=4, pady=(0,8))
-
         self._refresh_tour_list()
 
     # ================================================================
@@ -296,7 +290,7 @@ class TourEditor:
                  bg="#fff", relief="solid", bd=1).pack(fill="x", padx=4)
 
         # レポートページ
-        lbl2("レポートページ（例に沿って入力）")
+        lbl2("レポートページ（任意・空欄で自動命名）")
         page_row = tk.Frame(right, bg="#faf8f5")
         page_row.pack(fill="x", padx=4)
         self.report_page_var = tk.StringVar()
@@ -337,28 +331,6 @@ class TourEditor:
         self.report_desc_box = scrolledtext.ScrolledText(
             right, font=("", 10), height=3, bg="#fff", relief="solid", bd=1, wrap="word")
         self.report_desc_box.pack(fill="x", padx=4)
-
-        # 音声（ASMRスライドショー）
-        audio2_frame = tk.Frame(right, bg="#e8f0fa", relief="solid", bd=1)
-        audio2_frame.pack(fill="x", padx=4, pady=(8,0))
-        audio2_inner = tk.Frame(audio2_frame, bg="#e8f0fa", pady=6, padx=8)
-        audio2_inner.pack(fill="x")
-        tk.Label(audio2_inner, text="🎵 音声ファイル（ASMRスライドショー）",
-                 bg="#e8f0fa", fg="#1a4a8a", font=("", 10, "bold")).pack(anchor="w")
-        af2_row = tk.Frame(audio2_inner, bg="#e8f0fa")
-        af2_row.pack(fill="x", pady=(4,0))
-        tk.Label(af2_row, text="ファイル名:", bg="#e8f0fa", fg="#5c4a32", font=("", 9), width=9, anchor="w").pack(side="left")
-        self.report_audio_var = tk.StringVar()
-        tk.Entry(af2_row, textvariable=self.report_audio_var, font=("", 10), bg="#fff",
-                 relief="solid", bd=1).pack(side="left", fill="x", expand=True)
-        al2_row = tk.Frame(audio2_inner, bg="#e8f0fa")
-        al2_row.pack(fill="x", pady=(4,0))
-        tk.Label(al2_row, text="ラベル:", bg="#e8f0fa", fg="#5c4a32", font=("", 9), width=9, anchor="w").pack(side="left")
-        self.report_audio_label_var = tk.StringVar()
-        tk.Entry(al2_row, textvariable=self.report_audio_label_var, font=("", 10), bg="#fff",
-                 relief="solid", bd=1).pack(side="left", fill="x", expand=True)
-        tk.Label(audio2_inner, text="例: sound_kawa.mp3  /  ラベル: 川のせせらぎ",
-                 bg="#e8f0fa", fg="#888", font=("", 8)).pack(anchor="w", pady=(2,0))
 
         # 保存ボタン
         save_row2 = tk.Frame(right, bg="#faf8f5")
@@ -431,51 +403,6 @@ class TourEditor:
         self.dates_text.delete("1.0", "end")
         self.dates_text.config(state="disabled")
         self.tour_listbox.selection_clear(0, "end")
-
-    def _delete_tour(self):
-        if not hasattr(self, 'selected_tour_key') or not self.selected_tour_key:
-            messagebox.showwarning("未選択", "削除するツアーを一覧から選んでください"); return
-        key   = self.selected_tour_key
-        title = self.tours[key].get("title", key)
-        if not messagebox.askyesno(
-                "削除の確認",
-                f"「{title}」を削除しますか？\n\n"
-                f"キー: {key}\n"
-                f"この操作は元に戻せません。"):
-            return
-        del self.tours[key]
-        save_tours(self.tours)
-        self._remove_from_scraper(key)
-        self.selected_tour_key = None
-        self._refresh_tour_list()
-        # フォームをクリア
-        self.key_var.set("")
-        self.key_entry.config(state="normal")
-        self.url_var.set("")
-        self.title_var.set("")
-        for v in self.tag_vars.values(): v.set(False)
-        self.tour_status_label.config(text="", bg="#fdf5e8")
-        self.dates_text.config(state="normal")
-        self.dates_text.delete("1.0", "end")
-        self.dates_text.config(state="disabled")
-        self.status_var.set(f"🗑 「{title[:30]}」を削除しました")
-
-    def _remove_from_scraper(self, key):
-        """scraper.pyのTOUR_URLsから指定キーの行を削除する"""
-        if not os.path.exists(SCRAPER_PATH): return
-        with open(SCRAPER_PATH, "r", encoding="utf-8") as f:
-            src = f.read()
-        import re
-        # "key": "url", の行を削除（前後の空白・改行ごと）
-        new_src = re.sub(
-            r'\n\s*"' + re.escape(key) + r'"\s*:.*?,?\s*(?=\n)',
-            '',
-            src
-        )
-        if new_src != src:
-            with open(SCRAPER_PATH, "w", encoding="utf-8") as f:
-                f.write(new_src)
-
 
     def _toggle_hidden(self):
         if not hasattr(self, 'selected_tour_key') or not self.selected_tour_key:
@@ -564,8 +491,6 @@ class TourEditor:
         self.report_hero_var.set(r.get("hero", ""))
         self.report_catch_var.set(r.get("catch", ""))
         self.report_shot_date_var.set(r.get("shot_date", ""))
-        self.report_audio_var.set(r.get("audio", ""))
-        self.report_audio_label_var.set(r.get("audio_label", ""))
 
     def _new_report(self):
         self.selected_report_key = None
@@ -577,8 +502,6 @@ class TourEditor:
         self.report_hero_var.set("")
         self.report_catch_var.set("")
         self.report_shot_date_var.set("")
-        self.report_audio_var.set("")
-        self.report_audio_label_var.set("")
         self.report_listbox.selection_clear(0, "end")
         self.status_var.set("新規レポート追加モード")
 
@@ -620,7 +543,7 @@ class TourEditor:
         if not re.match(r'^\d{4}-\d{2}-\d{2}$', dt):
             messagebox.showwarning("形式エラー", "日付はYYYY-MM-DD形式で入力してください\n例: 2025-10-22"); return
 
-        self.reports[dt] = {"title": title, "page": page, "photos": photos, "desc": desc, "hero": hero, "catch": catch, "shot_date": shot_date, "audio": self.report_audio_var.get().strip(), "audio_label": self.report_audio_label_var.get().strip()}
+        self.reports[dt] = {"title": title, "page": page, "photos": photos, "desc": desc, "hero": hero, "catch": catch, "shot_date": shot_date}
         save_reports(self.reports)
         self.selected_report_key = dt
         self._refresh_report_list()
