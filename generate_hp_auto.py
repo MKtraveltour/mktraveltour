@@ -459,13 +459,14 @@ def build_tour_cards(tours: dict) -> str:
     _today = _dt2.date.today()
 
     def is_all_past(tour):
-        """全日程が過去ならTrueを返す（随時催行はFalse）"""
+        """全日程が過去ならTrueを返す（随時催行でも期間終了なら非表示）"""
         dates = tour.get("dates", [])
         if not dates: return False
+        has_jiji = any("随時" in str(d) for d in dates)
         future_found = False
         date_found = False
         for d in dates:
-            if "随時" in str(d): return False
+            if "随時" in str(d): continue  # 随時行は個別スキップ（即return しない）
             for m in _re2.finditer(r"(\d{1,2})/(\d{1,2})", str(d)):
                 mo, day = int(m.group(1)), int(m.group(2))
                 try:
@@ -481,6 +482,8 @@ def build_tour_cards(tours: dict) -> str:
                     date_found = True
                     if dt2 >= _today: future_found = True
                 except: pass
+        # 随時催行のみで期間指定なし → 常時表示
+        if has_jiji and not date_found: return False
         if not date_found: return False
         return not future_found
 
