@@ -83,6 +83,8 @@ TOUR_URLS = {
 
     "keihoku-kouyou2026": "https://travel.mk-group.co.jp/tourkyoto/keihoku-kouyou2026/",
 
+    "nuigurumi_iinui": "https://travel.mk-group.co.jp/tourkyoto/nuigurumi-261121/",
+
 }
 
 HEADERS = {
