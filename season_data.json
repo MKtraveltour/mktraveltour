@@ -137,6 +137,17 @@
       "date": "2021年11月11日",
       "desc": "京北の紅葉ツアーでも立ち寄る岩戸落葉神社。空いっぱいに広がるイチョウが壮大です。",
       "links": []
+    },
+    {
+      "key": "jousyoukouji_2022",
+      "season": "summer",
+      "label": "紅葉の水鏡",
+      "thumb_title": "紅葉の水鏡",
+      "img": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/jousyoukouji_by_driver.jpg",
+      "title": "錦秋の庭",
+      "date": "2022年11月21日",
+      "desc": "知る人ぞ知るしんとした慎ましやかな景色。街中では味わえない特別な空間。",
+      "links": []
     }
   ]
 }
