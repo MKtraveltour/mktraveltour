@@ -129,7 +129,7 @@
     },
     {
       "key": "iwatoochiba",
-      "season": "summer",
+      "season": "autumn",
       "label": "黄金の森を仰ぐ",
       "thumb_title": "黄金の森を仰ぐ",
       "img": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/iwatoochiba_by_driver.jpg",
@@ -140,13 +140,24 @@
     },
     {
       "key": "jousyoukouji_2022",
-      "season": "summer",
+      "season": "autumn",
       "label": "紅葉の水鏡",
       "thumb_title": "紅葉の水鏡",
       "img": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/jousyoukouji_by_driver.jpg",
       "title": "錦秋の庭",
       "date": "2022年11月21日",
       "desc": "知る人ぞ知るしんとした慎ましやかな景色。街中では味わえない特別な空間。",
+      "links": []
+    },
+    {
+      "key": "zyuurinji_gradation",
+      "season": "autumn",
+      "label": "在原業平ゆかりの地",
+      "thumb_title": "在原業平ゆかりの地",
+      "img": "https://raw.githubusercontent.com/MKtraveltour/mktraveltour/main/zyuurinji_gurade_20251129_kimuramg.jpg",
+      "title": "桜だけじゃない 紅葉の十輪寺",
+      "date": "2025年11月29日　MKスタッフ撮影",
+      "desc": "瓦に乗りかかってしまうほどの見事な紅葉がグラデーションになって魅了します",
       "links": []
     }
   ]

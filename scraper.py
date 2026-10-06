@@ -85,6 +85,8 @@ TOUR_URLS = {
 
     "nuigurumi_iinui": "https://travel.mk-group.co.jp/tourkyoto/nuigurumi-261121/",
 
+    "juurinji-light": "https://travel.mk-group.co.jp/tourkyoto/juurinji-light2026/",
+
 }
 
 HEADERS = {
