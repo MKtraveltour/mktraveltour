@@ -1,6 +1,24 @@
 {
   "articles": [
     {
+      "id": "025",
+      "title": "ディープな京都を発信したい！",
+      "author": "Hiro",
+      "category": "New！",
+      "date": "2026-10-06",
+      "text": "私達の部署で切っても切れない質問は数多くありますが、\nその中でもやはり多いのは「穴場の紅葉のスポットはありませんか？」です。\n\nドライバーだったり、観光協会様だったり沢山の情報源から紅葉状況を確認しますが\n以前は穴場と呼ばれていた場所がもはや定番になっている場所も数知れず…。\n\nさて何を紹介しようかといつも悩んでいます。\n\nそんな中でもまだまだ知られていないはずという紅葉スポットを去年の紅葉の写真とともにご紹介。\n\nMKでは数年前からツアーに登場している十輪寺。\n今年はライトアップツアーの販売を開始しました。\n\n新たな試みにも挑戦していますので皆様ぜひツアーページを覗いてみてください。\n[BANNER]<a href=\"https://travel.mk-group.co.jp/tourkyoto/juurinji-light2026/\" target=\"_blank\" style=\"display:block;text-align:center;background:#8b7355;color:#fff;border-radius:6px;padding:9px;font-size:13px;font-weight:500;margin:8px 0;text-decoration:none;\">【夜間特別拝観】紅葉の十輪寺へ♪ご住職の講話と梵字が彩る、特別な秋の夜</a>[/BANNER]",
+      "photos": [
+        "zyuurinji_waku_20251129_kimuramg.jpg",
+        "zyuurinji_gurade_20251129_kimuramg.jpg",
+        "zyuurinji_20251129_kimuramg.jpg",
+        "zyuurinji_ityou_20251129_kimuramg.jpg"
+      ],
+      "audio": "",
+      "audio_label": "",
+      "publish_at": "",
+      "pinned": false
+    },
+    {
       "id": "024",
       "title": "紅葉のお問合せ増えてます！",
       "author": "Hiro",
