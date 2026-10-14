@@ -89,6 +89,8 @@ TOUR_URLS = {
 
     "youkoku_night2026": "https://travel.mk-group.co.jp/tourkyoto/momijiweek2026_mktour/",
 
+    "zuwaigani2026": "https://travel.mk-group.co.jp/tourkyoto/zuwaigani2026/",
+
 }
 
 HEADERS = {
