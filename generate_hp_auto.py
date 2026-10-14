@@ -716,7 +716,9 @@ def build_momiji_pickup(tours: dict, max_items: int = 6) -> str:
     SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama", "momidiya"}
     # 紅葉ピックアップから手動で除外したいツアー（タグはautumnでも紅葉の内容ではないもの等）
     MOMIJI_MANUAL_EXCLUDE = {"kyotanba_kuromame"}
-    AUTUMN_TAGS = {"autumn", "秋のツアー"}
+    # momijiタグ（ツアー管理ツールで手動設定）のツアーのみピックアップ
+    # autumnタグ全体ではなくmomijiタグで絞ることで「秋だが紅葉ではない」ツアーを除外
+    AUTUMN_TAGS = {"momiji"}
 
     def _is_all_past(tour):
         dates = tour.get("dates", [])
@@ -765,7 +767,8 @@ def build_momiji_pickup(tours: dict, max_items: int = 6) -> str:
         if _is_all_past(tour):
             continue
         tags = tour.get("tags", [])
-        if not AUTUMN_TAGS.intersection(tags):
+        # momijiタグがないものは除外（autumnタグのみのツアーも除外）
+        if "momiji" not in tags:
             continue
         # 満席のツアーは除外する（ツアーカードのバッジ判定と同じロジック）
         statuses = tour.get("statuses", [])
@@ -802,10 +805,15 @@ def build_momiji_pickup(tours: dict, max_items: int = 6) -> str:
     <span class="momiji-pickup-sub">この秋おすすめの紅葉ツアーをご紹介</span>
   </div>
   <div class="momiji-carousel-wrap">
-  <button class="momiji-btn momiji-btn-prev" onclick="momijiMove(-1)">&#8249;</button>
-  <div class="momiji-pickup-scroll" id="momiji-scroll">
+    <button class="momiji-btn momiji-btn-prev" onclick="momijiMove(-1)">&#8249;</button>
+    <div class="momiji-track-outer">
+      <div class="momiji-track" id="momiji-track">
 {cards_html}
+      </div>
+    </div>
+    <button class="momiji-btn momiji-btn-next" onclick="momijiMove(1)">&#8250;</button>
   </div>
+  <div class="momiji-dots" id="momiji-dots"></div>
 </div>"""
 
 
@@ -912,30 +920,26 @@ HTML_TEMPLATE = """\
     .momiji-pickup-title {{ font-size: 16px; font-weight: 500; color: #8b3a1e; }}
     .momiji-pickup-sub {{ font-size: 12px; color: #a07a4a; }}
     /* カルーセル本体 */
-    .momiji-carousel-wrap {{ position:relative; overflow:hidden; padding: 8px 0 12px; }}
-    .momiji-pickup-scroll {{
-      display:flex; gap:0; overflow-x:scroll; scroll-snap-type:x mandatory;
-      -webkit-overflow-scrolling:touch; scrollbar-width:none; padding: 12px 0;
-    }}
-    .momiji-pickup-scroll::-webkit-scrollbar {{ display:none; }}
+    .momiji-carousel-wrap {{ position:relative; overflow:hidden; padding:12px 0 16px; }}
+    .momiji-track-outer {{ overflow:hidden; border-radius:10px; }}
+    .momiji-track {{ display:flex; transition:transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94); }}
     .momiji-card {{
-      flex: 0 0 200px; background:#fff; border:1px solid #e6d5b8; border-radius:10px;
-      overflow:hidden; text-decoration:none; margin: 0 8px;
-      scroll-snap-align:center;
-      transition: transform 0.35s ease, box-shadow 0.35s ease, opacity 0.35s ease;
-      transform: scale(0.85); opacity: 0.65;
+      flex: 0 0 100%; background:#fff; border:1px solid #e6d5b8; border-radius:10px;
+      overflow:hidden; text-decoration:none; display:block;
     }}
-    .momiji-card.is-active {{
-      transform: scale(1); opacity: 1;
-      box-shadow: 0 6px 20px rgba(139,58,30,0.25);
-    }}
-    .momiji-card-img {{ width:100%; height:130px; background:#c9b28a; overflow:hidden; }}
-    .momiji-card-img img {{ width:100%; height:100%; object-fit:cover; display:block; }}
-    .momiji-card-body {{ padding: 8px 10px 10px; }}
-    .momiji-card-title {{ font-size: 12px; font-weight: 500; color: #3c2e1e; line-height: 1.4; margin-bottom: 4px; display:-webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }}
-    .momiji-card-price {{ font-size: 11px; color: #8b3a1e; }}
+    .momiji-card-img {{ width:100%; height:200px; background:#c9b28a; overflow:hidden; }}
+    .momiji-card-img img {{ width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.4s ease; }}
+    .momiji-card:hover .momiji-card-img img {{ transform:scale(1.04); }}
+    .momiji-card-body {{ padding: 12px 14px 14px; display:flex; justify-content:space-between; align-items:center; gap:8px; }}
+    .momiji-card-title {{ font-size: 13px; font-weight: 500; color: #3c2e1e; line-height: 1.5; flex:1; }}
+    .momiji-card-price {{ font-size: 12px; color: #8b3a1e; white-space:nowrap; font-weight:500; }}
+    /* インジケーター */
+    .momiji-dots {{ display:flex; justify-content:center; gap:6px; margin-top:10px; }}
+    .momiji-dot {{ width:7px; height:7px; border-radius:50%; background:#d9c9b2; border:none; cursor:pointer; padding:0; transition:background 0.3s,transform 0.3s; }}
+    .momiji-dot.active {{ background:#8b3a1e; transform:scale(1.3); }}
     /* 前後ボタン */
-    .momiji-btn {{ position:absolute; top:50%; transform:translateY(-50%); background:rgba(139,58,30,0.75); color:#fff; border:none; border-radius:50%; width:32px; height:32px; font-size:16px; cursor:pointer; z-index:2; display:flex; align-items:center; justify-content:center; }}
+    .momiji-btn {{ position:absolute; top:calc(50% - 16px); transform:translateY(-50%); background:rgba(139,58,30,0.8); color:#fff; border:none; border-radius:50%; width:36px; height:36px; font-size:20px; cursor:pointer; z-index:2; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.2); }}
+    .momiji-btn:hover {{ background:rgba(139,58,30,1); }}
     .momiji-btn-prev {{ left:4px; }}
     .momiji-btn-next {{ right:4px; }}
     /* レポートビューワー */
@@ -1776,27 +1780,53 @@ HTML_TEMPLATE = """\
     if (note) note.textContent = count + '件のツアーを表示中';
   }}
 
-  // ===== 紅葉カルーセル =====
-  function momijiUpdateActive() {{
-    var scroll = document.getElementById('momiji-scroll');
-    if (!scroll) return;
-    var cards = scroll.querySelectorAll('.momiji-card');
-    var center = scroll.scrollLeft + scroll.offsetWidth / 2;
-    var closest = null, minDist = Infinity;
-    cards.forEach(function(card) {{
-      var cardCenter = card.offsetLeft + card.offsetWidth / 2;
-      var dist = Math.abs(cardCenter - center);
-      if (dist < minDist) {{ minDist = dist; closest = card; }}
-    }});
-    cards.forEach(function(card) {{ card.classList.toggle('is-active', card === closest); }});
-  }}
-  function momijiMove(dir) {{
-    var scroll = document.getElementById('momiji-scroll');
-    if (!scroll) return;
-    var card = scroll.querySelector('.momiji-card');
-    var step = card ? card.offsetWidth + 16 : 220;
-    scroll.scrollBy({{ left: dir * step, behavior: 'smooth' }});
-  }}
+  // ===== 紅葉カルーセル（8秒自動スライド）=====
+  (function() {{
+    var _idx = 0, _total = 0, _timer = null;
+    function _go(n) {{
+      var track = document.getElementById('momiji-track');
+      if (!track) return;
+      var cards = track.querySelectorAll('.momiji-card');
+      _total = cards.length;
+      if (!_total) return;
+      _idx = (n + _total) % _total;
+      track.style.transform = 'translateX(-' + (_idx * 100) + '%)';
+      // ドット更新
+      var dots = document.querySelectorAll('.momiji-dot');
+      dots.forEach(function(d, i) {{ d.classList.toggle('active', i === _idx); }});
+    }}
+    function _next() {{ _go(_idx + 1); }}
+    function _startTimer() {{
+      clearInterval(_timer);
+      _timer = setInterval(_next, 8000);
+    }}
+    window.momijiMove = function(dir) {{
+      _go(_idx + dir);
+      _startTimer(); // 手動操作でタイマーリセット
+    }};
+    window._momijiInit = function() {{
+      var track = document.getElementById('momiji-track');
+      if (!track) return;
+      var cards = track.querySelectorAll('.momiji-card');
+      _total = cards.length;
+      // ドット生成
+      var dotsEl = document.getElementById('momiji-dots');
+      if (dotsEl) {{
+        dotsEl.innerHTML = '';
+        for (var i = 0; i < _total; i++) {{
+          (function(idx) {{
+            var d = document.createElement('button');
+            d.className = 'momiji-dot' + (idx === 0 ? ' active' : '');
+            d.setAttribute('aria-label', (idx+1) + '枚目');
+            d.onclick = function() {{ _go(idx); _startTimer(); }};
+            dotsEl.appendChild(d);
+          }})(i);
+        }}
+      }}
+      _go(0);
+      _startTimer();
+    }};
+  }})();
 
   // ===== お気に入り機能 =====
   function getFavs() {{ try {{ return JSON.parse(localStorage.getItem('mk_favs') || '[]'); }} catch(e) {{ return []; }} }}
@@ -1842,13 +1872,8 @@ HTML_TEMPLATE = """\
     // お気に入り初期表示
     renderFavs();
     // 紅葉カルーセル初期化
-    var momijiScroll = document.getElementById('momiji-scroll');
-    if (momijiScroll) {{
-      momijiScroll.addEventListener('scroll', momijiUpdateActive, {{passive:true}});
-      setTimeout(function() {{
-        var first = momijiScroll.querySelector('.momiji-card');
-        if (first) first.classList.add('is-active');
-      }}, 100);
+    if (document.getElementById('momiji-track')) {{
+      setTimeout(window._momijiInit, 100);
     }}
   }});
 
