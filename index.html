@@ -41,29 +41,47 @@
     .momiji-pickup-head { display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; padding: 0 2px 10px; }
     .momiji-pickup-title { font-size: 16px; font-weight: 500; color: #8b3a1e; }
     .momiji-pickup-sub { font-size: 12px; color: #a07a4a; }
-    /* カルーセル本体 */
-    .momiji-carousel-wrap { position:relative; overflow:hidden; padding:12px 0 16px; }
-    .momiji-track-outer { overflow:hidden; border-radius:10px; }
-    .momiji-track { display:flex; transition:transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94); }
+    /* カルーセル：5枚同時表示・中央拡大 */
+    .momiji-carousel-wrap { position:relative; padding:8px 40px 8px; }
+    .momiji-track-outer { overflow:hidden; }
+    .momiji-track { display:flex; transition:transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94); }
     .momiji-card {
-      flex: 0 0 100%; background:#fff; border:1px solid #e6d5b8; border-radius:10px;
-      overflow:hidden; text-decoration:none; display:block;
+      flex: 0 0 20%; padding: 4px;
+      text-decoration:none; display:block;
+      transform: scale(0.9);
+      transition: transform 0.45s ease, box-shadow 0.45s ease;
+      position:relative; z-index:0;
     }
-    .momiji-card-img { width:100%; height:200px; background:#c9b28a; overflow:hidden; }
-    .momiji-card-img img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.4s ease; }
-    .momiji-card:hover .momiji-card-img img { transform:scale(1.04); }
-    .momiji-card-body { padding: 12px 14px 14px; display:flex; justify-content:space-between; align-items:center; gap:8px; }
-    .momiji-card-title { font-size: 13px; font-weight: 500; color: #3c2e1e; line-height: 1.5; flex:1; }
-    .momiji-card-price { font-size: 12px; color: #8b3a1e; white-space:nowrap; font-weight:500; }
-    /* インジケーター */
+    .momiji-card.is-center {
+      transform: scale(1.08);
+      z-index:1;
+    }
+    .momiji-card-inner {
+      background:#fff; border:1px solid #e6d5b8; border-radius:10px;
+      overflow:hidden; aspect-ratio:1; position:relative;
+    }
+    .momiji-card.is-center .momiji-card-inner {
+      box-shadow: 0 6px 20px rgba(139,58,30,0.28);
+    }
+    .momiji-card-img { width:100%; height:70%; background:#c9b28a; overflow:hidden; }
+    .momiji-card-img img { width:100%; height:100%; object-fit:cover; display:block; }
+    .momiji-card-body { padding: 6px 8px; height:30%; display:flex; flex-direction:column; justify-content:center; }
+    .momiji-card-title { font-size: 11px; font-weight: 500; color: #3c2e1e; line-height: 1.4;
+      display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin-bottom:2px; }
+    .momiji-card-price { font-size: 10px; color: #8b3a1e; font-weight:500; }
+    /* ドット */
     .momiji-dots { display:flex; justify-content:center; gap:6px; margin-top:10px; }
-    .momiji-dot { width:7px; height:7px; border-radius:50%; background:#d9c9b2; border:none; cursor:pointer; padding:0; transition:background 0.3s,transform 0.3s; }
+    .momiji-dot { width:8px; height:8px; border-radius:50%; background:#d9c9b2; border:none; cursor:pointer; padding:0; transition:background 0.3s,transform 0.3s; }
     .momiji-dot.active { background:#8b3a1e; transform:scale(1.3); }
     /* 前後ボタン */
-    .momiji-btn { position:absolute; top:calc(50% - 16px); transform:translateY(-50%); background:rgba(139,58,30,0.8); color:#fff; border:none; border-radius:50%; width:36px; height:36px; font-size:20px; cursor:pointer; z-index:2; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+    .momiji-btn { position:absolute; top:50%; transform:translateY(-50%); background:rgba(139,58,30,0.82); color:#fff; border:none; border-radius:50%; width:34px; height:34px; font-size:20px; cursor:pointer; z-index:2; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.18); }
     .momiji-btn:hover { background:rgba(139,58,30,1); }
     .momiji-btn-prev { left:4px; }
     .momiji-btn-next { right:4px; }
+    @media(max-width:700px) {
+      .momiji-card { flex: 0 0 33.333%; }
+      .momiji-carousel-wrap { padding: 8px 36px 8px; }
+    }
     /* レポートビューワー */
     .report-viewer-overlay { display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:10000;align-items:center;justify-content:center;flex-direction:column; }
     .report-viewer-overlay.show { display:flex; }
@@ -272,45 +290,57 @@
     <div class="momiji-track-outer">
       <div class="momiji-track" id="momiji-track">
       <a href="https://travel.mk-group.co.jp/tourkyoto/keihoku-kouyou2026/" target="_blank" class="momiji-card">
-        <div class="momiji-card-img"><img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/09/トップ用-1.jpg" alt="京北の紅葉を訪ねて。常照皇寺と里山めぐり～季節のそば御膳を味わう秋の旅～" loading="lazy"></div>
-        <div class="momiji-card-body">
-          <div class="momiji-card-title">京北の紅葉を訪ねて。常照皇寺と里山めぐり～季節のそば御膳を味わう秋の旅～</div>
-          <div class="momiji-card-price">15,300円（税込）</div>
+        <div class="momiji-card-inner">
+          <div class="momiji-card-img"><img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/09/トップ用-1.jpg" alt="京北の紅葉を訪ねて。常照皇寺と里山めぐり～季節のそば御膳を味わう秋の旅～" loading="lazy"></div>
+          <div class="momiji-card-body">
+            <div class="momiji-card-title">京北の紅葉を訪ねて。常照皇寺と里山めぐり～季節のそば御膳を味わう秋の旅～</div>
+            <div class="momiji-card-price">15,300円（税込）</div>
+          </div>
         </div>
       </a>
       <a href="https://travel.mk-group.co.jp/tourkyoto/nishiyama_half2026/" target="_blank" class="momiji-card">
-        <div class="momiji-card-img"><img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/08/トップ用画像2.png" alt="京都・西山、紅葉をめぐる半日 ～タクシーで訪れる、静かな秋の名刹～" loading="lazy"></div>
-        <div class="momiji-card-body">
-          <div class="momiji-card-title">京都・西山、紅葉をめぐる半日 ～タクシーで訪れる、静かな秋の名刹～</div>
-          <div class="momiji-card-price">8,800円（税込）</div>
+        <div class="momiji-card-inner">
+          <div class="momiji-card-img"><img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/08/トップ用画像2.png" alt="京都・西山、紅葉をめぐる半日 ～タクシーで訪れる、静かな秋の名刹～" loading="lazy"></div>
+          <div class="momiji-card-body">
+            <div class="momiji-card-title">京都・西山、紅葉をめぐる半日 ～タクシーで訪れる、静かな秋の名刹～</div>
+            <div class="momiji-card-price">8,800円（税込）</div>
+          </div>
         </div>
       </a>
       <a href="https://travel.mk-group.co.jp/tourkyoto/kameoka-momiji2026/" target="_blank" class="momiji-card">
-        <div class="momiji-card-img"><img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/08/トップ用2.jpg" alt="紅葉の亀岡、心ほどける秋旅。法常寺で出会う、特別なひととき" loading="lazy"></div>
-        <div class="momiji-card-body">
-          <div class="momiji-card-title">紅葉の亀岡、心ほどける秋旅。法常寺で出会う、特別なひととき</div>
-          <div class="momiji-card-price">15,800円（税込）</div>
+        <div class="momiji-card-inner">
+          <div class="momiji-card-img"><img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/08/トップ用2.jpg" alt="紅葉の亀岡、心ほどける秋旅。法常寺で出会う、特別なひととき" loading="lazy"></div>
+          <div class="momiji-card-body">
+            <div class="momiji-card-title">紅葉の亀岡、心ほどける秋旅。法常寺で出会う、特別なひととき</div>
+            <div class="momiji-card-price">15,800円（税込）</div>
+          </div>
         </div>
       </a>
       <a href="https://travel.mk-group.co.jp/tourkyoto/hojoji-light2026/" target="_blank" class="momiji-card">
-        <div class="momiji-card-img"><img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/09/top.png" alt="【京都駅発着】法常寺 紅葉ライトアップ送迎プラン ～亀岡の名刹で過ごす、秋の夜～" loading="lazy"></div>
-        <div class="momiji-card-body">
-          <div class="momiji-card-title">【京都駅発着】法常寺 紅葉ライトアップ送迎プラン ～亀岡の名刹で過ごす、秋の夜～</div>
-          <div class="momiji-card-price">7,800円（税込）</div>
+        <div class="momiji-card-inner">
+          <div class="momiji-card-img"><img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/09/top.png" alt="【京都駅発着】法常寺 紅葉ライトアップ送迎プラン ～亀岡の名刹で過ごす、秋の夜～" loading="lazy"></div>
+          <div class="momiji-card-body">
+            <div class="momiji-card-title">【京都駅発着】法常寺 紅葉ライトアップ送迎プラン ～亀岡の名刹で過ごす、秋の夜～</div>
+            <div class="momiji-card-price">7,800円（税込）</div>
+          </div>
         </div>
       </a>
       <a href="https://travel.mk-group.co.jp/tourkyoto/youkokuji-limited2026/" target="_blank" class="momiji-card">
-        <div class="momiji-card-img"><img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/09/トップ用2-2.jpg" alt="【9名様限定・特別貸切】誰もいない朝の柳谷観音 楊谷寺へ ～開門前の静寂に包まれる、京都西山の特別な朝～" loading="lazy"></div>
-        <div class="momiji-card-body">
-          <div class="momiji-card-title">【9名様限定・特別貸切】誰もいない朝の柳谷観音 楊谷寺へ ～開門前の静寂に包まれる、京都西山の特別な朝～</div>
-          <div class="momiji-card-price">20,000円（税込）</div>
+        <div class="momiji-card-inner">
+          <div class="momiji-card-img"><img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/09/トップ用2-2.jpg" alt="【9名様限定・特別貸切】誰もいない朝の柳谷観音 楊谷寺へ ～開門前の静寂に包まれる、京都西山の特別な朝～" loading="lazy"></div>
+          <div class="momiji-card-body">
+            <div class="momiji-card-title">【9名様限定・特別貸切】誰もいない朝の柳谷観音 楊谷寺へ ～開門前の静寂に包まれる、京都西山の特別な朝～</div>
+            <div class="momiji-card-price">20,000円（税込）</div>
+          </div>
         </div>
       </a>
       <a href="https://travel.mk-group.co.jp/tourkyoto/juurinji-light2026/" target="_blank" class="momiji-card">
-        <div class="momiji-card-img"><img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/10/top.jpg" alt="【夜間特別拝観】紅葉の十輪寺へ♪ご住職の講話と梵字が彩る、特別な秋の夜" loading="lazy"></div>
-        <div class="momiji-card-body">
-          <div class="momiji-card-title">【夜間特別拝観】紅葉の十輪寺へ♪ご住職の講話と梵字が彩る、特別な秋の夜</div>
-          <div class="momiji-card-price">3,000円～7,000円（税込）</div>
+        <div class="momiji-card-inner">
+          <div class="momiji-card-img"><img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/10/top.jpg" alt="【夜間特別拝観】紅葉の十輪寺へ♪ご住職の講話と梵字が彩る、特別な秋の夜" loading="lazy"></div>
+          <div class="momiji-card-body">
+            <div class="momiji-card-title">【夜間特別拝観】紅葉の十輪寺へ♪ご住職の講話と梵字が彩る、特別な秋の夜</div>
+            <div class="momiji-card-price">3,000円～7,000円（税込）</div>
+          </div>
         </div>
       </a>
       </div>
@@ -459,7 +489,7 @@
   <a href="https://www.mk-group.co.jp/mktravel/list_008_2024" target="_blank" style="display:block;padding:6px 0;font-size:13px;color:#5c4a32;">📁 2024年</a>
 </div>
 
-<p class="updated-note">最終更新: 2026年10月14日 10:07</p>
+<p class="updated-note">最終更新: 2026年10月14日 10:24</p>
 
 <div class="page-wrap">
 
@@ -1095,7 +1125,7 @@
     </div>
     <div class="tour-count" id="tour-count"></div>
     <div class="tours-grid" id="tours-grid">
-      <div class="tour-card" data-tags="history event autumn exp" data-dates="2026-10-22" data-tour-id="2026-10-22" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/">
+      <div class="tour-card" data-tags="exp autumn history event" data-dates="2026-10-22" data-tour-id="2026-10-22" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/">
         <div class="tour-img" style="background:#3a2a1a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/宿泊トップ.png" alt="【限定宿泊プラン】 くらま温泉で迎える 鞍馬の火祭 特別な一夜" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bfull" style="z-index:1;">満席</div>
@@ -1109,7 +1139,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="history event autumn exp" data-dates="2026-10-22" data-tour-id="2026-10-22" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/">
+      <div class="tour-card" data-tags="exp autumn history event" data-dates="2026-10-22" data-tour-id="2026-10-22" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/">
         <div class="tour-img" style="background:#6b8e6b;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/1day.png" alt="昼の鞍馬散策と夜の火祭へ  ～くらま温泉で過ごす特別な一日～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bfull" style="z-index:1;">満席</div>
@@ -1123,7 +1153,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="history event autumn exp" data-dates="2026-10-22" data-tour-id="2026-10-22" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/kuramanohimatsuri2026/">
+      <div class="tour-card" data-tags="exp autumn history event" data-dates="2026-10-22" data-tour-id="2026-10-22" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/kuramanohimatsuri2026/">
         <div class="tour-img" style="background:#3a2a1a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/夜トップ.png" alt="間近で体感する迫力！くらま温泉×鞍馬の火祭 観覧ツアー ～帰り時間を気にせず楽しむ特別な一夜～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge bfull" style="z-index:1;">満席</div>
@@ -1347,7 +1377,7 @@
           <a href="https://travel.mk-group.co.jp/tourkyoto/eto-uma/" target="_blank" class="btn-detail">詳細をみる</a>
         </div>
       </div>
-      <div class="tour-card" data-tags="history exp" data-dates="" data-tour-id="2026-10-22" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/yawata/">
+      <div class="tour-card" data-tags="exp history" data-dates="" data-tour-id="2026-10-22" data-tour-url="https://travel.mk-group.co.jp/tourkyoto/yawata/">
         <div class="tour-img" style="background:#7c6b4a;position:relative;overflow:hidden;">
           <img src="https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2025/02/トップ-1.png" alt="京都・八幡の隠れた名所巡り ～流れ橋と歴史の旅～" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;" onerror="this.style.display='none'">
           <div class="sbadge br" style="z-index:1;">募集中</div>
@@ -1883,50 +1913,88 @@
     if (note) note.textContent = count + '件のツアーを表示中';
   }
 
-  // ===== 紅葉カルーセル（8秒自動スライド）=====
+  // ===== 紅葉カルーセル（5枚表示・1枚ずつ3秒スライド・無限ループ）=====
   (function() {
-    var _idx = 0, _total = 0, _timer = null;
-    function _go(n) {
+    var _cur = 0, _real = 0, _timer = null;
+    var PER = 5; // 同時表示枚数
+
+    function _updateCenter(cards) {
+      // 現在先頭から数えてPER/2枚目（中央）をis-centerに
+      var centerOff = Math.floor(PER / 2);
+      cards.forEach(function(c, i) {
+        c.classList.toggle('is-center', i === _cur + centerOff);
+      });
+    }
+
+    function _updateDots() {
+      document.querySelectorAll('.momiji-dot').forEach(function(d, i) {
+        d.classList.toggle('active', i === (_cur % _real));
+      });
+    }
+
+    function _slide(n, animate) {
       var track = document.getElementById('momiji-track');
       if (!track) return;
-      var cards = track.querySelectorAll('.momiji-card');
-      _total = cards.length;
-      if (!_total) return;
-      _idx = (n + _total) % _total;
-      track.style.transform = 'translateX(-' + (_idx * 100) + '%)';
-      // ドット更新
-      var dots = document.querySelectorAll('.momiji-dot');
-      dots.forEach(function(d, i) { d.classList.toggle('active', i === _idx); });
+      var cards = Array.prototype.slice.call(track.querySelectorAll('.momiji-card'));
+      var total = cards.length; // 複製込みの総数
+      _cur = n;
+      if (!animate) track.style.transition = 'none';
+      track.style.transform = 'translateX(-' + (_cur * (100 / PER)) + '%)';
+      if (!animate) void track.offsetWidth; // reflow
+      if (!animate) track.style.transition = '';
+      _updateCenter(cards);
+      _updateDots();
     }
-    function _next() { _go(_idx + 1); }
+
+    function _next() {
+      _cur++;
+      // 無限ループ：複製部分に達したら先頭にリセット
+      if (_cur >= _real) {
+        _slide(_cur, true);
+        setTimeout(function() { _slide(0, false); }, 600);
+        return;
+      }
+      _slide(_cur, true);
+    }
+
     function _startTimer() {
       clearInterval(_timer);
-      _timer = setInterval(_next, 8000);
+      _timer = setInterval(_next, 3000);
     }
+
     window.momijiMove = function(dir) {
-      _go(_idx + dir);
-      _startTimer(); // 手動操作でタイマーリセット
+      _cur = Math.max(0, Math.min(_cur + dir, _real - 1));
+      _slide(_cur, true);
+      _startTimer();
     };
+
     window._momijiInit = function() {
       var track = document.getElementById('momiji-track');
       if (!track) return;
-      var cards = track.querySelectorAll('.momiji-card');
-      _total = cards.length;
-      // ドット生成
+      var origCards = Array.prototype.slice.call(track.querySelectorAll('.momiji-card'));
+      _real = origCards.length;
+      if (!_real) return;
+
+      // 無限ループ用：先頭PER枚を末尾に複製
+      for (var i = 0; i < PER; i++) {
+        track.appendChild(origCards[i % _real].cloneNode(true));
+      }
+
+      // ドット生成（元のカード数分）
       var dotsEl = document.getElementById('momiji-dots');
       if (dotsEl) {
         dotsEl.innerHTML = '';
-        for (var i = 0; i < _total; i++) {
+        for (var j = 0; j < _real; j++) {
           (function(idx) {
             var d = document.createElement('button');
             d.className = 'momiji-dot' + (idx === 0 ? ' active' : '');
-            d.setAttribute('aria-label', (idx+1) + '枚目');
-            d.onclick = function() { _go(idx); _startTimer(); };
+            d.onclick = function() { _slide(idx, true); _startTimer(); };
             dotsEl.appendChild(d);
-          })(i);
+          })(j);
         }
       }
-      _go(0);
+
+      _slide(0, false);
       _startTimer();
     };
   })();

@@ -791,10 +791,12 @@ def build_momiji_pickup(tours: dict, max_items: int = 6) -> str:
         price = tour.get("price", "")
         img_html = f'<img src="{image}" alt="{title}" loading="lazy">' if image else ""
         cards.append(f"""      <a href="{url}" target="_blank" class="momiji-card">
-        <div class="momiji-card-img">{img_html}</div>
-        <div class="momiji-card-body">
-          <div class="momiji-card-title">{title}</div>
-          <div class="momiji-card-price">{price}</div>
+        <div class="momiji-card-inner">
+          <div class="momiji-card-img">{img_html}</div>
+          <div class="momiji-card-body">
+            <div class="momiji-card-title">{title}</div>
+            <div class="momiji-card-price">{price}</div>
+          </div>
         </div>
       </a>""")
 
@@ -919,29 +921,47 @@ HTML_TEMPLATE = """\
     .momiji-pickup-head {{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; padding: 0 2px 10px; }}
     .momiji-pickup-title {{ font-size: 16px; font-weight: 500; color: #8b3a1e; }}
     .momiji-pickup-sub {{ font-size: 12px; color: #a07a4a; }}
-    /* カルーセル本体 */
-    .momiji-carousel-wrap {{ position:relative; overflow:hidden; padding:12px 0 16px; }}
-    .momiji-track-outer {{ overflow:hidden; border-radius:10px; }}
-    .momiji-track {{ display:flex; transition:transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94); }}
+    /* カルーセル：5枚同時表示・中央拡大 */
+    .momiji-carousel-wrap {{ position:relative; padding:8px 40px 8px; }}
+    .momiji-track-outer {{ overflow:hidden; }}
+    .momiji-track {{ display:flex; transition:transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94); }}
     .momiji-card {{
-      flex: 0 0 100%; background:#fff; border:1px solid #e6d5b8; border-radius:10px;
-      overflow:hidden; text-decoration:none; display:block;
+      flex: 0 0 20%; padding: 4px;
+      text-decoration:none; display:block;
+      transform: scale(0.9);
+      transition: transform 0.45s ease, box-shadow 0.45s ease;
+      position:relative; z-index:0;
     }}
-    .momiji-card-img {{ width:100%; height:200px; background:#c9b28a; overflow:hidden; }}
-    .momiji-card-img img {{ width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.4s ease; }}
-    .momiji-card:hover .momiji-card-img img {{ transform:scale(1.04); }}
-    .momiji-card-body {{ padding: 12px 14px 14px; display:flex; justify-content:space-between; align-items:center; gap:8px; }}
-    .momiji-card-title {{ font-size: 13px; font-weight: 500; color: #3c2e1e; line-height: 1.5; flex:1; }}
-    .momiji-card-price {{ font-size: 12px; color: #8b3a1e; white-space:nowrap; font-weight:500; }}
-    /* インジケーター */
+    .momiji-card.is-center {{
+      transform: scale(1.08);
+      z-index:1;
+    }}
+    .momiji-card-inner {{
+      background:#fff; border:1px solid #e6d5b8; border-radius:10px;
+      overflow:hidden; aspect-ratio:1; position:relative;
+    }}
+    .momiji-card.is-center .momiji-card-inner {{
+      box-shadow: 0 6px 20px rgba(139,58,30,0.28);
+    }}
+    .momiji-card-img {{ width:100%; height:70%; background:#c9b28a; overflow:hidden; }}
+    .momiji-card-img img {{ width:100%; height:100%; object-fit:cover; display:block; }}
+    .momiji-card-body {{ padding: 6px 8px; height:30%; display:flex; flex-direction:column; justify-content:center; }}
+    .momiji-card-title {{ font-size: 11px; font-weight: 500; color: #3c2e1e; line-height: 1.4;
+      display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin-bottom:2px; }}
+    .momiji-card-price {{ font-size: 10px; color: #8b3a1e; font-weight:500; }}
+    /* ドット */
     .momiji-dots {{ display:flex; justify-content:center; gap:6px; margin-top:10px; }}
-    .momiji-dot {{ width:7px; height:7px; border-radius:50%; background:#d9c9b2; border:none; cursor:pointer; padding:0; transition:background 0.3s,transform 0.3s; }}
+    .momiji-dot {{ width:8px; height:8px; border-radius:50%; background:#d9c9b2; border:none; cursor:pointer; padding:0; transition:background 0.3s,transform 0.3s; }}
     .momiji-dot.active {{ background:#8b3a1e; transform:scale(1.3); }}
     /* 前後ボタン */
-    .momiji-btn {{ position:absolute; top:calc(50% - 16px); transform:translateY(-50%); background:rgba(139,58,30,0.8); color:#fff; border:none; border-radius:50%; width:36px; height:36px; font-size:20px; cursor:pointer; z-index:2; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.2); }}
+    .momiji-btn {{ position:absolute; top:50%; transform:translateY(-50%); background:rgba(139,58,30,0.82); color:#fff; border:none; border-radius:50%; width:34px; height:34px; font-size:20px; cursor:pointer; z-index:2; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.18); }}
     .momiji-btn:hover {{ background:rgba(139,58,30,1); }}
     .momiji-btn-prev {{ left:4px; }}
     .momiji-btn-next {{ right:4px; }}
+    @media(max-width:700px) {{
+      .momiji-card {{ flex: 0 0 33.333%; }}
+      .momiji-carousel-wrap {{ padding: 8px 36px 8px; }}
+    }}
     /* レポートビューワー */
     .report-viewer-overlay {{ display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:10000;align-items:center;justify-content:center;flex-direction:column; }}
     .report-viewer-overlay.show {{ display:flex; }}
@@ -1780,50 +1800,88 @@ HTML_TEMPLATE = """\
     if (note) note.textContent = count + '件のツアーを表示中';
   }}
 
-  // ===== 紅葉カルーセル（8秒自動スライド）=====
+  // ===== 紅葉カルーセル（5枚表示・1枚ずつ3秒スライド・無限ループ）=====
   (function() {{
-    var _idx = 0, _total = 0, _timer = null;
-    function _go(n) {{
+    var _cur = 0, _real = 0, _timer = null;
+    var PER = 5; // 同時表示枚数
+
+    function _updateCenter(cards) {{
+      // 現在先頭から数えてPER/2枚目（中央）をis-centerに
+      var centerOff = Math.floor(PER / 2);
+      cards.forEach(function(c, i) {{
+        c.classList.toggle('is-center', i === _cur + centerOff);
+      }});
+    }}
+
+    function _updateDots() {{
+      document.querySelectorAll('.momiji-dot').forEach(function(d, i) {{
+        d.classList.toggle('active', i === (_cur % _real));
+      }});
+    }}
+
+    function _slide(n, animate) {{
       var track = document.getElementById('momiji-track');
       if (!track) return;
-      var cards = track.querySelectorAll('.momiji-card');
-      _total = cards.length;
-      if (!_total) return;
-      _idx = (n + _total) % _total;
-      track.style.transform = 'translateX(-' + (_idx * 100) + '%)';
-      // ドット更新
-      var dots = document.querySelectorAll('.momiji-dot');
-      dots.forEach(function(d, i) {{ d.classList.toggle('active', i === _idx); }});
+      var cards = Array.prototype.slice.call(track.querySelectorAll('.momiji-card'));
+      var total = cards.length; // 複製込みの総数
+      _cur = n;
+      if (!animate) track.style.transition = 'none';
+      track.style.transform = 'translateX(-' + (_cur * (100 / PER)) + '%)';
+      if (!animate) void track.offsetWidth; // reflow
+      if (!animate) track.style.transition = '';
+      _updateCenter(cards);
+      _updateDots();
     }}
-    function _next() {{ _go(_idx + 1); }}
+
+    function _next() {{
+      _cur++;
+      // 無限ループ：複製部分に達したら先頭にリセット
+      if (_cur >= _real) {{
+        _slide(_cur, true);
+        setTimeout(function() {{ _slide(0, false); }}, 600);
+        return;
+      }}
+      _slide(_cur, true);
+    }}
+
     function _startTimer() {{
       clearInterval(_timer);
-      _timer = setInterval(_next, 8000);
+      _timer = setInterval(_next, 3000);
     }}
+
     window.momijiMove = function(dir) {{
-      _go(_idx + dir);
-      _startTimer(); // 手動操作でタイマーリセット
+      _cur = Math.max(0, Math.min(_cur + dir, _real - 1));
+      _slide(_cur, true);
+      _startTimer();
     }};
+
     window._momijiInit = function() {{
       var track = document.getElementById('momiji-track');
       if (!track) return;
-      var cards = track.querySelectorAll('.momiji-card');
-      _total = cards.length;
-      // ドット生成
+      var origCards = Array.prototype.slice.call(track.querySelectorAll('.momiji-card'));
+      _real = origCards.length;
+      if (!_real) return;
+
+      // 無限ループ用：先頭PER枚を末尾に複製
+      for (var i = 0; i < PER; i++) {{
+        track.appendChild(origCards[i % _real].cloneNode(true));
+      }}
+
+      // ドット生成（元のカード数分）
       var dotsEl = document.getElementById('momiji-dots');
       if (dotsEl) {{
         dotsEl.innerHTML = '';
-        for (var i = 0; i < _total; i++) {{
+        for (var j = 0; j < _real; j++) {{
           (function(idx) {{
             var d = document.createElement('button');
             d.className = 'momiji-dot' + (idx === 0 ? ' active' : '');
-            d.setAttribute('aria-label', (idx+1) + '枚目');
-            d.onclick = function() {{ _go(idx); _startTimer(); }};
+            d.onclick = function() {{ _slide(idx, true); _startTimer(); }};
             dotsEl.appendChild(d);
-          }})(i);
+          }})(j);
         }}
       }}
-      _go(0);
+
+      _slide(0, false);
       _startTimer();
     }};
   }})();
