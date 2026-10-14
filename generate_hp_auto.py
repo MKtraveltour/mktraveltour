@@ -204,7 +204,7 @@ def get_tour_emoji(title: str) -> str:
 def build_tour_js(tours: dict) -> str:
     """tour_data.json からカレンダー用JSデータを生成"""
     lines = []
-    SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama", "momidiya"}
+    SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama", "momidiya", "nuigurumi2026", "nuigurumi2026-2"}
 
     import datetime as _dt2, re as _re2
     _period_queue = []  # 期間ツアーの後処理リスト
@@ -453,7 +453,7 @@ def build_tour_cards(tours: dict) -> str:
 
     bg_colors = ["#6b8e6b", "#7c6b4a", "#4a7c6b", "#3a2a1a"]
     cards_entries = []  # (sort_key, html) のリスト
-    SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama", "momidiya"}
+    SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama", "momidiya", "nuigurumi2026", "nuigurumi2026-2"}
 
     import datetime as _dt2, re as _re2
     _today = _dt2.date.today()
@@ -718,7 +718,7 @@ def build_momiji_pickup(tours: dict, max_items: int = 6) -> str:
     """
     import datetime as _dt3, re as _re3
     _today = _dt3.date.today()
-    SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama", "momidiya"}
+    SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama", "momidiya", "nuigurumi2026", "nuigurumi2026-2"}
     # 紅葉ピックアップから手動で除外したいツアー（タグはautumnでも紅葉の内容ではないもの等）
     MOMIJI_MANUAL_EXCLUDE = {"kyotanba_kuromame"}
     # momijiタグ（ツアー管理ツールで手動設定）のツアーのみピックアップ
@@ -840,7 +840,7 @@ def build_sidebar_status(tours: dict) -> str:
         except: return None
 
     entries = []
-    SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama", "momidiya"}
+    SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama", "momidiya", "nuigurumi2026", "nuigurumi2026-2"}
     for key, tour in tours.items():
         if key in SKIP_KEYS: continue
         if tour.get("hidden"): continue  # 手動非表示フラグ
