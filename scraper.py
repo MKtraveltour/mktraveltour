@@ -87,6 +87,8 @@ TOUR_URLS = {
 
     "juurinji-light": "https://travel.mk-group.co.jp/tourkyoto/juurinji-light2026/",
 
+    "youkoku_night2026": "https://travel.mk-group.co.jp/tourkyoto/momijiweek2026_mktour/",
+
 }
 
 HEADERS = {
