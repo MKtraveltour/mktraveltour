@@ -466,15 +466,20 @@ def build_tour_cards(tours: dict) -> str:
         future_found = False
         date_found = False
         for d in dates:
-            if "随時" in str(d): continue  # 随時行は個別スキップ（即return しない）
-            for m in _re2.finditer(r"(\d{1,2})/(\d{1,2})", str(d)):
+            if "随時" in str(d): continue
+            ds = str(d)
+            # 年付き「2026年11月18日」→ 月/日に正規化
+            ds = _re2.sub(r'\d{4}年(\d{1,2})月(\d{1,2})日', r'\1/\2', ds)
+            # 「11月18日」→ 月/日に正規化
+            ds = _re2.sub(r'(\d{1,2})月(\d{1,2})日', r'\1/\2', ds)
+            for m in _re2.finditer(r"(\d{1,2})/(\d{1,2})", ds):
                 mo, day = int(m.group(1)), int(m.group(2))
                 try:
                     dt = _dt2.date(_today.year, mo, day)
                     date_found = True
                     if dt >= _today: future_found = True
                 except: pass
-            period = _re2.search(r"(\d{1,2})/(\d{1,2}).*?[～~].*(\d{1,2})/(\d{1,2})", str(d))
+            period = _re2.search(r"(\d{1,2})/(\d{1,2}).*?[～~].*(\d{1,2})/(\d{1,2})", ds)
             if period:
                 mo2, day2 = int(period.group(3)), int(period.group(4))
                 try:
