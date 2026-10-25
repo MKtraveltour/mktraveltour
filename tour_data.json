@@ -17,7 +17,7 @@
       "景色・写真",
       "京都西山"
     ],
-    "updated_at": "2026-10-16T08:58:09.592244",
+    "updated_at": "2026-10-25T09:28:14.398935",
     "error": null
   },
   "ayabe_ajisai": {
@@ -38,7 +38,7 @@
       "神社仏閣",
       "景色・写真"
     ],
-    "updated_at": "2026-10-16T08:58:10.510096",
+    "updated_at": "2026-10-25T09:28:14.672177",
     "error": null
   },
   "rousoku": {
@@ -68,13 +68,13 @@
       "日帰り旅行",
       "夏のツアー"
     ],
-    "updated_at": "2026-10-16T08:58:11.269660",
+    "updated_at": "2026-10-25T09:28:14.913113",
     "error": null
   },
   "himatsuri_stay": {
     "key": "himatsuri_stay",
     "url": "https://travel.mk-group.co.jp/tourkyoto/himatsuri-stay/",
-    "title": "【限定宿泊プラン】 くらま温泉で迎える 鞍馬の火祭 特別な一夜",
+    "title": "【募集終了】【限定宿泊プラン】 くらま温泉で迎える 鞍馬の火祭 特別な一夜",
     "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/宿泊トップ.png",
     "price": "67,000円～135,000円（税込）",
     "dates": [
@@ -96,7 +96,7 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-10-16T08:58:12.233938",
+    "updated_at": "2026-10-25T09:28:15.187068",
     "error": null
   },
   "okuribi": {
@@ -119,7 +119,7 @@
       "乗合",
       "夏のツアー"
     ],
-    "updated_at": "2026-10-16T08:58:13.167843",
+    "updated_at": "2026-10-25T09:28:15.441782",
     "error": null
   },
   "kokoro_utsushi": {
@@ -143,7 +143,7 @@
       "期間限定",
       "送迎場所指定OK"
     ],
-    "updated_at": "2026-10-16T08:58:14.354690",
+    "updated_at": "2026-10-25T09:28:15.923890",
     "error": null
   },
   "satsuei": {
@@ -170,7 +170,7 @@
       "ガイド・講座",
       "期間限定"
     ],
-    "updated_at": "2026-10-16T08:58:15.161579",
+    "updated_at": "2026-10-25T09:28:16.180198",
     "error": null
   },
   "momidiya": {
@@ -197,13 +197,13 @@
       "夏のツアー",
       "夏旅"
     ],
-    "updated_at": "2026-10-16T08:58:16.063139",
+    "updated_at": "2026-10-25T09:28:16.437109",
     "error": null
   },
   "himatsuri_1day": {
     "key": "himatsuri_1day",
     "url": "https://travel.mk-group.co.jp/tourkyoto/himatsuri-1day/",
-    "title": "昼の鞍馬散策と夜の火祭へ  ～くらま温泉で過ごす特別な一日～",
+    "title": "【募集終了】昼の鞍馬散策と夜の火祭へ  ～くらま温泉で過ごす特別な一日～",
     "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/1day.png",
     "price": "26,800円（税込）",
     "dates": [
@@ -225,7 +225,7 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-10-16T08:58:17.029034",
+    "updated_at": "2026-10-25T09:28:16.693057",
     "error": null
   },
   "furin_shojuin2026": {
@@ -246,7 +246,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-10-16T08:58:17.487210",
+    "updated_at": "2026-10-25T09:28:16.948084",
     "error": null
   },
   "migidaimonji2026": {
@@ -270,13 +270,13 @@
       "乗合",
       "夏のツアー"
     ],
-    "updated_at": "2026-10-16T08:58:18.182640",
+    "updated_at": "2026-10-25T09:28:17.218866",
     "error": null
   },
   "himatsuri2026": {
     "key": "himatsuri2026",
     "url": "https://travel.mk-group.co.jp/tourkyoto/kuramanohimatsuri2026/",
-    "title": "間近で体感する迫力！くらま温泉×鞍馬の火祭 観覧ツアー ～帰り時間を気にせず楽しむ特別な一夜～",
+    "title": "【募集終了】間近で体感する迫力！くらま温泉×鞍馬の火祭 観覧ツアー ～帰り時間を気にせず楽しむ特別な一夜～",
     "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/夜トップ.png",
     "price": "25,800円（税込）",
     "dates": [
@@ -298,7 +298,7 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-10-16T08:58:19.258521",
+    "updated_at": "2026-10-25T09:28:17.474514",
     "error": null
   },
   "miyama_ishida": {
@@ -320,7 +320,7 @@
       "歴史",
       "京都美山"
     ],
-    "updated_at": "2026-10-16T08:58:20.033283",
+    "updated_at": "2026-10-25T09:28:17.746278",
     "error": null
   },
   "yuzengiku2026": {
@@ -344,7 +344,7 @@
       "夏のツアー",
       "夏旅"
     ],
-    "updated_at": "2026-10-16T08:58:20.808621",
+    "updated_at": "2026-10-25T09:28:17.992486",
     "error": null
   },
   "yokokuji_shuttle": {
@@ -367,7 +367,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-10-16T08:58:21.630771",
+    "updated_at": "2026-10-25T09:28:18.288714",
     "error": null
   },
   "shojuin_sogei": {
@@ -382,6 +382,11 @@
     ],
     "statuses": [
       {
+        "date": "11/20",
+        "label": "あと３名",
+        "type": "few"
+      },
+      {
         "date": "11/29",
         "label": "あと３名",
         "type": "few"
@@ -395,7 +400,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-10-16T08:58:22.136614",
+    "updated_at": "2026-10-25T09:28:18.560764",
     "error": null
   },
   "uma": {
@@ -420,7 +425,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-10-16T08:58:23.023104",
+    "updated_at": "2026-10-25T09:28:18.831589",
     "error": null
   },
   "narihira_nishiyama": {
@@ -449,7 +454,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-10-16T08:58:23.938496",
+    "updated_at": "2026-10-25T09:28:19.103392",
     "error": null
   },
   "tango": {
@@ -471,7 +476,7 @@
       "貸切",
       "日帰り旅行"
     ],
-    "updated_at": "2026-10-16T08:58:25.077456",
+    "updated_at": "2026-10-25T09:28:19.391881",
     "error": null
   },
   "baikamo2026": {
@@ -496,7 +501,7 @@
       "日帰り旅行",
       "夏のツアー"
     ],
-    "updated_at": "2026-10-16T08:58:25.994669",
+    "updated_at": "2026-10-25T09:28:19.761354",
     "error": null
   },
   "maizuru_ajisai": {
@@ -521,7 +526,7 @@
       "神社仏閣",
       "景色・写真"
     ],
-    "updated_at": "2026-10-16T08:58:26.801663",
+    "updated_at": "2026-10-25T09:28:20.017754",
     "error": null
   },
   "yawata": {
@@ -543,7 +548,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-10-16T08:58:27.719334",
+    "updated_at": "2026-10-25T09:28:20.304687",
     "error": null
   },
   "shasou": {
@@ -564,7 +569,7 @@
       "歴史",
       "京都美山"
     ],
-    "updated_at": "2026-10-16T08:58:28.335867",
+    "updated_at": "2026-10-25T09:28:20.577371",
     "error": null
   },
   "kayabuki_himawari": {
@@ -579,7 +584,7 @@
     ],
     "statuses": [],
     "tags": [],
-    "updated_at": "2026-10-16T08:58:29.221930",
+    "updated_at": "2026-10-25T09:28:20.849865",
     "error": null,
     "hidden": true
   },
@@ -604,7 +609,7 @@
       "乗合",
       "夏のツアー"
     ],
-    "updated_at": "2026-10-16T08:58:29.711400",
+    "updated_at": "2026-10-25T09:28:21.378472",
     "error": null
   },
   "chikubushima": {
@@ -624,7 +629,7 @@
       "history",
       "summer"
     ],
-    "updated_at": "2026-10-16T08:58:30.707749",
+    "updated_at": "2026-10-25T09:28:21.666321",
     "error": null,
     "hidden": false
   },
@@ -642,7 +647,7 @@
     "tags": [
       "flower"
     ],
-    "updated_at": "2026-10-16T08:58:31.434335",
+    "updated_at": "2026-10-25T09:28:22.002527",
     "error": null,
     "hidden": false
   },
@@ -661,7 +666,7 @@
       "history",
       "summer"
     ],
-    "updated_at": "2026-10-16T08:58:32.209972",
+    "updated_at": "2026-10-25T09:28:22.289724",
     "error": null,
     "hidden": false
   },
@@ -681,7 +686,7 @@
       "event",
       "history"
     ],
-    "updated_at": "2026-10-16T08:58:32.984180",
+    "updated_at": "2026-10-25T09:28:22.561911",
     "error": null,
     "hidden": false
   },
@@ -700,7 +705,7 @@
     "tags": [
       "exp"
     ],
-    "updated_at": "2026-10-16T08:58:33.901495",
+    "updated_at": "2026-10-25T09:28:22.819047",
     "error": null,
     "hidden": false
   },
@@ -715,7 +720,7 @@
     "tags": [
       "event"
     ],
-    "updated_at": "2026-10-16T08:58:34.518512",
+    "updated_at": "2026-10-25T09:28:23.076433",
     "error": null,
     "hidden": true
   },
@@ -733,7 +738,7 @@
     "tags": [
       "exp"
     ],
-    "updated_at": "2026-10-16T08:58:35.450796",
+    "updated_at": "2026-10-25T09:28:23.332844",
     "error": null,
     "hidden": false
   },
@@ -748,7 +753,7 @@
     "tags": [
       "event"
     ],
-    "updated_at": "2026-10-16T08:58:36.050804",
+    "updated_at": "2026-10-25T09:28:23.589854",
     "error": null,
     "hidden": true
   },
@@ -765,8 +770,8 @@
     "statuses": [
       {
         "date": "11/22",
-        "label": "あと１名",
-        "type": "few"
+        "label": "催行確定",
+        "type": "confirmed"
       },
       {
         "date": "11/28",
@@ -779,7 +784,7 @@
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-10-16T08:58:37.031873",
+    "updated_at": "2026-10-25T09:28:23.844823",
     "error": null,
     "hidden": false
   },
@@ -839,7 +844,7 @@
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-10-16T08:58:37.948505",
+    "updated_at": "2026-10-25T09:28:24.116582",
     "error": null,
     "hidden": false
   },
@@ -870,8 +875,13 @@
     ],
     "statuses": [
       {
+        "date": "11/22",
+        "label": "あと３名",
+        "type": "few"
+      },
+      {
         "date": "11/23",
-        "label": "あと２名",
+        "label": "あと１名",
         "type": "few"
       },
       {
@@ -895,6 +905,11 @@
         "type": "few"
       },
       {
+        "date": "11/25",
+        "label": "あと３名",
+        "type": "few"
+      },
+      {
         "date": "12/02",
         "label": "あと３名",
         "type": "few"
@@ -905,7 +920,7 @@
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-10-16T08:58:38.929065",
+    "updated_at": "2026-10-25T09:28:24.931496",
     "error": null,
     "hidden": false
   },
@@ -927,15 +942,15 @@
       },
       {
         "date": "11/29",
-        "label": "あと２名",
-        "type": "few"
+        "label": "催行確定",
+        "type": "confirmed"
       }
     ],
     "tags": [
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-10-16T08:58:39.687967",
+    "updated_at": "2026-10-25T09:28:25.186947",
     "error": null,
     "hidden": false
   },
@@ -960,7 +975,7 @@
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-10-16T08:58:40.461903",
+    "updated_at": "2026-10-25T09:28:25.443350",
     "error": null,
     "hidden": false
   },
@@ -979,7 +994,7 @@
       "exp",
       "ガイド・講座"
     ],
-    "updated_at": "2026-10-16T08:58:41.220668",
+    "updated_at": "2026-10-25T09:28:25.705470",
     "error": null,
     "hidden": false
   },
@@ -1003,7 +1018,7 @@
       "event",
       "winter"
     ],
-    "updated_at": "2026-10-16T08:58:42.137563",
+    "updated_at": "2026-10-25T09:28:25.954909",
     "error": null,
     "hidden": false
   },
@@ -1051,7 +1066,7 @@
       "winter",
       "momiji"
     ],
-    "updated_at": "2026-10-16T08:58:43.038543",
+    "updated_at": "2026-10-25T09:28:26.210117",
     "error": null,
     "hidden": false
   },
@@ -1081,7 +1096,7 @@
       "exp",
       "autumn"
     ],
-    "updated_at": "2026-10-16T08:58:43.956524",
+    "updated_at": "2026-10-25T09:28:26.465690",
     "error": null,
     "hidden": false
   },
@@ -1099,7 +1114,7 @@
     "statuses": [
       {
         "date": "11/30",
-        "label": "あと２名",
+        "label": "あと１名",
         "type": "few"
       }
     ],
@@ -1108,7 +1123,7 @@
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-10-16T08:58:44.889596",
+    "updated_at": "2026-10-25T09:28:26.722297",
     "error": null,
     "hidden": false
   },
@@ -1139,7 +1154,7 @@
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-10-16T08:58:45.838660",
+    "updated_at": "2026-10-25T09:28:26.993788",
     "error": null,
     "hidden": false
   },
@@ -1163,7 +1178,7 @@
       "event",
       "autumn"
     ],
-    "updated_at": "2026-10-16T08:58:46.756083",
+    "updated_at": "2026-10-25T09:28:27.265317",
     "error": null,
     "hidden": false
   },
@@ -1183,7 +1198,7 @@
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-10-16T08:58:47.720480",
+    "updated_at": "2026-10-25T09:28:27.570013",
     "error": null,
     "hidden": false
   },
@@ -1203,7 +1218,7 @@
       "history",
       "momiji"
     ],
-    "updated_at": "2026-10-16T08:58:48.463528",
+    "updated_at": "2026-10-25T09:28:27.826850",
     "error": null,
     "hidden": false
   },
@@ -1229,7 +1244,7 @@
       "exp",
       "winter"
     ],
-    "updated_at": "2026-10-16T08:58:49.222090",
+    "updated_at": "2026-10-25T09:28:28.098363",
     "error": null,
     "hidden": false
   }

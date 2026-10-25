@@ -640,7 +640,7 @@ def build_tour_cards(tours: dict) -> str:
                         _sort_key = _dt_val
                 except: pass
 
-        cards_entries.append((_sort_key, f"""      <div class="tour-card" data-tags="{data_tags}" data-dates="{data_dates_attr}" data-tour-id="{k}" data-tour-url="{url}">
+        cards_entries.append((_sort_key, f"""      <div class="tour-card" data-tags="{data_tags}" data-dates="{data_dates_attr}" data-tour-id="{key}" data-tour-url="{url}">
         <div class="tour-img" style="background:{bg_color};position:relative;overflow:hidden;">
           {img_html}
           <div class="sbadge {badge_cls}" style="z-index:1;">{badge_text}</div>
