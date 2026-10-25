@@ -91,6 +91,8 @@ TOUR_URLS = {
 
     "zuwaigani2026": "https://travel.mk-group.co.jp/tourkyoto/zuwaigani2026/",
 
+    "2027hitsuji": "https://travel.mk-group.co.jp/tourkyoto/2026hitsuji/",
+
 }
 
 HEADERS = {
