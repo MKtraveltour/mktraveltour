@@ -97,6 +97,8 @@ TOUR_URLS = {
 
     "kyotanba_wadaiko2026": "https://travel.mk-group.co.jp/tourkyoto/kyotanba_taiko/",
 
+    "shojuin_lightup_2026": "https://travel.mk-group.co.jp/tourkyoto/shojuin_momiji_light2026/",
+
 }
 
 HEADERS = {
