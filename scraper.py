@@ -95,6 +95,8 @@ TOUR_URLS = {
 
     "tamba_wadaiko_2026": "https://travel.mk-group.co.jp/tourkyoto/",
 
+    "kyotanba_wadaiko2026": "https://travel.mk-group.co.jp/tourkyoto/kyotanba_taiko/",
+
 }
 
 HEADERS = {
