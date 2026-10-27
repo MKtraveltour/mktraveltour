@@ -93,6 +93,8 @@ TOUR_URLS = {
 
     "2027hitsuji": "https://travel.mk-group.co.jp/tourkyoto/2026hitsuji/",
 
+    "tamba_wadaiko_2026": "https://travel.mk-group.co.jp/tourkyoto/",
+
 }
 
 HEADERS = {
