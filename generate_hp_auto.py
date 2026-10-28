@@ -709,7 +709,7 @@ def build_tour_cards(tours: dict) -> str:
     return "\n".join(html for _, html in cards_entries)
 
 
-def build_momiji_pickup(tours: dict, max_items: int = 6) -> str:
+def build_momiji_pickup(tours: dict, max_items=None) -> str:
     """
     タグに「autumn」または「秋のツアー」を含むツアーをピックアップして、
     ヘッダー直下に表示する紅葉ツアー特集セクションのHTMLを生成する。
@@ -734,7 +734,10 @@ def build_momiji_pickup(tours: dict, max_items: int = 6) -> str:
         for d in dates:
             if "随時" in str(d):
                 return False
-            for m in _re3.finditer(r"(\d{1,2})/(\d{1,2})", str(d)):
+            _ds = str(d)
+            _ds = _re3.sub(r"\d{4}年(\d{1,2})月(\d{1,2})日", r"\1/\2", _ds)
+            _ds = _re3.sub(r"(\d{1,2})月(\d{1,2})日", r"\1/\2", _ds)
+            for m in _re3.finditer(r"(\d{1,2})/(\d{1,2})", _ds):
                 mo, day = int(m.group(1)), int(m.group(2))
                 try:
                     dt = _dt3.date(_today.year, mo, day)
@@ -750,7 +753,10 @@ def build_momiji_pickup(tours: dict, max_items: int = 6) -> str:
     def _nearest_date(tour):
         best = _dt3.date(9999, 12, 30)
         for d in tour.get("dates", []):
-            for m in _re3.finditer(r"(\d{1,2})/(\d{1,2})", str(d)):
+            _ds = str(d)
+            _ds = _re3.sub(r"\d{4}年(\d{1,2})月(\d{1,2})日", r"\1/\2", _ds)
+            _ds = _re3.sub(r"(\d{1,2})月(\d{1,2})日", r"\1/\2", _ds)
+            for m in _re3.finditer(r"(\d{1,2})/(\d{1,2})", _ds):
                 mo, day = int(m.group(1)), int(m.group(2))
                 try:
                     dt = _dt3.date(_today.year, mo, day)
@@ -928,7 +934,7 @@ HTML_TEMPLATE = """\
     .momiji-pickup-sub {{ font-size: 12px; color: #a07a4a; }}
     /* カルーセル：5枚同時表示・中央拡大 */
     .momiji-carousel-wrap {{ position:relative; padding:8px 40px 8px; }}
-    .momiji-track-outer {{ overflow:hidden; }}
+    .momiji-track-outer {{ overflow:hidden; padding:14px 0; }}   /* 拡大した中央カードと影が切れないよう上下に余白 */
     .momiji-track {{ display:flex; transition:transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94); }}
     .momiji-card {{
       flex: 0 0 20%; padding: 4px;
