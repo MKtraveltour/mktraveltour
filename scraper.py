@@ -99,6 +99,8 @@ TOUR_URLS = {
 
     "shojuin_lightup_2026": "https://travel.mk-group.co.jp/tourkyoto/shojuin_momiji_light2026/",
 
+    "2026fuyutourou": "https://travel.mk-group.co.jp/tourkyoto/2026fuyutourou/",
+
 }
 
 HEADERS = {
