@@ -366,6 +366,9 @@ def build_tour_js(tours: dict) -> str:
         if akey not in tours:
             continue
         atour = tours[akey]
+        # 非表示・エラー・【募集終了】の随時催行ツアーはカレンダーに載せない
+        if atour.get("hidden") or atour.get("error") or any(w in atour.get("title", "") for w in ("募集終了", "受付終了")):
+            continue
         atitle = atour.get("title", "")
         aurl   = atour.get("url", "")
         atags = atour.get("tags", [])
@@ -688,6 +691,9 @@ def build_tour_cards(tours: dict) -> str:
         if akey not in tours:
             continue
         t = tours[akey]
+        # 非表示・エラー・【募集終了】の随時催行ツアーはカードを出さない
+        if t.get("hidden") or t.get("error") or any(w in t.get("title", "") for w in ("募集終了", "受付終了")):
+            continue
         title = t.get("title", "")
         url   = t.get("url", "")
         img   = t.get("image", "")
