@@ -306,6 +306,12 @@ def scrape_tour(key: str, url: str) -> dict:
     if soup is None:
         return {"key": key, "url": url, "error": "取得失敗", "updated_at": datetime.now().isoformat()}
 
+    # ツアー詳細の見出しが無い＝ツアーページではない（削除済み・URL違い・トップへ転送など）
+    if soup.select_one("h1.c-tour-detail__heading-lv1") is None:
+        print(f"  [WARN] {key}: ツアーページが見つかりません（URLを確認してください）")
+        return {"key": key, "url": url, "title": "タイトル不明", "dates": [], "statuses": [],
+                "error": "ツアーページなし", "updated_at": datetime.now().isoformat()}
+
     data = {
         "key":       key,
         "url":       url,
@@ -359,17 +365,36 @@ def main():
             pass
 
     # hidden（非表示設定）と tags（手動タグ）を既存データから引き継ぐ
-    MANUAL_FIELDS = ("hidden", "tags")
+    MANUAL_FIELDS = ("hidden", "manual_hidden", "tags")
     for key, data in results.items():
         if key in existing:
             for field in MANUAL_FIELDS:
                 if field in existing[key]:
                     data[field] = existing[key][field]
+        # ツール（tour_editor.py）で手動非表示にしたツアーは、
+        # 他の処理（翌年URL自動チェック等）で表示に戻されていても必ず非表示に戻す
+        if data.get("manual_hidden"):
+            data["hidden"] = True
 
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(results, f, ensure_ascii=False, indent=2)
 
-    print(f"\n=== 完了: 成功{success}件 / 失敗{fail}件 ===")
+    # 非表示のツアーや「ツアーページなし」は警告のみ（HP更新は止めない）
+    # 表示中のツアーが通信エラー等で取得できなかった場合だけ「失敗」とする
+    warn = 0
+    fail = 0
+    for key, data in results.items():
+        if not data.get("error"):
+            continue
+        if data.get("hidden") or data.get("error") == "ツアーページなし":
+            warn += 1
+        else:
+            fail += 1
+    success = len(results) - warn - fail
+
+    print(f"\n=== 完了: 成功{success}件 / 警告{warn}件 / 失敗{fail}件 ===")
+    if warn:
+        print("  ※警告は非表示ツアーやページが無いツアーです。HP更新はそのまま続けます")
     print(f"保存先: {out_path}")
     return 0 if fail == 0 else 1
 

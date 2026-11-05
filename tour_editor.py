@@ -407,9 +407,14 @@ class TourEditor:
     def _toggle_hidden(self):
         if not hasattr(self, 'selected_tour_key') or not self.selected_tour_key:
             messagebox.showwarning("未選択", "ツアーを選んでください"); return
+        # 他の処理（run.py等）で更新された最新のファイルを読み直してから変更する
+        self.tours = load_tours()
+        if self.selected_tour_key not in self.tours:
+            messagebox.showerror("エラー", "このツアーはデータに存在しません。ツールを再起動してください"); return
         tour = self.tours[self.selected_tour_key]
         new_val = not tour.get("hidden", False)
         tour["hidden"] = new_val
+        tour["manual_hidden"] = new_val  # 手動で非表示にした印（自動処理で表示に戻されないようにする）
         save_tours(self.tours)
         self._refresh_tour_list()
         label = "非表示" if new_val else "表示中"
@@ -429,6 +434,8 @@ class TourEditor:
         if not url.startswith("http"):
             messagebox.showwarning("入力エラー", "URLを正しく入力してください"); return
         tags = [tag for tag, var in self.tag_vars.items() if var.get()]
+        # 古い内容で上書きしないよう、保存前に最新のファイルを読み直す
+        self.tours = load_tours()
         if hasattr(self, 'selected_tour_key') and self.selected_tour_key:
             self.tours[self.selected_tour_key]["url"]  = url
             self.tours[self.selected_tour_key]["tags"] = tags
@@ -568,6 +575,9 @@ class TourEditor:
                 ["python", RUN_PATH], cwd=BASE_DIR,
                 capture_output=True, text=True, encoding="utf-8"
             )
+            # run.pyでtour_data.jsonが書き換わるので、ツール側も読み直す
+            self.tours = load_tours()
+            self._refresh_tour_list()
             if result.returncode == 0:
                 self.status_var.set("✅ HP更新完了！GitHubにpushしました")
                 messagebox.showinfo("完了", "HP更新・GitHubへのpushが完了しました！")
