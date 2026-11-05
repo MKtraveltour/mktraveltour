@@ -10,8 +10,33 @@ from datetime import datetime
 from pathlib import Path
 
 
+# ===== 年の自動判定 =====
+def infer_year(month: int, day: int, today=None) -> int:
+    """
+    年が書かれていない日付（例: 1/3）の年を推定する。
+    基本は今年。ただし今年だと過去日で、来年にすると約5か月以内に来る日付は来年とみなす。
+    例）11月に見た「1/3」→ 来年の1/3（年明けのツアー）
+        11月に見た「6/21」→ 今年の6/21（終わったツアー）
+    """
+    import datetime as _d
+    today = today or _d.date.today()
+    try:
+        this_year = _d.date(today.year, month, day)
+    except ValueError:
+        return today.year
+    if this_year >= today:
+        return today.year
+    try:
+        next_year = _d.date(today.year + 1, month, day)
+    except ValueError:
+        return today.year
+    if (next_year - today).days <= 150:
+        return today.year + 1
+    return today.year
+
+
 # ===== カレンダー用：日付文字列 → (year, month, day) に変換 =====
-def parse_date(date_str: str, default_year: int = 2026):
+def parse_date(date_str: str, default_year: int = None):
     """
     各種日付形式を (year, month, day) に変換
     - '6/21(日)' → (2026, 6, 21)
@@ -25,23 +50,23 @@ def parse_date(date_str: str, default_year: int = 2026):
     # 年月日形式: 2026年7月18日 or 7月18日
     m = re.search(r"(?:(\d{4})年)?(\d{1,2})月(\d{1,2})日", date_str)
     if m:
-        year  = int(m.group(1)) if m.group(1) else default_year
         month = int(m.group(2))
         day   = int(m.group(3))
+        year  = int(m.group(1)) if m.group(1) else (default_year or infer_year(month, day))
         if 1 <= month <= 12 and 1 <= day <= 31:
             return (year, month, day)
     # スラッシュ形式: 6/21 or 2026/6/21
     m = re.search(r"(?:(\d{4})/)?(\d{1,2})/(\d{1,2})", date_str)
     if m:
-        year  = int(m.group(1)) if m.group(1) else default_year
         month = int(m.group(2))
         day   = int(m.group(3))
+        year  = int(m.group(1)) if m.group(1) else (default_year or infer_year(month, day))
         if 1 <= month <= 12 and 1 <= day <= 31:
             return (year, month, day)
     return None
 
 
-def parse_date_range(date_str: str, default_year: int = 2026):
+def parse_date_range(date_str: str, default_year: int = None):
     """
     期間形式から開始日・終了日を両方返す
     '2026年7月18日～8月23日' → [(2026,7,18), (2026,8,23)]
@@ -155,7 +180,7 @@ TAG_EMOJI_MAP = [
     ("景色・写真",       "💜"),
 ]
 
-def parse_excluded_dates(dates_list: list, default_year: int = 2026) -> set:
+def parse_excluded_dates(dates_list: list, default_year: int = None) -> set:
     """datesリストから除外日を解析してsetで返す（キー形式: 'YYYY-M-D'）"""
     excluded = set()
     for d in dates_list:
@@ -172,10 +197,10 @@ def parse_excluded_dates(dates_list: list, default_year: int = 2026) -> set:
                 if mm:
                     month = int(mm.group(1))
                     day   = int(mm.group(2))
-                    excluded.add(f"{default_year}-{month}-{day}")
+                    excluded.add(f"{default_year or infer_year(month, day)}-{month}-{day}")
                 elif month and re.search(r'^\d+日$', part):
                     day = int(re.search(r'\d+', part).group())
-                    excluded.add(f"{default_year}-{month}-{day}")
+                    excluded.add(f"{default_year or infer_year(month, day)}-{month}-{day}")
         # パターン②：「8/17は...除外日」形式（＜〉なし）
         # 「除外日」の直前にある最後の日付のみ抽出（期間の開始日等は除く）
         if not m:  # ＜〉パターンが見つからなかった場合のみ
@@ -186,7 +211,7 @@ def parse_excluded_dates(dates_list: list, default_year: int = 2026) -> set:
             if p2:
                 mo, dy = int(p2.group(1)), int(p2.group(2))
                 if 1 <= mo <= 12 and 1 <= dy <= 31:
-                    excluded.add(f"{default_year}-{mo}-{dy}")
+                    excluded.add(f"{default_year or infer_year(mo, dy)}-{mo}-{dy}")
     return excluded
 
 
@@ -475,7 +500,7 @@ def build_tour_cards(tours: dict) -> str:
             for m in _re2.finditer(r"(\d{1,2})/(\d{1,2})", ds):
                 mo, day = int(m.group(1)), int(m.group(2))
                 try:
-                    dt = _dt2.date(_today.year, mo, day)
+                    dt = _dt2.date(infer_year(mo, day), mo, day)
                     date_found = True
                     if dt >= _today: future_found = True
                 except: pass
@@ -483,7 +508,7 @@ def build_tour_cards(tours: dict) -> str:
             if period:
                 mo2, day2 = int(period.group(3)), int(period.group(4))
                 try:
-                    dt2 = _dt2.date(_today.year, mo2, day2)
+                    dt2 = _dt2.date(infer_year(mo2, day2), mo2, day2)
                     date_found = True
                     if dt2 >= _today: future_found = True
                 except: pass
@@ -635,7 +660,7 @@ def build_tour_cards(tours: dict) -> str:
             import re as _re3
             for _mm in _re3.finditer(r"(\d{1,2})/(\d{1,2})", str(_dd)):
                 try:
-                    _dt_val = _dt2.date(_today.year, int(_mm.group(1)), int(_mm.group(2)))
+                    _dt_val = _dt2.date(infer_year(int(_mm.group(1)), int(_mm.group(2))), int(_mm.group(1)), int(_mm.group(2)))
                     if _dt_val >= _today and _dt_val < _sort_key:
                         _sort_key = _dt_val
                 except: pass
@@ -740,7 +765,7 @@ def build_momiji_pickup(tours: dict, max_items=None) -> str:
             for m in _re3.finditer(r"(\d{1,2})/(\d{1,2})", _ds):
                 mo, day = int(m.group(1)), int(m.group(2))
                 try:
-                    dt = _dt3.date(_today.year, mo, day)
+                    dt = _dt3.date(infer_year(mo, day), mo, day)
                     date_found = True
                     if dt >= _today:
                         future_found = True
@@ -759,7 +784,7 @@ def build_momiji_pickup(tours: dict, max_items=None) -> str:
             for m in _re3.finditer(r"(\d{1,2})/(\d{1,2})", _ds):
                 mo, day = int(m.group(1)), int(m.group(2))
                 try:
-                    dt = _dt3.date(_today.year, mo, day)
+                    dt = _dt3.date(infer_year(mo, day), mo, day)
                     if dt >= _today and dt < best:
                         best = dt
                 except Exception:
@@ -840,7 +865,7 @@ def build_sidebar_status(tours: dict) -> str:
             m = _re.search(r"(\d+)/(\d+)", date_str)
             if not m: return None
             mo, d = int(m.group(1)), int(m.group(2))
-            dt = _dt.date(today.year, mo, d)
+            dt = _dt.date(infer_year(mo, d), mo, d)
             if dt < today: return None  # 過去日付は除外
             return dt
         except: return None
