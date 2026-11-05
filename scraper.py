@@ -101,6 +101,10 @@ TOUR_URLS = {
 
     "2026fuyutourou": "https://travel.mk-group.co.jp/tourkyoto/2026fuyutourou/",
 
+    "2027_hatsumoude": "https://travel.mk-group.co.jp/tourkyoto/2027hitsuji/",
+
+    "2027_miyama_fuyutourou": "https://travel.mk-group.co.jp/tourkyoto/2027fuyutourou/",
+
 }
 
 HEADERS = {
