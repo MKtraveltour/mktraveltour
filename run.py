@@ -4,6 +4,8 @@ run.py - 旅とも手帳 一括更新スクリプト
 2. スクレイピング（tour_data.json更新）
 3. HP生成（index.html生成）
    3.6 紅葉ツアー特集ページ更新（momiji2026.html）
+   3.7 公開中ツアーの内容を開催年別に保存（archive/）
+   3.8 催行済みツアー月別ページ（past_tours.html）
 4. GitHub push
 """
 import subprocess
@@ -35,6 +37,12 @@ except ImportError:
     print("📦 beautifulsoup4をインストール中...")
     subprocess.run([sys.executable, "-m", "pip", "install", "beautifulsoup4"], check=True)
 
+try:
+    import openpyxl
+except ImportError:
+    print("📦 openpyxlをインストール中...")
+    subprocess.run([sys.executable, "-m", "pip", "install", "openpyxl"], check=True)
+
 # --- STEP 1: 翌年URL自動チェック ---
 print("\n🔍 STEP 1: 非表示ツアーの翌年URL自動チェック")
 from check_next_year_url import check_and_update
@@ -63,6 +71,46 @@ try:
     build_momiji.main()
 except Exception as e:
     print(f"⚠️ 紅葉ページの更新でエラーが出ました（本体の更新はそのまま続けます）: {e}")
+
+# --- STEP 3.7: 公開中ツアーの内容を開催年別に保存 ---
+# 公式のツアーページは毎年上書きされるため、run.py 実行時点の内容を archive/<開催年>/ に残す
+# 【募集終了】や日程がすべて終わったツアーは、その時点の内容で固定する
+print(f"\n{'='*50}")
+print("▶ STEP 3.7: 開催内容の保存（archive/）")
+print('='*50)
+try:
+    import archive_tours
+    archive_tours.main()
+except Exception as e:
+    print(f"⚠️ 開催内容の保存でエラーが出ました（本体の更新はそのまま続けます）: {e}")
+
+# --- STEP 3.8: 催行済みツアー 月別ページ（管理表Excelから自動生成） ---
+print(f"\n{'='*50}")
+print("▶ STEP 3.8: 催行済みツアー月別ページ（past_tours.html）")
+print('='*50)
+try:
+    import generate_past_tours
+    if not generate_past_tours.main():
+        print("⚠️ 月別ページは更新されませんでした（本体の更新はそのまま続けます）")
+except Exception as e:
+    print(f"⚠️ 月別ページの生成でエラーが出ました（本体の更新はそのまま続けます）: {e}")
+
+# --- 内部情報を公開リポジトリに送らないための除外設定（.gitignore）を自動で確認 ---
+_GITIGNORE_LINES = ["__pycache__/", "mktravel_private/", "service_account*.json",
+                    "*secret*", "*.xlsx", "past_link_cache.json"]
+try:
+    _gi_path = os.path.join(BASE_DIR, ".gitignore")
+    _gi_now = open(_gi_path, encoding="utf-8").read().splitlines() if os.path.exists(_gi_path) else []
+    _gi_add = [l for l in _GITIGNORE_LINES if l not in _gi_now]
+    if _gi_add:
+        with open(_gi_path, "a", encoding="utf-8") as _f:
+            if _gi_now and _gi_now[-1].strip():
+                _f.write("\n")
+            _f.write("# 管理表(Excel)・認証キーなど内部情報は公開リポジトリに送らない\n")
+            _f.write("\n".join(_gi_add) + "\n")
+        print(f"🔒 .gitignore に除外設定を追加しました: {', '.join(_gi_add)}")
+except Exception as e:
+    print(f"⚠️ .gitignore の確認でエラー: {e}")
 
 # --- STEP 4: GitHub push ---
 print(f"\n{'='*50}")

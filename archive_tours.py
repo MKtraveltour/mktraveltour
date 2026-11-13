@@ -28,9 +28,27 @@ UA = {"User-Agent": "Mozilla/5.0"}
 WD = {"月": 0, "火": 1, "水": 2, "木": 3, "金": 4, "土": 5, "日": 6}
 _TOKEN = re.compile(r"(?<![\d/])(\d{1,2})/(\d{1,2})(?![\d/])(?:\s*[（(]([月火水木金土日祝])[^）)]*[）)])?")
 
-def edition_years(dates, today=None):
-    """日程から、そのツアーが開催される年の一覧を返す（曜日つきの日付は曜日から年を確定）"""
+def url_year(url, today=None):
+    """URLに書かれた開催年（例: .../2027hitsuji/ → 2027）。無い・古すぎる(例: 2021shojuin_sogei)ときは None"""
     today = today or datetime.date.today()
+    ys = [int(y) for y in re.findall(r"(20\d{2})", url or "")]
+    if ys and max(ys) >= today.year - 1:
+        return max(ys)
+    return None
+
+def edition_years(dates, today=None, url=None):
+    """そのツアーが開催される年の一覧を返す。
+    URLに開催年があればそれを使う（年をまたぐツアーは翌年も含める）。
+    無ければ日程から判定（曜日つきの日付は曜日から年を確定）"""
+    today = today or datetime.date.today()
+    uy = url_year(url, today)
+    if uy:
+        text = "\n".join(str(d) for d in (dates or []))
+        text = re.sub(r"(\d{1,2})月(\d{1,2})日", r"\1/\2", text)
+        ms = [int(g.group(1)) for g in _TOKEN.finditer(text) if 1 <= int(g.group(1)) <= 12]
+        if ms and any(m + 6 <= ms[0] for m in ms):
+            return [uy, uy + 1]
+        return [uy]
     text = "\n".join(str(d) for d in (dates or []))
     years = {int(y) for y in re.findall(r"(20\d{2})年\d{1,2}月\d{1,2}日", text)}
     text = re.sub(r"(20\d{2})年(\d{1,2})月(\d{1,2})日", r"\2/\3", text)
@@ -50,8 +68,8 @@ def edition_years(dates, today=None):
         return [today.year + 1]
     return [today.year]
 
-def edition_year(dates, today=None):
-    return edition_years(dates, today)[0]
+def edition_year(dates, today=None, url=None):
+    return edition_years(dates, today, url)[0]
 
 _WDP = r"(?:\s*[（(]([月火水木金土日祝])[^）)]*[）)])?"
 _END_TITLE = ("募集終了", "受付終了")
@@ -60,19 +78,19 @@ def _safe_date(y, m, d):
     try: return datetime.date(y, m, d)
     except ValueError: return None
 
-def last_date(dates, today=None):
+def last_date(dates, today=None, url=None):
     """日程のうち一番遅い日付（読み取れなければ None）"""
     today = today or datetime.date.today()
     text = "\n".join(str(d) for d in (dates or []))
     text = "\n".join(l.split("※")[0] for l in text.split("\n"))            # 「※8/17は除外」などの注記は除く
     text = re.sub(r"(20\d{2})年(\d{1,2})月(\d{1,2})日", r"\1#\2/\3", text)
     text = re.sub(r"(?<![\d#/])(\d{1,2})月(\d{1,2})日", r"\1/\2", text)
-    year = edition_year(dates, today); prev = None; best = None
+    year = edition_year(dates, today, url); prev = None; best = None
     for g in re.finditer(r"(?:(20\d{2})#)?(?<![\d/])(\d{1,2})/(\d{1,2})(?![\d/])" + _WDP, text):
         y = int(g.group(1)) if g.group(1) else None
         m, d, wd = int(g.group(2)), int(g.group(3)), g.group(4)
         dt = _safe_date(y, m, d) if y else None
-        if dt is None and wd in WD:
+        if dt is None and wd in WD and not url_year(url, today):
             for yy in (today.year - 1, today.year, today.year + 1):
                 c = _safe_date(yy, m, d)
                 if c and c.weekday() == WD[wd]: dt = c; break
@@ -88,7 +106,7 @@ def is_ended(t, today):
     """終了していれば理由を、していなければ空文字を返す"""
     title = t.get("title", "") or ""
     if any(w in title for w in _END_TITLE): return "募集終了の表示"
-    ld = last_date(t.get("dates"), today)
+    ld = last_date(t.get("dates"), today, t.get("url"))
     if ld and ld < today: return "日程がすべて終了"
     return ""
 
@@ -275,7 +293,7 @@ def archive_one(key, t, fetch, today, base_dir, now):
     if t.get("error") or "/tourkyoto/" not in url: return "skip"
     last = urlparse(url).path.rstrip("/").split("/")[-1]      # ?_gl=… などの付け足しは除いてページ名を取る
     slug = safe_name(last)
-    years = edition_years(t.get("dates"), today); year = years[0]
+    years = edition_years(t.get("dates"), today, t.get("url")); year = years[0]
     d = os.path.join(base_dir, "archive", str(year), slug)
     meta_path = os.path.join(d, "meta.json")
     prev = json.load(open(meta_path, encoding="utf-8")) if os.path.exists(meta_path) else None

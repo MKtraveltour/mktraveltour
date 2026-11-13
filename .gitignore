@@ -1,1 +1,7 @@
 __pycache__/
+# 管理表(Excel)・認証キーなど内部情報は公開リポジトリに送らない
+mktravel_private/
+service_account*.json
+*secret*
+*.xlsx
+past_link_cache.json
