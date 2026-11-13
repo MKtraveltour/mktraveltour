@@ -17,7 +17,7 @@
       "景色・写真",
       "京都西山"
     ],
-    "updated_at": "2026-11-13T17:38:52.867526",
+    "updated_at": "2026-11-13T17:55:42.274528",
     "error": null
   },
   "ayabe_ajisai": {
@@ -38,7 +38,7 @@
       "神社仏閣",
       "景色・写真"
     ],
-    "updated_at": "2026-11-13T17:38:53.764326",
+    "updated_at": "2026-11-13T17:55:43.223330",
     "error": null
   },
   "rousoku": {
@@ -68,7 +68,7 @@
       "日帰り旅行",
       "夏のツアー"
     ],
-    "updated_at": "2026-11-13T17:38:54.703301",
+    "updated_at": "2026-11-13T17:55:43.979831",
     "error": null
   },
   "himatsuri_stay": {
@@ -96,7 +96,7 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-11-13T17:38:55.732668",
+    "updated_at": "2026-11-13T17:55:45.176229",
     "error": null
   },
   "okuribi": {
@@ -119,7 +119,7 @@
       "乗合",
       "夏のツアー"
     ],
-    "updated_at": "2026-11-13T17:38:56.537026",
+    "updated_at": "2026-11-13T17:55:46.195008",
     "error": null
   },
   "kokoro_utsushi": {
@@ -143,7 +143,7 @@
       "期間限定",
       "送迎場所指定OK"
     ],
-    "updated_at": "2026-11-13T17:38:57.483044",
+    "updated_at": "2026-11-13T17:55:47.378806",
     "error": null
   },
   "satsuei": {
@@ -170,7 +170,7 @@
       "ガイド・講座",
       "期間限定"
     ],
-    "updated_at": "2026-11-13T17:38:58.318782",
+    "updated_at": "2026-11-13T17:55:48.570076",
     "error": null
   },
   "momidiya": {
@@ -197,7 +197,7 @@
       "夏のツアー",
       "夏旅"
     ],
-    "updated_at": "2026-11-13T17:38:58.828096",
+    "updated_at": "2026-11-13T17:55:49.794022",
     "error": null
   },
   "himatsuri_1day": {
@@ -225,7 +225,7 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-11-13T17:38:59.980197",
+    "updated_at": "2026-11-13T17:55:51.162503",
     "error": null
   },
   "furin_shojuin2026": {
@@ -246,7 +246,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-11-13T17:39:00.838131",
+    "updated_at": "2026-11-13T17:55:52.229236",
     "error": null
   },
   "migidaimonji2026": {
@@ -270,7 +270,7 @@
       "乗合",
       "夏のツアー"
     ],
-    "updated_at": "2026-11-13T17:39:01.808451",
+    "updated_at": "2026-11-13T17:55:53.329400",
     "error": null
   },
   "himatsuri2026": {
@@ -298,7 +298,7 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-11-13T17:39:02.919447",
+    "updated_at": "2026-11-13T17:55:54.221704",
     "error": null
   },
   "miyama_ishida": {
@@ -320,7 +320,7 @@
       "歴史",
       "京都美山"
     ],
-    "updated_at": "2026-11-13T17:39:03.709409",
+    "updated_at": "2026-11-13T17:55:55.239534",
     "error": null
   },
   "yuzengiku2026": {
@@ -344,17 +344,20 @@
       "夏のツアー",
       "夏旅"
     ],
-    "updated_at": "2026-11-13T17:39:04.190137",
+    "updated_at": "2026-11-13T17:55:56.245016",
     "error": null
   },
   "yokokuji_shuttle": {
     "key": "yokokuji_shuttle",
     "url": "https://travel.mk-group.co.jp/tourkyoto/yokokuji_shuttletour/",
-    "title": "タイトル不明",
-    "dates": [],
+    "title": "京都の隠れた名所ツアー ～ 長岡京の名刹＆花手水を楽しむ旅 ～",
+    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2025/02/yokokujitop2.jpg",
+    "price": "7,800円～8,800円（税込）",
+    "dates": [
+      "随時催行",
+      "※1名様からお申込み可能ですが、5名様以上で催行いたします。"
+    ],
     "statuses": [],
-    "error": "ツアーページなし",
-    "updated_at": "2026-11-13T17:39:05.066144",
     "tags": [
       "神社仏閣",
       "景色・写真",
@@ -363,7 +366,9 @@
       "京都西山",
       "京都タクシー観光",
       "日帰り旅行"
-    ]
+    ],
+    "updated_at": "2026-11-13T17:55:57.435182",
+    "error": null
   },
   "shojuin_sogei": {
     "key": "shojuin_sogei",
@@ -400,7 +405,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-11-13T17:39:05.718022",
+    "updated_at": "2026-11-13T17:55:58.750848",
     "error": null
   },
   "uma": {
@@ -425,7 +430,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-11-13T17:39:06.624427",
+    "updated_at": "2026-11-13T17:56:00.230724",
     "error": null
   },
   "narihira_nishiyama": {
@@ -454,7 +459,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-11-13T17:39:07.084450",
+    "updated_at": "2026-11-13T17:56:01.405264",
     "error": null
   },
   "tango": {
@@ -476,7 +481,7 @@
       "貸切",
       "日帰り旅行"
     ],
-    "updated_at": "2026-11-13T17:39:07.894999",
+    "updated_at": "2026-11-13T17:56:02.557148",
     "error": null
   },
   "baikamo2026": {
@@ -501,7 +506,7 @@
       "日帰り旅行",
       "夏のツアー"
     ],
-    "updated_at": "2026-11-13T17:39:08.687855",
+    "updated_at": "2026-11-13T17:56:03.704936",
     "error": null
   },
   "maizuru_ajisai": {
@@ -526,7 +531,7 @@
       "神社仏閣",
       "景色・写真"
     ],
-    "updated_at": "2026-11-13T17:39:09.463122",
+    "updated_at": "2026-11-13T17:56:04.763348",
     "error": null
   },
   "yawata": {
@@ -548,7 +553,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-11-13T17:39:10.404515",
+    "updated_at": "2026-11-13T17:56:05.917476",
     "error": null
   },
   "shasou": {
@@ -569,7 +574,7 @@
       "歴史",
       "京都美山"
     ],
-    "updated_at": "2026-11-13T17:39:11.354753",
+    "updated_at": "2026-11-13T17:56:06.921784",
     "error": null
   },
   "kayabuki_himawari": {
@@ -584,7 +589,7 @@
     ],
     "statuses": [],
     "tags": [],
-    "updated_at": "2026-11-13T17:39:12.280888",
+    "updated_at": "2026-11-13T17:56:08.120741",
     "error": null,
     "hidden": true,
     "manual_hidden": true
@@ -610,7 +615,7 @@
       "乗合",
       "夏のツアー"
     ],
-    "updated_at": "2026-11-13T17:39:13.253890",
+    "updated_at": "2026-11-13T17:56:09.336756",
     "error": null
   },
   "chikubushima": {
@@ -630,7 +635,7 @@
       "history",
       "summer"
     ],
-    "updated_at": "2026-11-13T17:39:14.206206",
+    "updated_at": "2026-11-13T17:56:10.195440",
     "error": null,
     "hidden": false
   },
@@ -648,7 +653,7 @@
     "tags": [
       "flower"
     ],
-    "updated_at": "2026-11-13T17:39:15.205025",
+    "updated_at": "2026-11-13T17:56:11.397173",
     "error": null,
     "hidden": false
   },
@@ -667,7 +672,7 @@
       "history",
       "summer"
     ],
-    "updated_at": "2026-11-13T17:39:16.168439",
+    "updated_at": "2026-11-13T17:56:12.428792",
     "error": null,
     "hidden": false
   },
@@ -687,7 +692,7 @@
       "event",
       "history"
     ],
-    "updated_at": "2026-11-13T17:39:17.137475",
+    "updated_at": "2026-11-13T17:56:13.613369",
     "error": null,
     "hidden": false
   },
@@ -706,7 +711,7 @@
     "tags": [
       "exp"
     ],
-    "updated_at": "2026-11-13T17:39:17.946122",
+    "updated_at": "2026-11-13T17:56:14.817751",
     "error": null,
     "hidden": false
   },
@@ -717,7 +722,7 @@
     "dates": [],
     "statuses": [],
     "error": "ツアーページなし",
-    "updated_at": "2026-11-13T17:39:18.622875",
+    "updated_at": "2026-11-13T17:56:15.552723",
     "hidden": true,
     "manual_hidden": true,
     "tags": [
@@ -738,7 +743,7 @@
     "tags": [
       "exp"
     ],
-    "updated_at": "2026-11-13T17:39:19.567101",
+    "updated_at": "2026-11-13T17:56:16.657602",
     "error": null,
     "hidden": false
   },
@@ -749,7 +754,7 @@
     "dates": [],
     "statuses": [],
     "error": "ツアーページなし",
-    "updated_at": "2026-11-13T17:39:20.023799",
+    "updated_at": "2026-11-13T17:56:17.536150",
     "hidden": true,
     "manual_hidden": true,
     "tags": [
@@ -783,7 +788,7 @@
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-11-13T17:39:21.308225",
+    "updated_at": "2026-11-13T17:56:18.408387",
     "error": null,
     "hidden": false
   },
@@ -848,7 +853,7 @@
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-11-13T17:39:21.580165",
+    "updated_at": "2026-11-13T17:56:19.387435",
     "error": null,
     "hidden": false
   },
@@ -934,7 +939,7 @@
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-11-13T17:39:22.543856",
+    "updated_at": "2026-11-13T17:56:20.815172",
     "error": null,
     "hidden": false
   },
@@ -964,7 +969,7 @@
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-11-13T17:39:23.348326",
+    "updated_at": "2026-11-13T17:56:21.965123",
     "error": null,
     "hidden": false
   },
@@ -989,7 +994,7 @@
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-11-13T17:39:24.280855",
+    "updated_at": "2026-11-13T17:56:22.987462",
     "error": null,
     "hidden": false
   },
@@ -1008,7 +1013,7 @@
       "exp",
       "ガイド・講座"
     ],
-    "updated_at": "2026-11-13T17:39:25.237184",
+    "updated_at": "2026-11-13T17:56:25.411392",
     "error": null,
     "hidden": false
   },
@@ -1032,7 +1037,7 @@
       "event",
       "winter"
     ],
-    "updated_at": "2026-11-13T17:39:26.175351",
+    "updated_at": "2026-11-13T17:56:26.575585",
     "error": null,
     "hidden": false
   },
@@ -1080,7 +1085,7 @@
       "winter",
       "momiji"
     ],
-    "updated_at": "2026-11-13T17:39:26.635134",
+    "updated_at": "2026-11-13T17:56:27.598891",
     "error": null,
     "hidden": false
   },
@@ -1099,7 +1104,7 @@
       "exp",
       "autumn"
     ],
-    "updated_at": "2026-11-13T17:39:27.626448",
+    "updated_at": "2026-11-13T17:56:28.808049",
     "error": null,
     "hidden": false
   },
@@ -1131,7 +1136,7 @@
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-11-13T17:39:28.582164",
+    "updated_at": "2026-11-13T17:56:29.985782",
     "error": null,
     "hidden": false
   },
@@ -1162,7 +1167,7 @@
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-11-13T17:39:30.551491",
+    "updated_at": "2026-11-13T17:56:30.670954",
     "error": null,
     "hidden": false
   },
@@ -1186,7 +1191,7 @@
       "event",
       "autumn"
     ],
-    "updated_at": "2026-11-13T17:39:31.503856",
+    "updated_at": "2026-11-13T17:56:31.925552",
     "error": null,
     "hidden": false
   },
@@ -1217,7 +1222,7 @@
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-11-13T17:39:32.441087",
+    "updated_at": "2026-11-13T17:56:33.087988",
     "error": null,
     "hidden": false
   },
@@ -1243,7 +1248,7 @@
       "history",
       "momiji"
     ],
-    "updated_at": "2026-11-13T17:39:33.449673",
+    "updated_at": "2026-11-13T17:56:34.270914",
     "error": null,
     "hidden": false
   },
@@ -1269,7 +1274,7 @@
       "exp",
       "winter"
     ],
-    "updated_at": "2026-11-13T17:39:34.267679",
+    "updated_at": "2026-11-13T17:56:35.448548",
     "error": null,
     "hidden": false
   },
@@ -1280,7 +1285,7 @@
     "dates": [],
     "statuses": [],
     "error": "ツアーページなし",
-    "updated_at": "2026-11-13T17:39:34.894826",
+    "updated_at": "2026-11-13T17:56:36.410516",
     "hidden": true,
     "manual_hidden": true,
     "tags": [
@@ -1295,7 +1300,7 @@
     "dates": [],
     "statuses": [],
     "error": "ツアーページなし",
-    "updated_at": "2026-11-13T17:39:35.355151",
+    "updated_at": "2026-11-13T17:56:37.104666",
     "hidden": true,
     "manual_hidden": true,
     "tags": [
@@ -1315,7 +1320,7 @@
     "tags": [
       "history"
     ],
-    "updated_at": "2026-11-13T17:39:35.629718",
+    "updated_at": "2026-11-13T17:56:38.305432",
     "error": null,
     "hidden": false
   },
@@ -1353,7 +1358,7 @@
       "history",
       "momiji"
     ],
-    "updated_at": "2026-11-13T17:39:35.916683",
+    "updated_at": "2026-11-13T17:56:39.464271",
     "error": null,
     "hidden": false
   },
@@ -1364,7 +1369,7 @@
     "dates": [],
     "statuses": [],
     "error": "ツアーページなし",
-    "updated_at": "2026-11-13T17:39:36.522097",
+    "updated_at": "2026-11-13T17:56:40.113205",
     "hidden": true,
     "manual_hidden": true,
     "tags": [
@@ -1394,7 +1399,7 @@
     "tags": [
       "history"
     ],
-    "updated_at": "2026-11-13T17:39:37.463443",
+    "updated_at": "2026-11-13T17:56:41.285600",
     "error": null,
     "hidden": false
   },
@@ -1416,7 +1421,7 @@
       "event",
       "exp"
     ],
-    "updated_at": "2026-11-13T17:39:38.425750",
+    "updated_at": "2026-11-13T17:56:42.013422",
     "error": null,
     "hidden": false
   },
@@ -1434,7 +1439,7 @@
     "tags": [
       "winter"
     ],
-    "updated_at": "2026-11-13T17:39:39.269050",
+    "updated_at": "2026-11-13T17:56:43.174473",
     "error": null,
     "hidden": false
   },
@@ -1450,9 +1455,10 @@
     ],
     "statuses": [],
     "tags": [
+      "momiji",
       "ガイド・講座"
     ],
-    "updated_at": "2026-11-13T17:39:39.799642",
+    "updated_at": "2026-11-13T17:56:44.144727",
     "error": null,
     "hidden": false
   }
