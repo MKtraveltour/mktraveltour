@@ -1,6 +1,23 @@
 {
   "articles": [
     {
+      "id": "030",
+      "title": "試験点灯～十輪寺～",
+      "author": "Hiro",
+      "category": "進捗報告",
+      "date": "2026-11-13",
+      "text": "11/11 十輪寺様のライトアップツアーの試験点灯に行ってきた上司より当日の様子が届きました！\n\n京都はまだまだ紅葉の最盛期には早く、青紅葉がきれいな状態です。\n例年ツアー開催時期には綺麗に色づいていますので今年も鮮やか紅葉の赤をお届けできるのではないかと思います！\n\nツアーご参加お待ちしております！",
+      "photos": [
+        "261111_jurinji_lightup_kouyou.jpg",
+        "261111_jurinji_lightup.jpg",
+        "261111_jurinji_lightup_under.jpg"
+      ],
+      "audio": "",
+      "audio_label": "",
+      "publish_at": "",
+      "pinned": false
+    },
+    {
       "id": "029",
       "title": "美味しいものとツアー造成",
       "author": "Hiro",

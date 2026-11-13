@@ -4,6 +4,7 @@ tour_editor.py  ―  旅とも手帳 ツアー管理ツール
 タブ②：当日の様子レポート管理（tour_reports.json）
 """
 import json
+import re
 import os
 import subprocess
 import tkinter as tk
@@ -16,7 +17,8 @@ TOUR_REPORTS_PATH = os.path.join(BASE_DIR, "tour_reports.json")
 SCRAPER_PATH      = os.path.join(BASE_DIR, "scraper.py")
 RUN_PATH          = os.path.join(BASE_DIR, "run.py")
 
-TAGS_OPTIONS = ["event", "exp", "history", "flower", "summer", "autumn", "winter", "spring", "momiji", "other"]
+TAGS_OPTIONS = ["event", "exp", "history", "flower", "summer", "autumn", "winter", "spring", "momiji",
+                "景色・写真", "神社仏閣", "グルメ", "ガイド・講座", "other"]
 TAG_LABELS   = {
     "event":   "イベント・お祭り",
     "exp":     "体験・名所巡り",
@@ -27,6 +29,10 @@ TAG_LABELS   = {
     "winter":  "冬のツアー",
     "spring":  "春のツアー",
     "momiji":  "🍁 紅葉ツアー",
+    "景色・写真":   "景色・写真",
+    "神社仏閣":     "神社仏閣",
+    "グルメ":       "お食事・グルメ",   # 既存ツアーの「グルメ」タグと共通
+    "ガイド・講座": "ガイド・講座あり", # 既存ツアーの「ガイド・講座」タグと共通
     "other":   "その他",
 }
 SEASON_DATA_PATH = os.path.join(BASE_DIR, "season_data.json")
@@ -200,6 +206,13 @@ class TourEditor:
                            bg="#faf8f5", fg="#3c2e1e", font=("", 9),
                            selectcolor="#fff", activebackground="#faf8f5",
                            cursor="hand2").grid(row=i//4, column=i%4, sticky="w", padx=4, pady=1)
+
+        lbl("その他のタグ（自由入力・「、」で区切って複数入力できます）")
+        self.free_tags_var = tk.StringVar()
+        tk.Entry(right, textvariable=self.free_tags_var, font=("", 10),
+                 relief="solid", bd=1).pack(fill="x", padx=4)
+        tk.Label(right, text="例：京都西山、ナイトツアー、送迎のみ　※チェックボックスにないタグはここに表示されます",
+                 bg="#faf8f5", fg="#888", font=("", 8)).pack(anchor="w", padx=4)
 
         self.always_on_var = tk.BooleanVar()
         tk.Checkbutton(right, text="随時催行ツアーとして登録",
@@ -376,6 +389,7 @@ class TourEditor:
         tags = tour.get("tags", [])
         for tag, var in self.tag_vars.items():
             var.set(tag in tags)
+        self.free_tags_var.set("、".join(t for t in tags if t not in self.tag_vars))
         self.always_on_var.set(key in ALWAYS_ON_KEYS)
         if hidden:
             self.tour_status_label.config(text="🙈 現在このツアーは非表示です", bg="#ffe0e0")
@@ -396,6 +410,7 @@ class TourEditor:
         self.url_var.set("https://travel.mk-group.co.jp/tourkyoto/")
         self.title_var.set("（スクレイパーが自動取得します）")
         for v in self.tag_vars.values(): v.set(False)
+        self.free_tags_var.set("")
         self.always_on_var.set(False)
         self.tour_status_label.config(text="新規ツアー追加モード", bg="#fdf5e8")
         self.hide_btn.config(text="🙈 非表示にする", bg="#e67e22")
@@ -434,6 +449,14 @@ class TourEditor:
         if not url.startswith("http"):
             messagebox.showwarning("入力エラー", "URLを正しく入力してください"); return
         tags = [tag for tag, var in self.tag_vars.items() if var.get()]
+        # 自由入力のタグ（「、」「,」区切り）を追加。入力された文字はそのまま保存する
+        # （「お食事・グルメ」「ガイド・講座あり」と書かれた場合だけ、既存ツアーと同じタグにそろえる）
+        label_to_tag = {"お食事・グルメ": "グルメ", "ガイド・講座あり": "ガイド・講座"}
+        for t in re.split(r"[、,，/／\n]+", self.free_tags_var.get()):
+            t = t.strip()
+            t = label_to_tag.get(t, t)
+            if t and t not in tags:
+                tags.append(t)
         # 古い内容で上書きしないよう、保存前に最新のファイルを読み直す
         self.tours = load_tours()
         if hasattr(self, 'selected_tour_key') and self.selected_tour_key:

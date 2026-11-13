@@ -105,6 +105,8 @@ TOUR_URLS = {
 
     "2027_miyama_fuyutourou": "https://travel.mk-group.co.jp/tourkyoto/2027fuyutourou/",
 
+    "miyamasou_2027winter": "https://travel.mk-group.co.jp/tourkyoto/miyamasou_2027winter/",
+
 }
 
 HEADERS = {
