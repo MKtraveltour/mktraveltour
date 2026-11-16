@@ -11,13 +11,51 @@ from pathlib import Path
 
 
 # ===== 年の自動判定 =====
+# ツアーごとの「開催年」情報（set_year_ctx で設定）
+_YEAR_CTX = {"year": None, "first_month": None}
+
+
+def set_year_ctx(tour: dict):
+    """
+    ツアーのURLから開催年を読み取り、年が書かれていない日付の判定に使う。
+    例）.../2027hitsuji/ → 2027年、.../zuwaigani2026/ → 2026年
+    ・12月→1月のように年をまたぐツアーは、最初の日程より大きく前の月を翌年とみなす
+      （例: zuwaigani2026 の 12/28, 1/21 → 2026/12/28, 2027/1/21）
+    ・URLに年が無い／今年より前の年（例: 2021shojuin_sogei）の場合は従来の自動判定
+    """
+    import datetime as _d
+    import re as _r
+    url = (tour or {}).get("url", "")
+    years = [int(y) for y in _r.findall(r"(20\d{2})", url)]
+    year = max(years) if years else None
+    if year is not None and year < _d.date.today().year:
+        year = None
+    first_month = None
+    if year is not None:
+        for ds in (tour.get("dates") or []):
+            m = _r.search(r"(?<!\d)(\d{1,2})[/月](\d{1,2})", str(ds))
+            if m and 1 <= int(m.group(1)) <= 12:
+                first_month = int(m.group(1))
+                break
+    _YEAR_CTX["year"] = year
+    _YEAR_CTX["first_month"] = first_month
+
+
 def infer_year(month: int, day: int, today=None) -> int:
     """
+    【優先】URLに開催年がある場合はその年（年またぎは翌年）。
+    【URLに年が無い場合】
     年が書かれていない日付（例: 1/3）の年を推定する。
     基本は今年。ただし今年だと過去日で、来年にすると約5か月以内に来る日付は来年とみなす。
     例）11月に見た「1/3」→ 来年の1/3（年明けのツアー）
         11月に見た「6/21」→ 今年の6/21（終わったツアー）
     """
+    if _YEAR_CTX.get("year"):
+        y = _YEAR_CTX["year"]
+        fm = _YEAR_CTX.get("first_month")
+        if fm and month + 6 <= fm:
+            return y + 1
+        return y
     import datetime as _d
     today = today or _d.date.today()
     try:
@@ -234,6 +272,7 @@ def build_tour_js(tours: dict) -> str:
     import datetime as _dt2, re as _re2
     _period_queue = []  # 期間ツアーの後処理リスト
     for key, tour in tours.items():
+        set_year_ctx(tour)
         if key in SKIP_KEYS:
             continue
         if tour.get("hidden"):
@@ -366,6 +405,7 @@ def build_tour_js(tours: dict) -> str:
         if akey not in tours:
             continue
         atour = tours[akey]
+        set_year_ctx(atour)
         # 非表示・エラー・【募集終了】の随時催行ツアーはカレンダーに載せない
         if atour.get("hidden") or atour.get("error") or any(w in atour.get("title", "") for w in ("募集終了", "受付終了")):
             continue
@@ -487,6 +527,7 @@ def build_tour_cards(tours: dict) -> str:
     _today = _dt2.date.today()
 
     def is_all_past(tour):
+        set_year_ctx(tour)
         """全日程が過去ならTrueを返す（随時催行でも期間終了なら非表示）"""
         dates = tour.get("dates", [])
         if not dates: return False
@@ -521,10 +562,12 @@ def build_tour_cards(tours: dict) -> str:
         return not future_found
 
     for i, (key, tour) in enumerate(tours.items()):
+        set_year_ctx(tour)
         if key in SKIP_KEYS:
             continue
         if is_all_past(tour):
             continue  # 全日程が過去のツアーは非表示
+        set_year_ctx(tour)
         if tour.get("hidden"):
             continue  # 手動非表示フラグ
         if "募集終了" in tour.get("title", "") or "受付終了" in tour.get("title", ""):
@@ -691,6 +734,7 @@ def build_tour_cards(tours: dict) -> str:
         if akey not in tours:
             continue
         t = tours[akey]
+        set_year_ctx(t)
         # 非表示・エラー・【募集終了】の随時催行ツアーはカードを出さない
         if t.get("hidden") or t.get("error") or any(w in t.get("title", "") for w in ("募集終了", "受付終了")):
             continue
@@ -757,6 +801,7 @@ def build_momiji_pickup(tours: dict, max_items=None) -> str:
     AUTUMN_TAGS = {"momiji"}
 
     def _is_all_past(tour):
+        set_year_ctx(tour)
         dates = tour.get("dates", [])
         if not dates:
             return False
@@ -782,6 +827,7 @@ def build_momiji_pickup(tours: dict, max_items=None) -> str:
         return not future_found
 
     def _nearest_date(tour):
+        set_year_ctx(tour)
         best = _dt3.date(9999, 12, 30)
         for d in tour.get("dates", []):
             _ds = str(d)
@@ -799,6 +845,7 @@ def build_momiji_pickup(tours: dict, max_items=None) -> str:
 
     picked = []
     for key, tour in tours.items():
+        set_year_ctx(tour)
         if key in SKIP_KEYS or key in MOMIJI_MANUAL_EXCLUDE:
             continue
         if tour.get("error") or tour.get("hidden"):
@@ -879,6 +926,7 @@ def build_sidebar_status(tours: dict) -> str:
     entries = []
     SKIP_KEYS = {"uma", "yokokuji_shuttle", "shojuin_sogei", "narihira_nishiyama", "momidiya", "nuigurumi2026", "nuigurumi2026-2"}
     for key, tour in tours.items():
+        set_year_ctx(tour)
         if key in SKIP_KEYS: continue
         if tour.get("hidden"): continue  # 手動非表示フラグ
         if tour.get("error"): continue
@@ -2211,6 +2259,53 @@ HTML_TEMPLATE = """\
 """
 
 
+
+# ===== 記事本文のURLをタップできるリンクにする =====
+_MAP_URL_RE = r"(?:google\.[a-z.]+/maps|maps\.google\.|maps\.app\.goo\.gl|goo\.gl/maps)"
+
+def linkify_article_text(text: str) -> str:
+    """
+    記事本文（[BANNER]以外）を表示用HTMLにする。
+    ・Googleマップのリンク → 「📍 地図を開く」ボタン（スマホではマップアプリが開く）
+      同じ行のURLの前に短い場所名を書くと、ボタンにその名前を表示（例: 光明寺 https://maps.app.goo.gl/xxxx）
+    ・それ以外のURL → タップできる普通のリンク
+    ・改行 → <br>
+    """
+    import re as _r
+    from html import escape as _esc
+    url_re = _r.compile(r"https?://[^\s<>「」『』（）()、。]+")
+    out_lines = []
+    for line in text.split("\n"):
+        pieces, pos = [], 0
+        for m in url_re.finditer(line):
+            url = m.group(0)
+            before = line[pos:m.start()]
+            if _r.search(_MAP_URL_RE, url):
+                label_src = before.strip().rstrip("：:→").strip()
+                if label_src and len(label_src) <= 25:
+                    label = "📍 " + label_src.lstrip("📍").strip() + "の地図を開く"
+                    before = ""
+                else:
+                    label = "📍 地図を開く"
+                pieces.append(before)
+                pieces.append(
+                    f'<a href="{_esc(url, quote=True)}" target="_blank" rel="noopener" '
+                    f'onclick="event.stopPropagation();" '
+                    f'style="display:inline-block;margin:4px 0;padding:6px 14px;border-radius:999px;'
+                    f'background:#8b7355;color:#fff;font-size:12px;text-decoration:none;">{_esc(label)}</a>'
+                )
+            else:
+                pieces.append(before)
+                pieces.append(
+                    f'<a href="{_esc(url, quote=True)}" target="_blank" rel="noopener" '
+                    f'onclick="event.stopPropagation();" '
+                    f'style="color:#7a4a1e;text-decoration:underline;word-break:break-all;">{_esc(url)}</a>'
+                )
+            pos = m.end()
+        pieces.append(line[pos:])
+        out_lines.append("".join(pieces))
+    return "<br>".join(out_lines)
+
 def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> None:
     """tour_data.json を読み込んでindex.htmlを生成"""
     with open(data_path, "r", encoding="utf-8") as f:
@@ -2491,7 +2586,7 @@ def generate(data_path: Path, output_path: Path, articles_path: Path = None) -> 
             if _p.startswith("[BANNER]"):
                 _html_parts.append(_p[8:-9])  # [BANNER]と[/BANNER]を除去
             else:
-                _html_parts.append(_p.replace("\n", "<br>"))
+                _html_parts.append(linkify_article_text(_p))
         text_html = "".join(_html_parts)
         aid = art.get("id", "")
         # バックナンバー判定
