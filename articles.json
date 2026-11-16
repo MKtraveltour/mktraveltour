@@ -1,6 +1,19 @@
 {
   "articles": [
     {
+      "id": "031",
+      "title": "いよいよ紅葉シーズン到来！",
+      "author": "Hiro",
+      "category": "New！",
+      "date": "2026-11-16",
+      "text": "いつもこのページをご覧いただいている皆様にMK外商部の「ちょっととっておき」をご紹介！\n\n弊社では多数寄せられる紅葉状況のお問い合わせに対応するために\n京都市観光協会様から寄せられた紅葉情報を端末上でまとめて確認できるようにGoogleマップにまとめています！\n\n弊社ツアーの訪問先も！そうでない場所も！\nこのホームページでだけこっそり最新情報が確認できるようにお見せします！\nこの機会に是非ご覧ください！\nhttps://www.google.com/maps/d/viewer?mid=1tuQ_V7Aly5Jg_PAITJOAMx_sXgEXtGs",
+      "photos": [],
+      "audio": "",
+      "audio_label": "",
+      "publish_at": "",
+      "pinned": false
+    },
+    {
       "id": "030",
       "title": "試験点灯～十輪寺～",
       "author": "Hiro",
