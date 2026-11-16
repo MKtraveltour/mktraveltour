@@ -17,7 +17,7 @@
       "景色・写真",
       "京都西山"
     ],
-    "updated_at": "2026-11-13T17:55:42.274528",
+    "updated_at": "2026-11-16T12:19:01.617599",
     "error": null
   },
   "ayabe_ajisai": {
@@ -38,7 +38,7 @@
       "神社仏閣",
       "景色・写真"
     ],
-    "updated_at": "2026-11-13T17:55:43.223330",
+    "updated_at": "2026-11-16T12:19:02.450509",
     "error": null
   },
   "rousoku": {
@@ -68,7 +68,7 @@
       "日帰り旅行",
       "夏のツアー"
     ],
-    "updated_at": "2026-11-13T17:55:43.979831",
+    "updated_at": "2026-11-16T12:19:03.936146",
     "error": null
   },
   "himatsuri_stay": {
@@ -96,7 +96,7 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-11-13T17:55:45.176229",
+    "updated_at": "2026-11-16T12:19:04.867695",
     "error": null
   },
   "okuribi": {
@@ -119,7 +119,7 @@
       "乗合",
       "夏のツアー"
     ],
-    "updated_at": "2026-11-13T17:55:46.195008",
+    "updated_at": "2026-11-16T12:19:05.801886",
     "error": null
   },
   "kokoro_utsushi": {
@@ -143,14 +143,14 @@
       "期間限定",
       "送迎場所指定OK"
     ],
-    "updated_at": "2026-11-13T17:55:47.378806",
+    "updated_at": "2026-11-16T12:19:06.803014",
     "error": null
   },
   "satsuei": {
     "key": "satsuei",
     "url": "https://travel.mk-group.co.jp/tourkyoto/photo_yokokuji/",
     "title": "【募集終了】SNSで映える！ 【閉門後貸切】紫陽花の名刹・柳谷観音 楊谷寺スマホ撮影講座ツアー",
-    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/05/top-3.png",
+    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/04/top-1.png",
     "price": "14,800円～15,800円（税込）",
     "dates": [
       "6/20(土)",
@@ -170,7 +170,7 @@
       "ガイド・講座",
       "期間限定"
     ],
-    "updated_at": "2026-11-13T17:55:48.570076",
+    "updated_at": "2026-11-16T12:19:07.624774",
     "error": null
   },
   "momidiya": {
@@ -197,7 +197,7 @@
       "夏のツアー",
       "夏旅"
     ],
-    "updated_at": "2026-11-13T17:55:49.794022",
+    "updated_at": "2026-11-16T12:19:08.288006",
     "error": null
   },
   "himatsuri_1day": {
@@ -225,7 +225,7 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-11-13T17:55:51.162503",
+    "updated_at": "2026-11-16T12:19:09.365968",
     "error": null
   },
   "furin_shojuin2026": {
@@ -246,7 +246,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-11-13T17:55:52.229236",
+    "updated_at": "2026-11-16T12:19:09.671312",
     "error": null
   },
   "migidaimonji2026": {
@@ -270,7 +270,7 @@
       "乗合",
       "夏のツアー"
     ],
-    "updated_at": "2026-11-13T17:55:53.329400",
+    "updated_at": "2026-11-16T12:19:10.614978",
     "error": null
   },
   "himatsuri2026": {
@@ -298,7 +298,7 @@
       "ナイトツアー",
       "秋のツアー"
     ],
-    "updated_at": "2026-11-13T17:55:54.221704",
+    "updated_at": "2026-11-16T12:19:11.638187",
     "error": null
   },
   "miyama_ishida": {
@@ -320,7 +320,7 @@
       "歴史",
       "京都美山"
     ],
-    "updated_at": "2026-11-13T17:55:55.239534",
+    "updated_at": "2026-11-16T12:19:12.606060",
     "error": null
   },
   "yuzengiku2026": {
@@ -344,7 +344,7 @@
       "夏のツアー",
       "夏旅"
     ],
-    "updated_at": "2026-11-13T17:55:56.245016",
+    "updated_at": "2026-11-16T12:19:13.227260",
     "error": null
   },
   "yokokuji_shuttle": {
@@ -367,7 +367,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-11-13T17:55:57.435182",
+    "updated_at": "2026-11-16T12:19:14.185140",
     "error": null
   },
   "shojuin_sogei": {
@@ -405,7 +405,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-11-13T17:55:58.750848",
+    "updated_at": "2026-11-16T12:19:14.474421",
     "error": null
   },
   "uma": {
@@ -430,7 +430,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-11-13T17:56:00.230724",
+    "updated_at": "2026-11-16T12:19:15.399101",
     "error": null
   },
   "narihira_nishiyama": {
@@ -459,7 +459,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-11-13T17:56:01.405264",
+    "updated_at": "2026-11-16T12:19:15.671129",
     "error": null
   },
   "tango": {
@@ -481,7 +481,7 @@
       "貸切",
       "日帰り旅行"
     ],
-    "updated_at": "2026-11-13T17:56:02.557148",
+    "updated_at": "2026-11-16T12:19:16.486578",
     "error": null
   },
   "baikamo2026": {
@@ -506,7 +506,7 @@
       "日帰り旅行",
       "夏のツアー"
     ],
-    "updated_at": "2026-11-13T17:56:03.704936",
+    "updated_at": "2026-11-16T12:19:17.441124",
     "error": null
   },
   "maizuru_ajisai": {
@@ -531,7 +531,7 @@
       "神社仏閣",
       "景色・写真"
     ],
-    "updated_at": "2026-11-13T17:56:04.763348",
+    "updated_at": "2026-11-16T12:19:18.269843",
     "error": null
   },
   "yawata": {
@@ -553,7 +553,7 @@
       "京都タクシー観光",
       "日帰り旅行"
     ],
-    "updated_at": "2026-11-13T17:56:05.917476",
+    "updated_at": "2026-11-16T12:19:19.037868",
     "error": null
   },
   "shasou": {
@@ -574,7 +574,7 @@
       "歴史",
       "京都美山"
     ],
-    "updated_at": "2026-11-13T17:56:06.921784",
+    "updated_at": "2026-11-16T12:19:19.838814",
     "error": null
   },
   "kayabuki_himawari": {
@@ -589,7 +589,7 @@
     ],
     "statuses": [],
     "tags": [],
-    "updated_at": "2026-11-13T17:56:08.120741",
+    "updated_at": "2026-11-16T12:19:20.780404",
     "error": null,
     "hidden": true,
     "manual_hidden": true
@@ -615,7 +615,7 @@
       "乗合",
       "夏のツアー"
     ],
-    "updated_at": "2026-11-13T17:56:09.336756",
+    "updated_at": "2026-11-16T12:19:21.743066",
     "error": null
   },
   "chikubushima": {
@@ -635,7 +635,7 @@
       "history",
       "summer"
     ],
-    "updated_at": "2026-11-13T17:56:10.195440",
+    "updated_at": "2026-11-16T12:19:22.677904",
     "error": null,
     "hidden": false
   },
@@ -653,7 +653,7 @@
     "tags": [
       "flower"
     ],
-    "updated_at": "2026-11-13T17:56:11.397173",
+    "updated_at": "2026-11-16T12:19:23.458582",
     "error": null,
     "hidden": false
   },
@@ -672,7 +672,7 @@
       "history",
       "summer"
     ],
-    "updated_at": "2026-11-13T17:56:12.428792",
+    "updated_at": "2026-11-16T12:19:24.283136",
     "error": null,
     "hidden": false
   },
@@ -692,7 +692,7 @@
       "event",
       "history"
     ],
-    "updated_at": "2026-11-13T17:56:13.613369",
+    "updated_at": "2026-11-16T12:19:25.198947",
     "error": null,
     "hidden": false
   },
@@ -711,7 +711,7 @@
     "tags": [
       "exp"
     ],
-    "updated_at": "2026-11-13T17:56:14.817751",
+    "updated_at": "2026-11-16T12:19:26.146981",
     "error": null,
     "hidden": false
   },
@@ -722,7 +722,7 @@
     "dates": [],
     "statuses": [],
     "error": "ツアーページなし",
-    "updated_at": "2026-11-13T17:56:15.552723",
+    "updated_at": "2026-11-16T12:19:26.595718",
     "hidden": true,
     "manual_hidden": true,
     "tags": [
@@ -743,7 +743,7 @@
     "tags": [
       "exp"
     ],
-    "updated_at": "2026-11-13T17:56:16.657602",
+    "updated_at": "2026-11-16T12:19:27.414802",
     "error": null,
     "hidden": false
   },
@@ -754,7 +754,7 @@
     "dates": [],
     "statuses": [],
     "error": "ツアーページなし",
-    "updated_at": "2026-11-13T17:56:17.536150",
+    "updated_at": "2026-11-16T12:19:27.956948",
     "hidden": true,
     "manual_hidden": true,
     "tags": [
@@ -788,7 +788,7 @@
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-11-13T17:56:18.408387",
+    "updated_at": "2026-11-16T12:19:28.814436",
     "error": null,
     "hidden": false
   },
@@ -853,7 +853,7 @@
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-11-13T17:56:19.387435",
+    "updated_at": "2026-11-16T12:19:29.844977",
     "error": null,
     "hidden": false
   },
@@ -939,7 +939,7 @@
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-11-13T17:56:20.815172",
+    "updated_at": "2026-11-16T12:19:30.769652",
     "error": null,
     "hidden": false
   },
@@ -969,7 +969,7 @@
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-11-13T17:56:21.965123",
+    "updated_at": "2026-11-16T12:19:31.058673",
     "error": null,
     "hidden": false
   },
@@ -994,7 +994,7 @@
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-11-13T17:56:22.987462",
+    "updated_at": "2026-11-16T12:19:32.008850",
     "error": null,
     "hidden": false
   },
@@ -1013,7 +1013,7 @@
       "exp",
       "ガイド・講座"
     ],
-    "updated_at": "2026-11-13T17:56:25.411392",
+    "updated_at": "2026-11-16T12:19:32.834263",
     "error": null,
     "hidden": false
   },
@@ -1037,7 +1037,7 @@
       "event",
       "winter"
     ],
-    "updated_at": "2026-11-13T17:56:26.575585",
+    "updated_at": "2026-11-16T12:19:33.767275",
     "error": null,
     "hidden": false
   },
@@ -1085,7 +1085,7 @@
       "winter",
       "momiji"
     ],
-    "updated_at": "2026-11-13T17:56:27.598891",
+    "updated_at": "2026-11-16T12:19:34.407318",
     "error": null,
     "hidden": false
   },
@@ -1104,7 +1104,7 @@
       "exp",
       "autumn"
     ],
-    "updated_at": "2026-11-13T17:56:28.808049",
+    "updated_at": "2026-11-16T12:19:35.327768",
     "error": null,
     "hidden": false
   },
@@ -1136,38 +1136,27 @@
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-11-13T17:56:29.985782",
+    "updated_at": "2026-11-16T12:19:36.476660",
     "error": null,
     "hidden": false
   },
   "keihoku-kouyou2026": {
     "key": "keihoku-kouyou2026",
     "url": "https://travel.mk-group.co.jp/tourkyoto/keihoku-kouyou2026/",
-    "title": "京北の紅葉を訪ねて。常照皇寺と里山めぐり～季節のそば御膳を味わう秋の旅～",
+    "title": "【募集終了】京北の紅葉を訪ねて。常照皇寺と里山めぐり～季節のそば御膳を味わう秋の旅～",
     "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/09/トップ用-1.jpg",
     "price": "15,300円（税込）",
     "dates": [
       "11/14(土)",
       "11/15(日)"
     ],
-    "statuses": [
-      {
-        "date": "11/14",
-        "label": "催行確定",
-        "type": "confirmed"
-      },
-      {
-        "date": "11/15",
-        "label": "催行確定",
-        "type": "confirmed"
-      }
-    ],
+    "statuses": [],
     "tags": [
       "history",
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-11-13T17:56:30.670954",
+    "updated_at": "2026-11-16T12:19:37.403058",
     "error": null,
     "hidden": false
   },
@@ -1191,7 +1180,7 @@
       "event",
       "autumn"
     ],
-    "updated_at": "2026-11-13T17:56:31.925552",
+    "updated_at": "2026-11-16T12:19:38.387768",
     "error": null,
     "hidden": false
   },
@@ -1222,7 +1211,7 @@
       "autumn",
       "momiji"
     ],
-    "updated_at": "2026-11-13T17:56:33.087988",
+    "updated_at": "2026-11-16T12:19:39.350828",
     "error": null,
     "hidden": false
   },
@@ -1248,7 +1237,7 @@
       "history",
       "momiji"
     ],
-    "updated_at": "2026-11-13T17:56:34.270914",
+    "updated_at": "2026-11-16T12:19:40.157146",
     "error": null,
     "hidden": false
   },
@@ -1274,7 +1263,7 @@
       "exp",
       "winter"
     ],
-    "updated_at": "2026-11-13T17:56:35.448548",
+    "updated_at": "2026-11-16T12:19:40.935989",
     "error": null,
     "hidden": false
   },
@@ -1285,7 +1274,7 @@
     "dates": [],
     "statuses": [],
     "error": "ツアーページなし",
-    "updated_at": "2026-11-13T17:56:36.410516",
+    "updated_at": "2026-11-16T12:19:41.571268",
     "hidden": true,
     "manual_hidden": true,
     "tags": [
@@ -1300,7 +1289,7 @@
     "dates": [],
     "statuses": [],
     "error": "ツアーページなし",
-    "updated_at": "2026-11-13T17:56:37.104666",
+    "updated_at": "2026-11-16T12:19:42.047638",
     "hidden": true,
     "manual_hidden": true,
     "tags": [
@@ -1320,7 +1309,7 @@
     "tags": [
       "history"
     ],
-    "updated_at": "2026-11-13T17:56:38.305432",
+    "updated_at": "2026-11-16T12:19:42.962282",
     "error": null,
     "hidden": false
   },
@@ -1358,7 +1347,7 @@
       "history",
       "momiji"
     ],
-    "updated_at": "2026-11-13T17:56:39.464271",
+    "updated_at": "2026-11-16T12:19:43.787804",
     "error": null,
     "hidden": false
   },
@@ -1369,7 +1358,7 @@
     "dates": [],
     "statuses": [],
     "error": "ツアーページなし",
-    "updated_at": "2026-11-13T17:56:40.113205",
+    "updated_at": "2026-11-16T12:19:44.260545",
     "hidden": true,
     "manual_hidden": true,
     "tags": [
@@ -1399,7 +1388,7 @@
     "tags": [
       "history"
     ],
-    "updated_at": "2026-11-13T17:56:41.285600",
+    "updated_at": "2026-11-16T12:19:45.232257",
     "error": null,
     "hidden": false
   },
@@ -1421,7 +1410,7 @@
       "event",
       "exp"
     ],
-    "updated_at": "2026-11-13T17:56:42.013422",
+    "updated_at": "2026-11-16T12:19:45.723558",
     "error": null,
     "hidden": false
   },
@@ -1439,7 +1428,7 @@
     "tags": [
       "winter"
     ],
-    "updated_at": "2026-11-13T17:56:43.174473",
+    "updated_at": "2026-11-16T12:19:46.683245",
     "error": null,
     "hidden": false
   },
@@ -1447,7 +1436,7 @@
     "key": "photo_yokokuji2026a",
     "url": "https://travel.mk-group.co.jp/tourkyoto/photo_yokokuji2026a/",
     "title": "【緊急発売】早朝の楊谷寺へ！人気インフルエンサー・まっちゃん氏のスマホ撮影ワークショップ送迎プラン",
-    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/11/top-4.png",
+    "image": "https://cdn.getshifter.co/3bbf0d0cfe366a41e24684c63408bc1c5657b6b2/uploads/2026/11/top-6.png",
     "price": "5,000円（税込）",
     "dates": [
       "11/28(土)",
@@ -1458,7 +1447,7 @@
       "momiji",
       "ガイド・講座"
     ],
-    "updated_at": "2026-11-13T17:56:44.144727",
+    "updated_at": "2026-11-16T12:19:47.628647",
     "error": null,
     "hidden": false
   }

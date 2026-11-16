@@ -14,5 +14,8 @@
  "url": "https://travel.mk-group.co.jp/tourkyoto/keihoku-kouyou2026/",
  "captured_at": "2026-11-13T10:29:29",
  "text_len": 2243,
- "hero": "d8c8a3e240c5.jpg"
+ "hero": "d8c8a3e240c5.jpg",
+ "frozen": true,
+ "frozen_reason": "募集終了の表示",
+ "frozen_at": "2026-11-16"
 }

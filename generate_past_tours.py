@@ -85,6 +85,14 @@ TEMPLATE = r'''<!DOCTYPE html>
   .yf[aria-pressed="true"] small { color:var(--onb); opacity:.85; }
   .fnote { max-width:1100px; margin:8px auto 0; padding:0 20px; font-size:11px; color:var(--sub); text-align:center; }
   .nav a.off { opacity:.3; pointer-events:none; }
+  .tfilter { max-width:1100px; margin:18px auto 0; padding:0 16px; display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; }
+  .tfilter .lab { font-size:12px; color:var(--sub); margin-right:2px; }
+  .tf { font:inherit; font-size:14px; font-weight:500; background:var(--card); color:var(--text); border:1px solid var(--line); border-radius:999px; padding:8px 16px; cursor:pointer; }
+  .tf small { font-size:10px; margin-left:5px; color:var(--brand); }
+  .tf:hover { border-color:var(--brand); }
+  .tf[aria-pressed="true"] { background:var(--brand); border-color:var(--brand); color:var(--onb); }
+  .tf[aria-pressed="true"] small { color:var(--onb); opacity:.85; }
+  .ti { flex:0 0 auto; font-size:13px; line-height:1; }
   .arc-badge { flex:0 0 auto; font-size:10px; color:var(--brand); border:1px solid var(--brand); border-radius:4px; padding:0 5px; }
 </style>
 </head>
@@ -96,6 +104,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   <span class="count" id="total-count">@@TOTAL@@</span>
 </div>
 <nav class="nav">@@NAV@@</nav>
+<div class="tfilter" id="tfilter" role="group" aria-label="テーマで絞り込み"><span class="lab">テーマで探す</span></div>
 <div class="yfilter" id="yfilter" role="group" aria-label="年で絞り込み"><span class="lab">年で絞り込み</span></div>
 <p class="fnote">年は複数選べます。随時・毎週運行は年の指定がないため、絞り込み中は表示されません。</p>
 <p class="legend"><b>青字</b>＝リンクあり（公式サイトの過去ツアー一覧に掲載中のページ）／ グレー＝リンクなし<br>複数の月にまたがるツアーは、催行した各月に掲載しています。<br><span class="arc-badge">保存版</span>＝当時の内容を保存したページ（公式ページが上書きされても残ります）</p>
@@ -124,17 +133,39 @@ TEMPLATE = r'''<!DOCTYPE html>
     bar.appendChild(b);
     return b;
   }
+  // ---- テーマ（ツアー名から自動判定）----
+  var THEMES = [['sakura','🌸 桜'],['ajisai','💠 紫陽花'],['momiji','🍁 紅葉'],['food','🍽️ 食べ物']];
+  var theme = '';
+  var tbar = document.getElementById('tfilter');
+  var tbtns = {};
+  var tcount = {};
+  Array.prototype.forEach.call(document.querySelectorAll('.list li'), function (li) {
+    (li.getAttribute('data-th') || '').split(' ').forEach(function (t) { if (t) tcount[t] = (tcount[t] || 0) + 1; });
+  });
+  function tbtn(key, label) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'tf'; b.setAttribute('aria-pressed', 'false');
+    b.innerHTML = label + (key ? '<small>' + (tcount[key] || 0) + '</small>' : '');
+    b.addEventListener('click', function () { theme = (theme === key) ? '' : key; apply(); });
+    tbar.appendChild(b);
+    return b;
+  }
+  tbtns[''] = tbtn('', 'すべて');
+  THEMES.forEach(function (t) { tbtns[t[0]] = tbtn(t[0], t[1]); });
+
   btns.all = btn('すべて', '', 'all');
   years.forEach(function (y) { btns[y] = btn(y + '年', counts[y], y); });
   function apply() {
     var any = Object.keys(sel).length > 0, total = 0;
+    Object.keys(tbtns).forEach(function (k) { tbtns[k].setAttribute('aria-pressed', k === theme ? 'true' : 'false'); });
     btns.all.setAttribute('aria-pressed', any ? 'false' : 'true');
     years.forEach(function (y) { btns[y].setAttribute('aria-pressed', sel[y] ? 'true' : 'false'); });
     secs.forEach(function (s) {
       var n = 0;
       Array.prototype.forEach.call(s.querySelectorAll('li'), function (li) {
         var y = li.querySelector('.yr');
-        var show = !any || (y && sel[y.textContent]);
+        var th = ' ' + (li.getAttribute('data-th') || '') + ' ';
+        var show = (!any || (y && sel[y.textContent])) && (!theme || th.indexOf(' ' + theme + ' ') >= 0);
         li.style.display = show ? '' : 'none';
         if (show) n++;
       });
@@ -146,8 +177,10 @@ TEMPLATE = r'''<!DOCTYPE html>
       if (chip) { chip.classList.toggle('off', !n); var sm = chip.querySelector('small'); if (sm) sm.textContent = n; }
     });
     var t = document.getElementById('total-count');
-    if (t) t.textContent = (any ? '該当 ' : '全 ') + total + ' 件';
+    if (t) t.textContent = ((any || theme) ? '該当 ' : '全 ') + total + ' 件';
   }
+  var tp = new URLSearchParams(location.search).get('t');
+  if (tp && tbtns[tp]) { theme = tp; }
   var yp = new URLSearchParams(location.search).get('y');
   if (yp) { years.forEach(function (y) { if (yp === '2024' ? Number(y) <= 2024 : y === yp) { sel[y] = true; } }); }
   apply();
@@ -385,19 +418,56 @@ def make_arc_lookup(index):
     return lambda slug, y: index.get((_san(slug), y))
 
 # ---------------------------------------------------------------- HTML
+# ---------------------------------------------------------------- テーマ（ツアー名から自動判定）
+# キーワードを増やしたいときは、このリストに言葉を追加するだけでOK
+THEME_RULES = [
+    ("sakura", "🌸", ["桜", "さくら", "サクラ", "花見", "しだれ"]),
+    ("ajisai", "💠", ["紫陽花", "あじさい", "アジサイ"]),
+    ("momiji", "🍁", ["紅葉", "もみじ", "モミジ", "錦秋", "観紅"]),
+    ("food",   "🍽️", ["グルメ", "ランチ", "ディナー", "料理", "懐石", "御膳", "会席", "食べ", "味わ", "美食",
+                     "カニ", "ガニ", "蟹", "ブリ", "鰻", "うなぎ", "そば", "蕎麦", "湯葉", "ゆば", "豆腐",
+                     "寿司", "鍋", "弁当", "スイーツ", "和菓子", "甘味", "パフェ", "クロワッサン", "モンブラン",
+                     "酒蔵", "酒造", "日本酒", "試飲", "飲み比べ", "ワイン", "ビール",
+                     "収穫", "いちご", "苺", "ぶどう", "黒豆"]),
+]
+
+# 判定から外す言葉（例：「青もみじ」は初夏なので紅葉に入れない、「そばの花」は食べ物に入れない）
+THEME_EXCLUDE = {
+    "momiji": ["青もみじ", "青紅葉", "青モミジ"],
+    "food":   ["そばの花"],
+}
+
+def themes_of(title):
+    """ツアー名からテーマ（複数可）を判定"""
+    found = []
+    for key, _icon, words in THEME_RULES:
+        t = title or ""
+        for x in THEME_EXCLUDE.get(key, []):
+            t = t.replace(x, "")
+        if any(w in t for w in words):
+            found.append(key)
+    return found
+
+def theme_icons(keys):
+    icons = {k: i for k, i, _w in THEME_RULES}
+    return "".join(icons[k] for k in keys)
+
 def build_html(ent, jiji, link_ok, show_back=True, arc=None):
     by_m = collections.defaultdict(list)
     for e in ent: by_m[e["m"]].append(e)
     def li(e, year=True):
+        th = themes_of(e["title"])
+        dth = f' data-th="{" ".join(th)}"' if th else ""
+        ic = f'<span class="ti" aria-hidden="true">{theme_icons(th)}</span>' if th else ""
         yr = f'<span class="yr">{e["y"]}</span>' if year else ""
         note = f'<span class="note">{escape(e["note"])}</span>' if e.get("note") else ""
         if year and arc:
             href = arc(e["slug"], e["y"])
             if href:      # その年の内容を保存したページがあれば、そちらへ（公式ページが上書きされても残る）
-                return f'<li>{yr}<a href="{escape(href)}">{escape(e["title"])}</a><span class="arc-badge">保存版</span>{note}</li>'
+                return f'<li{dth}>{yr}{ic}<a href="{escape(href)}">{escape(e["title"])}</a><span class="arc-badge">保存版</span>{note}</li>'
         if link_ok(e["slug"]):
-            return f'<li>{yr}<a href="{SITE_BASE}{escape(e["slug"])}/" target="_blank" rel="noopener">{escape(e["title"])}</a>{note}</li>'
-        return f'<li class="nolink">{yr}<span>{escape(e["title"])}</span>{note}</li>'
+            return f'<li{dth}>{yr}{ic}<a href="{SITE_BASE}{escape(e["slug"])}/" target="_blank" rel="noopener">{escape(e["title"])}</a>{note}</li>'
+        return f'<li class="nolink"{dth}>{yr}{ic}<span>{escape(e["title"])}</span>{note}</li>'
     sections, chips = "", ""
     for m in range(1, 13):
         items = sorted(by_m[m], key=lambda e: (-e["y"], e["title"]))
