@@ -109,6 +109,8 @@ TOUR_URLS = {
 
     "photo_yokokuji2026a": "https://travel.mk-group.co.jp/tourkyoto/photo_yokokuji2026a/",
 
+    "miyamasou_bisyoku": "https://travel.mk-group.co.jp/tourkyoto/miyamasou_2027winter/",
+
 }
 
 HEADERS = {

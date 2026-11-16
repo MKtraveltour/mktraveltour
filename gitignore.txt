@@ -44,6 +44,12 @@ preview/
 *.old
 *.swp
 
+# --- 内部情報（run.py が自動で確認している項目と同じ） ---
+mktravel_private/
+service_account*.json
+*secret*
+past_link_cache.json
+
 # --- Windows が自動で作るファイル ---
 Thumbs.db
 desktop.ini

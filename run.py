@@ -3,7 +3,7 @@ run.py - 旅とも手帳 一括更新スクリプト
 1. 翌年URL自動チェック（hidden:Trueのツアー）
 2. スクレイピング（tour_data.json更新）
 3. HP生成（index.html生成）
-   3.6 紅葉ツアー特集ページ更新（momiji2026.html）
+   3.6 季節のツアー特集ページ更新（紅葉・桜・紫陽花など）
    3.7 公開中ツアーの内容を開催年別に保存（archive/）
    3.8 催行済みツアー月別ページ（past_tours.html）
 4. GitHub push
@@ -61,16 +61,23 @@ print('='*50)
 from generate_reports import generate_all_reports
 generate_all_reports()
 
-# --- STEP 3.6: 紅葉ツアー特集ページ更新 ---
+# --- STEP 3.6: 季節のツアー特集ページ更新 ---
+# 公開する季節ページの設定ファイルを並べる（桜・紫陽花の本番ページを作ったらここに追加）
+# 例: SEASON_CONFIGS = ["momiji_config.json", "sakura_config.json"]
+SEASON_CONFIGS = ["momiji_config.json"]
 # エラーが出ても本体（旅とも手帳）の更新・pushは止めない
 print(f"\n{'='*50}")
-print("▶ STEP 3.6: 紅葉ツアー特集ページ更新（momiji2026.html）")
+print("▶ STEP 3.6: 季節のツアー特集ページ更新")
 print('='*50)
 try:
     import build_momiji
-    build_momiji.main()
+    for _cfg in SEASON_CONFIGS:
+        try:
+            build_momiji.main(config_name=_cfg)
+        except Exception as e:
+            print(f"⚠️ {_cfg} の更新でエラーが出ました（ほかの更新はそのまま続けます）: {e}")
 except Exception as e:
-    print(f"⚠️ 紅葉ページの更新でエラーが出ました（本体の更新はそのまま続けます）: {e}")
+    print(f"⚠️ 季節ページの更新でエラーが出ました（本体の更新はそのまま続けます）: {e}")
 
 # --- STEP 3.7: 公開中ツアーの内容を開催年別に保存 ---
 # 公式のツアーページは毎年上書きされるため、run.py 実行時点の内容を archive/<開催年>/ に残す

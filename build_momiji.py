@@ -188,7 +188,7 @@ def is_target(td, detect):
     return bool(tags & set(detect.get("tags", []))) or any(w in title for w in detect.get("words", []))
 
 
-def build(config, tour_data, today, model=False):
+def build(config, tour_data, today, model=None):
     """
     model=True（モデルページ）のときは、【募集終了】のツアーも載せ、
     タイトルの【募集終了】を外して表示します。
@@ -207,7 +207,10 @@ def build(config, tour_data, today, model=False):
         c = conf_by_key.get(key, {})
         td = tour_data.get(key)
         if td is None:
-            notes.append(f"・{key}: tour_data.json にありません（昨年以前のツアーなら、設定ファイルから消してOK）")
+            if model.get("source") == "archive" if isinstance(model, dict) else False:
+                notes.append(f"・{key}: 保存版（archive/）にありません（過去ツアー編集で取り込むと載ります）")
+            else:
+                notes.append(f"・{key}: tour_data.json にありません（昨年以前のツアーなら、設定ファイルから消してOK）")
             continue
         if td.get("hidden") and not model:
             notes.append(f"・{key}: 非表示設定のため掲載しません")
@@ -218,6 +221,8 @@ def build(config, tour_data, today, model=False):
                 notes.append(f"・{key}: 募集終了のため掲載しません")
                 continue
             title_raw = re.sub(r"【?募集終了】?\s*", "", title_raw).strip()
+        if isinstance(model, dict) and model.get("source") == "archive":
+            title_raw = re.sub(r"^\s*[【\[](募集終了|受付終了)[】\]]\s*", "", title_raw)
 
         raw_dates = td.get("dates", []) or []
         parsed = expand_dates(raw_dates, today)
@@ -359,18 +364,70 @@ def render_template(site, block, model_notice):
     return html
 
 
+def load_archive_source(model, detect, html_path):
+    """
+    保存版（archive/<年>/<ページ名>/meta.json）から、モデルページ用のツアー情報を作る。
+    テーマは past_tours.html の分類（data-th）と、タイトルの言葉（detect）で判定する。
+    """
+    import glob
+    year = int(model["year"])
+    themes = set(model.get("themes", []))
+    theme_map = {}
+    try:
+        import collect_past_tours
+        for i in collect_past_tours.read_past_list():
+            theme_map.setdefault((i["year"], i["slug"]), set()).update(i["themes"])
+    except Exception:
+        pass
+    out_dir = os.path.dirname(html_path)
+
+    def rel(p):
+        return os.path.relpath(p, out_dir).replace(os.sep, "/")
+
+    data = {}
+    for mp in sorted(glob.glob(os.path.join(BASE_DIR, "archive", str(year), "*", "meta.json"))):
+        try:
+            m = load_json(mp)
+        except Exception:
+            continue
+        d = os.path.dirname(mp)
+        slug = m.get("slug") or os.path.basename(d)
+        td = {
+            "title": m.get("title", ""),
+            "url": rel(os.path.join(d, "index.html")),   # モデルでは保存版ページへリンク
+            "price": m.get("price", ""),
+            "dates": m.get("dates", []),
+            # 保存版の写真は archive/<年>/<ページ名>/img/ に入っている
+            "image": rel(os.path.join(d, m["hero"] if "/" in m["hero"] else os.path.join("img", m["hero"])))
+                     if m.get("hero") else "",
+            "tags": [], "statuses": [],
+        }
+        if theme_map.get((year, slug), set()) & themes or is_target(td, detect):
+            data[slug] = td
+    return data
+
+
 def main(check_only=False, config_name=None):
     config_name = config_name or DEFAULT_CONFIG
     config = load_json(os.path.join(BASE_DIR, config_name))
-    tour_data = load_json(TOUR_DATA_PATH)
     html_path = os.path.join(BASE_DIR, config.get("output_html", "momiji2026.html"))
     site = config.get("site")
     model = config.get("model") or {}
+    if model.get("source") == "archive":
+        # 保存版（archive/）の過去ツアーから作るモデル。基準日はその年の1月1日
+        tour_data = load_archive_source(model, config.get("detect", DEFAULT_DETECT), html_path)
+        model.setdefault("as_of", f"{int(model['year'])}-01-01")
+    else:
+        tour_data = load_json(TOUR_DATA_PATH)
     label = (site or {}).get("label", "紅葉")
 
     # モデルページは「その時点で見たらどう見えるか」を作るため、基準日を差し替える
     today = model.get("as_of") or date.today().isoformat()
-    tours, notes = build(config, tour_data, today, model=bool(model))
+    tours, notes = build(config, tour_data, today, model=model or None)
+    if model.get("source") == "archive":
+        # 過去のツアーなので、空席の代わりに「◯年 催行」と表示する
+        for t in tours:
+            t["status"], t["statusText"] = "confirmed", model.get("status_label", f"{model['year']}年 催行")
     now = datetime.now()
     updated_at = model.get("updated_label") or f"{now.year}年{now.month}月{now.day}日 {now:%H:%M}"
 
