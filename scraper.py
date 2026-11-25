@@ -111,6 +111,8 @@ TOUR_URLS = {
 
     "miyamasou_bisyoku": "https://travel.mk-group.co.jp/tourkyoto/miyamasou_2027winter/",
 
+    "temmangu_2027": "https://travel.mk-group.co.jp/tourkyoto/ikimitenmangu2027/",
+
 }
 
 HEADERS = {
